@@ -31,7 +31,7 @@
 			<table class="table table-striped table-hover table-bordered table-condensed" id="stock_table">
 			    <thead>
 			        <tr>
-			            <th>Code</th>
+			            <th>Code G</th>
 			            <th>Name</th>
 			            <th>Sector</th>
 			            <th>Share Price</th>
