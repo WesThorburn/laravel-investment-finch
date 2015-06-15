@@ -1,0 +1,32 @@
+.half-width{
+	width:50%;
+}
+
+.quarter-width{
+	width:25%;
+}
+
+.third-width{
+	width:33.33%;
+}
+
+.default-margin-top{
+	margin-top:20px;
+}
+
+.default-margin-bottom{
+	margin-bottom:20px;
+}
+
+.half-margin-top{
+	margin-top:10px;
+}
+
+.half-margin-bottom{
+	margin-bottom:10px;
+}
+
+.alert-minimal{
+	margin-bottom:0px;
+	padding:3px 3px 3px 10px;
+}
