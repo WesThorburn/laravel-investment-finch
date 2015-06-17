@@ -36,7 +36,7 @@
 			            <th>Sector</th>
 			            <th>Share Price</th>
 			            <th>Day Change</th>
-			            <th>Mkt Cap</th>
+			            <th>Mkt Cap (M)</th>
 			            <th>Volume</th>
 			            <th>EBITDA (m)</th>
 			            <th>EPS Current Year</th>

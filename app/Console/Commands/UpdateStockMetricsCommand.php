@@ -63,7 +63,7 @@ class UpdateStockMetricsCommand extends Command {
 						"year_low" => $individualMetric[10],
 						"fifty_day_moving_average" => $individualMetric[11],
 						"two_hundred_day_moving_average" => $individualMetric[12],
-						"market_cap" => $individualMetric[13],
+						"market_cap" => UpdateStockMetricsCommand::getMarketCap($individualMetric[13]),
 						"dividend_yield" => $individualMetric[14]
 					));
 				}
@@ -84,6 +84,16 @@ class UpdateStockMetricsCommand extends Command {
 			$stockCodeParameter .= "+".$stockCode.".AX";
 		}
 		return substr($stockCodeParameter, 1);
+	}
+
+	//Formats Market cap and returns it in Millions
+	private static function getMarketCap($individualMetric){
+		if(substr($individualMetric, -1) == 'B'){
+			return floatval(substr($individualMetric, 0, -1))*1000;
+		}
+		elseif(substr($individualMetric, -1) == 'M'){
+			return floatval(substr($individualMetric, 0, -1));
+		}
 	}
 
 	/**
