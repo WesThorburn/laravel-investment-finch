@@ -41,11 +41,12 @@ class UpdateStockListCommand extends Command {
 		$masterStockList = array();
 		foreach($companyListFromASX as $companyRow){
 			if($companyRow != null){
-				if(substr(explode(',"', explode('",', $companyRow)[1])[1], -1) == '"'){
-					$sector = substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -1);
+				$companyRowEnd = explode(',"', explode('",', $companyRow)[1])[1];
+				if(substr($companyRowEnd, -1) == '"'){
+					$sector = substr($companyRowEnd, 0, -1);
 				}
 				else{
-					$sector = explode(',"', explode('",', $companyRow)[1])[1];
+					$sector = $companyRowEnd;
 				}
 				array_push($masterStockList, array(
 					"stock_code" => explode(',"', explode('",', $companyRow)[1])[0], 
