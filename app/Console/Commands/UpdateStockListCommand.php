@@ -42,9 +42,9 @@ class UpdateStockListCommand extends Command {
 		foreach($companyListFromASX as $companyRow){
 			if($companyRow != null){
 				array_push($masterStockList, array(
-					"stock_code" => explode(',', $companyRow)[1], 
-				    'company_name' => substr(explode(',', $companyRow)[0], 1, -1),
-				    'sector' => substr(explode(',', $companyRow)[2], 1, -1)
+					"stock_code" => explode(',"', explode('",', $companyRow)[1])[0], 
+				    'company_name' => substr(explode('",', $companyRow)[0], 1),
+				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2)
 				));
 			}
 		}
