@@ -44,6 +44,9 @@ class UpdateStockListCommand extends Command {
 				if(substr(explode(',"', explode('",', $companyRow)[1])[1], -1) == '"'){
 					$sector = substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -1);
 				}
+				else{
+					$sector = explode(',"', explode('",', $companyRow)[1])[1];
+				}
 				array_push($masterStockList, array(
 					"stock_code" => explode(',"', explode('",', $companyRow)[1])[0], 
 				    'company_name' => substr(explode('",', $companyRow)[0], 1),
