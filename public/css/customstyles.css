@@ -31,6 +31,18 @@
 	padding:3px 3px 3px 10px;
 }
 
+.color-red{
+	color:red;
+}
+
+.color-green{
+	color:green;
+}
+
 .navbar{
 	border-radius:0px;
+}
+
+.panel-body{
+	padding:5px;
 }

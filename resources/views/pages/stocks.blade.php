@@ -58,7 +58,11 @@
 				        		<td>{{ $stock->stock->company_name }}</td>
 				        		<td>{{ $stock->stock->sector }}</td>
 				        		<td>${{ $stock->last_trade }}</td>
-				        		<td>{{ $stock->day_change }}%</td>
+				        		<td @if($stock->day_change < 0) class="color-red" 
+				        			@elseif($stock->day_change > 0) class="color-green"
+				        			@endif>
+				        			{{ $stock->day_change }}%
+				        		</td>
 				        		<td>{{ $stock->market_cap }}</td>
 				        		<td>{{ $stock->average_daily_volume }}</td>
 				        		<td>{{ $stock->EBITDA }}</td>
