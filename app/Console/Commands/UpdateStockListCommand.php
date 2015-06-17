@@ -43,6 +43,7 @@ class UpdateStockListCommand extends Command {
 			if($companyRow != null){
 				$companyRowEnd = explode(',"', explode('",', $companyRow)[1])[1];
 				if(substr($companyRowEnd, -1) == '"'){
+					dd(substr($companyRowEnd, -1));
 					$sector = substr($companyRowEnd, 0, -1);
 				}
 				else{
