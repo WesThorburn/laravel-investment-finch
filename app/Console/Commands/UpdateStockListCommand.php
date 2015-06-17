@@ -44,7 +44,7 @@ class UpdateStockListCommand extends Command {
 				array_push($masterStockList, array(
 					"stock_code" => explode(',"', explode('",', $companyRow)[1])[0], 
 				    'company_name' => substr(explode('",', $companyRow)[0], 1),
-				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2)
+				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -1)
 				));
 			}
 		}
