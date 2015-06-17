@@ -43,6 +43,10 @@
 	border-radius:0px;
 }
 
+.btn-logout, .btn-login, .btn-register{
+	margin-top:8px;
+}
+
 .panel-body{
 	padding:5px;
 }
