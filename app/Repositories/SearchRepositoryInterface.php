@@ -1,7 +1,7 @@
 <?php namespace App\Repositories;
 
 interface SearchRepositoryInterface{
-	public function getAllMetrics();
-	public function getMetricsByStockList($listOfStocks);
-	public function getScreenerResults($request);
+	public function getAllMetrics($omitCondition);
+	public function getMetricsByStockList($listOfStocks, $omitCondition);
+	public function getSearchResults($request);
 }

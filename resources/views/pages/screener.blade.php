@@ -251,6 +251,14 @@
 							</td>
 						</div>
 					</tr>
+					<tr>
+						<div class="form-group">
+							<td align="right" colspan="4"><b>Show stocks with low quality or incomplete metrics</b></td>
+							<td>
+								{!! Form::checkbox('omitCondition', null, false, ['class' => 'quater-margin-left']) !!}
+							</td>
+						</div>
+					</tr>
 					@include('layouts.subviews.form-error-row', ['fieldName' => 'minDividendYield'])
 					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxDividendYield'])
 					<tr>

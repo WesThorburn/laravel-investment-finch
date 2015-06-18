@@ -26,6 +26,10 @@
 	margin-bottom:10px;
 }
 
+.quater-margin-left{
+	margin-left:5px;
+}
+
 .alert-minimal{
 	margin-bottom:0px;
 	padding:3px 3px 3px 10px;
@@ -37,6 +41,10 @@
 
 .color-green{
 	color:green;
+}
+
+.hidden{
+	display:none;
 }
 
 .navbar{

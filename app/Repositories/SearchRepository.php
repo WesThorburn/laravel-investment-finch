@@ -4,15 +4,15 @@ use App\Models\Stock;
 use App\Models\StockMetrics;
 
 Class SearchRepository implements SearchRepositoryInterface{
-	public function getAllMetrics(){
-		return StockMetrics::with('stock')->where('stock_code', '!=', 'null')->omitOutliers()->get();
+	public function getAllMetrics($omitCondition){
+		return StockMetrics::with('stock')->where('stock_code', '!=', 'null')->omitOutliers($omitCondition)->get();
 	}
 
-	public function getMetricsByStockList($listOfStocks){
-		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers()->get();
+	public function getMetricsByStockList($listOfStocks, $omitCondition){
+		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->get();
 	}
 
-	public function getScreenerResults($request){
+	public function getSearchResults($request){
 		$allSectors = [];
 		$minPrice = StockMetrics::min('last_trade');
 		$maxPrice = StockMetrics::max('last_trade');
@@ -145,6 +145,11 @@ Class SearchRepository implements SearchRepositoryInterface{
 			$maxDividendYield = $request->maxDividendYield;
 		}
 
+		//Make sure results are ommited even if box isn't ticked.
+		if($request->omitCondition == null){
+			$request->omitCondition = 'omit';
+		}
+
 		return StockMetrics::whereIn('stock_code', $this->getStocksBySector($request->sector))
 			->whereBetween('last_trade', [$minPrice, $maxPrice])
 			->whereBetween('average_daily_volume', [$minVolume, $maxVolume])
@@ -159,7 +164,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 			->whereBetween('two_hundred_day_moving_average', [$min200DayMA, $max200DayMA])
 			->whereBetween('market_cap', [$minMarketCap, $maxMarketCap])
 			->whereBetween('dividend_yield', [$minDividendYield, $maxDividendYield])
-			->omitOutliers()
+			->omitOutliers($request->omitCondition)
 			->lists('stock_code');
 			
 	}

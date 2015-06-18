@@ -17,9 +17,9 @@ class SearchController extends Controller {
 		$this->search = $search;
 	}
 
-	public function home(){
+	public function home($omitCondition = 'omit'){
 		return view('pages.stocks')->with([
-			'stocks' => $this->search->getAllMetrics(), 
+			'stocks' => $this->search->getAllMetrics($omitCondition), 
 			'sectors' => Stock::getSectorDropdown(), 
 			'sectorName' => null
 		]);
@@ -32,17 +32,8 @@ class SearchController extends Controller {
 	}
 
 	public function show(ScreenerSearchRequest $request){
-		if($request->searchType == "sectorOnly"){
-			if($request->sector == "All"){
-				return $this->home();
-			}
-			$stockCodes = Stock::where('sector', $request->sector)->lists('stock_code');
-		}
-		elseif($request->searchType == "screener"){
-			$stockCodes = $this->search->getScreenerResults($request);
-		}
 		return view('pages.stocks')->with([
-			'stocks' => $this->search->getMetricsByStockList($stockCodes), 
+			'stocks' => $this->search->getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition), 
 			'sectors' => Stock::getSectorDropdown(), 
 			'sectorName' => $request->sector
 		]);

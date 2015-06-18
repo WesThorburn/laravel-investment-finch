@@ -12,7 +12,7 @@
 			});
 		});
 	</script>
-	<div class = "col-md-2 col-md-offset-1">
+	<div class = "col-md-3 col-md-offset-1">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<label>Filter By Sector</label>
@@ -21,7 +21,9 @@
 				{!! Form::open(array('action' => 'SearchController@show', 'method' => 'get')) !!}
 					{!! Form::hidden('searchType', 'sectorOnly') !!}
 					{!! Form::select('sector', $sectors, $sectorName, ['class' => 'form-control half-margin-bottom']) !!}
-					{!! Form::submit("Filter", ['class' => 'btn btn-default form-control']) !!}
+					{!! Form::label('omitConditionLabel', 'Show stocks with low quality or incomplete metrics') !!}
+					{!! Form::checkbox('omitCondition', null, false, ['class' => 'quater-margin-left']) !!}
+					{!! Form::submit("Filter", ['class' => 'btn btn-default form-control half-margin-top']) !!}
 				{!! Form::close() !!}
 			</div>
 		</div>
@@ -41,8 +43,8 @@
 			            <th>EBITDA (m)</th>
 			            <th>EPS Current Year</th>
 			            <th>EPS Next Year</th>
-			            <th>P/E Ratio</th>
-			            <th>Price/Book</th>
+			            <th>P / E Ratio</th>
+			            <th>Price / Book</th>
 			            <th>52 Week High</th>
 			            <th>52 Week Low</th>
 			            <th>50 Day MA</th>
