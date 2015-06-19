@@ -57,7 +57,7 @@
 				        @foreach($stocks as $stock)
 				        	<tr>
 				        		<td>
-				        			<!--<a href="/stock/{{$stock->stock_code}}"></a>{{ $stock->stock_code }}-->
+				        			{{ $stock->stock_code }}<!--<a href="/stock/{{$stock->stock_code}}"></a>-->
 				        		</td>
 				        		<td>{{ $stock->stock->company_name }}</td>
 				        		<td>{{ $stock->stock->sector }}</td>
