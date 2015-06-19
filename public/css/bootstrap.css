@@ -6343,6 +6343,7 @@ button.close {
   display: block;
   margin-right: auto;
   margin-left: auto;
+  float:none;
 }
 .pull-right {
   float: right !important;

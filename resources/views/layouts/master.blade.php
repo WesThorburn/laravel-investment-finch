@@ -5,12 +5,11 @@
 			StockWebsite | @yield('title')
 		</title>
 		
-		<!-- Latest compiled and minified CSS -->
+		<!-- CSS -->
 		<link rel="stylesheet" href="/css/bootstrap.css">
 		<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="/css/dataTables.bootstrap.css">
-		
-		<!-- Custom Styles -->
+		<link rel="stylesheet" href="/css/jasny-bootstrap.css">
 		<link rel="stylesheet" href="/css/customstyles.css">
 		
 		<!--Javascript-->
@@ -18,6 +17,8 @@
 		<script src="/js/jquery.dataTables.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/dataTables.bootstrap.js"></script>
+		<script src="/js/jasny-bootstrap.js"></script>
+		<script src="/js/Chart.js"></script>
 		<script src="/js/extra.js"></script>
 		@yield('head')
 	</head>

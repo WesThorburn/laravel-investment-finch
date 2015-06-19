@@ -53,10 +53,12 @@
 			        </tr>
 			    </thead>
 				<div class="panel-body">
-				    <tbody>
+				    <tbody data-link="row" class="rowlink">
 				        @foreach($stocks as $stock)
 				        	<tr>
-				        		<td>{{ $stock->stock_code }}</td>
+				        		<td>
+				        			<!--<a href="/stock/{{$stock->stock_code}}"></a>{{ $stock->stock_code }}-->
+				        		</td>
 				        		<td>{{ $stock->stock->company_name }}</td>
 				        		<td>{{ $stock->stock->sector }}</td>
 				        		<td>${{ $stock->last_trade }}</td>
