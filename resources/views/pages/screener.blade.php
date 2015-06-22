@@ -265,7 +265,6 @@
 						<td colspan="5">{!! Form::submit("Search", ['class' => 'btn btn-default form-control']) !!}</td>
 					</tr>
 				</table>
-				{!! Form::hidden('searchType', 'screener') !!}
 				{!! Form::close() !!}
 			
 		</div>

@@ -9,8 +9,13 @@
 		$(document).ready(
             function() {
                 setInterval(function() {
-                    $('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
-                }, 60000);
+                	if(window.location.search == ""){
+                		$('#metrics').load('/search/%7Bsearch%7D?viewType=partial');
+                	}
+                	else{
+						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
+                	}
+                }, 3000);
             });
 	</script>
 	<div class = "col-md-3 col-md-offset-1">
@@ -20,7 +25,6 @@
 			</div>
 			<div class="panel-body">
 				{!! Form::open(['action' => 'SearchController@show', 'method' => 'get']) !!}
-					{!! Form::hidden('searchType', 'sectorOnly') !!}
 					{!! Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control half-margin-bottom']) !!}
 					{!! Form::label('omitConditionLabel', 'Show stocks with low quality or incomplete metrics') !!}
 					{!! Form::checkbox('omitCondition', null, false, ['class' => 'quater-margin-left']) !!}
