@@ -145,6 +145,10 @@ Class SearchRepository implements SearchRepositoryInterface{
 			$maxDividendYield = $request->maxDividendYield;
 		}
 
+		if($request->stockSector == null){
+			$request->stockSector = "All";
+		}
+
 		//Make sure results are ommited even if box isn't ticked.
 		if($request->omitCondition == null){
 			$request->omitCondition = 'omit';
@@ -169,7 +173,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 			
 	}
 
-	private function getStocksBySector($sectorRequest = "All"){
+	private function getStocksBySector($sectorRequest){
 		if($sectorRequest == "All"){
 			return Stock::distinct('sector')->lists('stock_code');
 		}

@@ -22,7 +22,6 @@ class ScreenerSearchRequest extends Request {
 	public function rules()
 	{
 		return [
-			'stockSector' => 'required',
 			'minPrice' => 'numeric',
 			'maxPrice' => 'numeric',
 			'minVolume' => 'numeric',
