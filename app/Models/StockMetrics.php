@@ -6,6 +6,25 @@ class StockMetrics extends Model {
 
 	protected $table = 'stock_metrics';
 
+	protected $fillable = [
+		"stock_code",
+		"last_trade",
+		"day_change",
+		"average_daily_volume",
+		"EBITDA",
+		"earnings_per_share_current",
+		"earnings_per_share_next_year",
+		"price_to_earnings",
+		"price_to_book",
+		"year_high",
+		"year_low",
+		"fifty_day_moving_average",
+		"two_hundred_day_moving_average",
+		"market_cap",
+		"dividend_yield",
+		"updated_at"
+	];
+
 	public function stock(){
 		return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
 	}

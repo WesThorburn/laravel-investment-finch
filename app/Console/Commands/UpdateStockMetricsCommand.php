@@ -1,27 +1,22 @@
 <?php namespace App\Console\Commands;
-
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Models\StockMetrics;
 use App\Models\Stock;
-
 class UpdateStockMetricsCommand extends Command {
-
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
 	protected $name = 'stocks:updateStockMetrics';
-
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
 	protected $description = "Updates stock metrics from Yahoo finance data.";
-
 	/**
 	 * Create a new command instance.
 	 *
@@ -31,7 +26,6 @@ class UpdateStockMetricsCommand extends Command {
 	{
 		parent::__construct();
 	}
-
 	/**
 	 * Execute the console command.
 	 *
@@ -40,16 +34,13 @@ class UpdateStockMetricsCommand extends Command {
 	public function fire()
 	{
 		$this->info('Updating stock metrics... This may take several minutes...');
-
 		$iterationNumber = 1;
-		\DB::table('stock_metrics')->truncate();
 		while($iterationNumber <= ceil(Stock::count()/100)){
-			$masterMetricList = array();
 			$metrics = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".UpdateStockMetricsCommand::getStockCodeParameter()."&f=sl1p2a2j4ee8rp6kjm3m4j1y"));
 			foreach($metrics as $metric){
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
-					array_push($masterMetricList, array(
+					$updateStock = StockMetrics::updateOrCreate([
 						"stock_code" => substr(explode('.', $individualMetric[0])[0], 1),
 						"last_trade" => $individualMetric[1],
 						"day_change" => substr($individualMetric[2], 1, -2),
@@ -64,17 +55,15 @@ class UpdateStockMetricsCommand extends Command {
 						"fifty_day_moving_average" => $individualMetric[11],
 						"two_hundred_day_moving_average" => $individualMetric[12],
 						"market_cap" => UpdateStockMetricsCommand::getMarketCap($individualMetric[13]),
-						"dividend_yield" => $individualMetric[14]
-					));
+						"dividend_yield" => $individualMetric[14],
+						"updated_at" => date("Y-m-d H:i:s")
+					]);
 				}
 			}
-			\DB::table('stock_metrics')->insert($masterMetricList);
 			$iterationNumber++;
 		}
-
 		$this->info('All stock metrics were updated successfully!');
 	}
-
 	//Gets list of stock codes separated by addition symbols
 	private static function getStockCodeParameter(){
 		//Limit of 100 at a time due to yahoo's url length limit
@@ -85,7 +74,6 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		return substr($stockCodeParameter, 1);
 	}
-
 	//Formats Market cap and returns it in Millions
 	private static function getMarketCap($individualMetric){
 		if(substr($individualMetric, -1) == 'B'){
@@ -95,7 +83,6 @@ class UpdateStockMetricsCommand extends Command {
 			return floatval(substr($individualMetric, 0, -1));
 		}
 	}
-
 	/**
 	 * Get the console command arguments.
 	 *
@@ -107,7 +94,6 @@ class UpdateStockMetricsCommand extends Command {
 			['example', InputArgument::OPTIONAL, 'An example argument.'],
 		];
 	}
-
 	/**
 	 * Get the console command options.
 	 *
@@ -119,5 +105,4 @@ class UpdateStockMetricsCommand extends Command {
 			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
 		];
 	}
-
 }

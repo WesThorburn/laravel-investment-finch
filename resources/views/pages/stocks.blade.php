@@ -15,7 +15,7 @@
                 	else{
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
-                }, 3000);
+                }, 10000);
             });
 	</script>
 	<div class = "col-md-3 col-md-offset-1">
