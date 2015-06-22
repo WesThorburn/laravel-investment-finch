@@ -22,7 +22,7 @@ class ScreenerSearchRequest extends Request {
 	public function rules()
 	{
 		return [
-			'sector' => 'required',
+			'stockSector' => 'required',
 			'minPrice' => 'numeric',
 			'maxPrice' => 'numeric',
 			'minVolume' => 'numeric',

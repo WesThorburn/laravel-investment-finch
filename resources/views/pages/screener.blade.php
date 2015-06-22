@@ -16,10 +16,10 @@
 					<tr>
 						<div class="form-group">
 							<td align="right"><b>Sector</b></td>
-							<td colspan="4">{!! Form::select('sector', $sectors, 0, ['class' => 'form-control']) !!}</td>
+							<td colspan="4">{!! Form::select('stockSector', $sectors, 0, ['class' => 'form-control']) !!}</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'sector'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'stockSector'])
 					<tr>
 						<div class="form-group">
 							<td><b>Stock Price</b></td>
@@ -39,8 +39,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minPrice'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxPrice'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minPrice'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxPrice'])
 					<tr>
 						<div class="form-group">
 							<td><b>Average Daily Volume</b></td>
@@ -50,8 +50,8 @@
 							<td>{!! Form::input('text', 'maxVolume', null, ['class' => 'form-control', 'placeholder' => '100000']) !!}</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minVolume'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxVolume'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minVolume'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxVolume'])
 					<tr>
 						<div class="form-group">
 							<td><b>EBITDA</b></td>
@@ -71,8 +71,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minEBITDA'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxEBITDA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minEBITDA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxEBITDA'])
 					<tr>
 						<div class="form-group">
 							<td><b>EPS Current Year</b></td>
@@ -92,8 +92,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minEPSCurrentYear'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxEPSCurrentYear'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minEPSCurrentYear'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxEPSCurrentYear'])
 					<tr>
 						<div class="form-group">
 							<td><b>EPS Next Year</b></td>
@@ -113,8 +113,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minEPSNextYear'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxEPSNextYear'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minEPSNextYear'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxEPSNextYear'])
 					<tr>
 						<div class="form-group">
 							<td><b>P/E Ratio</b></td>
@@ -124,8 +124,8 @@
 							<td>{!! Form::input('text', 'maxPERatio', null, ['class' => 'form-control', 'placeholder' => '0.00']) !!}</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minPERatio'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxPERatio'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minPERatio'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxPERatio'])
 					<tr>
 						<div class="form-group">
 							<td><b>Price/Book</b></td>
@@ -135,8 +135,8 @@
 							<td>{!! Form::input('text', 'maxPriceBook', null, ['class' => 'form-control', 'placeholder' => '0.00']) !!}</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minPriceBook'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxPriceBook'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minPriceBook'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxPriceBook'])
 					<tr>
 						<div class="form-group">
 							<td><b>52 Week High</b></td>
@@ -156,8 +156,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'min52WeekHigh'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'max52WeekHigh'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'min52WeekHigh'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'max52WeekHigh'])
 					<tr>
 						<div class="form-group">
 							<td><b>52 Week Low</b></td>
@@ -177,8 +177,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'min52WeekLow'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'max52WeekLow'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'min52WeekLow'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'max52WeekLow'])
 					<tr>
 						<div class="form-group">
 							<td><b>50 Day MA</b></td>
@@ -198,8 +198,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'min50DayMA'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'max50DayMA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'min50DayMA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'max50DayMA'])
 					<tr>
 						<div class="form-group">
 							<td><b>200 Day MA</b></td>
@@ -219,8 +219,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'min200DayMA'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'max200DayMA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'min200DayMA'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'max200DayMA'])
 					<tr>
 						<div class="form-group">
 							<td><b>Market Cap (M)</b></td>
@@ -230,8 +230,8 @@
 							<td>{!! Form::input('text', 'maxMarketCap', null, ['class' => 'form-control', 'placeholder' => '0']) !!}</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minMarketCap'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxMarketCap'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minMarketCap'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxMarketCap'])
 					<tr>
 						<div class="form-group">
 							<td><b>Dividend Yield</b></td>
@@ -259,8 +259,8 @@
 							</td>
 						</div>
 					</tr>
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'minDividendYield'])
-					@include('layouts.subviews.form-error-row', ['fieldName' => 'maxDividendYield'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'minDividendYield'])
+					@include('layouts.partials.form-error-row', ['fieldName' => 'maxDividendYield'])
 					<tr>
 						<td colspan="5">{!! Form::submit("Search", ['class' => 'btn btn-default form-control']) !!}</td>
 					</tr>

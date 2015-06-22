@@ -10,7 +10,7 @@ class SearchPageTest extends TestCase{
 
 	public function testStockScreener(){
 		$this->visit('/search')
-			->select('All','sector')
+			->select('All','stockSector')
 			->type('1','minPrice')
 			->type('10','maxPrice')
 			->type('10000','minVolume')

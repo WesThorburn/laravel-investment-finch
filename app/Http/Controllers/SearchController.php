@@ -20,8 +20,8 @@ class SearchController extends Controller {
 	public function home($omitCondition = 'omit'){
 		return view('pages.stocks')->with([
 			'stocks' => $this->search->getAllMetrics($omitCondition), 
-			'sectors' => Stock::getSectorDropdown(), 
-			'sectorName' => null
+			'stockSectors' => Stock::getSectorDropdown(), 
+			'stockSectorName' => null
 		]);
 	}
 	
@@ -32,10 +32,14 @@ class SearchController extends Controller {
 	}
 
 	public function show(ScreenerSearchRequest $request){
+		$stocks = $this->search->getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
+		if($request->viewType == 'partial'){
+			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
+		}
 		return view('pages.stocks')->with([
-			'stocks' => $this->search->getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition), 
-			'sectors' => Stock::getSectorDropdown(), 
-			'sectorName' => $request->sector
+			'stocks' => $stocks, 
+			'stockSectors' => Stock::getSectorDropdown(),
+			'stockSectorName' => $request->stockSector
 		]);
 	}
 }

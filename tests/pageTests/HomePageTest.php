@@ -8,7 +8,7 @@ class HomePageTest extends TestCase{
 
 	public function testSectorFilter(){
 		$this->visit('/')
-			->select('All','sector')
+			->select('All','stockSector')
 			->press('Filter')
 			->see('Code')->see('Name')->see('Sector');
 	}

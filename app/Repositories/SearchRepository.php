@@ -149,8 +149,8 @@ Class SearchRepository implements SearchRepositoryInterface{
 		if($request->omitCondition == null){
 			$request->omitCondition = 'omit';
 		}
-
-		return StockMetrics::whereIn('stock_code', $this->getStocksBySector($request->sector))
+		
+		return StockMetrics::whereIn('stock_code', $this->getStocksBySector($request->stockSector))
 			->whereBetween('last_trade', [$minPrice, $maxPrice])
 			->whereBetween('average_daily_volume', [$minVolume, $maxVolume])
 			->whereBetween('EBITDA', [$minEBITDA, $maxEBITDA])
