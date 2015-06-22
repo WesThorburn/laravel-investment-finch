@@ -58,3 +58,10 @@
 .panel-body{
 	padding:5px;
 }
+
+.table-bordered-only-top-bottom{
+	border-top:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+	border-left:none;
+	border-right:none;
+}

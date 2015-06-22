@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', 'SearchController@home');
+Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 Route::resource('stock', 'StockController');
 

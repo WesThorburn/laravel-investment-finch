@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-	<table class="table table-striped table-hover table-bordered table-condensed" id="stock_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" id="stock_table">
 	    <thead>
 	        <tr>
 	            <th>Code</th>
@@ -58,7 +58,8 @@
 <script>
 	$(document).ready(function(){
 		$('#stock_table').DataTable({
-			"lengthMenu": [20,50,100]
+			"lengthMenu": [20,50,100],
+			"stateSave": true
 		});
 	});
 </script>

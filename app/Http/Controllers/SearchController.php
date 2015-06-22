@@ -16,14 +16,6 @@ class SearchController extends Controller {
 	public function __construct(SearchRepositoryInterface $search){
 		$this->search = $search;
 	}
-
-	public function home($omitCondition = 'omit'){
-		return view('pages.stocks')->with([
-			'stocks' => $this->search->getAllMetrics($omitCondition), 
-			'stockSectors' => Stock::getSectorDropdown(), 
-			'stockSectorName' => null
-		]);
-	}
 	
 	public function index(){
 		return view('pages.screener')->with([
