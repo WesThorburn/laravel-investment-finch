@@ -169,7 +169,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 			
 	}
 
-	private function getStocksBySector($sectorRequest == "All"){
+	private function getStocksBySector($sectorRequest = "All"){
 		if($sectorRequest == "All"){
 			return Stock::distinct('sector')->lists('stock_code');
 		}
