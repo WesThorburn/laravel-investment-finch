@@ -52,10 +52,10 @@
 							<ul class="nav navbar-nav">
 								<li>
 									@if(Auth::check())
-										<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout">Logout</button>
+										<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
 									@else
-										<button onclick="redirect('/auth/login')" class="btn btn-default btn-login">Log In</button>
-										<button onclick="redirect('/auth/register')" class="btn btn-default btn-register">Register</button>
+										<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
+										<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
 									@endif
 								</li>
 							</ul>
