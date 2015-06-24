@@ -137,7 +137,6 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-		'Khill\Lavacharts\Laravel\LavachartsServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -196,8 +195,7 @@ return [
 		'Storage'   => 'Illuminate\Support\Facades\Storage',
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
-		'View'      => 'Illuminate\Support\Facades\View',
-
+		'View'      => 'Illuminate\Support\Facades\View'
 	],
 
 ];

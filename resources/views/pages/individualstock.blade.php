@@ -64,9 +64,24 @@
 				<h3 @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
 					Day Change: {{ $metrics->day_change }}%
 				</h3>
-				{!! $stockPriceChart->render('AreaChart', 'StockPrice', 'stocks-div', array('height'=>400, 'width'=>400)) !!}
-				{{--{!! $stockVolumeChart->render('BarChart', 'StockVolume', 'stocks-volume-div', array('height'=>100, 'width'=>800)) !!}--}}
+				<canvas id="stock-price" width="600" height="300"></canvas>
 			</div>
 		</div>
 	</div>
+@stop
+
+@section('footer')
+	<script src="/js/Chart.js"></script>
+	<script>
+		(function(){
+			var ctx = document.getElementById('stock-price').getContext('2d');
+			var chart ={
+				labels: [{{ implode(',',$dates) }}],
+				datasets: [{
+					data: [{{ implode(',',$prices) }}]
+				}]
+			};
+			new Chart(ctx).Line(chart, { bezierCurve: false });
+		})();
+	</script>
 @stop

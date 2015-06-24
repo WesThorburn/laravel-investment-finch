@@ -4,6 +4,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Models\StockMetrics;
 use App\Models\Stock;
+use Carbon\Carbon;
+
 class UpdateStockMetricsCommand extends Command {
 	/**
 	 * The console command name.
@@ -35,13 +37,15 @@ class UpdateStockMetricsCommand extends Command {
 	{
 		$this->info('Updating stock metrics... This may take several minutes...');
 		$iterationNumber = 1;
-		while($iterationNumber <= ceil(Stock::count()/100)){
+		$maxIterations = ceil(Stock::count()/100);
+		while($iterationNumber <= $maxIterations){
 			$metrics = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".UpdateStockMetricsCommand::getStockCodeParameter()."&f=sl1p2a2j4ee8rp6kjm3m4j1y"));
 			foreach($metrics as $metric){
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
-					$updateStock = StockMetrics::updateOrCreate([
-						"stock_code" => substr(explode('.', $individualMetric[0])[0], 1),
+					$stockCode = substr(explode('.', $individualMetric[0])[0], 1);
+					$updateStock = StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
+						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
 						"day_change" => substr($individualMetric[2], 1, -2),
 						"average_daily_volume" => $individualMetric[3],
@@ -60,6 +64,7 @@ class UpdateStockMetricsCommand extends Command {
 					]);
 				}
 			}
+			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
 			$iterationNumber++;
 		}
 		$this->info('All stock metrics were updated successfully!');
@@ -67,7 +72,7 @@ class UpdateStockMetricsCommand extends Command {
 	//Gets list of stock codes separated by addition symbols
 	private static function getStockCodeParameter(){
 		//Limit of 100 at a time due to yahoo's url length limit
-		$stockCodeList = Stock::whereNotIn('stock_code', StockMetrics::lists('stock_code'))->take(100)->lists('stock_code');
+		$stockCodeList = Stock::whereIn('stock_code', StockMetrics::where('updated_at', '<', Carbon::now()->subSeconds(60))->orderBy('updated_at')->take(100)->lists('stock_code'))->lists('stock_code');
 		$stockCodeParameter = "";
 		foreach($stockCodeList as $stockCode){
 			$stockCodeParameter .= "+".$stockCode.".AX";
