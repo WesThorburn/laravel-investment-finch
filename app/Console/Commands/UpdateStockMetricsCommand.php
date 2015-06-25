@@ -44,7 +44,7 @@ class UpdateStockMetricsCommand extends Command {
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
 					$stockCode = substr(explode('.', $individualMetric[0])[0], 1);
-					$updateStock = StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
+					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
 						"day_change" => substr($individualMetric[2], 1, -2),

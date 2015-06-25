@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use App\Repositories\SearchRepositoryInterface;
-
 use Illuminate\Http\Request;
+
+use Datatables;
 
 class SearchController extends Controller {
 

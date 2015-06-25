@@ -12,4 +12,8 @@ class ArtisanStockCommandTest extends TestCase{
 		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS']);
 		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA']);
 	}
+
+	public function testGetDailyFinancials(){
+		$this->artisan("stocks:getDailyFinancials");
+	}
 }
