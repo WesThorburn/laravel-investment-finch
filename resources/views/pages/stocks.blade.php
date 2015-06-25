@@ -38,4 +38,6 @@
 			@include('layouts.partials.stock-list-display')
 		</div>
 	</div>
+
+	
 @stop

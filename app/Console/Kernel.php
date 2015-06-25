@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
 		'App\Console\Commands\UpdateStockListCommand',
 		'App\Console\Commands\UpdateStockMetricsCommand',
-		'App\Console\Commands\GetHistoricalFinancialsCommand'
+		'App\Console\Commands\GetHistoricalFinancialsCommand',
+		'App\Console\Commands\SaveDayCloseCommand'
 	];
 
 	/**
@@ -25,7 +26,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
+		$schedule->command('stocks:updateStockList')->dailyAt('15:00');
+		$schedule->command('stocks:saveDayClose')->dailyAt('06:00');
 		$schedule->command('stocks:updateStockMetrics')->withoutOverlapping();
 	}
 

@@ -6,6 +6,12 @@ class Stock extends Model {
 
 	protected $table = 'stocks';
 
+	protected $fillable = [
+		'stock_code',
+		'company_name',
+		'sector'
+	];
+
 	public function stock(){
 		return $this->hasOne('App\Models\StockMetrics', 'stock_code', 'stock_code');
 	}

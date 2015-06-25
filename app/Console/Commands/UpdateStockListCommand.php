@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use App\Models\Stock;
 
 class UpdateStockListCommand extends Command {
 
@@ -38,18 +39,18 @@ class UpdateStockListCommand extends Command {
 	public function fire()
 	{
 		$companyListFromASX = array_slice(explode(PHP_EOL, file_get_contents("http://www.asx.com.au/asx/research/ASXListedCompanies.csv")), 3);
-		$masterStockList = array();
-		foreach($companyListFromASX as $companyRow){
+		$numberOfStocks = count($companyListFromASX);
+		foreach($companyListFromASX as $key => $companyRow){
 			if($companyRow != null){
-				array_push($masterStockList, array(
-					"stock_code" => explode(',"', explode('",', $companyRow)[1])[0], 
+				$stockCode = explode(',"', explode('",', $companyRow)[1])[0];
+				Stock::updateOrCreate(['stock_code' => $stockCode], [
+					'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
 				    'company_name' => substr(explode('",', $companyRow)[0], 1),
 				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2)
-				));
+				]);
 			}
+			$this->info("Updating... ".round(($key+1)*(100/$numberOfStocks), 2)."%");
 		}
-		\DB::table('stocks')->truncate();
-		\DB::table('stocks')->insert($masterStockList);
 		$this->info('The list of stocks was updated successfully!');
 	}
 
