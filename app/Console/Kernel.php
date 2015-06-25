@@ -27,11 +27,18 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('stocks:updateStockMetrics')->withoutOverlapping();
+        //Only run this between 23:00 UTC and 07:00 UTC
+    	$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping()->when(function(){
+    		date_default_timezone_set("UTC");
+    		$currentTime = intval(str_replace(':', '', date('H:i:s')));
+    		if($currentTime >= 230000 || $currentTime <= 70000){
+    			return true;
+    		}
+    	});
+        
 		$schedule->command('stocks:getDailyFinancials')->dailyAt('06:45');
 		$schedule->command('stocks:stocks:resetDayChange')->dailyAt('14:00');
 		$schedule->command('stocks:updateStockList')->dailyAt('15:00');
 
 	}
-
 }
