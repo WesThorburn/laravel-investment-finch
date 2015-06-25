@@ -38,9 +38,8 @@ class ResetDayChangeCommand extends Command
      */
     public function handle()
     {
-        $this->info("current: ".$currentTime);
         $this->info("Resetting day gain to 0.00% for all stocks.");
-        StockMetrics::where('day_change', '!=', 0.000)->update(['day_change' => 0.00]);
+        StockMetrics::where('day_change', '!=', 0)->update(['day_change' => 0.00]);
         $this->info("All gains have been reset.");
     }
 }

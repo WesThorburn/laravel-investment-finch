@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel {
     		}
     	});
         
-		$schedule->command('stocks:getDailyFinancials')->dailyAt('06:45');
+		$schedule->command('stocks:getDailyFinancials')->dailyAt('09:00');
 		$schedule->command('stocks:stocks:resetDayChange')->dailyAt('14:00');
 		$schedule->command('stocks:updateStockList')->dailyAt('15:00');
 
