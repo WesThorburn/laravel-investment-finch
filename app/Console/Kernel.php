@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel {
 	{
         //Only run this between 23:00 UTC and 07:00 UTC
     	$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping()->when(function(){
-    		date_default_timezone_set("UTC");
+    		date_default_timezone_set("Australia/Sydney");
     		$currentTime = intval(str_replace(':', '', date('H:i:s')));
     		if($currentTime >= 230000 || $currentTime <= 70000){
     			return true;
