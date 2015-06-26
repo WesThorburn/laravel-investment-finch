@@ -5,6 +5,7 @@
 @stop
 
 @section('body')
+	{{intval(str_replace(':', '', date('H:i:s')))}}
 	<div class="col-md-4 col-md-offset-4">
 		<div class="panel panel-default">
 		 	<div class="panel-heading">
