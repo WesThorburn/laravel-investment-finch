@@ -32,9 +32,13 @@ class StockController extends Controller
             ->addNumberColumn('Price')
             ->addRows($graphData);
 
-        $linechart = $stockPriceLava->AreaChart('StockPrice')
+        $stockPriceLava = \Lava::AreaChart('StockPrice')
             ->dataTable($prices)
-            ->title('Price of '.$id);
+            ->setOptions([
+                'width' => 550,
+                'height' => 325,
+                'title' => 'Price of '.strtoupper($id)
+            ]);
 
         return view('pages.individualstock')->with([
             'stockPriceLava' => $stockPriceLava,

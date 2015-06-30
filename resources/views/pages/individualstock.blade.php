@@ -78,7 +78,7 @@
 				</div>
 				<div class="container">
 					<div id="stock_price_div" class="pull-left">
-						{!! $stockPriceLava->render('AreaChart', 'StockPrice', 'stock_price_div', array('height'=>300, 'width'=>600)) !!}
+						@areachart('StockPrice', 'stock_price_div')
 					</div>
 				</div>
 			</div>
