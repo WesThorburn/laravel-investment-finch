@@ -59,29 +59,33 @@
 					</table>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-9">
 				<h2>Last Trade: {{ $metrics->last_trade }}</h2>
 				<h3 @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
 					Day Change: {{ $metrics->day_change }}%
 				</h3>
-				<canvas id="stock-price" width="600" height="300"></canvas>
+				<div class="container center-block">
+					<div class="btn-group btn-group-sm" role="group">
+						<button class="btn btn-default active">30 Days</button>
+						<button class="btn btn-default">3 Months</button>
+						<button class="btn btn-default">6 Months</button>
+						<button class="btn btn-default">12 Months</button>
+						<button class="btn btn-default">2 Years</button>
+						<button class="btn btn-default">5 Years</button>
+						<button class="btn btn-default">All</button>
+						<button class="btn btn-default">10 Years</button>
+					</div>
+				</div>
+				<div class="container">
+					<div id="stock_price_div" class="pull-left">
+						{!! $stockPriceLava->render('AreaChart', 'StockPrice', 'stock_price_div', array('height'=>300, 'width'=>600)) !!}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 @stop
 
 @section('footer')
-	<script src="/js/Chart.js"></script>
-	<script>
-		(function(){
-			var ctx = document.getElementById('stock-price').getContext('2d');
-			var chart ={
-				labels: [{{ implode(',',$dates) }}],
-				datasets: [{
-					data: [{{ implode(',',$prices) }}]
-				}]
-			};
-			new Chart(ctx).Line(chart, { bezierCurve: false });
-		})();
-	</script>
+	
 @stop

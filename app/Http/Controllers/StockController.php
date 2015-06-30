@@ -9,10 +9,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Historicals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
+use App\Repositories\IndividualStockRepositoryInterface;
 use Carbon\Carbon;
+use Khill\Lavacharts\Lavacharts;
 
 class StockController extends Controller
 {
+    public function __construct(IndividualStockRepositoryInterface $stock){
+        $this->stock = $stock;
+    }
     /**
      * Display the specified resource.
      *
@@ -20,13 +25,38 @@ class StockController extends Controller
      * @return Response
      */
     public function show($id){
-        $dailyTradingData = Historicals::where('stock_code', $id)->get();
+        $graphData = $this->stock->getGraphData($id);
+        $stockPriceLava = new Lavacharts;
+        $prices = \Lava::DataTable();
+        $prices->addStringColumn('Date')
+            ->addNumberColumn('Price')
+            ->addRows($graphData);
+
+        $linechart = $stockPriceLava->AreaChart('StockPrice')
+            ->dataTable($prices)
+            ->title('Price of '.$id);
+
         return view('pages.individualstock')->with([
+            'stockPriceLava' => $stockPriceLava,
             'stock' => Stock::where('stock_code', $id)->first(),
-            'metrics' => StockMetrics::where('stock_code', $id)->first(),
-            'dates' => $dailyTradingData->lists('date')->toArray(),
-            'prices' => $dailyTradingData->lists('close')->toArray(),
-            'volume' => $dailyTradingData->lists('volume')->toArray()
+            'metrics' => StockMetrics::where('stock_code', $id)->first()
         ]);
+
+        /*$stockPriceLava->HorizontalAxis(array(
+            'maxTextLines' => 1000,
+            'showTextEvery' => 1,
+            'gridlines' => array(
+                'color' => '#43fc72',
+                'count' => 6
+            ),
+            'minorGridlines' => array(
+                'color' => '#b3c8d1',
+                'count' => 3
+            )
+        ));*/
+    }
+
+    public function graph($dataType, $stockCode, $timeFrame){
+        return $dataType. $stockCode. $timeFrame;
     }
 }

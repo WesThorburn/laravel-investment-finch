@@ -39,6 +39,5 @@ class StockMetrics extends Model {
 				->where('market_cap', '!=', 'N/A');
 		}
 		return $query;
-		
 	}
 }

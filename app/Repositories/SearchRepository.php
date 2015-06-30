@@ -9,7 +9,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 	}
 
 	public function getMetricsByStockList($listOfStocks, $omitCondition){
-		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->get();
+		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->with('stock')->get();
 	}
 
 	public function getSearchResults($request){

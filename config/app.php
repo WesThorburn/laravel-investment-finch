@@ -137,7 +137,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-		'yajra\Datatables\DatatablesServiceProvider',
+		"Khill\Lavacharts\Laravel\LavachartsServiceProvider",
 
 		/*
 		 * Application Service Providers...
@@ -172,7 +172,6 @@ return [
 		'Config'    => 'Illuminate\Support\Facades\Config',
 		'Cookie'    => 'Illuminate\Support\Facades\Cookie',
 		'Crypt'     => 'Illuminate\Support\Facades\Crypt',
-		'Datatables'=> 'yajra\Datatables\Datatables',
 		'DB'        => 'Illuminate\Support\Facades\DB',
 		'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
 		'Event'     => 'Illuminate\Support\Facades\Event',
