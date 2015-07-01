@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Historicals;
+use App\Models\Stock;
+
 Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 
@@ -7,7 +10,20 @@ Route::get('graph/{dataType}/{stockCode}/{timeFrame}', 'StockController@graph');
 Route::resource('stock', 'StockController');
 
 Route::get('/test', function(){
-	echo "http://real-chart.finance.yahoo.com/table.csv?s=BGL.AX&d=".(date('m')-1)."&e=".date('d')."&f=".date('Y')."&g=d&a=".(date('m')-1)."&b=".date('d')."&c=".date('Y')."&ignore=.csv";
+	date_default_timezone_set("Australia/Sydney");
+	//Limit of 100 at a time due to yahoo's url length limit
+	$datesNotAvailable = Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code');
+	foreach($datesNotAvailable as $naStockCode){
+		echo "<br>".$naStockCode;
+	}
+	echo "<br><br>";
+
+	$stockCodeList = Stock::whereNotIn('stock_code', $datesNotAvailable)->take(100)->lists('stock_code');
+	$stockCodeParameter = "";
+	foreach($stockCodeList as $stockCode){
+		$stockCodeParameter .= "+".$stockCode.".AX";
+	}
+	dd($stockCodeParameter);
 });
 
 Route::controllers([

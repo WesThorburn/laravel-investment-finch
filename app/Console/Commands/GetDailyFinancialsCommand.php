@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Historicals;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -40,36 +41,36 @@ class GetDailyFinancialsCommand extends Command
     public function handle()
     {
         if(Carbon::now()->isWeekDay()){
-            $this->info("This process can take up to an hour...");
+            $this->info("This process can take several minutes...");
             $this->info("Getting daily financials...");
             $stockCodes = Stock::all()->lists('stock_code');
+
             $numberOfStocks = count($stockCodes);
-            foreach($stockCodes as $key => $stockCode){
-                $dailyFinancialsUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$stockCode.".AX&d=".(date('m')-1)."&e=".date('d')."&f=".date('Y')."&g=d&a=".(date('m')-1)."&b=".date('d')."&c=".date('Y')."&ignore=.csv";
-                if(get_headers($dailyFinancialsUrl, 1)[0] == 'HTTP/1.1 200 OK'){
-                    file_put_contents('database/files/spreadsheet.txt', trim(str_replace("Date,Open,High,Low,Close,Volume,Adj Close", "", file_get_contents($dailyFinancialsUrl))));
-                    $spreadSheetFile = fopen('database/files/spreadsheet.txt', 'r');
-                    $dailyTradeRecords = array();
-                    while(!feof($spreadSheetFile)){
-                        $line = fgets($spreadSheetFile);
-                        $pieces = explode(',', $line);
-                        if(Carbon::createFromFormat('Y-m-d', $pieces[0])->isToday()){
-                            array_push($dailyTradeRecords, array(
-                                'stock_code' => $stockCode,
-                                'date' => $pieces[0],
-                                'open' => $pieces[1],
-                                'high' => $pieces[2],
-                                'low' => $pieces[3],
-                                'close' => $pieces[4],
-                                'volume' => $pieces[5],
-                                'adj_close' => $pieces[6]
-                            ));
-                        }
-                    }
-                    \DB::table('historicals')->insert($dailyTradeRecords);
-                }
-                $this->info("Getting daily financials...".round(($key+1)*(100/$numberOfStocks), 2)."%");
-            }
+			$iterationNumber = 1;
+			$maxIterations = ceil($numberOfStocks/100);
+			while($iterationNumber <= $maxIterations){
+				$dailyRecords = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".GetDailyFinancialsCommand::getStockCodeParameter()."&f=sohgl1v"));
+				$this->info(print_r(GetDailyFinancialsCommand::getStockCodeParameter()));
+				foreach($dailyRecords as $record){
+					if($record != null){
+						$individualRecord = explode(',', $record);
+						$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
+						Historicals::insert([
+							"stock_code" => $stockCode,
+							"date" => date("Y-m-d"),
+							"open" => $individualRecord[1],
+							"high" => $individualRecord[2],
+							"low" => $individualRecord[3],
+							"close" => $individualRecord[4],
+							"volume" => $individualRecord[5],
+							"adj_close" => $individualRecord[4],
+							"updated_at" => date("Y-m-d H:i:s")
+						]);
+					}
+				}
+				$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
+				$iterationNumber++;
+			}
             $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
         }
         else{
@@ -77,4 +78,16 @@ class GetDailyFinancialsCommand extends Command
         }
         
     }
+
+    //Gets list of stock codes separated by addition symbols
+	private static function getStockCodeParameter(){
+		date_default_timezone_set("Australia/Sydney");
+		//Limit of 100 at a time due to yahoo's url length limit
+		$stockCodeList = Stock::whereNotIn('stock_code', Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code'))->take(100)->lists('stock_code');
+		$stockCodeParameter = "";
+		foreach($stockCodeList as $stockCode){
+			$stockCodeParameter .= "+".$stockCode.".AX";
+		}
+		return substr($stockCodeParameter, 1);
+	}
 }
