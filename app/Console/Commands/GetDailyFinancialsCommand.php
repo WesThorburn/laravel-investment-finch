@@ -50,7 +50,6 @@ class GetDailyFinancialsCommand extends Command
 			$maxIterations = ceil($numberOfStocks/100);
 			while($iterationNumber <= $maxIterations){
 				$dailyRecords = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".GetDailyFinancialsCommand::getStockCodeParameter()."&f=sohgl1v"));
-				$this->info(print_r(GetDailyFinancialsCommand::getStockCodeParameter()));
 				foreach($dailyRecords as $record){
 					if($record != null){
 						$individualRecord = explode(',', $record);
