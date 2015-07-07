@@ -9,7 +9,7 @@
 		"illuminate/html": "5.*",
 		"doctrine/dbal": "2.5.1",
 		"nesbot/carbon": "^1.19",
-		"khill/lavacharts": "2.5.*"
+		"khill/lavacharts": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

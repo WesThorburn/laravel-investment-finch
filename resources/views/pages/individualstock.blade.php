@@ -5,6 +5,16 @@
 @stop
 
 @section('body')
+	<script type="text/javascript">
+		function getGraphData(timeFrame){
+			$.getJSON('/graph/'+ '{{ $stock->stock_code }}/' + timeFrame, function (dataTableJson) {
+				console.log(dataTableJson);
+				lava.loadData('StockPrice', dataTableJson, function (chart) {
+					console.log(chart);
+				});
+			});
+		}
+	</script>
 	<div class="col-md-6 col-md-offset-3">
 		<div class="center-block">
 			<h1>{{ $stock->company_name }}</h1>
@@ -66,14 +76,14 @@
 				</h3>
 				<div class="container center-block">
 					<div class="btn-group btn-group-sm" role="group">
-						<button class="btn btn-default active">30 Days</button>
-						<button class="btn btn-default">3 Months</button>
-						<button class="btn btn-default">6 Months</button>
-						<button class="btn btn-default">12 Months</button>
-						<button class="btn btn-default">2 Years</button>
-						<button class="btn btn-default">5 Years</button>
-						<button class="btn btn-default">All</button>
-						<button class="btn btn-default">10 Years</button>
+						<button class="btn btn-default active" onclick="getGraphData('last_month')">30 Days</button>
+						<button class="btn btn-default" onclick="getGraphData('last_3_months')">3 Months</button>
+						<button class="btn btn-default" onclick="getGraphData('last_6_months')">6 Months</button>
+						<button class="btn btn-default" onclick="getGraphData('last_year')">12 Months</button>
+						<button class="btn btn-default" onclick="getGraphData('last_2_years')">2 Years</button>
+						<button class="btn btn-default" onclick="getGraphData('last_5_years')">5 Years</button>
+						<button class="btn btn-default" onclick="getGraphData('last_10_years')">All</button>
+						<button class="btn btn-default" onclick="getGraphData('all_time')">10 Years</button>
 					</div>
 				</div>
 				<div class="container">

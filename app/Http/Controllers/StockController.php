@@ -60,7 +60,12 @@ class StockController extends Controller
         ));*/
     }
 
-    public function graph($dataType, $stockCode, $timeFrame){
-        return $dataType. $stockCode. $timeFrame;
+    public function graph($stockCode, $timeFrame){
+        $graphData = $this->stock->getGraphData($stockCode, $timeFrame);
+        $prices = \Lava::DataTable();
+        $prices->addStringColumn('Date')
+            ->addNumberColumn('Price')
+            ->addRows($graphData);
+        return $prices->toJson();
     }
 }
