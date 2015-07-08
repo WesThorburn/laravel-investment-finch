@@ -30,7 +30,7 @@
 	</script>
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-11 col-lg-offset-1">
+			<div class="col-lg-12">
 				<h1>{{ $stock->company_name }}</h1>
 				<h2>{{ $stock->sector }}</h2>
 				<h3>(ASX: {{ $stock->stock_code }})</h3>
@@ -40,7 +40,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-11 col-lg-offset-1">
+			<div class="col-lg-12">
 				<h2>${{ $metrics->last_trade }}
 					<small @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
 						{{ $metrics->day_change }}%
@@ -52,7 +52,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-6 col-lg-offset-1">
+			<div class="col-lg-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
