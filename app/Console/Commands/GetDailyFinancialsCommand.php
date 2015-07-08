@@ -70,6 +70,8 @@ class GetDailyFinancialsCommand extends Command
 				$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
 				$iterationNumber++;
 			}
+            //Re-apply index after insert
+            \DB::statement("ALTER TABLE 'historicals' ADD INDEX('stock_code')");
             $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
         }
         else{
