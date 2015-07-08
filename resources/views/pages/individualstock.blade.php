@@ -13,13 +13,68 @@
 					console.log(chart);
 				});
 			});
+			var timeFrameButtonIds = [
+				"last_month", 
+				"last_3_months", 
+				"last_6_months", 
+				"last_year", 
+				"last_2_years", 
+				"last_5_years", 
+				"last_10_years", 
+				"all_time"
+			];
+
+			timeFrameButtonIds.forEach(function(buttonId){
+				document.getElementById(buttonId).className = "btn btn-default";
+			});
+			document.getElementById(timeFrame).className = "btn btn-default active";
 		}
 	</script>
-	<div class="col-md-6 col-md-offset-3">
-		<div class="center-block">
-			<h1>{{ $stock->company_name }}</h1>
-			<h2>{{ $stock->sector }}</h2>
-			<h3>{{ $stock->stock_code }}</h3>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-11 col-md-offset-1">
+				<h1>{{ $stock->company_name }}</h1>
+				<h2>{{ $stock->sector }}</h2>
+				<h3>(ASX: {{ $stock->stock_code }})</h3>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-11 col-md-offset-1">
+				<h2>${{ $metrics->last_trade }}
+					<small @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
+						{{ $metrics->day_change }}%
+					</small>
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="btn-group btn-group-sm pull-center" role="group">
+							<button class="btn btn-default active" onclick="getGraphData('last_month')" id="last_month">30 Days</button>
+							<button class="btn btn-default" onclick="getGraphData('last_3_months')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_6_months')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_year')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_2_years')" id="last_2_years">2 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_5_years')" id="last_5_years">5 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_10_years')" id="last_10_years">10 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('all_time')" id="all_time">All</button>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div id="stock_price_div" class="pull-left">
+							@areachart('StockPrice', 'stock_price_div')
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-heading">Key Metrics</div>
@@ -67,29 +122,6 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
-			</div>
-			<div class="col-md-9">
-				<h2>Last Trade: {{ $metrics->last_trade }}</h2>
-				<h3 @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
-					Day Change: {{ $metrics->day_change }}%
-				</h3>
-				<div class="container center-block">
-					<div class="btn-group btn-group-sm" role="group">
-						<button class="btn btn-default active" onclick="getGraphData('last_month')">30 Days</button>
-						<button class="btn btn-default" onclick="getGraphData('last_3_months')">3 Months</button>
-						<button class="btn btn-default" onclick="getGraphData('last_6_months')">6 Months</button>
-						<button class="btn btn-default" onclick="getGraphData('last_year')">12 Months</button>
-						<button class="btn btn-default" onclick="getGraphData('last_2_years')">2 Years</button>
-						<button class="btn btn-default" onclick="getGraphData('last_5_years')">5 Years</button>
-						<button class="btn btn-default" onclick="getGraphData('last_10_years')">All</button>
-						<button class="btn btn-default" onclick="getGraphData('all_time')">10 Years</button>
-					</div>
-				</div>
-				<div class="container">
-					<div id="stock_price_div" class="pull-left">
-						@areachart('StockPrice', 'stock_price_div')
-					</div>
 				</div>
 			</div>
 		</div>
