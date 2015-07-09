@@ -7,6 +7,6 @@ class IndividualStockPageTest extends TestCase{
 			->see("Bank")
 			->see("CBA")
 			->see("Key Metrics")
-			->see("Last Trade: ");
+			->see("Price of CBA");
 	}
 }

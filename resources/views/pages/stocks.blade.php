@@ -18,22 +18,19 @@
                 }, 10000);
             });
 	</script>
-	<div class = "col-md-3 col-md-offset-1">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<label>Filter By Sector</label>
-			</div>
-			<div class="panel-body">
-				{!! Form::open(['action' => 'SearchController@show', 'method' => 'get']) !!}
-					{!! Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control half-margin-bottom']) !!}
-					{!! Form::label('omitConditionLabel', 'Show stocks with low quality or incomplete metrics') !!}
-					{!! Form::checkbox('omitCondition', null, false, ['class' => 'quater-margin-left']) !!}
-					{!! Form::submit("Filter", ['class' => 'btn btn-default form-control half-margin-top']) !!}
-				{!! Form::close() !!}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="pull-left">
+					{!! Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']) !!}
+						{!! Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control']) !!}
+						{!! Form::submit("Filter Sector", ['class' => 'btn btn-default form-control']) !!}
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-10 col-md-offset-1">
+	
+	<div class="col-md-12">
 		<div id="metrics">
 			@include('layouts.partials.stock-list-display')
 		</div>

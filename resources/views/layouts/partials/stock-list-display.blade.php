@@ -11,14 +11,10 @@
 	            <th>Volume</th>
 	            <th>EBITDA (m)</th>
 	            <th>EPS Current Year</th>
-	            <th>EPS Next Year</th>
 	            <th>P / E Ratio</th>
 	            <th>Price / Book</th>
 	            <th>52 Week High</th>
 	            <th>52 Week Low</th>
-	            <th>50 Day MA</th>
-	            <th>200 Day MA</th>
-	            <th>Div Yield</th>
 	        </tr>
 	    </thead>
 		<div class="panel-body">
@@ -40,14 +36,10 @@
 						<td>{{ $stock->average_daily_volume }}</td>
 						<td>{{ $stock->EBITDA }}</td>
 						<td>{{ $stock->earnings_per_share_current }}</td>
-						<td>{{ $stock->earnings_per_share_next_year }}</td>
 						<td>{{ $stock->price_to_earnings }}</td>
 						<td>{{ $stock->price_to_book }}</td>
 						<td>{{ $stock->year_high }}</td>
 						<td>{{ $stock->year_low }}</td>
-						<td>{{ $stock->fifty_day_moving_average }}</td>
-						<td>{{ $stock->two_hundred_day_moving_average }}</td>
-						<td>{{ $stock->dividend_yield }}</td>
 					</tr>
 				@endforeach
 		    </tbody>
