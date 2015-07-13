@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Historicals;
-use App\Models\Stock;
-
 Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 

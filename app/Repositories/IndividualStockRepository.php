@@ -31,7 +31,7 @@ Class IndividualStockRepository implements IndividualStockRepositoryInterface{
 				->where('market_cap', '>=', ($individualMarketCap/10))
 				->lists('stock_code');
 				
-			//If Mkt Cap conditions leave too few left, just return others in sector
+			//If Mkt Cap conditions leave too few left, just return $otherStocksInSector
 			if(count($relatedStocks) < 5){
 				return $otherStocksInSector;
 			}
