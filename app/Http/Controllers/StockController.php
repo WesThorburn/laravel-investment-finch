@@ -26,12 +26,12 @@ class StockController extends Controller
      */
     public function show($id){
         if(Stock::where('stock_code', $id)->first()){
-            $graphData = $this->stock->getGraphData($id);
+            $priceGraphData = $this->stock->getGraphData($id, 'last_month', 'Price');
             $stockPriceLava = new Lavacharts;
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
                 ->addNumberColumn('Price')
-                ->addRows($graphData);
+                ->addRows($priceGraphData);
 
             $stockPriceLava = \Lava::AreaChart('StockPrice')
                 ->dataTable($prices)
@@ -44,31 +44,25 @@ class StockController extends Controller
             return view('pages.individualstock')->with([
                 'stockPriceLava' => $stockPriceLava,
                 'stock' => Stock::where('stock_code', $id)->first(),
+                'relatedStocks' => StockMetrics::getMetricsByStockList($this->stock->getRelatedStocks($id), 'omit'),
                 'metrics' => StockMetrics::where('stock_code', $id)->first()
             ]);
-
-            /*$stockPriceLava->HorizontalAxis(array(
-                'maxTextLines' => 1000,
-                'showTextEvery' => 1,
-                'gridlines' => array(
-                    'color' => '#43fc72',
-                    'count' => 6
-                ),
-                'minorGridlines' => array(
-                    'color' => '#b3c8d1',
-                    'count' => 3
-                )
-            ));*/
         }
         return redirect('/');
     }
 
-    public function graph($stockCode, $timeFrame){
-        $graphData = $this->stock->getGraphData($stockCode, $timeFrame);
+    public function graph($stockCode, $timeFrame, $dataType){
+        $graphData = $this->stock->getGraphData($stockCode, $timeFrame, $dataType);
         $prices = \Lava::DataTable();
         $prices->addStringColumn('Date')
-            ->addNumberColumn('Price')
+            ->addNumberColumn($dataType)
             ->addRows($graphData);
         return $prices->toJson();
+    }
+
+    public function relatedStocks($id){
+        return view('layouts.partials.related-stock-list-display')->with([
+            'relatedStocks' => StockMetrics::getMetricsByStockList($this->stock->getRelatedStocks($id), 'omit')
+        ]);
     }
 }

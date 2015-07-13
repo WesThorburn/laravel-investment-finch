@@ -40,4 +40,8 @@ class StockMetrics extends Model {
 		}
 		return $query;
 	}
+
+	public static function getMetricsByStockList($listOfStocks, $omitCondition){
+		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->with('stock')->get();
+	}
 }

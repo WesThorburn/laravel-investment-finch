@@ -6,8 +6,15 @@
 
 @section('body')
 	<script type="text/javascript">
-		function getGraphData(timeFrame){
-			$.getJSON('/graph/'+ '{{ $stock->stock_code }}/' + timeFrame, function (dataTableJson) {
+		$(document).ready(
+            function() {
+                setInterval(function() {
+                		$('#metrics').load('/relatedstocks/{{$stock->stock->stock_code}}');
+                }, 10000);
+        	});
+
+		function getGraphData(timeFrame, dataType){
+			$.getJSON('/graph/'+ '{{ $stock->stock_code }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('StockPrice', dataTableJson, function (chart) {
 				});
 			});
@@ -56,14 +63,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
-							<button class="btn btn-default active" onclick="getGraphData('last_month')" id="last_month">30 Days</button>
-							<button class="btn btn-default" onclick="getGraphData('last_3_months')" id="last_3_months">3 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_6_months')" id="last_6_months">6 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_year')" id="last_year">12 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_2_years')" id="last_2_years">2 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('last_5_years')" id="last_5_years">5 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('last_10_years')" id="last_10_years">10 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('all_time')" id="all_time">All</button>
+							<button class="btn btn-default active" onclick="getGraphData('last_month', 'Price')" id="last_month">30 Days</button>
+							<button class="btn btn-default" onclick="getGraphData('last_3_months', 'Price')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_6_months', 'Price')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_year', 'Price')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_2_years', 'Price')" id="last_2_years">2 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_5_years', 'Price')" id="last_5_years">5 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_10_years', 'Price')" id="last_10_years">10 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('all_time', 'Price')" id="all_time">All</button>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -75,7 +82,7 @@
 			</div>
 			<div class="col-lg-3">
 				<div class="panel panel-default">
-					<div class="panel-heading">Key Metrics</div>
+					<div class="panel-heading"><b>Key Metrics</b></div>
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
@@ -123,6 +130,16 @@
 				</div>
 			</div>
 		</div>
+
+		@if($relatedStocks->first())
+			<div class="row">
+				<div class="col-lg-9 col-lg-offset-1">
+					<div id="metrics">
+						@include('layouts.partials.related-stock-list-display')
+					</div>	
+				</div>		
+			</div>
+		@endif
 	</div>
 @stop
 

@@ -8,10 +8,6 @@ Class SearchRepository implements SearchRepositoryInterface{
 		return StockMetrics::with('stock')->where('stock_code', '!=', 'null')->omitOutliers($omitCondition)->get();
 	}
 
-	public function getMetricsByStockList($listOfStocks, $omitCondition){
-		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->with('stock')->get();
-	}
-
 	public function getSearchResults($request){
 		$allSectors = [];
 		$minPrice = StockMetrics::min('last_trade');

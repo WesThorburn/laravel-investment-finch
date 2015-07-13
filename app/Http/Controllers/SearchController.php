@@ -25,7 +25,7 @@ class SearchController extends Controller {
 	}
 
 	public function show(ScreenerSearchRequest $request){
-		$stocks = $this->search->getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
+		$stocks = StockMetrics::getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
 		if($request->viewType == 'partial'){
 			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
 		}
