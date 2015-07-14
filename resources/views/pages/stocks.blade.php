@@ -15,13 +15,14 @@
                 	else{
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
+                	$('#sectorDayChange').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayChange');
                 }, 10000);
             });
 	</script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-				<div id="sectorDayGains">
+				<div id="sectorDayChange">
 					@include('layouts.partials.sector-day-gains-display')
 				</div>
 			</div>

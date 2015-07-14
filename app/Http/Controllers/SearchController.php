@@ -28,6 +28,9 @@ class SearchController extends Controller {
 	public function show(ScreenerSearchRequest $request){
 		$stocks = StockMetrics::getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
 		if($request->viewType == 'partial'){
+			if($request->section == 'sectorDayChange'){
+				return view('layouts.partials.sector-day-gains-display')->with(['sectorDayChanges' => SectorHistoricals::getSectorDayChanges()]);
+			}
 			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
 		}
 		return view('pages.stocks')->with([
