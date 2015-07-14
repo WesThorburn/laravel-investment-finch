@@ -2,6 +2,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use App\Models\SectorHistoricals;
 use App\Models\StockMetrics;
 use App\Models\Stock;
 use Carbon\Carbon;

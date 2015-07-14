@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\ScreenerSearchRequest;
 use App\Http\Controllers\Controller;
+use App\Models\SectorHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use App\Repositories\SearchRepositoryInterface;
@@ -30,7 +31,8 @@ class SearchController extends Controller {
 			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
 		}
 		return view('pages.stocks')->with([
-			'stocks' => $stocks, 
+			'stocks' => $stocks,
+			'sectorDayChanges' => SectorHistoricals::getSectorDayChanges(),
 			'stockSectors' => Stock::getSectorDropdown(),
 			'stockSectorName' => $request->stockSector
 		]);

@@ -20,6 +20,12 @@
 	</script>
 	<div class="container-fluid">
 		<div class="row">
+			<div class="col-md-3">
+				<div id="sectorDayGains">
+					@include('layouts.partials.sector-day-gains-display')
+				</div>
+			</div>
+
 			<div class="col-md-12">
 				<div class="pull-left">
 					{!! Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']) !!}
@@ -28,13 +34,14 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="col-md-12">
-		<div id="metrics">
-			@include('layouts.partials.stock-list-display')
+
+		<div class="row">
+			<div class="col-md-12">
+				<div id="metrics">
+					@include('layouts.partials.stock-list-display')
+				</div>
+			</div>
 		</div>
 	</div>
-
 	
 @stop

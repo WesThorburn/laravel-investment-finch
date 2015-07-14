@@ -13,4 +13,8 @@ class SectorHistoricals extends Model
     	'created_at',
     	'updated_at'
     ];
+
+    public static function getSectorDayChanges(){
+    	return SectorHistoricals::where('date', date("Y-m-d"))->get();
+    }
 }
