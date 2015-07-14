@@ -68,7 +68,6 @@ class UpdateStockMetricsCommand extends Command {
 			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
 			$iterationNumber++;
 		}
-		UpdateStockMetricsCommand::updateSectorGain();
 		$this->info('All stock metrics were updated successfully!');
 	}
 	//Gets list of stock codes separated by addition symbols
@@ -88,40 +87,6 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		elseif(substr($individualMetric, -1) == 'M'){
 			return floatval(substr($individualMetric, 0, -1));
-		}
-	}
-	private static function updateSectorGain(){
-		$sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
-		foreach($sectors as $sector){
-			$stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-			$marketCaps = array();
-			$marketCapDayChanges = array();
-			foreach($stocksInSector as $stock){
-				$marketCap = StockMetrics::where('stock_code', $stock)->pluck('market_cap');
-				$dayChange = StockMetrics::where('stock_code', $stock)->pluck('day_change');
-				array_push($marketCaps, $marketCap);
-				array_push($marketCapDayChanges, $marketCap - ($marketCap/(($dayChange/100)+1)));
-			}
-			$totalSectorMarketCaps = array_sum($marketCaps);
-			$totalSectorDayChange = array_sum($marketCapDayChanges);
-			if($totalSectorMarketCaps > 0){
-				$percentChange = (100/$totalSectorMarketCaps)*$totalSectorDayChange;
-			}
-			else{
-				$percentChange = 0;
-			}
-			
-			SectorHistoricals::updateOrCreate(
-				[
-					'sector' => $sector,
-					'date' => date("Y-m-d")
-				], 
-				[
-					'sector' => $sector,
-					'date' => date("Y-m-d"),
-					'day_change' => round($percentChange, 2)
-				]
-			);
 		}
 	}
 	/**
