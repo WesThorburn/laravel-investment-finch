@@ -15,15 +15,22 @@
                 	else{
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
-                	$('#sectorDayChange').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayChange');
+                	$('#sectorDayGain').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayGain');
+                	$('#sectorDayLoss').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayLoss');
                 }, 10000);
             });
 	</script>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
-				<div id="sectorDayChange">
-					@include('layouts.partials.sector-day-gains-display')
+			<div class="col-md-4">
+				<div id="sectorDayGain">
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => 'Best Performing Sectors'])
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div id="sectorDayLoss">
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => 'Worst Performing Sectors'])
 				</div>
 			</div>
 
