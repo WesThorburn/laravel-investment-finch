@@ -45,35 +45,42 @@ class UpdateSectorChangeCommand extends Command
         $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
         foreach($sectors as $sector){
             $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-            $marketCaps = array();
-            $marketCapDayChanges = array();
-            foreach($stocksInSector as $stock){
-                $marketCap = StockMetrics::where('stock_code', $stock)->pluck('market_cap');
-                $dayChange = StockMetrics::where('stock_code', $stock)->pluck('day_change');
-                array_push($marketCaps, $marketCap);
-                array_push($marketCapDayChanges, $marketCap - ($marketCap/(($dayChange/100)+1)));
-            }
-            $totalSectorMarketCaps = array_sum($marketCaps);
-            $totalSectorDayChange = array_sum($marketCapDayChanges);
-            if($totalSectorMarketCaps > 0){
-                $percentChange = (100/$totalSectorMarketCaps)*$totalSectorDayChange;
-            }
-            else{
-                $percentChange = 0;
-            }
-            
-            SectorHistoricals::updateOrCreate(
-                [
-                    'sector' => $sector,
-                    'date' => date("Y-m-d")
-                ], 
-                [
-                    'sector' => $sector,
-                    'date' => date("Y-m-d"),
-                    'day_change' => round($percentChange, 2)
-                ]
-            );
+            UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
         }
+        //Calculate change for whole market
+        $allStockCodes = Stock::lists('stock_code');
+        UpdateSectorChangeCommand::calculateDayGain($allStockCodes, "All");
         $this->info("Sector day changes have been updated!");
+    }
+
+    private static function calculateDayGain($listOfStocks, $sectorName){
+        $marketCaps = array();
+        $marketCapDayChanges = array();
+        foreach($listOfStocks as $stock){
+            $marketCap = StockMetrics::where('stock_code', $stock)->pluck('market_cap');
+            $dayChange = StockMetrics::where('stock_code', $stock)->pluck('day_change');
+            array_push($marketCaps, $marketCap);
+            array_push($marketCapDayChanges, $marketCap - ($marketCap/(($dayChange/100)+1)));
+        }
+        $totalSectorMarketCaps = array_sum($marketCaps);
+        $totalSectorDayChange = array_sum($marketCapDayChanges);
+        if($totalSectorMarketCaps > 0){
+            $percentChange = (100/$totalSectorMarketCaps)*$totalSectorDayChange;
+        }
+        else{
+            $percentChange = 0;
+        }
+        
+        SectorHistoricals::updateOrCreate(
+            [
+                'sector' => $sectorName,
+                'date' => date("Y-m-d")
+            ], 
+            [
+                'sector' => $sectorName,
+                'date' => date("Y-m-d"),
+                'day_change' => round($percentChange, 2)
+            ]
+        );
     }
 }

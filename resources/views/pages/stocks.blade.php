@@ -16,7 +16,7 @@
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
                 	$('#sectorDayChange').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayChange');
-                }, 120000);
+                }, 10000);
             });
 	</script>
 	<div class="container">
