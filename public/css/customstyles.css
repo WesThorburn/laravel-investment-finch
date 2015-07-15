@@ -26,8 +26,16 @@
 	margin-bottom:10px;
 }
 
+.quarter-margin-top{
+	margin-top:5px;
+}
+
 .quater-margin-left{
 	margin-left:5px;
+}
+
+.no-margin-bottom{
+	margin-bottom:0px;
 }
 
 .alert-minimal{
@@ -49,6 +57,7 @@
 
 .navbar{
 	border-radius:0px;
+	min-height:35px;
 }
 
 .btn-logout, .btn-login, .btn-register{
@@ -57,6 +66,10 @@
 
 .panel-body{
 	padding:5px;
+}
+
+.2px-padding{
+	padding:2px;
 }
 
 .table-bordered-only-top-bottom{

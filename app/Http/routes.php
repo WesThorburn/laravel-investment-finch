@@ -8,7 +8,7 @@ Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 Route::resource('stock', 'StockController');
 
 Route::get('/servertime', function(){
-	return "<b>Sydney Time: ".date('F j, Y, g:i a');
+	return "<b>Sydney Time: ".date('l F j, Y, g:i a');
 });
 
 Route::controllers([

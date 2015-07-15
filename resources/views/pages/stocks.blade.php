@@ -16,22 +16,10 @@
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
                 	$('#sectorDayChange').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayChange');
-                }, 10000);
-            	setInterval(function(){
-            		$('#clock').load('/servertime');
-            	}, 1000); 
+                }, 120000);
             });
 	</script>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div id="clock"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
 				<div id="sectorDayChange">

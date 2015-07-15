@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-	<div class="panel-heading"><b>Sector Performance</b></div>
+	<div class="panel-heading 2px-padding"><b>Sector Performance</b></div>
 	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins" id="sector_day_change_table">
 	    <thead>
 	        <tr>
