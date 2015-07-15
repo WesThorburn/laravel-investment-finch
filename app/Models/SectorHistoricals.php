@@ -15,6 +15,15 @@ class SectorHistoricals extends Model
     ];
 
     public static function getSectorDayChanges(){
-    	return SectorHistoricals::where('date', date("Y-m-d"))->where('sector', '!=', 'Class Pend')->get();
+    	return SectorHistoricals::where('date', date("Y-m-d"))
+            ->where('sector', '!=', 'Class Pend')
+            ->where('sector', '!=', 'All')
+            ->get();
+    }
+
+    public static function getMarketChange(){
+        return SectorHistoricals::where('date', date("Y-m-d"))
+            ->where('sector', 'All')
+            ->pluck('day_change');
     }
 }

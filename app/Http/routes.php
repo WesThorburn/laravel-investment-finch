@@ -8,8 +8,10 @@ Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 Route::resource('stock', 'StockController');
 
 Route::get('/servertime', function(){
-	return "<b>Sydney Time: ".date('l F j, Y, g:i a');
+	return "<b>".date('l F j, Y, g:i a')." (Sydney)";
 });
+
+Route::get('/marketchange', 'SearchController@marketChange');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

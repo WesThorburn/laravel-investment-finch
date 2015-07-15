@@ -27,12 +27,20 @@
 
 	<body>
 		<script type="text/javascript">
+			$(document).ready(
+				function(){
+					$('#marketChange').load('/marketchange');
+				}
+			);
 			function redirect(location){
 				window.location.href = location;
 			}
 			setInterval(function(){
         		$('#clock').load('/servertime');
-        	}, 1000); 
+        	}, 1000);
+        	setInterval(function(){
+        		$('#marketChange').load('/marketchange');
+        	}, 10000); 
 		</script>
 		<div id="container">
 			<nav class="navbar navbar-inverse no-margin-bottom">
@@ -76,6 +84,11 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div id="clock" class="quarter-margin-top"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="marketChange" class="quarter-margin-top"></div>
 						</div>
 					</div>
 				</div>

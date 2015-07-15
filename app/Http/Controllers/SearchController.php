@@ -40,4 +40,9 @@ class SearchController extends Controller {
 			'stockSectorName' => $request->stockSector
 		]);
 	}
+
+	public function marketChange(){
+		return view('layouts.partials.market-change-display')
+			->with(['marketChange' => SectorHistoricals::getMarketChange()]);
+	}
 }
