@@ -36,7 +36,7 @@
 				window.location.href = location;
 			}
 			setInterval(function(){
-        		$('#clock').load('/servertime');
+        		$('#marketStatus').load('/marketstatus');
         	}, 1000);
         	setInterval(function(){
         		$('#marketChange').load('/marketchange');
@@ -83,7 +83,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<div id="clock" class="quarter-margin-top"></div>
+							<div id="marketStatus" class="quarter-margin-top"></div>
 						</div>
 					</div>
 					<div class="row">

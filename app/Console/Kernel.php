@@ -29,9 +29,7 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule)
 	{
       	//Only run these between 10:00 and 17:00 Sydney Time
-      	date_default_timezone_set("Australia/Sydney");
-      	$currentTime = intval(str_replace(':', '', date('H:i:s')));
-		if($currentTime >= 103000 && $currentTime <= 170000){
+		if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 170000){
 			$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping();
 			$schedule->command('stocks:updateSectorChange')->weekdays()->withoutOverlapping();
 		}

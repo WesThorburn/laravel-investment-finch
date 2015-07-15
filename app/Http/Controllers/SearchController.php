@@ -45,4 +45,12 @@ class SearchController extends Controller {
 		return view('layouts.partials.market-change-display')
 			->with(['marketChange' => SectorHistoricals::getMarketChange()]);
 	}
+
+	public function marketStatus(){
+		return view('layouts.partials.market-status-display')
+			->with([
+				'marketStatus' => getMarketStatus(),
+				'serverTime' => getServerTime()
+			]);
+	}
 }
