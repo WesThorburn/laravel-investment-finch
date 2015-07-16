@@ -1,5 +1,4 @@
 <?php
-
 Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 

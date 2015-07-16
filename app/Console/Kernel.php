@@ -34,9 +34,8 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping();
 			$schedule->command('stocks:updateSectorChange')->weekdays()->withoutOverlapping();
 		}
-    	
-    	$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('16:30');
 		$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
+		$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('16:35');
 		$schedule->command('stocks:resetDayChange')->dailyAt('00:00');
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
 

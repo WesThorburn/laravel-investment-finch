@@ -33,12 +33,13 @@ function getServerTime(){
 	return date('l F j, Y, g:i a')." (Sydney)";
 }
 
-function getOnlyDate($carbonInstance){
+function getDateFromCarbonDate($carbonInstance){
 	//Receives a carbon instance and returns only the date (not time)
-	
+	return explode(' ', $carbonInstance)[0];
 }
 
-function createCarbonDateFromPhpDate($phpDate){
+function getCarbonDateFromDate($phpDate){
+	//Receives a date and returns it as a carbon instance
 	$phpDateWithoutQuotes = str_replace('"', '', $phpDate);
 	$explodedDate = explode('-', $phpDateWithoutQuotes);
 	return Carbon::createFromDate($explodedDate[0], $explodedDate[1], $explodedDate[2]);
