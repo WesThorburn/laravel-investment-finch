@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\ScreenerSearchRequest;
 use App\Http\Controllers\Controller;
+use App\Models\StockGains;
 use App\Models\SectorHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
@@ -31,7 +32,7 @@ class SearchController extends Controller {
 			if($request->section == 'sectorDayGain' || $request->section == 'sectorDayLoss'){
 				return view('layouts.partials.sector-day-change-display')
 					->with([
-						'sectorChanges' => SectorHistoricals::getSectorDayChanges($request->section), 
+						'changes' => SectorHistoricals::getSectorDayChanges($request->section), 
 						'title' => SectorHistoricals::getSectorDayChangeTitle($request->section)
 					]);
 			}
@@ -43,6 +44,8 @@ class SearchController extends Controller {
 			'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
 			'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayGain'),
 			'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss'),
+			'topWeeklyGains' => StockGains::getBestPerformingStocksThisWeek(),
+			'topWeeklyLosses' => StockGains::getWorstPerformingStocksThisWeek(),
 			'stockSectors' => Stock::getSectorDropdown(),
 			'stockSectorName' => $request->stockSector
 		]);

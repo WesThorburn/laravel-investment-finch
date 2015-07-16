@@ -1,5 +1,6 @@
 <?php namespace App\Models;
 
+use App\Models\StockGains;
 use Illuminate\Database\Eloquent\Model;
 
 class StockGains extends Model
@@ -22,4 +23,18 @@ class StockGains extends Model
         'all_time_change',
         'updated_at'
 	];
+
+    public function stock(){
+        return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
+    }
+
+    public static function getBestPerformingStocksThisWeek(){
+        $stockList = StockMetrics::omitOutliers()->lists('stock_code');
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'desc')->take(10)->get();
+    }
+
+    public static function getWorstPerformingStocksThisWeek(){
+        $stockList = StockMetrics::omitOutliers()->lists('stock_code');
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take(10)->get();
+    }
 }

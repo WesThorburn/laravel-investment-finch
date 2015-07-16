@@ -12,8 +12,12 @@ class Stock extends Model {
 		'sector'
 	];
 
-	public function stock(){
+	public function metrics(){
 		return $this->hasOne('App\Models\StockMetrics', 'stock_code', 'stock_code');
+	}
+
+	public function gains(){
+		return $this->hasOne('App\Models\StockGains', 'stock_code', 'stock_code');
 	}
 
 	public static function getSectorDropdown(){

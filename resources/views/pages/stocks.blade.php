@@ -33,7 +33,19 @@
 					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
 				</div>
 			</div>
+		</div>
 
+		<div class="row">
+			<div class="col-md-4">
+			@include('layouts.partials.stock-top-change', ['stockChanges' => $topWeeklyGains, 'title' => 'Best Performing Stocks (7 Days)'])
+			</div>
+
+			<div class="col-md-4">
+				@include('layouts.partials.stock-top-change', ['stockChanges' => $topWeeklyLosses, 'title' => 'Worst Performing Stocks (7 Days)'])
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-md-12">
 				<div class="pull-left">
 					{!! Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']) !!}
