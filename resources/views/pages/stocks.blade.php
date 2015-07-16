@@ -24,13 +24,13 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div id="sectorDayGain">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => "Today's Best Performing Sectors"])
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
 				</div>
 			</div>
 
 			<div class="col-md-4">
 				<div id="sectorDayLoss">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => "Today's Worst Performing Sectors"])
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
 				</div>
 			</div>
 

@@ -49,9 +49,31 @@ class SectorHistoricals extends Model
     }
 
     public static function getMarketChange(){
-        return SectorHistoricals::where('date', date("Y-m-d"))
+        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
             ->where('sector', 'All')
             ->pluck('day_change');
+    }
+
+    public static function getMarketChangeMessage(){
+        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
+        $marketChange = SectorHistoricals::getMarketChange();
+        if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
+            if($marketChange < 0){
+                return "The ASX is down ".$marketChange."% today.";
+            }
+            elseif($marketChange >= 0){
+                return "The ASX is up ".$marketChange."% today.";
+            }
+        }
+        else{
+            $dayForTitle = date("l", strtotime($mostRecentSectorHistoricalsDate));
+            if($marketChange < 0){
+                return "The ASX was down ".$marketChange."% on ".$dayForTitle.".";
+            }
+            elseif($marketChange >= 0){
+                return "The ASX was up ".$marketChange."% on ".$dayForTitle.".";
+            }
+        }
     }
 
     private static function getMostRecentSectorHistoricalsDate(){

@@ -41,6 +41,8 @@ class SearchController extends Controller {
 			'stocks' => $stocks,
 			'sectorDayGains' => SectorHistoricals::getSectorDayChanges('sectorDayGain'),
 			'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
+			'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayGain'),
+			'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss'),
 			'stockSectors' => Stock::getSectorDropdown(),
 			'stockSectorName' => $request->stockSector
 		]);
@@ -48,7 +50,10 @@ class SearchController extends Controller {
 
 	public function marketChange(){
 		return view('layouts.partials.market-change-display')
-			->with(['marketChange' => SectorHistoricals::getMarketChange()]);
+			->with([
+				'marketChangeMessage' => SectorHistoricals::getMarketChangeMessage(),
+				'marketChange' => SectorHistoricals::getMarketChange()
+			]);
 	}
 
 	public function marketStatus(){
