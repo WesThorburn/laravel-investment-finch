@@ -27,9 +27,19 @@ function getMarketStatus(){
 		}
 	}
 	return "Market Closed";
-	
 }
 
 function getServerTime(){
 	return date('l F j, Y, g:i a')." (Sydney)";
+}
+
+function getOnlyDate($carbonInstance){
+	//Receives a carbon instance and returns only the date (not time)
+	
+}
+
+function createCarbonDateFromPhpDate($phpDate){
+	$phpDateWithoutQuotes = str_replace('"', '', $phpDate);
+	$explodedDate = explode('-', $phpDateWithoutQuotes);
+	return Carbon::createFromDate($explodedDate[0], $explodedDate[1], $explodedDate[2]);
 }

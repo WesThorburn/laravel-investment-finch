@@ -28,20 +28,19 @@ class SearchController extends Controller {
 	public function show(ScreenerSearchRequest $request){
 		$stocks = StockMetrics::getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
 		if($request->viewType == 'partial'){
-			if($request->section == 'sectorDayGain'){
+			if($request->section == 'sectorDayGain' || $request->section == 'sectorDayLoss'){
 				return view('layouts.partials.sector-day-change-display')
-					->with(['sectorChanges' => SectorHistoricals::getSectorDayChanges('desc'), 'title' => 'Best Performing Sectors']);
-			}
-			elseif($request->section == 'sectorDayLoss'){
-				return view('layouts.partials.sector-day-change-display')
-					->with(['sectorChanges' => SectorHistoricals::getSectorDayChanges('asc'), 'title' => 'Worst Performing Sectors']);
+					->with([
+						'sectorChanges' => SectorHistoricals::getSectorDayChanges($request->section), 
+						'title' => SectorHistoricals::getSectorDayChangeTitle($request->section)
+					]);
 			}
 			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
 		}
 		return view('pages.stocks')->with([
 			'stocks' => $stocks,
-			'sectorDayGains' => SectorHistoricals::getSectorDayChanges('desc'),
-			'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('asc'),
+			'sectorDayGains' => SectorHistoricals::getSectorDayChanges('sectorDayGain'),
+			'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
 			'stockSectors' => Stock::getSectorDropdown(),
 			'stockSectorName' => $request->stockSector
 		]);

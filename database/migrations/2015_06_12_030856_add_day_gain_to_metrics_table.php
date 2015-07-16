@@ -14,7 +14,7 @@ class AddDayGainToMetricsTable extends Migration {
 	{
 		Schema::table('stock_metrics', function(Blueprint $table)
 		{
-			$table->decimal('day_change', 6, 3)->after('last_trade');
+			$table->decimal('day_change', 6, 2)->after('last_trade');
 		});
 	}
 

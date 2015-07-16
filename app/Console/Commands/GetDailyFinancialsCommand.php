@@ -21,7 +21,7 @@ class GetDailyFinancialsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Gets the daily trade data of each stock.';
 
     /**
      * Create a new command instance.

@@ -19,7 +19,7 @@ class ResetDayChangeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = "Resets the 'day-change' value of each stock to zero.";
 
     /**
      * Create a new command instance.

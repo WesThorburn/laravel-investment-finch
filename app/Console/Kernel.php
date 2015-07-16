@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\GetHistoricalFinancialsCommand',
 		'App\Console\Commands\GetDailyFinancialsCommand',
 		'App\Console\Commands\ResetDayChangeCommand',
-		'App\Console\Commands\UpdateSectorChangeCommand'
+		'App\Console\Commands\UpdateSectorChangeCommand',
+		'App\Console\Commands\CalculateStockChangeCommand'
 	];
 
 	/**
@@ -34,6 +35,7 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateSectorChange')->weekdays()->withoutOverlapping();
 		}
     	
+    	$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('16:30');
 		$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
 		$schedule->command('stocks:resetDayChange')->dailyAt('00:00');
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');

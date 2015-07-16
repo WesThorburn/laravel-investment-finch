@@ -16,7 +16,7 @@ class CreateSectorHistoricals extends Migration
             $table->increments('id');
             $table->string('sector');
             $table->date('date');
-            $table->decimal('day_change', 6, 3);
+            $table->decimal('day_change', 6, 2);
             $table->timestamps();
         });
     }
