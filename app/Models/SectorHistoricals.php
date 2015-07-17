@@ -15,7 +15,19 @@ class SectorHistoricals extends Model
     	'updated_at'
     ];
 
-    public static function getSectorDayChanges($section){
+    public function stock(){
+        return $this->belongsTo('App\Models\Stock', 'sector', 'sector');
+    }
+
+    public static function getBestPerformingSector(){
+        $bestPerformingSector = SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+            ->orderBy('day_change', 'desc')
+            ->take(1)
+            ->lists('sector');
+        return $bestPerformingSector[0];
+    }
+
+    public static function getSectorDayChanges($section, $limit = 5){
         if($section == 'sectorDayGain'){
             $order = "desc";
         }
@@ -24,27 +36,31 @@ class SectorHistoricals extends Model
         }
     	return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
             ->where('sector', '!=', 'Class Pend')
+            ->where('sector', '!=', 'Not Applic')
             ->where('sector', '!=', 'All')
             ->orderBy('day_change', $order)
-            ->take(5)
+            ->take($limit)
             ->get();
     }
 
     public static function getSectorDayChangeTitle($section){
-        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
-        if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
-            //Most Recent Date is today
-            $dayForTitle = "Today";
-        }
-        else{
-            $dayForTitle = date("l", strtotime($mostRecentSectorHistoricalsDate));
-        }
-
+        $dayForTitle = SectorHistoricals::getSectorDayChangeDay();
         if($section == 'sectorDayGain'){
             return $dayForTitle."'s Best Performing Sectors";
         }
         elseif($section == 'sectorDayLoss'){
             return $dayForTitle."'s Worst Performing Sectors";
+        }
+    }
+
+    public static function getSectorDayChangeDay(){
+        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
+        if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
+            //Most Recent Date is today
+            return "Today";
+        }
+        else{
+            return date("l", strtotime($mostRecentSectorHistoricalsDate));
         }
     }
 

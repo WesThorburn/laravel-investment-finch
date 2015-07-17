@@ -44,7 +44,7 @@ class StockController extends Controller
             return view('pages.individualstock')->with([
                 'stockPriceLava' => $stockPriceLava,
                 'stock' => Stock::where('stock_code', $id)->first(),
-                'relatedStocks' => StockMetrics::getMetricsByStockList($this->stock->getRelatedStocks($id), 'omit'),
+                'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit'),
                 'metrics' => StockMetrics::where('stock_code', $id)->first()
             ]);
         }
@@ -62,7 +62,7 @@ class StockController extends Controller
 
     public function relatedStocks($id){
         return view('layouts.partials.related-stock-list-display')->with([
-            'relatedStocks' => StockMetrics::getMetricsByStockList($this->stock->getRelatedStocks($id), 'omit')
+            'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit')
         ]);
     }
 }

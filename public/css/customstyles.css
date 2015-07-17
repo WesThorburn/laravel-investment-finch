@@ -26,6 +26,10 @@
 	margin-bottom:10px;
 }
 
+.quarter-margin-bottom{
+	margin-bottom:5px;
+}
+
 .quarter-margin-top{
 	margin-top:5px;
 }
@@ -34,8 +38,16 @@
 	margin-left:5px;
 }
 
+.no-margin-top{
+	margin-top:none;
+}
+
 .no-margin-bottom{
 	margin-bottom:0px;
+}
+
+.list-group-item.reduced-padding{
+	padding:2px 10px;
 }
 
 .alert-minimal{
@@ -73,4 +85,16 @@
 	border-bottom:1px solid #ddd;
 	border-left:none;
 	border-right:none;
+}
+
+.table-bordered-only-bottom{
+	border-top:none;
+	border-bottom:1px solid #ddd;
+	border-left:none;
+	border-right:none;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd).table-row-active,
+.table-striped > tbody > tr:nth-of-type(even).table-row-active{
+	background-color:#CFCFCF;
 }

@@ -80,6 +80,10 @@ table.no-margins{
 	margin-bottom: 0px !important;
 }
 
+table.no-margin-top{
+	margin-top: 0px !important;
+}
+
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc,

@@ -29,6 +29,7 @@
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
+					$('#marketStatus').load('/marketstatus');
 					$('#marketChange').load('/marketchange');
 				}
 			);
@@ -56,6 +57,7 @@
 									<span class="icon-bar"></span>
 								</button>
 								<a class="navbar-brand" href="/">Home</a>
+								<a class="navbar-brand" href="/sector">Sectors</a>
 								
 							</div>
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
