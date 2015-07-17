@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\SectorHistoricals;
+
 Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 
@@ -10,6 +13,10 @@ Route::resource('stock', 'StockController');
 
 Route::get('/marketstatus','SearchController@marketStatus');
 Route::get('/marketchange', 'SearchController@marketChange');
+
+route::get('/test', function(){
+	
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

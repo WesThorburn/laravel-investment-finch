@@ -28,13 +28,13 @@ class StockGains extends Model
         return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
     }
 
-    public static function getBestPerformingStocksThisWeek(){
+    public static function getBestPerformingStocksThisWeek($limit = 10){
         $stockList = StockMetrics::omitOutliers()->lists('stock_code');
-        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'desc')->take(10)->get();
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'desc')->take($limit)->get();
     }
 
-    public static function getWorstPerformingStocksThisWeek(){
+    public static function getWorstPerformingStocksThisWeek($limit = 10){
         $stockList = StockMetrics::omitOutliers()->lists('stock_code');
-        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take(10)->get();
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take($limit)->get();
     }
 }

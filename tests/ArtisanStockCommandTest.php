@@ -12,4 +12,10 @@ class ArtisanStockCommandTest extends TestCase{
 		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS']);
 		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA']);
 	}
+
+	public function resetDayChange(){
+		$this->artisan("stocks:resetDayChange");
+		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS', 'day_change' => '0.00']);
+		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA', 'day_change' => '0.00']);
+	}
 }
