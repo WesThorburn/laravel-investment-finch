@@ -32,7 +32,7 @@ class SearchController extends Controller {
 			if($request->section == 'sectorDayGain' || $request->section == 'sectorDayLoss'){
 				return view('layouts.partials.sector-day-change-display')
 					->with([
-						'changes' => SectorHistoricals::getSectorDayChanges($request->section), 
+						'sectorChanges' => SectorHistoricals::getSectorDayChanges($request->section), 
 						'title' => SectorHistoricals::getSectorDayChangeTitle($request->section)
 					]);
 			}

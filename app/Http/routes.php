@@ -2,6 +2,8 @@
 Route::get('/', 'SearchController@show');
 Route::resource('search', 'SearchController');
 
+Route::resource('sector', 'SectorController');
+
 Route::get('graph/{stockCode}/{timeFrame}/{dataType}', 'StockController@graph');
 Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 Route::resource('stock', 'StockController');
