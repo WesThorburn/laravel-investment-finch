@@ -43,8 +43,14 @@ class SectorHistoricals extends Model
             ->get();
     }
 
+    public static function getSelectedSectorDayChange($sectorName){
+        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+            ->where('sector', $sectorName)
+            ->pluck('day_change');
+    }
+
     public static function getSectorDayChangeTitle($section){
-        $dayForTitle = SectorHistoricals::getSectorDayChangeDay();
+        $dayForTitle = SectorHistoricals::getSectorWeekDay();
         if($section == 'sectorDayGain'){
             return $dayForTitle."'s Best Performing Sectors";
         }
@@ -53,7 +59,7 @@ class SectorHistoricals extends Model
         }
     }
 
-    public static function getSectorDayChangeDay(){
+    public static function getSectorWeekDay(){
         $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
         if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
             //Most Recent Date is today

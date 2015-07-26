@@ -33,6 +33,7 @@
 <script>
 	$(document).ready(function(){
 		$('#stock_table').DataTable({
+			"order": [3, "{{ $sortOrder }}"],
 			"pageLength": 18,
 			"dom": 'tp',
 			"stateSave": true

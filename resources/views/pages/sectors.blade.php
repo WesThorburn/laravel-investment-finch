@@ -13,7 +13,7 @@
 						<thead>
 					        <tr>
 					            <th>Sector</th>
-					            <th>{{ $sectorDayChangeDay }}'s Change</th>
+					            <th>{{ $sectorWeekDay }}'s Change</th>
 					        </tr>
 					    </thead>
 					    <tbody data-link="row" class="rowlink">
@@ -38,7 +38,12 @@
 			</div>
 			<div class="col-md-8">
 				<div id="metrics">
-					@include('layouts.partials.other-stocks-in-sector')
+					@if($selectedSectorDayChange < 0.00)
+						<?php $sortOrder = 'asc'; ?>
+					@elseif($selectedSectorDayChange >= 0.00)
+						<?php $sortOrder = 'desc'; ?>
+					@endif
+					@include('layouts.partials.other-stocks-in-sector', ['sortOrder' => $sortOrder])
 				</div>
 			</div>
 		</div>

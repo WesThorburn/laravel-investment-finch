@@ -21,9 +21,10 @@ class SectorController extends Controller
     	$sectorDayChanges = SectorHistoricals::getSectorDayChanges("sectorDayGain", 30);
         return view('pages.sectors')->with([
         	'selectedSector' => $sectorName,
+            'selectedSectorDayChange' => SectorHistoricals::getSelectedSectorDayChange($sectorName),
         	'sectors' => $sectorDayChanges,
-        	'sectorDayChangeDay' => SectorHistoricals::getSectorDayChangeDay(),
-        	'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'omit'),
+        	'sectorWeekDay' => SectorHistoricals::getSectorWeekDay(),
+        	'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'all'),
         ]);
     }
 }
