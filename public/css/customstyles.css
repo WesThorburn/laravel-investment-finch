@@ -1,3 +1,11 @@
+body{
+	font-size:13px;
+}
+
+th{
+	font-size:12px;
+}
+
 .half-width{
 	width:50%;
 }
@@ -70,6 +78,11 @@
 .navbar{
 	border-radius:0px;
 	min-height:35px;
+}
+
+.navbar-inverse{
+	background-color:#253237;
+	border-color:#080808;
 }
 
 .btn-logout, .btn-login, .btn-register{
