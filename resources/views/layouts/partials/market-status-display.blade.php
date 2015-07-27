@@ -4,5 +4,4 @@
 	class="color-red"
 	@endif>
 	<b>{{ $marketStatus }}</b>
-</span>
-	- <b>{{ $serverTime }}
+</span> <b> - {{ $serverTime }}

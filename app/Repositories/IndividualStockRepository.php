@@ -16,13 +16,12 @@ Class IndividualStockRepository implements IndividualStockRepositoryInterface{
 			elseif($dataType == 'Volume'){
 				$recordValue = $record->volume;
 			}
-			array_push($graphData, array($this->makeCarbonDate($record->date)->toFormattedDateString(), $recordValue));
+			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
 		}
+		//Current day's trade value
+		$stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
+		$metricDate = explode(" ", $stockMetric->updated_at)[0];
+		array_push($graphData, array(getCarbonDateFromDate($metricDate)->toFormattedDateString(), $stockMetric->last_trade));
 		return $graphData;
-	}
-
-	private function makeCarbonDate($date){
-		$datePieces = explode('-', $date);
-		return Carbon::createFromDate($datePieces[0], $datePieces[1], $datePieces[2]);
 	}
 }

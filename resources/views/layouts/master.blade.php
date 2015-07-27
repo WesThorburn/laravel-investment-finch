@@ -21,7 +21,6 @@
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/dataTables.bootstrap.js"></script>
 		<script src="/js/jasny-bootstrap.js"></script>
-		<script src="/js/extra.js"></script>
 		@yield('head')
 	</head>
 
