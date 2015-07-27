@@ -37,10 +37,10 @@
 			}
 			setInterval(function(){
         		$('#marketStatus').load('/marketstatus');
-        	}, 1000);
+        	}, 15000);
         	setInterval(function(){
         		$('#marketChange').load('/marketchange');
-        	}, 10000); 
+        	}, 15000); 
 		</script>
 		<div id="container">
 			<nav class="navbar navbar-inverse no-margin-bottom">

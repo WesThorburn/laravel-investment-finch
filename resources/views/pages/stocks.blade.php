@@ -17,7 +17,7 @@
                 	}
                 	$('#sectorDayGain').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayGain');
                 	$('#sectorDayLoss').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayLoss');
-                }, 10000);
+                }, 60000);
             });
 	</script>
 	<div class="container">

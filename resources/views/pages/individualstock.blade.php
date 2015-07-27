@@ -10,7 +10,7 @@
             function() {
                 setInterval(function() {
                 		$('#metrics').load('/relatedstocks/{{$stock->metrics->stock_code}}');
-                }, 10000);
+                }, 60000);
         	});
 
 		function getGraphData(timeFrame, dataType){

@@ -13,7 +13,7 @@
                 		$('#allSectors').load(window.location.pathname + '/daychanges');
                 		$('#otherStocksInSector').load(window.location.pathname + '/otherstocksinsector');
                 	}
-                }, 10000);
+                }, 60000);
             });
 	</script>
 	<div class="container">
