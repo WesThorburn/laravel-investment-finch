@@ -1,6 +1,6 @@
 <div class="panel panel-default">
 	<div class="panel-heading"><b>{{$selectedSector}}</b></div>
-	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="stock_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="stocks_in_sector">
 	    <thead>
 	        <tr>
 	            <th>Code</th>
@@ -32,8 +32,7 @@
 
 <script>
 	$(document).ready(function(){
-		$('#stock_table').DataTable({
-			"order": [3, "{{ $sortOrder }}"],
+		$('#stocks_in_sector').DataTable({
 			"pageLength": 18,
 			"dom": 'tp',
 			"stateSave": true

@@ -18,13 +18,27 @@ class SectorController extends Controller
 
     public function show($sectorName)
     {
-    	$sectorDayChanges = SectorHistoricals::getSectorDayChanges("sectorDayGain", 30);
         return view('pages.sectors')->with([
         	'selectedSector' => $sectorName,
             'selectedSectorDayChange' => SectorHistoricals::getSelectedSectorDayChange($sectorName),
-        	'sectors' => $sectorDayChanges,
+        	'sectors' => SectorHistoricals::getSectorDayChanges("sectorDayGain", 30),
         	'sectorWeekDay' => SectorHistoricals::getSectorWeekDay(),
         	'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'all'),
+        ]);
+    }
+
+    public function sectorDayChanges($sectorName){
+        return view('layouts.partials.all-sectors-day-change-display')->with([
+            'selectedSector' => $sectorName,
+            'sectors' => SectorHistoricals::getSectorDayChanges("sectorDayGain", 30),
+            'sectorWeekDay' => SectorHistoricals::getSectorWeekDay()
+        ]);
+    }
+
+    public function otherStocksInSector($sectorName){
+        return view('layouts.partials.other-stocks-in-sector')->with([
+            'selectedSector' => $sectorName,
+            'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'all')
         ]);
     }
 }
