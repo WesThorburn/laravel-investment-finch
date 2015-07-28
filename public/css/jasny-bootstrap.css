@@ -512,7 +512,7 @@
 }
 .table-hover.rowlink tr:hover td,
 .table-hover .rowlink tr:hover td {
-  background-color: #cfcfcf;
+  background-color: #D9E0DC;
 }
 .btn-file {
   position: relative;

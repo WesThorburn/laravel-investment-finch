@@ -3007,7 +3007,7 @@ select[multiple].form-group-lg .form-control {
       -ms-user-select: none;
           user-select: none;
   background-image: none;
-  border: 1px solid transparent;
+  border: 1px solid #263338;
   border-radius: 4px;
 }
 .btn:focus,
@@ -4664,8 +4664,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   z-index: 2;
   color: #fff;
   cursor: default;
-  background-color: #000;
-  border-color: #000;
+  background-color: #263338;
+  border-color: #263338;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,
@@ -5321,7 +5321,7 @@ a.list-group-item-danger.active:focus {
 }
 .panel-heading {
   padding: 10px 15px;
-  border-bottom: 1px solid transparent;
+  border-bottom: none;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }

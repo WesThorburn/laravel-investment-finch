@@ -7,7 +7,7 @@
 		
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="/css/bootstrap-theme.css">
 		<link rel="stylesheet" href="/css/dataTables.bootstrap.css">
 		<link rel="stylesheet" href="/css/jasny-bootstrap.css">
 		<link rel="stylesheet" href="/css/customstyles.css">
@@ -55,14 +55,15 @@
 									<span class="icon-bar"></span>
 									<span class="icon-bar"></span>
 								</button>
-								<a class="navbar-brand" href="/">Home</a>
-								<a class="navbar-brand" href="/sector">Sectors</a>
-								
+								<a class="nav navbar-brand" href="/">Home</a>
 							</div>
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li><a href="/search">Screener <span class="sr-only">(current)</span></a></li>
+									<li><a href="/sector">Sectors</a></li>
+									<li><a href="/search">Search <span class="sr-only">(current)</span></a></li>
 								</ul>
+								<!--
+								Removed until login functionality is added
 								<div class="pull-right">
 									<ul class="nav navbar-nav">
 										<li>
@@ -74,7 +75,7 @@
 											@endif
 										</li>
 									</ul>
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>
