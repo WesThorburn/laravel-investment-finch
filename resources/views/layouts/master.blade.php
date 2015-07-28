@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>
-			StockWebsite | @yield('title')
+			Stocks | @yield('title') | Wes Thorburn
 		</title>
 		
 		<!-- CSS -->
@@ -59,8 +59,8 @@
 							</div>
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li><a href="/sector">Sectors</a></li>
-									<li><a href="/search">Search <span class="sr-only">(current)</span></a></li>
+									<li class="nav-button"><a href="/sector">Sectors</a></li>
+									<li class="nav-button"><a href="/search">Search <span class="sr-only">(current)</span></a></li>
 								</ul>
 								<!--
 								Removed until login functionality is added
