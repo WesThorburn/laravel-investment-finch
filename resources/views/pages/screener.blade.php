@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Screener
+	Search
 @stop
 
 @section('body')

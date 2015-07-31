@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>
-			1 Stocks | @yield('title') | Wes Thorburn
+			Stocks | @yield('title') | Wes Thorburn
 		</title>
 		
 		<!-- CSS -->
