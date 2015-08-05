@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-      	//Only run these between 10:00 and 17:00 Sydney Time
+      	//Only run these between 10:00 and 17:00 Sydney Time (In Testing)
 		if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 170000){
 			$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping();
 			$schedule->command('stocks:updateSectorChange')->weekdays()->withoutOverlapping();
