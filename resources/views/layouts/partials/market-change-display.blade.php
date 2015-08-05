@@ -7,5 +7,9 @@
 		<div class="color-red">
 			{{$marketChangeMessage}}
 		</div>
+	@elseif($marketChange == 0)
+		<div>
+			{{$marketChangeMessage}}
+		</div>
 	@endif
 @endif
