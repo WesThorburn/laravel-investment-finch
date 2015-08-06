@@ -10,12 +10,12 @@ class NavigationTest extends TestCase{
 	public function testSectorsButton(){
 		$this->visit('/')
 			->click('Sectors')
-			->seePageIs('/sector');
+			->seePageIs('/sectors');
 	}
 
 	public function testScreenerButton(){
 		$this->visit('/')
-			->click('Screener')
+			->click('Search')
 			->seePageIs('/search');
 	}
 }

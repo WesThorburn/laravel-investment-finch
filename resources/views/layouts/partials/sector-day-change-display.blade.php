@@ -5,7 +5,7 @@
 		    @foreach($sectorChanges as $sectorChange)
 				<tr>
 					<td>
-						{{ $sectorChange->sector }}<a href="/sector/{{$sectorChange->sector}}"></a>
+						{{ $sectorChange->sector }}<a href="/sectors/{{$sectorChange->sector}}"></a>
 					</td>
 					<td @if($sectorChange->day_change < 0) class="color-red" 
 						@elseif($sectorChange->day_change > 0) class="color-green"

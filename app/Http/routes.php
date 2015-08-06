@@ -4,11 +4,11 @@ Route::resource('search', 'SearchController');
 
 Route::get('sector/daychanges', 'SectorController@sectorDayChanges');
 Route::get('sector/otherstocksinsector', 'SectorController@otherStocksInSector');
-Route::resource('sector', 'SectorController');
+Route::resource('sectors', 'SectorController');
 
 Route::get('graph/{stockCode}/{timeFrame}/{dataType}', 'StockController@graph');
 Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
-Route::resource('stock', 'StockController');
+Route::resource('stocks', 'StockController');
 
 Route::get('/marketstatus','SearchController@marketStatus');
 Route::get('/marketchange', 'SearchController@marketChange');

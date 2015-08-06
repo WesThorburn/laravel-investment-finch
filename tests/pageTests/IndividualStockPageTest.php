@@ -2,7 +2,7 @@
 
 class IndividualStockPageTest extends TestCase{
 	public function testIndividualStockPage(){
-		$this->visit('/stock/CBA')
+		$this->visit('/stocks/CBA')
 			->see("COMMONWEALTH")
 			->see("Bank")
 			->see("CBA")

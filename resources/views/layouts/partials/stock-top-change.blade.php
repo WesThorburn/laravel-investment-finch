@@ -5,7 +5,7 @@
 		    @foreach($stockChanges as $stockChange)
 				<tr>
 					<td>
-						{{ $stockChange->stock->stock_code }}<a href="/stock/{{$stockChange->stock->stock_code}}"></a>
+						{{ $stockChange->stock->stock_code }}<a href="/stocks/{{$stockChange->stock->stock_code}}"></a>
 					</td>
 					<td>
 						{{ ucfirst(strtolower($stockChange->stock->company_name)) }}

@@ -14,7 +14,7 @@
 		    @foreach($stocksInSector as $stock)
 				<tr>
 					<td>
-						<a href="/stock/{{$stock->stock_code}}">{{ $stock->stock_code }}</a>
+						<a href="/stocks/{{$stock->stock_code}}">{{ $stock->stock_code }}</a>
 					</td>
 					<td>{{ ucfirst(strtolower($stock->stock->company_name)) }}</td>
 					<td>${{ $stock->last_trade }}</td>

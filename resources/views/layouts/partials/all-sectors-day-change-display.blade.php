@@ -10,7 +10,7 @@
 			@foreach($sectors as $sector)
 				<tr @if($sector->sector == $selectedSector) class="table-row-active" @endif>
 					<td>
-						<a href="/sector/{{$sector->sector}}">{{$sector->sector}}</a>
+						<a href="/sectors/{{$sector->sector}}">{{$sector->sector}}</a>
 					</td>
 					<td>
 						<div 
