@@ -10,7 +10,8 @@ class Stock extends Model {
 	protected $fillable = [
 		'stock_code',
 		'company_name',
-		'sector'
+		'sector',
+		'business_summary'
 	];
 
 	public function metrics(){

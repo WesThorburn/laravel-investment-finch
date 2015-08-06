@@ -14,6 +14,7 @@ Route::get('/marketstatus','SearchController@marketStatus');
 Route::get('/marketchange', 'SearchController@marketChange');
 
 /*route::get('/test', function(){
+
 });
 
 Route::controllers([

@@ -18,6 +18,7 @@ class CreateStocksTable extends Migration {
 			$table->char('stock_code', 3);
 			$table->string('company_name');
 			$table->string('sector');
+			$table->longText('business_summary')->nullable();
 			$table->timestamps();
 		});
 	}

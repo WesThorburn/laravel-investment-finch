@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\ResetDayChangeCommand',
 		'App\Console\Commands\UpdateSectorChangeCommand',
 		'App\Console\Commands\CalculateStockChangeCommand',
-		'App\Console\Commands\FillSectorHistoricalsCommand'
+		'App\Console\Commands\FillSectorHistoricalsCommand',
+		'App\Console\Commands\GetBusinessSummariesCommand'
 	];
 
 	/**
