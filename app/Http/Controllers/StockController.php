@@ -41,7 +41,7 @@ class StockController extends Controller
             $stockPriceLava = \Lava::AreaChart('StockPrice')
                 ->dataTable($prices)
                 ->setOptions([
-                    'width' => 542,
+                    'width' => 838,
                     'height' => 325,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
