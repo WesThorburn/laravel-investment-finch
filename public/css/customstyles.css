@@ -118,3 +118,9 @@ th{
 .navbar-default{
 	background-color:#D9E0DC;
 }
+
+@media(min-width: 768px){
+	.no-padding-left{
+		padding-left:0px;
+	}
+}

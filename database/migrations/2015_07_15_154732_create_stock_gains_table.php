@@ -21,6 +21,7 @@ class CreateStockGainsTable extends Migration
             $table->decimal('two_month_change', 10, 2);
             $table->decimal('three_month_change', 10, 2);
             $table->decimal('six_month_change', 10, 2);
+            $table->decimal('this_year_change', 10, 2);
             $table->decimal('year_change', 10, 2);
             $table->decimal('two_year_change', 10, 2);
             $table->decimal('three_year_change', 10, 2);

@@ -22,31 +22,50 @@
 	</script>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<div id="sectorDayGain">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
+			<div class="col-sm-8">
+				<div class="col-sm-6">
+					<div id="sectorDayGain">
+						@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div id="sectorDayLoss">
+						@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					@include('layouts.partials.stock-top-change', 
+						[
+							'stockChanges' => $topWeeklyGains, 
+							'title' => 'Best Performing Stocks (7 Days)',
+							'timeFrame' => 'week'
+						])
+				</div>
+
+				<div class="col-sm-6">
+					@include('layouts.partials.stock-top-change', 
+						[
+							'stockChanges' => $topWeeklyLosses, 
+							'title' => 'Worst Performing Stocks (7 Days)',
+							'timeFrame' => 'week'
+						])
 				</div>
 			</div>
 
-			<div class="col-md-4">
-				<div id="sectorDayLoss">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
-				</div>
+			<div class="col-sm-4 no-padding-left">
+				@include('layouts.partials.stock-top-change', 
+					[
+						'stockChanges' => $topStocksThisYear, 
+						'title' => "Best Performing Stocks ".date('Y'),
+						'timeFrame' => 'ytd'
+					])
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-4">
-			@include('layouts.partials.stock-top-change', ['stockChanges' => $topWeeklyGains, 'title' => 'Best Performing Stocks (7 Days)'])
-			</div>
-
-			<div class="col-md-4">
-				@include('layouts.partials.stock-top-change', ['stockChanges' => $topWeeklyLosses, 'title' => 'Worst Performing Stocks (7 Days)'])
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
+			<div class="col-sm-12">
 				<div class="pull-left">
 					{!! Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']) !!}
 						{!! Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control']) !!}
@@ -56,7 +75,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-sm-12">
 				<div id="metrics">
 					@include('layouts.partials.stock-list-display')
 				</div>

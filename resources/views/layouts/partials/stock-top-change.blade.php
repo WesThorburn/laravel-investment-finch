@@ -10,11 +10,19 @@
 					<td>
 						{{ ucfirst(strtolower($stockChange->stock->company_name)) }}
 					</td>
-					<td @if($stockChange->week_change < 0) class="color-red" 
-						@elseif($stockChange->week_change > 0) class="color-green"
-						@endif>
-						{{ $stockChange->week_change }}%
-					</td>
+					@if($timeFrame == 'week')
+						<td @if($stockChange->week_change < 0) class="color-red" 
+							@elseif($stockChange->week_change > 0) class="color-green"
+							@endif>
+							{{ $stockChange->week_change }}%
+						</td>
+					@elseif($timeFrame == 'ytd')
+						<td @if($stockChange->this_year_change < 0) class="color-red" 
+							@elseif($stockChange->this_year_change > 0) class="color-green"
+							@endif>
+							{{ $stockChange->this_year_change }}%
+						</td>
+					@endif
 				</tr>
 			@endforeach
 		</tbody>

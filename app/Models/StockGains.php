@@ -15,6 +15,7 @@ class StockGains extends Model
         'two_month_change',
         'three_month_change',
         'six_month_change',
+        'this_year_change',
         'year_change',
         'two_year_change',
         'three_year_change',
@@ -36,5 +37,10 @@ class StockGains extends Model
     public static function getWorstPerformingStocksThisWeek($limit = 10){
         $stockList = StockMetrics::omitOutliers()->lists('stock_code');
         return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take($limit)->get();
+    }
+
+    public static function getBestPerformingStocksThisYear($limit = 18){
+        $stockList = StockMetrics::omitOutliers()->where('market_cap', '>=', 100)->lists('stock_code');
+        return StockGains::whereIn('stock_code', $stockList)->where('this_year_change', '<', 250)->orderBy('this_year_change', 'desc')->take($limit)->get();
     }
 }

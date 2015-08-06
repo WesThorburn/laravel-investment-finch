@@ -45,6 +45,10 @@ class CalculateStockChangeCommand extends Command
         $this->info("Calculating the stock changes... This may take several minutes.");
         $stockCodes = Stock::lists('stock_code');
         $numberOfStocks = Stock::count();
+
+        //For Calculation of YTD gain
+        $firstTradingDateOfYear = CalculateStockChangeCommand::getFirstTradingDateOfYear();
+
         foreach($stockCodes as $key => $stockCode){
             $lastTrade = StockMetrics::where('stock_code', $stockCode)->pluck('last_trade');
             
@@ -65,6 +69,9 @@ class CalculateStockChangeCommand extends Command
             
             $priceSixMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(6)));
             $sixMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceSixMonthsAgo);
+
+            $priceAtStartOfYear = CalculateStockChangeCommand::getPriceAtDate($stockCode, $firstTradingDateOfYear);
+            $thisYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceAtStartOfYear);
 
             $priceOneYearAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYear()));
             $oneYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneYearAgo);     
@@ -98,6 +105,7 @@ class CalculateStockChangeCommand extends Command
                 'two_month_change' => $twoMonthChange,
                 'three_month_change' => $threeMonthChange,
                 'six_month_change' => $sixMonthChange,
+                'this_year_change' => $thisYearChange,
                 'year_change' => $oneYearChange,
                 'two_year_change' => $twoYearChange,
                 'three_year_change' => $threeYearChange,
@@ -124,5 +132,12 @@ class CalculateStockChangeCommand extends Command
             return round(($currentPrice-$startingPrice)*(100/$startingPrice), 2);
         }
         return 0;
+    }
+
+    private static function getFirstTradingDateOfYear(){
+        $firstTradingRecordOfYear = Historicals::where('date', 'like', date("Y").'-01-0%')->orderBy('date')->limit(1)->get();;
+        foreach($firstTradingRecordOfYear as $record){
+            return $record->date;
+        }
     }
 }
