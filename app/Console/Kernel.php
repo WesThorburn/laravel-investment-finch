@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\GetDailyFinancialsCommand',
 		'App\Console\Commands\ResetDayChangeCommand',
 		'App\Console\Commands\UpdateSectorChangeCommand',
-		'App\Console\Commands\CalculateStockChangeCommand'
+		'App\Console\Commands\CalculateStockChangeCommand',
+		'App\Console\Commands\FillSectorHistoricalsCommand'
 	];
 
 	/**
@@ -31,8 +32,8 @@ class Kernel extends ConsoleKernel {
 	{
       	//Only run these between 10:00 and 17:00 Sydney Time (In Testing)
 		if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 170000){
-			$schedule->command('stocks:updateStockMetrics')->weekdays()->withoutOverlapping();
-			$schedule->command('stocks:updateSectorChange')->weekdays()->withoutOverlapping();
+			$schedule->command('stocks:updateStockMetrics')->everyMinute()->weekdays()->withoutOverlapping();
+			$schedule->command('stocks:updateSectorChange')->everyMinute()->weekdays()->withoutOverlapping();
 		}
 		$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
 		$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('16:35');
