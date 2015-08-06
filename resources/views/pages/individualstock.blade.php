@@ -38,16 +38,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1>{{ $stock->company_name }}</h1>
+				<h1 class="no-margin-top">{{ $stock->company_name }}</h1>
 				<h2>{{ $stock->sector }}</h2>
 				<h3>(ASX: {{ $stock->stock_code }})</h3>
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
 				<h2>${{ $metrics->last_trade }}
 					<small @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
 						{{ $metrics->day_change }}%
@@ -130,6 +123,21 @@
 				</div>
 			</div>
 		</div>
+
+		@if($stock->business_summary != "")
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<b>Business Summary</b>
+						</div>
+						<div class="panel-body">
+							{{ $stock->business_summary }}
+						</div>
+					</div>
+				</div>
+			</div>
+		@endif
 
 		@if($relatedStocks->first())
 			<div class="row">
