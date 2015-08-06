@@ -18,6 +18,11 @@ class StockController extends Controller
     public function __construct(IndividualStockRepositoryInterface $stock){
         $this->stock = $stock;
     }
+
+    public function index(){
+        return redirect('/');
+    }
+
     /**
      * Display the specified resource.
      *
