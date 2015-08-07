@@ -23,34 +23,37 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
-				<div class="col-sm-6">
-					<div id="sectorDayGain">
-						@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
+				<div class="row">
+					<div class="col-sm-6">
+						<div id="sectorDayGain">
+							@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div id="sectorDayLoss">
+							@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
+						</div>
 					</div>
 				</div>
-
-				<div class="col-sm-6">
-					<div id="sectorDayLoss">
-						@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
+				<div class="row">
+					<div class="col-sm-6">
+						@include('layouts.partials.stock-top-change', 
+							[
+								'stockChanges' => $topWeeklyGains, 
+								'title' => 'Best Performing Stocks (7 Days)',
+								'timeFrame' => 'week'
+							])
 					</div>
-				</div>
 
-				<div class="col-sm-6">
-					@include('layouts.partials.stock-top-change', 
-						[
-							'stockChanges' => $topWeeklyGains, 
-							'title' => 'Best Performing Stocks (7 Days)',
-							'timeFrame' => 'week'
-						])
-				</div>
-
-				<div class="col-sm-6">
-					@include('layouts.partials.stock-top-change', 
-						[
-							'stockChanges' => $topWeeklyLosses, 
-							'title' => 'Worst Performing Stocks (7 Days)',
-							'timeFrame' => 'week'
-						])
+					<div class="col-sm-6">
+						@include('layouts.partials.stock-top-change', 
+							[
+								'stockChanges' => $topWeeklyLosses, 
+								'title' => 'Worst Performing Stocks (7 Days)',
+								'timeFrame' => 'week'
+							])
+					</div>
 				</div>
 			</div>
 
