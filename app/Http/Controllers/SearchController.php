@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Requests\ScreenerSearchRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Controllers\Controller;
 use App\Models\StockGains;
 use App\Models\SectorHistoricals;
@@ -21,12 +21,12 @@ class SearchController extends Controller {
 	}
 	
 	public function index(){
-		return view('pages.screener')->with([
+		return view('pages.search')->with([
 			'sectors' => Stock::getSectorDropdown()
 		]);
 	}
 
-	public function show(ScreenerSearchRequest $request){
+	public function show(SearchRequest $request){
 		$stocks = StockMetrics::getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
 		if($request->viewType == 'partial'){
 			if($request->section == 'sectorDayGain' || $request->section == 'sectorDayLoss'){

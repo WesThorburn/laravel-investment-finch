@@ -43,13 +43,25 @@ class UpdateStockListCommand extends Command {
 		foreach($companyListFromASX as $key => $companyRow){
 			if($companyRow != null){
 				$stockCode = explode(',"', explode('",', $companyRow)[1])[0];
-				Stock::updateOrCreate(['stock_code' => $stockCode], [
-					'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
-				    'company_name' => substr(explode('",', $companyRow)[0], 1),
-				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2)
-				]);
+				//Only insert full stock list if not in test mode
+				if(!$this->option('testMode')){
+					Stock::updateOrCreate(['stock_code' => $stockCode], [
+						'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
+					    'company_name' => substr(explode('",', $companyRow)[0], 1),
+					    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2),
+					    'updated_at' => date("Y-m-d H:i:s")
+					]);
+					$this->info("Updating... ".round(($key+1)*(100/$numberOfStocks), 2)."%");
+				}
+				else{
+					if($stockCode == 'TLS' || $stockCode == 'CBA'){
+						$stock = Stock::where('stock_code', $stockCode)->first();
+						$stock->updated_at = date("Y-m-d H:i:s");
+						$stock->save();
+						$this->info("[Test Mode] Updated...".$stockCode);
+					}
+				}
 			}
-			$this->info("Updating... ".round(($key+1)*(100/$numberOfStocks), 2)."%");
 		}
 		$this->info('The list of stocks was updated successfully!');
 	}
@@ -61,9 +73,7 @@ class UpdateStockListCommand extends Command {
 	 */
 	protected function getArguments()
 	{
-		return [
-			['example', InputArgument::OPTIONAL, 'An example argument.'],
-		];
+		return [];
 	}
 
 	/**
@@ -74,7 +84,7 @@ class UpdateStockListCommand extends Command {
 	protected function getOptions()
 	{
 		return [
-			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
+			['testMode', null, InputOption::VALUE_OPTIONAL, 'Runs the command in Test Mode.', false],
 		];
 	}
 

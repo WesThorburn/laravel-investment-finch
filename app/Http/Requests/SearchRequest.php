@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class ScreenerSearchRequest extends Request {
+class SearchRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

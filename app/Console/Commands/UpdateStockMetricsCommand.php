@@ -108,7 +108,7 @@ class UpdateStockMetricsCommand extends Command {
 	protected function getOptions()
 	{
 		return [
-			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
+			['testMode', null, InputOption::VALUE_OPTIONAL, 'Runs the command in Test Mode.', false],
 		];
 	}
 }

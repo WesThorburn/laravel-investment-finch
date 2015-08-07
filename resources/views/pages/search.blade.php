@@ -7,7 +7,7 @@
 @section('body')
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-6 col-lg-offset-3">
+			<div class="col-sm-6 col-sm-offset-3">
 				<div class="panel panel-default">
 				 	<div class="panel-heading">
 				        <th colspan="2">Enter the metrics you'd like to search for</th>
