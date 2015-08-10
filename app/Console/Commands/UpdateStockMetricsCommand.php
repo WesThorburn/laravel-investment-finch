@@ -39,8 +39,14 @@ class UpdateStockMetricsCommand extends Command {
 		$this->info('Updating stock metrics... This may take several minutes...');
 		$iterationNumber = 1;
 		$maxIterations = ceil(Stock::count()/100);
+		if($this->option('testMode')){
+			$maxIterations = 1;
+			$this->info("[Test Mode]");
+		}
 		while($iterationNumber <= $maxIterations){
-			$metrics = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".UpdateStockMetricsCommand::getStockCodeParameter()."&f=sl1p2a2j4ee8rp6kjm3m4j1y"));
+			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
+			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2a2j4ee8rp6kjm3m4j1y";
+			$metrics = explode("\n", file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
@@ -70,15 +76,20 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		$this->info('All stock metrics were updated successfully!');
 	}
-	//Gets list of stock codes separated by addition symbols
-	private static function getStockCodeParameter(){
-		//Limit of 100 at a time due to yahoo's url length limit
-		$stockCodeList = Stock::whereIn('stock_code', StockMetrics::where('updated_at', '<', Carbon::now()->subSeconds(60))->orderBy('updated_at')->take(100)->lists('stock_code'))->lists('stock_code');
-		$stockCodeParameter = "";
-		foreach($stockCodeList as $stockCode){
-			$stockCodeParameter .= "+".$stockCode.".AX";
+	//Gets list of stock codes separated by addition symbols, only TLS and CBA in test mode
+	private static function getStockCodeParameter($testMode = false){
+		if(!$testMode){
+			//Limit of 100 at a time due to yahoo's url length limit
+			$stockCodeList = Stock::whereIn('stock_code', StockMetrics::where('updated_at', '<', Carbon::now()->subSeconds(60))->orderBy('updated_at')->take(100)->lists('stock_code'))->lists('stock_code');
+			$stockCodeParameter = "";
+			foreach($stockCodeList as $stockCode){
+				$stockCodeParameter .= "+".$stockCode.".AX";
+			}
+			return substr($stockCodeParameter, 1);
 		}
-		return substr($stockCodeParameter, 1);
+		else{
+			return "TLS.AX+CBA.AX";
+		}
 	}
 	//Formats Market cap and returns it in Millions
 	private static function getMarketCap($individualMetric){

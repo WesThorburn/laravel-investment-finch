@@ -9,6 +9,17 @@ class Historicals extends Model
 {
     protected $table = 'historicals';
 
+    protected $fillable = [
+        'stock_code',
+        'date',
+        'open',
+        'high',
+        'low',
+        'close',
+        'volume',
+        'adj_close'
+    ];
+
     public function scopeDateCondition($query, $timeframe){
     	if($timeframe == 'last_month'){
     		return $query->where('date', '>', Carbon::now()->subMonth());

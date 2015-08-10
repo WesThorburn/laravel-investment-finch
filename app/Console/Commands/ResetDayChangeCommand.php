@@ -12,7 +12,7 @@ class ResetDayChangeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:resetDayChange';
+    protected $signature = 'stocks:resetDayChange {--testMode=false}';
 
     /**
      * The console command description.
@@ -38,8 +38,15 @@ class ResetDayChangeCommand extends Command
      */
     public function handle()
     {
-        $this->info("Resetting day gain to 0.00% for all stocks.");
-        StockMetrics::where('day_change', '!=', 0)->update(['day_change' => 0.00]);
-        $this->info("All gains have been reset.");
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            StockMetrics::whereIn('stock_code', ['TLS', 'CBA'])->where('day_change', '!=', 0)->update(['day_change' => 0.00]);
+            $this->info("Gains reset for TLS and CBA.");
+        }
+        else{
+            $this->info("Resetting day gain to 0.00% for all stocks.");
+            StockMetrics::where('day_change', '!=', 0)->update(['day_change' => 0.00]);
+            $this->info("All gains have been reset.");
+        }
     }
 }

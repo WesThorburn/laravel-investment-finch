@@ -15,7 +15,7 @@ class UpdateSectorChangeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:updateSectorChange';
+    protected $signature = 'stocks:updateSectorChange {--testMode=false}';
 
     /**
      * The console command description.
@@ -41,16 +41,26 @@ class UpdateSectorChangeCommand extends Command
      */
     public function handle()
     {
-        $this->info("Updating sector day changes...");
-        $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
-        foreach($sectors as $sector){
-            $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-            UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            foreach(['Bank', 'Telecommunication Service'] as $sector){
+                $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
+                UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
+            }
+            $this->info('Bank & Telecommunication Service sectors updated.');
         }
-        //Calculate change for whole market
-        $allStockCodes = Stock::lists('stock_code');
-        UpdateSectorChangeCommand::calculateDayGain($allStockCodes, "All");
-        $this->info("Sector day changes have been updated!");
+        else{
+            $this->info("Updating sector day changes...");
+            $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
+            foreach($sectors as $sector){
+                $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
+                UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
+            }
+            //Calculate change for whole market
+            $allStockCodes = Stock::lists('stock_code');
+            UpdateSectorChangeCommand::calculateDayGain($allStockCodes, "All");
+            $this->info("Sector day changes have been updated!");
+        }
     }
 
     private static function calculateDayGain($listOfStocks, $sectorName){

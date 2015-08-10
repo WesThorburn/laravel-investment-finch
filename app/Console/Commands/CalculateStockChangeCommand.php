@@ -16,7 +16,7 @@ class CalculateStockChangeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:calculateStockChange';
+    protected $signature = 'stocks:calculateStockChange {--testMode=false}';
 
     /**
      * The console command description.
@@ -42,79 +42,94 @@ class CalculateStockChangeCommand extends Command
      */
     public function handle()
     {
-        $this->info("Calculating the stock changes... This may take several minutes.");
-        $stockCodes = Stock::lists('stock_code');
-        $numberOfStocks = Stock::count();
-
-        //For Calculation of YTD gain
-        $firstTradingDateOfYear = CalculateStockChangeCommand::getFirstTradingDateOfYear();
-
-        foreach($stockCodes as $key => $stockCode){
-            $lastTrade = StockMetrics::where('stock_code', $stockCode)->pluck('last_trade');
-            
-            $priceOneWeekAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subWeek()));
-            $weekChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneWeekAgo);
-
-            $priceTwoWeeksAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subWeeks(2)));
-            $twoWeekChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoWeeksAgo);
-            
-            $priceOneMonthAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonth()));
-            $oneMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneMonthAgo);         
-
-            $priceTwoMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(2)));
-            $twoMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoMonthsAgo);            
-
-            $priceThreeMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(3)));
-            $threeMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceThreeMonthsAgo);
-            
-            $priceSixMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(6)));
-            $sixMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceSixMonthsAgo);
-
-            $priceAtStartOfYear = CalculateStockChangeCommand::getPriceAtDate($stockCode, $firstTradingDateOfYear);
-            $thisYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceAtStartOfYear);
-
-            $priceOneYearAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYear()));
-            $oneYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneYearAgo);     
-
-            $priceTwoYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(2)));
-            $twoYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoYearsAgo);           
-
-            $priceThreeYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(3)));
-            $threeYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceThreeYearsAgo);
-            
-            $priceFiveYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(5)));
-            $fiveYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceFiveYearsAgo);      
-
-            $priceTenYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(10)));
-            $tenYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTenYearsAgo);
-            
-            if(Historicals::where('stock_code', $stockCode)->first()){
-                $oldestDate = Historicals::where('stock_code', $stockCode)->orderBy('date', 'asc')->take(1)->lists('date');
-                $oldestPriceAvailable = CalculateStockChangeCommand::getPriceAtDate($stockCode, substr($oldestDate, 2, -2));
-                $allTimeChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $oldestPriceAvailable); 
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            foreach(['TLS', 'CBA'] as $stockCode){
+                $priceOneWeekAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subWeek()));
+                $lastTrade = StockMetrics::where('stock_code', $stockCode)->pluck('last_trade');
+                $weekChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneWeekAgo);
+                StockGains::updateOrCreate(['stock_code' => $stockCode], [
+                    'stock_code' => $stockCode,
+                    'week_change' => $weekChange,
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
             }
-            else{
-                $allTimeChange = 0;
-            }
+        }
+        else{
+            $this->info("Calculating the stock changes... This may take several minutes.");
+            $stockCodes = Stock::lists('stock_code');
+            $numberOfStocks = Stock::count();
 
-            StockGains::updateOrCreate(['stock_code' => $stockCode], [
-                'stock_code' => $stockCode,
-                'week_change' => $weekChange,
-                'two_week_change' => $twoWeekChange,
-                'month_change' => $oneMonthChange,
-                'two_month_change' => $twoMonthChange,
-                'three_month_change' => $threeMonthChange,
-                'six_month_change' => $sixMonthChange,
-                'this_year_change' => $thisYearChange,
-                'year_change' => $oneYearChange,
-                'two_year_change' => $twoYearChange,
-                'three_year_change' => $threeYearChange,
-                'five_year_change' => $fiveYearChange,
-                'ten_year_change' => $tenYearChange,
-                'all_time_change' => $allTimeChange,
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
-            $this->info("Completed: ".$stockCode." ".($key+1)."/".$numberOfStocks." - ".round(($key+1)*(100/$numberOfStocks), 2)."%");
+            //For Calculation of YTD gain
+            $firstTradingDateOfYear = CalculateStockChangeCommand::getFirstTradingDateOfYear();
+
+            foreach($stockCodes as $key => $stockCode){
+                $lastTrade = StockMetrics::where('stock_code', $stockCode)->pluck('last_trade');
+                
+                $priceOneWeekAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subWeek()));
+                $weekChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneWeekAgo);
+
+                $priceTwoWeeksAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subWeeks(2)));
+                $twoWeekChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoWeeksAgo);
+                
+                $priceOneMonthAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonth()));
+                $oneMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneMonthAgo);         
+
+                $priceTwoMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(2)));
+                $twoMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoMonthsAgo);            
+
+                $priceThreeMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(3)));
+                $threeMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceThreeMonthsAgo);
+                
+                $priceSixMonthsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subMonths(6)));
+                $sixMonthChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceSixMonthsAgo);
+
+                $priceAtStartOfYear = CalculateStockChangeCommand::getPriceAtDate($stockCode, $firstTradingDateOfYear);
+                $thisYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceAtStartOfYear);
+
+                $priceOneYearAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYear()));
+                $oneYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceOneYearAgo);     
+
+                $priceTwoYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(2)));
+                $twoYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTwoYearsAgo);           
+
+                $priceThreeYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(3)));
+                $threeYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceThreeYearsAgo);
+                
+                $priceFiveYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(5)));
+                $fiveYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceFiveYearsAgo);      
+
+                $priceTenYearsAgo = CalculateStockChangeCommand::getPriceAtDate($stockCode, getDateFromCarbonDate(Carbon::now()->subYears(10)));
+                $tenYearChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $priceTenYearsAgo);
+                
+                if(Historicals::where('stock_code', $stockCode)->first()){
+                    $oldestDate = Historicals::where('stock_code', $stockCode)->orderBy('date', 'asc')->take(1)->lists('date');
+                    $oldestPriceAvailable = CalculateStockChangeCommand::getPriceAtDate($stockCode, substr($oldestDate, 2, -2));
+                    $allTimeChange = CalculateStockChangeCommand::getPercentChange($lastTrade, $oldestPriceAvailable); 
+                }
+                else{
+                    $allTimeChange = 0;
+                }
+
+                StockGains::updateOrCreate(['stock_code' => $stockCode], [
+                    'stock_code' => $stockCode,
+                    'week_change' => $weekChange,
+                    'two_week_change' => $twoWeekChange,
+                    'month_change' => $oneMonthChange,
+                    'two_month_change' => $twoMonthChange,
+                    'three_month_change' => $threeMonthChange,
+                    'six_month_change' => $sixMonthChange,
+                    'this_year_change' => $thisYearChange,
+                    'year_change' => $oneYearChange,
+                    'two_year_change' => $twoYearChange,
+                    'three_year_change' => $threeYearChange,
+                    'five_year_change' => $fiveYearChange,
+                    'ten_year_change' => $tenYearChange,
+                    'all_time_change' => $allTimeChange,
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
+                $this->info("Completed: ".$stockCode." ".($key+1)."/".$numberOfStocks." - ".round(($key+1)*(100/$numberOfStocks), 2)."%");
+            }
         }
     }
 

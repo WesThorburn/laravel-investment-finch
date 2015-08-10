@@ -1,0 +1,28 @@
+ArtisanStockCommand
+ [x] Update stock list
+ [x] Update stock metrics
+ [x] Get daily financials
+ [x] Reset day change
+ [x] Update sector change
+ [x] Calculate stock change
+
+Navigation
+ [x] Home button
+ [x] Sectors button
+ [x] Screener button
+
+HomePage
+ [x] Index page
+ [x] Sector filter
+
+IndividualStockPage
+ [x] Individual stock page
+
+SearchPage
+ [x] Search page
+ [x] Stock screener
+
+SectorPage
+ [x] Sector page
+ [x] Stock link
+

@@ -14,7 +14,7 @@ class GetDailyFinancialsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:getDailyFinancials';
+    protected $signature = 'stocks:getDailyFinancials {--testMode=false}';
 
     /**
      * The console command description.
@@ -48,13 +48,19 @@ class GetDailyFinancialsCommand extends Command
             $numberOfStocks = count($stockCodes);
 			$iterationNumber = 1;
 			$maxIterations = ceil($numberOfStocks/100);
+            if($this->option('testMode')){
+                $maxIterations = 1;
+                $this->info("[Test Mode]");
+            }
 			while($iterationNumber <= $maxIterations){
-				$dailyRecords = explode("\n", file_get_contents("http://finance.yahoo.com/d/quotes.csv?s=".GetDailyFinancialsCommand::getStockCodeParameter()."&f=sohgl1v"));
+                $stockCodeParameter = GetDailyFinancialsCommand::getStockCodeParameter($this->option('testMode'));
+                $financialsURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sohgl1v";
+				$dailyRecords = explode("\n", file_get_contents($financialsURL));
 				foreach($dailyRecords as $record){
 					if($record != null){
 						$individualRecord = explode(',', $record);
 						$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
-						Historicals::insert([
+						Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 							"stock_code" => $stockCode,
 							"date" => date("Y-m-d"),
 							"open" => $individualRecord[1],
@@ -71,25 +77,31 @@ class GetDailyFinancialsCommand extends Command
 				$iterationNumber++;
 			}
 
-            $this->info("Reapplying index to historicals table");
-            \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
-            $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
+            if(!$this->option('testMode')){
+                $this->info("Reapplying index to historicals table");
+                \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
+                $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
+            }
         }
         else{
             $this->info("This command can only be run on weekdays");
         }
-        
     }
 
     //Gets list of stock codes separated by addition symbols
-	private static function getStockCodeParameter(){
-		date_default_timezone_set("Australia/Sydney");
-		//Limit of 100 at a time due to yahoo's url length limit
-		$stockCodeList = Stock::whereNotIn('stock_code', Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code'))->take(100)->lists('stock_code');
-		$stockCodeParameter = "";
-		foreach($stockCodeList as $stockCode){
-			$stockCodeParameter .= "+".$stockCode.".AX";
-		}
-		return substr($stockCodeParameter, 1);
+	private static function getStockCodeParameter($testMode = false){
+        if(!$testMode){
+            date_default_timezone_set("Australia/Sydney");
+            //Limit of 100 at a time due to yahoo's url length limit
+            $stockCodeList = Stock::whereNotIn('stock_code', Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code'))->take(100)->lists('stock_code');
+            $stockCodeParameter = "";
+            foreach($stockCodeList as $stockCode){
+                $stockCodeParameter .= "+".$stockCode.".AX";
+            }
+            return substr($stockCodeParameter, 1);
+        }
+        else{
+            return "TLS.AX+CBA.AX";
+        }
 	}
 }
