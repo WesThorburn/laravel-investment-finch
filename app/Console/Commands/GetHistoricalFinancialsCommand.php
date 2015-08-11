@@ -44,7 +44,7 @@ class GetHistoricalFinancialsCommand extends Command
             $this->info("Downloading historical financials...");
             $numberOfStocks = Stock::count();
             foreach(Stock::lists('stock_code') as $key => $stockCode){
-                $historicalSheetUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$stockCode.".AX&d=7&e=11&f=2015&g=d&a=7&b=10&c=2015&ignore=.csv";
+                $historicalSheetUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$stockCode.".AX&d=7&e=12&f=2015&g=d&a=7&b=11&c=2015&ignore=.csv";
                 if(get_headers($historicalSheetUrl, 1)[0] == 'HTTP/1.1 200 OK')
                 {
                     file_put_contents('database/files/spreadsheet.txt', trim(str_replace("Date,Open,High,Low,Close,Volume,Adj Close", "", file_get_contents($historicalSheetUrl))));
