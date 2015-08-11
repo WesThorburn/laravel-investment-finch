@@ -77,7 +77,7 @@ class GetDailyFinancialsCommand extends Command
 				$iterationNumber++;
 			}
 
-            if($this->option('testMode') == 'false'){
+            if($this->option('testMode') != 'true'){
                 $this->info("Reapplying index to historicals table");
                 \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
                 $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
@@ -90,7 +90,7 @@ class GetDailyFinancialsCommand extends Command
 
     //Gets list of stock codes separated by addition symbols
 	private static function getStockCodeParameter($testMode = 'false'){
-        if($testMode == 'false'){
+        if($testMode != 'true'){
             date_default_timezone_set("Australia/Sydney");
             //Limit of 100 at a time due to yahoo's url length limit
             $stockCodeList = Stock::whereNotIn('stock_code', Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code'))->take(100)->lists('stock_code');
