@@ -2,9 +2,11 @@
 <html>
 	<head>
 		<title>
-			Stocks | @yield('title') | Wes Thorburn
+			@yield('title') | ASX Stocks | Wes Thorburn
 		</title>
 		
+		<meta name="description" content="The only Australian Stock Market website that allows users to search for and rank stocks based on pre-defined metrics. A simple open source project built upon the Yahoo finance API."/>
+
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/bootstrap.css">
 		<link rel="stylesheet" href="/css/bootstrap-theme.css">
