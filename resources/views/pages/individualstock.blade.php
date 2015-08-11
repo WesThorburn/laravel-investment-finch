@@ -13,6 +13,14 @@
                 }, 60000);
         	});
 
+		$(document).ready(function () {
+		    $(window).resize(function(){
+		        lava.get('StockPrice', function(){
+		        	this.draw;
+		        });
+		    });
+		});
+
 		function getGraphData(timeFrame, dataType){
 			$.getJSON('/graph/'+ '{{ $stock->stock_code }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('StockPrice', dataTableJson, function (chart) {
@@ -34,6 +42,8 @@
 			});
 			document.getElementById(timeFrame).className = "btn btn-default active";
 		}
+
+		
 	</script>
 	<div class="container">
 		<div class="row">
@@ -52,7 +62,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-9">
+			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
