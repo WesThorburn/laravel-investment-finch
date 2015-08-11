@@ -40,7 +40,7 @@ class GetDailyFinancialsCommand extends Command
      */
     public function handle()
     {
-        if(Carbon::now()->isWeekDay()){
+        if(isTradingDay()){
             $this->info("This process can take several minutes...");
             $this->info("Getting daily financials...");
             $stockCodes = Stock::all()->lists('stock_code');
@@ -48,7 +48,7 @@ class GetDailyFinancialsCommand extends Command
             $numberOfStocks = count($stockCodes);
 			$iterationNumber = 1;
 			$maxIterations = ceil($numberOfStocks/100);
-            if($this->option('testMode')){
+            if($this->option('testMode') == 'true'){
                 $maxIterations = 1;
                 $this->info("[Test Mode]");
             }
@@ -77,20 +77,20 @@ class GetDailyFinancialsCommand extends Command
 				$iterationNumber++;
 			}
 
-            if(!$this->option('testMode')){
+            if($this->option('testMode') == 'false'){
                 $this->info("Reapplying index to historicals table");
                 \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
                 $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
             }
         }
         else{
-            $this->info("This command can only be run on weekdays");
+            $this->info("This command can only be run on trading days.");
         }
     }
 
     //Gets list of stock codes separated by addition symbols
-	private static function getStockCodeParameter($testMode = false){
-        if(!$testMode){
+	private static function getStockCodeParameter($testMode = 'false'){
+        if($testMode == 'false'){
             date_default_timezone_set("Australia/Sydney");
             //Limit of 100 at a time due to yahoo's url length limit
             $stockCodeList = Stock::whereNotIn('stock_code', Historicals::distinct()->where('date',date("Y-m-d"))->lists('stock_code'))->take(100)->lists('stock_code');
