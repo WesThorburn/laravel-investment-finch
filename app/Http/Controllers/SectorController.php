@@ -13,7 +13,7 @@ use App\Models\StockMetrics;
 class SectorController extends Controller
 {
 	public function index(){
-		return $this->show(SectorHistoricals::getBestPerformingSector());
+		return redirect('/sectors/'.SectorHistoricals::getBestPerformingSector());
 	}
 
     public function show($sectorName)

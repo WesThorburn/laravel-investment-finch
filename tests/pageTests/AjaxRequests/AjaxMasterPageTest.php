@@ -2,13 +2,13 @@
 
 class AjaxMasterPageTest extends TestCase{
 	public function testMarketStatus(){
-		$this->visit('/marketstatus')
+		$this->visit('/ajax/marketstatus')
 			->see("Market")
 			->see("(Sydney)");
 	}
 
 	public function testMarketChange(){
-		$this->visit('/marketchange')
+		$this->visit('/ajax/marketchange')
 			->see('The ASX')
 			->see("%");
 	}

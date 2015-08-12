@@ -14,10 +14,10 @@
             function() {
                 setInterval(function() {
                 	if(window.location.pathname != "/sector"){
-                		$('#allSectors').load(window.location.pathname + '/daychanges');
-                		$('#otherStocksInSector').load(window.location.pathname + '/otherstocksinsector');
+                		$('#allSectors').load('/ajax' + window.location.pathname + '/daychanges');
+                		$('#otherStocksInSector').load('/ajax' + window.location.pathname + '/otherstocksinsector');
                 	}
-                }, 60000);
+                }, 5000);
             });
 	</script>
 	<div class="container">

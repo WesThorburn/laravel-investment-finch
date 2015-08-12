@@ -30,18 +30,18 @@
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
-					$('#marketStatus').load('/marketstatus');
-					$('#marketChange').load('/marketchange');
+					$('#marketStatus').load('/ajax/marketstatus');
+					$('#marketChange').load('/ajax/marketchange');
 				}
 			);
 			function redirect(location){
 				window.location.href = location;
 			}
 			setInterval(function(){
-        		$('#marketStatus').load('/marketstatus');
+        		$('#marketStatus').load('/ajax/marketstatus');
         	}, 15000);
         	setInterval(function(){
-        		$('#marketChange').load('/marketchange');
+        		$('#marketChange').load('/ajax/marketchange');
         	}, 15000); 
 		</script>
 		<div id="container">

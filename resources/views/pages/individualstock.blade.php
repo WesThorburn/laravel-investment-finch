@@ -13,7 +13,7 @@
 		$(document).ready(
             function() {
                 setInterval(function() {
-                		$('#metrics').load('/relatedstocks/{{$stock->metrics->stock_code}}');
+                		$('#metrics').load('/ajax/relatedstocks/{{$stock->metrics->stock_code}}');
                 }, 60000);
         	});
 
