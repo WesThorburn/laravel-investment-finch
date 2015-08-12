@@ -59,6 +59,25 @@
 							])
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						@include('layouts.partials.stock-top-change', 
+							[
+								'stockChanges' => $topMonthlyGains, 
+								'title' => 'Best Performing Stocks (30 Days)',
+								'timeFrame' => 'week'
+							])
+					</div>
+
+					<div class="col-sm-6">
+						@include('layouts.partials.stock-top-change', 
+							[
+								'stockChanges' => $topMonthlyLosses, 
+								'title' => 'Worst Performing Stocks (30 Days)',
+								'timeFrame' => 'week'
+							])
+					</div>
+				</div>
 			</div>
 
 			<div class="col-sm-4 no-padding-left">

@@ -29,17 +29,23 @@ class StockGains extends Model
         return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
     }
 
-    public static function getBestPerformingStocksThisWeek($limit = 10){
-        $stockList = StockMetrics::omitOutliers()->lists('stock_code');
+    public static function getTopStocksThisWeek($stockList, $limit = 10){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'desc')->take($limit)->get();
     }
 
-    public static function getWorstPerformingStocksThisWeek($limit = 10){
-        $stockList = StockMetrics::omitOutliers()->lists('stock_code');
+    public static function getBottomStocksThisWeek($stockList, $limit = 10){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take($limit)->get();
     }
 
-    public static function getBestPerformingStocksThisYear($limit = 18){
+    public static function getTopStocksThisMonth($stockList, $limit = 10){
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('month_change', 'desc')->take($limit)->get();
+    }
+
+    public static function getBottomStocksThisMonth($stockList, $limit = 10){
+        return StockGains::whereIn('stock_code', $stockList)->orderBy('month_change', 'asc')->take($limit)->get();
+    }
+
+    public static function getTopStocksThisYear($limit = 18){
         $stockList = StockMetrics::omitOutliers()->where('market_cap', '>=', 100)->lists('stock_code');
         return StockGains::whereIn('stock_code', $stockList)->where('this_year_change', '<', 250)->orderBy('this_year_change', 'desc')->take($limit)->get();
     }
