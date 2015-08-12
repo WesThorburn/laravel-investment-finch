@@ -2,13 +2,10 @@
 
 class AjaxSectorPageTest extends TestCase{
 	public function testSectorDayChanges(){
-		$this->visit('/ajax/sectors/all/daychanges')
+		$this->visit('/ajax/sectors/Bank/daychanges')
 			->see('Sector')->see('Change')
-			->dontSee('Toggle navigation')
-			->dontSee('Home')
-			->dontSee('Sectors')
-			->dontSee('Stocks')
-			->dontSee('Search');
+			->dontSee('Toggle navigation');
+			//Toggle Navigation appears if the whole page is reloaded.
 	}
 
 	public function testOtherStocksInSector(){

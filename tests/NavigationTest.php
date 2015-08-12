@@ -8,9 +8,11 @@ class NavigationTest extends TestCase{
 	}
 
 	public function testSectorsButton(){
+		//'Sectors' redirects to URL of day's highest performing sector
 		$this->visit('/')
 			->click('Sectors')
-			->seePageIs('/sectors');
+			->see('Sector')
+			->see('Change');
 	}
 
 	public function testScreenerButton(){
