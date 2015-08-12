@@ -30,7 +30,10 @@ class StockController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id){
+    public function show(Request $request, $id){
+        if($request->stockCode){
+            return redirect('stocks/'.$request->stockCode);
+        }
         if(Stock::where('stock_code', $id)->first()){
             $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
             $stockPriceLava = new Lavacharts;
