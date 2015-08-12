@@ -11,13 +11,13 @@ class AjaxIndividualStockPageTest extends TestCase{
 	}
 
 	public function testStockGraph(){
-		$this->visit('/ajax/graph/CBA/last_month/Price')
+		$this->visit('/graph/CBA/last_month/Price')
 			->see('Date')
 			->see('Price')
 			->see(date('M'))
 			->see(date('Y'));
 
-		$this->visit('/ajax/graph/CBA/all_time/Price')
+		$this->visit('/graph/CBA/all_time/Price')
 			->see('Date')
 			->see('Price')
 			->see('Feb 1, 2000')
