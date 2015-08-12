@@ -11,7 +11,7 @@
 @section('body')
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">
+			<div class="col-lg-6 col-lg-offset-3">
 				<div class="panel panel-default">
 				 	<div class="panel-heading">
 				        <th colspan="2">Enter the metrics you'd like to search for</th>
@@ -22,7 +22,8 @@
 							<tr>
 								<div class="form-group">
 									<td align="right"><b>Sector</b></td>
-									<td colspan="4">{!! Form::select('stockSector', $sectors, 0, ['class' => 'form-control']) !!}</td>
+									<td colspan="2">{!! Form::select('stockSector', $sectors, 0, ['class' => 'form-control']) !!}</td>
+									<td colspan="2"></td>
 								</div>
 							</tr>
 							@include('layouts.partials.form-error-row', ['fieldName' => 'stockSector'])
