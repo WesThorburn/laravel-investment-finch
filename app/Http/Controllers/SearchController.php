@@ -41,13 +41,6 @@ class SearchController extends Controller {
 		
 		return view('pages.stocks')->with([
 			'stocks' => $stocks,
-			'sectorDayGains' => SectorHistoricals::getSectorDayChanges('sectorDayGain'),
-			'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
-			'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayGain'),
-			'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss'),
-			'topWeeklyGains' => StockGains::getBestPerformingStocksThisWeek(),
-			'topWeeklyLosses' => StockGains::getWorstPerformingStocksThisWeek(),
-			'topStocksThisYear' => StockGains::getBestPerformingStocksThisYear(),
 			'stockSectors' => Stock::getSectorDropdown(),
 			'stockSectorName' => $request->stockSector
 		]);

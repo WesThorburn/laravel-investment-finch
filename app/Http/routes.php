@@ -1,5 +1,7 @@
 <?php
-Route::get('/', 'SearchController@show');
+Route::get('/', 'PageController@index');
+
+Route::resource('stocks', 'StockController');
 Route::resource('search', 'SearchController');
 
 Route::get('sectors/{sectorName}/daychanges', 'SectorController@sectorDayChanges');
@@ -8,7 +10,6 @@ Route::resource('sectors', 'SectorController');
 
 Route::get('graph/{stockCode}/{timeFrame}/{dataType}', 'StockController@graph');
 Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
-Route::resource('stocks', 'StockController');
 
 Route::get('/marketstatus','SearchController@marketStatus');
 Route::get('/marketchange', 'SearchController@marketChange');

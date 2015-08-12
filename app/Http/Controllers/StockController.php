@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\SearchRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Historicals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
-use App\Repositories\IndividualStockRepositoryInterface;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
 
 class StockController extends Controller
 {
-    public function __construct(IndividualStockRepositoryInterface $stock){
-        $this->stock = $stock;
-    }
-
-    public function index(){
-        return redirect('/');
+    public function index(SearchRequest $request){
+        $stocks = StockMetrics::getMetricsByStockList(Stock::lists('stock_code'), "omit");
+        return view('pages.stocks')->with([
+            'stockSectors' => Stock::getSectorDropdown(),
+            'stocks' => $stocks,
+            'stockSectorName' => $request->stockSector
+        ]);
     }
 
     /**
@@ -31,7 +32,7 @@ class StockController extends Controller
      */
     public function show($id){
         if(Stock::where('stock_code', $id)->first()){
-            $priceGraphData = $this->stock->getGraphData($id, 'last_month', 'Price');
+            $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
             $stockPriceLava = new Lavacharts;
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
@@ -57,7 +58,7 @@ class StockController extends Controller
     }
 
     public function graph($stockCode, $timeFrame, $dataType){
-        $graphData = $this->stock->getGraphData($stockCode, $timeFrame, $dataType);
+        $graphData = Stock::getGraphData($stockCode, $timeFrame, $dataType);
         $prices = \Lava::DataTable();
         $prices->addStringColumn('Date')
             ->addNumberColumn($dataType)
