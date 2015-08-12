@@ -17,7 +17,7 @@
                 		$('#allSectors').load('/ajax' + window.location.pathname + '/daychanges');
                 		$('#otherStocksInSector').load('/ajax' + window.location.pathname + '/otherstocksinsector');
                 	}
-                }, 5000);
+                }, 60000);
             });
 	</script>
 	<div class="container">
