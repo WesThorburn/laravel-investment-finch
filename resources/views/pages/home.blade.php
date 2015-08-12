@@ -65,7 +65,7 @@
 							[
 								'stockChanges' => $topMonthlyGains, 
 								'title' => 'Best Performing Stocks (30 Days)',
-								'timeFrame' => 'week'
+								'timeFrame' => 'month'
 							])
 					</div>
 
@@ -74,7 +74,7 @@
 							[
 								'stockChanges' => $topMonthlyLosses, 
 								'title' => 'Worst Performing Stocks (30 Days)',
-								'timeFrame' => 'week'
+								'timeFrame' => 'month'
 							])
 					</div>
 				</div>

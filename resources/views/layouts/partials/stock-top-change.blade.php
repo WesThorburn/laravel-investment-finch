@@ -22,6 +22,12 @@
 							@endif>
 							{{ $stockChange->this_year_change }}%
 						</td>
+					@elseif($timeFrame == 'month')
+						<td @if($stockChange->month_change < 0) class="color-red" 
+							@elseif($stockChange->month_change > 0) class="color-green"
+							@endif>
+							{{ $stockChange->month_change }}%
+						</td>
 					@endif
 				</tr>
 			@endforeach
