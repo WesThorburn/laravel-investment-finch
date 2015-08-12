@@ -19,7 +19,7 @@ Class IndividualStockRepository implements IndividualStockRepositoryInterface{
 			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
 		}
 		//Add Current day's trade value to graph data
-		if(isTradingDay() && !Historicals::where(['stock_code' => $stockCode, 'date' => date('Y-m-d')])->first()){
+		if(getMarketStatus() == "Market Open" && !Historicals::where(['stock_code' => $stockCode, 'date' => date('Y-m-d')])->first()){
 			$stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
 			$metricDate = explode(" ", $stockMetric->updated_at)[0];
 			array_push($graphData, array(getCarbonDateFromDate($metricDate)->toFormattedDateString(), $stockMetric->last_trade));
