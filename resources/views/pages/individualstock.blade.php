@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('nav')
+	@include('layouts.partials.nav-buttons')
+@stop
+
 @section('title')
 	{{$stock->metrics->stock_code}}
 @stop

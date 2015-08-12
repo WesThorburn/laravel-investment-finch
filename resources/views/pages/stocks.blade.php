@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('nav')
+	@include('layouts.partials.nav-buttons', ['page' => 'home'])
+@stop
+
 @section('title')
 	Home
 @stop

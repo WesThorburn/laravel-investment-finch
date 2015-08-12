@@ -50,6 +50,14 @@ th{
 	margin-top:none;
 }
 
+.no-margin-left{
+	margin-top:left;
+}
+
+.no-margin-right{
+	margin-top:right;
+}
+
 .no-margin-bottom{
 	margin-bottom:0px;
 }
