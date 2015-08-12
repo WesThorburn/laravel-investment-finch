@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('nav')
-	@include('layouts.partials.nav-buttons')
+	@include('layouts.partials.nav-buttons', ['page' => ''])
 @stop
 
 @section('title')
