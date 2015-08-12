@@ -8,21 +8,21 @@ use App\Models\StockMetrics;
 
 use Illuminate\Console\Command;
 
-class UpdateSectorChangeCommand extends Command
+class UpdateSectorMetricsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stocks:updateSectorChange {--testMode=false}';
+    protected $signature = 'stocks:updateSectorMetrics {--testMode=false}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updates the daily percentage change for each sector.';
+    protected $description = 'Updates the metrics for each sector.';
 
     /**
      * Create a new command instance.
@@ -45,20 +45,20 @@ class UpdateSectorChangeCommand extends Command
             $this->info("[Test Mode]");
             foreach(['Bank', 'Telecommunication Service'] as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-                UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
+                UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
             }
             $this->info('Bank & Telecommunication Service sectors updated.');
         }
         else{
-            $this->info("Updating sector day changes...");
+            $this->info("Updating sector metrics...");
             $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
             foreach($sectors as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-                UpdateSectorChangeCommand::calculateDayGain($stocksInSector, $sector);
+                UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
             }
             //Calculate change for whole market
             $allStockCodes = Stock::lists('stock_code');
-            UpdateSectorChangeCommand::calculateDayGain($allStockCodes, "All");
+            UpdateSectorMetricsCommand::calculateDayGain($allStockCodes, "All");
             $this->info("Sector day changes have been updated!");
         }
     }
@@ -89,7 +89,14 @@ class UpdateSectorChangeCommand extends Command
             [
                 'sector' => $sectorName,
                 'date' => date("Y-m-d"),
-                'day_change' => round($percentChange, 2)
+/*                'day_change' => round($percentChange, 2),
+                'average_daily_volume' => ,
+                'EBITDA' => ,
+                'earnings_per_share_current' => ,
+                'earnings_per_share_next_year' => ,
+                'price_to_earnings' => ,
+                'price_to_book' => ,
+                'dividend_yield' => ,*/
             ]
         );
     }
