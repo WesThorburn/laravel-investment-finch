@@ -268,7 +268,7 @@
 						@include('layouts.partials.form-error-row', ['fieldName' => 'minDividendYield'])
 						@include('layouts.partials.form-error-row', ['fieldName' => 'maxDividendYield'])
 						<tr>
-							<td colspan="5">{!! Form::submit("Find", ['class' => 'btn btn-default form-control']) !!}</td>
+							<td colspan="5">{!! Form::submit("Search", ['class' => 'btn btn-default form-control']) !!}</td>
 						</tr>
 					</table>
 					{!! Form::close() !!}

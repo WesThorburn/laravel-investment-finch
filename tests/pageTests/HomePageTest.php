@@ -8,10 +8,10 @@ class HomePageTest extends TestCase{
 			->see("Best Performing Stocks (30 Days)")->see("Worst Performing Stocks (30 Days)");
 	}
 
-	public function testStockSearch(){
+	public function testStockFind(){
 		$this->visit('/')
-			->type('CBA', 'stockCodeSearch')
-			->press('Search')
+			->type('CBA', 'stockCodeFind')
+			->press('Find')
 			->seePageIs('/stocks/CBA')
 			->see('Commonwealth Bank of Australia')
 			->see('Key Metrics')

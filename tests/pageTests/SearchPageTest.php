@@ -33,7 +33,7 @@ class SearchPageTest extends TestCase{
 			->type('70','max200DayMA')
 			->type('1','minMarketCap')
 			->type('1000','maxMarketCap')
-			->press('Find')
+			->press('Search')
 			->see('Code')->see('Name')->see('Sector');
 	}
 }

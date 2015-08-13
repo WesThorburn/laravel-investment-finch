@@ -31,8 +31,8 @@ class StockController extends Controller
      * @return Response
      */
     public function show(Request $request, $id){
-        if($request->stockCodeSearch){
-            return redirect('stocks/'.$request->stockCodeSearch);
+        if($request->stockCodeFind){
+            return redirect('stocks/'.$request->stockCodeFind);
         }
         if(Stock::where('stock_code', $id)->first()){
             $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
