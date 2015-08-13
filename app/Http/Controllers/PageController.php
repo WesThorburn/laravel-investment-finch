@@ -25,7 +25,7 @@ class PageController extends Controller
             'topWeeklyLosses' => StockGains::getBottomStocksThisWeek($allNonOmittedStocks),
             'topMonthlyGains' => StockGains::getTopStocksThisMonth($allNonOmittedStocks),
             'topMonthlyLosses' => StockGains::getBottomStocksThisMonth($allNonOmittedStocks),
-            'topStocksThisYear' => StockGains::getTopStocksThisYear()
+            'topStocksThisYear' => StockGains::getTopStocksThisYear(29)
         ]);
     }
 }
