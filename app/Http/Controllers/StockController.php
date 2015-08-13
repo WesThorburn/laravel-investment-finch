@@ -47,7 +47,7 @@ class StockController extends Controller
                 ->dataTable($prices)
                 ->setOptions([
                     'width' => 620,
-                    'height' => 325,
+                    'height' => 360,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
 

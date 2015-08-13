@@ -154,8 +154,15 @@
 		</div>
 
 		<div class="row">
+			@if($relatedStocks->first())
+				<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-7" @endif>
+					<div id="metrics">
+						@include('layouts.partials.related-stock-list-display')
+					</div>	
+				</div>		
+			@endif
 			@if($stock->business_summary != "")
-				<div @if(!$relatedStocks->first()) class="col-md-12" @else class="col-md-6" @endif>
+				<div @if(!$relatedStocks->first()) class="col-md-12" @else class="col-md-5" @endif>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>Business Summary</b>
@@ -165,14 +172,6 @@
 						</div>
 					</div>
 				</div>
-			@endif
-
-			@if($relatedStocks->first())
-				<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-6" @endif>
-					<div id="metrics">
-						@include('layouts.partials.related-stock-list-display')
-					</div>	
-				</div>		
 			@endif
 		</div>
 	</div>
