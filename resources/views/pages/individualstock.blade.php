@@ -125,22 +125,22 @@
 							<tr>
 								<td>52 Week High</td>
 								<td>{{ $metrics->year_high }}</td>
-								<td></td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>52 Week Low</td>
 								<td>{{ $metrics->year_low }}</td>
-								<td></td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>50 Day Moving Average</td>
 								<td>{{ $metrics->fifty_day_moving_average }}</td>
-								<td></td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>200 Day Moving Average</td>
 								<td>{{ $metrics->two_hundred_day_moving_average }}</td>
-								<td></td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>Market Cap</td>
