@@ -69,9 +69,10 @@ class Stock extends Model {
 			}
 			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
 		}
-		//Add Current day's trade value to graph data
-		if(getMarketStatus() == "Market Open" 
-			&& getCurrentTimeIntVal() >= 103200 
+		//Add Current day's trade value to graph data 
+		//10:32am allows time for the metrics to be populated
+		if(isTradingDay() 
+			&& getCurrentTimeIntVal() >= 103200
 			&& !Historicals::where(['stock_code' => $stockCode, 'date' => date('Y-m-d')])->first()){
 			$stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
 			$metricDate = explode(" ", $stockMetric->updated_at)[0];
