@@ -81,7 +81,7 @@ class UpdateSectorMetricsCommand extends Command
         else{
             $percentChange = 0;
         }
-        
+
         SectorHistoricals::updateOrCreate(
             [
                 'sector' => $sectorName,
