@@ -15,14 +15,14 @@ class UpdateSectorMetricsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:updateSectorMetrics {--testMode=false}';
+    protected $signature = 'stocks:updateSectorMetrics {--testMode=false}{--mode=full}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updates the metrics for each sector.';
+    protected $description = 'Updates the metrics for each sector. --mode=partial includes only Market Cap --mode=full includes all metrics';
 
     /**
      * Create a new command instance.
@@ -51,23 +51,26 @@ class UpdateSectorMetricsCommand extends Command
         }
         else{
             $this->info("Updating sector metrics...");
+            $this->info("Mode: ".$this->option('mode'));
             $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
-
-            $sectorMetrics = [
-                'average_daily_volume', 
-                'EBITDA', 
-                'earnings_per_share_current', 
-                'earnings_per_share_next_year', 
-                'price_to_earnings', 
-                'price_to_book', 
-                'dividend_yield'
-            ];
 
             foreach($sectors as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
                 UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
-                foreach($sectorMetrics as $sectorMetric){
-                    UpdateSectorMetricsCommand::calculateMetric($sectorMetric, $stocksInSector, $sector);
+
+                if($this->option('mode') == 'full'){
+                    $sectorMetrics = [
+                        'average_daily_volume', 
+                        'EBITDA', 
+                        'earnings_per_share_current', 
+                        'earnings_per_share_next_year', 
+                        'price_to_earnings', 
+                        'price_to_book', 
+                        'dividend_yield'
+                    ];
+                    foreach($sectorMetrics as $sectorMetric){
+                        UpdateSectorMetricsCommand::calculateMetric($sectorMetric, $stocksInSector, $sector);
+                    }
                 }
             }
             //Calculate change for whole market
