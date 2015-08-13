@@ -19,6 +19,7 @@ class SectorHistoricals extends Model
         'price_to_earnings',
         'price_to_book',
         'dividend_yield',
+        'average_sector_market_cap',
     	'created_at',
     	'updated_at'
     ];

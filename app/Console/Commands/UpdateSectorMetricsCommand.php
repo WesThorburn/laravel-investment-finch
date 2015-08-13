@@ -86,6 +86,8 @@ class UpdateSectorMetricsCommand extends Command
             array_push($marketCaps, $marketCap);
             array_push($marketCapDayChanges, $marketCap - ($marketCap/(($dayChange/100)+1)));
         }
+
+        //Calculate Market Cap % Change
         $totalSectorMarketCaps = array_sum($marketCaps);
         $totalSectorDayChange = array_sum($marketCapDayChanges);
         if($totalSectorMarketCaps > 0){
@@ -94,6 +96,16 @@ class UpdateSectorMetricsCommand extends Command
         else{
             $percentChange = 0;
         }
+
+        //Calculate Sector's Average Market Cap
+        $numberOfMarketCaps = count($marketCaps);
+        if($numberOfMarketCaps > 0){
+            $averageSectorMarketCap = $totalSectorMarketCaps/$numberOfMarketCaps;
+        }
+        else{
+            $averageSectorMarketCap = 0;
+        }
+        
 
         SectorHistoricals::updateOrCreate(
             [
@@ -104,7 +116,8 @@ class UpdateSectorMetricsCommand extends Command
                 'sector' => $sectorName,
                 'date' => date("Y-m-d"),
                 'total_sector_market_cap' => $totalSectorMarketCaps,
-                'day_change' => round($percentChange, 2)
+                'day_change' => round($percentChange, 2),
+                'average_sector_market_cap' => $averageSectorMarketCap
             ]
         );
     }
