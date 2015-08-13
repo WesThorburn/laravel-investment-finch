@@ -14,6 +14,7 @@ class AddTotalSectorMarketCapsToSectorHistoricals extends Migration
     {
         Schema::table('sector_historicals', function (Blueprint $table) {
             $table->decimal('total_sector_market_cap', 10, 2)->after('date');
+            $table->decimal('average_sector_market_cap', 10, 2)->after('dividend_yield');
         });
     }
 
@@ -26,6 +27,7 @@ class AddTotalSectorMarketCapsToSectorHistoricals extends Migration
     {
         Schema::table('sector_historicals', function (Blueprint $table) {
             $table->dropColumn('total_sector_market_cap');
+            $table->dropColumn('average_sector_market_cap');
         });
     }
 }

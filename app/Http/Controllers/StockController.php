@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\SearchRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Historicals;
+use App\Models\SectorHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use Carbon\Carbon;
@@ -45,16 +46,19 @@ class StockController extends Controller
             $stockPriceLava = \Lava::AreaChart('StockPrice')
                 ->dataTable($prices)
                 ->setOptions([
-                    'width' => 838,
+                    'width' => 620,
                     'height' => 325,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
+
+            $sector = Stock::where('stock_code', $id)->first()->pluck('sector');
 
             return view('pages.individualstock')->with([
                 'stockPriceLava' => $stockPriceLava,
                 'stock' => Stock::where('stock_code', $id)->first(),
                 'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit'),
-                'metrics' => StockMetrics::where('stock_code', $id)->first()
+                'metrics' => StockMetrics::where('stock_code', $id)->first(),
+                'sectorAverage' => SectorHistoricals::where(['sector' => $sector, 'date' => date("Y-m-d")])->first()
             ]);
         }
         return redirect('/');

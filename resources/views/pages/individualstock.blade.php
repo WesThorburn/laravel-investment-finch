@@ -66,7 +66,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-7">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
@@ -87,50 +87,65 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-5">
 				<div class="panel panel-default">
 					<div class="panel-heading"><b>Key Metrics</b></div>
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
+								<td></td>
+								<td><b>{{ $stock->stock_code }}</b></td>
+								<td><b>Sector</b></td>
+							</tr>
+							<tr>
 								<td>EBITDA</td>
 								<td>{{ $metrics->EBITDA }}</td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>EPS (This Year)</td>
 								<td>{{ $metrics->earnings_per_share_current }}</td>
+								<td>{{ $sectorAverage->earnings_per_share_current }}</td>
 							</tr>
 							<tr>
 								<td>EPS (Next Year)</td>
 								<td>{{ $metrics->earnings_per_share_next_year }}</td>
+								<td>{{ $sectorAverage->earnings_per_share_next_year }}</td>
 							</tr>
 							<tr>
 								<td>Price/Earnings</td>
 								<td>{{ $metrics->price_to_earnings }}</td>
+								<td>{{ $sectorAverage->price_to_earnings }}</td>
 							</tr>
 							<tr>
 								<td>Price/Book</td>
 								<td>{{ $metrics->price_to_book }}</td>
+								<td>{{ $sectorAverage->price_to_book }}</td>
 							</tr>
 							<tr>
 								<td>52 Week High</td>
 								<td>{{ $metrics->year_high }}</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>52 Week Low</td>
 								<td>{{ $metrics->year_low }}</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>50 Day Moving Average</td>
 								<td>{{ $metrics->fifty_day_moving_average }}</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>200 Day Moving Average</td>
 								<td>{{ $metrics->two_hundred_day_moving_average }}</td>
+								<td></td>
 							</tr>
 							<tr>
 								<td>Market Cap</td>
 								<td>{{ formatMoneyAmount($metrics->market_cap) }}</td>
+								<td></td>
 							</tr>
 						</tbody>
 					</table>
