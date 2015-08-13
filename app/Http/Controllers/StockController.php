@@ -51,14 +51,15 @@ class StockController extends Controller
                     'title' => 'Price of '.strtoupper($id)
                 ]);
 
-            $sector = Stock::where('stock_code', $id)->first()->pluck('sector');
+            $sector = Stock::where('stock_code', $id)->pluck('sector');
+            $motRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
 
             return view('pages.individualstock')->with([
                 'stockPriceLava' => $stockPriceLava,
                 'stock' => Stock::where('stock_code', $id)->first(),
                 'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit'),
                 'metrics' => StockMetrics::where('stock_code', $id)->first(),
-                'sectorAverage' => SectorHistoricals::where(['sector' => $sector, 'date' => date("Y-m-d")])->first()
+                'sectorAverage' => SectorHistoricals::where(['sector' => $sector, 'date' => $motRecentSectorHistoricalsDate])->first()
             ]);
         }
         return redirect('/');

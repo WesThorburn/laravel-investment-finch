@@ -29,7 +29,7 @@ class SectorHistoricals extends Model
     }
 
     public static function getBestPerformingSector(){
-        $bestPerformingSector = SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+        $bestPerformingSector = SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
             ->orderBy('day_change', 'desc')
             ->take(1)
             ->lists('sector');
@@ -43,7 +43,7 @@ class SectorHistoricals extends Model
         elseif($section == 'sectorDayLoss'){
             $order = "asc";
         }
-    	return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+    	return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
             ->where('sector', '!=', 'Class Pend')
             ->where('sector', '!=', 'Not Applic')
             ->where('sector', '!=', 'All')
@@ -53,7 +53,7 @@ class SectorHistoricals extends Model
     }
 
     public static function getSelectedSectorDayChange($sectorName){
-        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
             ->where('sector', $sectorName)
             ->pluck('day_change');
     }
@@ -69,7 +69,7 @@ class SectorHistoricals extends Model
     }
 
     public static function getSectorWeekDay(){
-        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
+        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
         if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
             //Most Recent Date is today
             return "Today";
@@ -80,13 +80,13 @@ class SectorHistoricals extends Model
     }
 
     public static function getMarketChange(){
-        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate()[0])
+        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
             ->where('sector', 'All')
             ->pluck('day_change');
     }
 
     public static function getMarketChangeMessage(){
-        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate()[0];
+        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
         $marketChange = SectorHistoricals::getMarketChange();
         if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
             if($marketChange < 0){
@@ -107,7 +107,7 @@ class SectorHistoricals extends Model
         }
     }
 
-    private static function getMostRecentSectorHistoricalsDate(){
-        return SectorHistoricals::orderBy('date', 'desc')->take(1)->lists('date');
+    public static function getMostRecentSectorHistoricalsDate(){
+        return SectorHistoricals::orderBy('date', 'desc')->take(1)->lists('date')[0];
     }
 }
