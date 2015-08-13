@@ -10,7 +10,15 @@ class SectorHistoricals extends Model
     protected $fillable = [
     	'sector',
     	'date',
+        'total_sector_market_cap',
     	'day_change',
+        'average_daily_volume',
+        'EBITDA',
+        'earnings_per_share_current',
+        'earnings_per_share_next_year',
+        'price_to_earnings',
+        'price_to_book',
+        'dividend_yield',
     	'created_at',
     	'updated_at'
     ];

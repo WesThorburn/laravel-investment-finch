@@ -92,7 +92,7 @@ class UpdateSectorMetricsCommand extends Command
                 'date' => date("Y-m-d"),
                 'total_sector_market_cap' => $totalSectorMarketCaps,
                 'day_change' => round($percentChange, 2),
-/*                'average_daily_volume' => ,
+/*              'average_daily_volume' => ,
                 'EBITDA' => ,
                 'earnings_per_share_current' => ,
                 'earnings_per_share_next_year' => ,
