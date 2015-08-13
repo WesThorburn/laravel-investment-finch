@@ -55,6 +55,7 @@ class UpdateSectorMetricsCommand extends Command
             foreach($sectors as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
                 UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
+                //UpdateSectorMetricsCommand::calculateMetric('average_daily_volume', $stocksInSector, $sector);
             }
             //Calculate change for whole market
             $allStockCodes = Stock::lists('stock_code');
@@ -89,8 +90,8 @@ class UpdateSectorMetricsCommand extends Command
             [
                 'sector' => $sectorName,
                 'date' => date("Y-m-d"),
-/*                'day_change' => round($percentChange, 2),
-                'average_daily_volume' => ,
+                'day_change' => round($percentChange, 2),
+/*                'average_daily_volume' => ,
                 'EBITDA' => ,
                 'earnings_per_share_current' => ,
                 'earnings_per_share_next_year' => ,
@@ -100,4 +101,10 @@ class UpdateSectorMetricsCommand extends Command
             ]
         );
     }
+
+/*    public static function calculateMetric($metricName, $listOfStocks, $sectorName){
+        foreach($listOfStocks as $stock){
+
+        }
+    }*/
 }

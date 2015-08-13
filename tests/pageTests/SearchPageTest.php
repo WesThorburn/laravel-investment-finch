@@ -8,7 +8,7 @@ class SearchPageTest extends TestCase{
 			->see("Stock Price");
 	}
 
-	public function testStockScreener(){
+	public function testSearchFunction(){
 		$this->visit('/search')
 			->select('All','stockSector')
 			->type('1','minPrice')

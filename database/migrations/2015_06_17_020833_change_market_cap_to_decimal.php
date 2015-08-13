@@ -13,7 +13,7 @@ class ChangeMarketCapToDecimal extends Migration
     public function up()
     {
         Schema::table('stock_metrics', function (Blueprint $table) {
-            $table->decimal('market_cap', 8, 1)->change();
+            $table->decimal('market_cap', 8, 2)->change();
         });
     }
 
