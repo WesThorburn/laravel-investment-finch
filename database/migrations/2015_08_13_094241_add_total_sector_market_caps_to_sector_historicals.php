@@ -13,7 +13,7 @@ class AddTotalSectorMarketCapsToSectorHistoricals extends Migration
     public function up()
     {
         Schema::table('sector_historicals', function (Blueprint $table) {
-            $table->decimal('total_sector_market_cap', 8, 2)->after('date');
+            $table->decimal('total_sector_market_cap', 10, 2)->after('date');
         });
     }
 

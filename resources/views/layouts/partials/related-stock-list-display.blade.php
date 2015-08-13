@@ -8,7 +8,7 @@
 	            <th>Sector</th>
 	            <th>Share Price</th>
 	            <th>Day Change</th>
-	            <th>Mkt Cap (M)</th>
+	            <th>Mkt Cap</th>
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
@@ -25,7 +25,7 @@
 						@endif>
 						{{ $stock->day_change }}%
 					</td>
-					<td>{{ $stock->market_cap }}</td>
+					<td>{{ formatMoneyAmount($stock->market_cap) }}</td>
 				</tr>
 			@endforeach
 	    </tbody>

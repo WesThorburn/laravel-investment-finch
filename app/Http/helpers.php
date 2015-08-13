@@ -36,6 +36,18 @@ function isTradingDay(){
 	}
 }
 
+function formatMoneyAmount($amount){
+	if(!$amount){
+		return "";
+	}
+	elseif($amount >= 1000){
+		return ($amount/1000) . "B";
+	}
+	elseif($amount < 1000){
+		return $amount . "M";
+	}
+}
+
 function getServerTime(){
 	return date('l F j, Y, g:i a')." (Sydney)";
 }

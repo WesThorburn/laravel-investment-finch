@@ -129,8 +129,8 @@
 								<td>{{ $metrics->two_hundred_day_moving_average }}</td>
 							</tr>
 							<tr>
-								<td>Market Cap (M)</td>
-								<td>{{ $metrics->market_cap }}</td>
+								<td>Market Cap</td>
+								<td>{{ formatMoneyAmount($metrics->market_cap) }}</td>
 							</tr>
 						</tbody>
 					</table>
