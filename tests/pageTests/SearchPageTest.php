@@ -10,7 +10,7 @@ class SearchPageTest extends TestCase{
 
 	public function testSearchFunction(){
 		$this->visit('/search')
-			->select('All','stockSector')
+			->select('All', 'stockSector')
 			->type('1','minPrice')
 			->type('10','maxPrice')
 			->type('10000','minVolume')
@@ -33,7 +33,7 @@ class SearchPageTest extends TestCase{
 			->type('70','max200DayMA')
 			->type('1','minMarketCap')
 			->type('1000','maxMarketCap')
-			->press('Search')
+			->press('Find')
 			->see('Code')->see('Name')->see('Sector');
 	}
 }
