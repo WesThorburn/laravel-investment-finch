@@ -52,10 +52,23 @@ class UpdateSectorMetricsCommand extends Command
         else{
             $this->info("Updating sector metrics...");
             $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
+
+            $sectorMetrics = [
+                'average_daily_volume', 
+                'EBITDA', 
+                'earnings_per_share_current', 
+                'earnings_per_share_next_year', 
+                'price_to_earnings', 
+                'price_to_book', 
+                'dividend_yield'
+            ];
+
             foreach($sectors as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
                 UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
-                //UpdateSectorMetricsCommand::calculateMetric('average_daily_volume', $stocksInSector, $sector);
+                foreach($sectorMetrics as $sectorMetric){
+                    UpdateSectorMetricsCommand::calculateMetric($sectorMetric, $stocksInSector, $sector);
+                }
             }
             //Calculate change for whole market
             $allStockCodes = Stock::lists('stock_code');
@@ -91,21 +104,32 @@ class UpdateSectorMetricsCommand extends Command
                 'sector' => $sectorName,
                 'date' => date("Y-m-d"),
                 'total_sector_market_cap' => $totalSectorMarketCaps,
-                'day_change' => round($percentChange, 2),
-/*              'average_daily_volume' => ,
-                'EBITDA' => ,
-                'earnings_per_share_current' => ,
-                'earnings_per_share_next_year' => ,
-                'price_to_earnings' => ,
-                'price_to_book' => ,
-                'dividend_yield' => ,*/
+                'day_change' => round($percentChange, 2)
             ]
         );
     }
 
-/*    public static function calculateMetric($metricName, $listOfStocks, $sectorName){
+    public static function calculateMetric($metricName, $listOfStocks, $sectorName){
+        $sectorMetrics = array();
         foreach($listOfStocks as $stock){
-
+            $sectorMetric = StockMetrics::where('stock_code', $stock)->pluck($metricName);
+            array_push($sectorMetrics, $sectorMetric);
         }
-    }*/
+        $numberOfSectorMetrics = count($sectorMetrics);
+        if($numberOfSectorMetrics > 0){
+            $averageSectorMetricValue = array_sum($sectorMetrics)/$numberOfSectorMetrics;
+        }
+        else{
+            $averageSectorMetricValue = 0;
+        }
+        SectorHistoricals::updateOrCreate(
+            [
+                'sector' => $sectorName,
+                'date' => date("Y-m-d")
+            ], 
+            [
+              $metricName => round($averageSectorMetricValue, 2),
+            ]
+        );
+    }
 }
