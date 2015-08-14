@@ -138,7 +138,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		"Khill\Lavacharts\Laravel\LavachartsServiceProvider",
-		"yajra\Datatables\DatatablesServiceProvider",
+		//"yajra\Datatables\DatatablesServiceProvider",
 
 		/*
 		 * Application Service Providers...
