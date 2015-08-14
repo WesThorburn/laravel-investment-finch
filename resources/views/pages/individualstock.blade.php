@@ -66,6 +66,8 @@
 						class="side-by-side color-red" 
 					@elseif(rtrim($metrics->day_change, '%') > 0) 
 						class="side-by-side color-green" 
+					@else
+						class="side-by-side"
 					@endif>
 					{{ $metrics->day_change }}%
 				</h3>
