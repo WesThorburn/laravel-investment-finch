@@ -48,6 +48,31 @@ function formatMoneyAmount($amount){
 	}
 }
 
+function formatCompanyName($stockCode, $name){
+	$reservedWords = ['Air'];
+
+	$standardUcWords = ucwords(strtolower($name));
+	$firstChar = substr($standardUcWords, 0, 1);
+	$firstTwoChars = substr($standardUcWords, 0, 2);
+	$firstThreeChars = substr($standardUcWords, 0, 3);
+	$firstFourChars = substr($standardUcWords, 0, 4);
+
+	if(strtoupper($stockCode).' ' == strtoupper($firstFourChars)){
+		return strtoupper($firstFourChars).substr($standardUcWords, 3);
+	}
+	elseif(strtoupper(substr($stockCode,0,2)) == strtoupper($firstTwoChars) && !in_array($firstThreeChars, $reservedWords)){
+		if(substr($standardUcWords, 3, 1) == ' ' || substr($standardUcWords, 2, 1) == ' '){
+			return strtoupper($firstThreeChars).substr($standardUcWords, 3);
+		}
+	}
+	elseif(strtoupper(substr($stockCode,0,1)) == $firstChar && !in_array($firstThreeChars, $reservedWords)){
+		if(substr($standardUcWords, 3, 1) == ' ' || substr($standardUcWords, 2, 1) == ' '){
+			return strtoupper($firstThreeChars).substr($standardUcWords, 3);
+		}
+	}
+	return ucwords(strtolower($name));
+}
+
 function getServerTime(){
 	return date('l F j, Y, g:i a')." (Sydney)";
 }

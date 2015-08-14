@@ -24,7 +24,7 @@
 						<td>
 							{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 						</td>
-						<td>{{ ucwords(strtolower($stock->stock->company_name)) }}</td>
+						<td>{{ $stock->stock->company_name }}</td>
 						<td>{{ $stock->stock->sector }}</td>
 						<td>${{ $stock->last_trade }}</td>
 						<td @if($stock->day_change < 0) class="color-red" 
