@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Home
+	Stocks
 @stop
 
 @section('body')
