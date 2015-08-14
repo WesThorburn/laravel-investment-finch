@@ -47,7 +47,7 @@ class UpdateStockListCommand extends Command {
 				if(!$this->option('testMode')){
 					Stock::updateOrCreate(['stock_code' => $stockCode], [
 						'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
-					    'company_name' => substr(explode('",', $companyRow)[0], 1),
+					    'company_name' => formatCompanyName($stockCode, substr(explode('",', $companyRow)[0], 1)),
 					    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2),
 					    'updated_at' => date("Y-m-d H:i:s")
 					]);
@@ -56,6 +56,7 @@ class UpdateStockListCommand extends Command {
 				else{
 					if($stockCode == 'TLS' || $stockCode == 'CBA'){
 						$stock = Stock::where('stock_code', $stockCode)->first();
+						$stock->company_name = formatCompanyName($stockCode, $stock->company_name);
 						$stock->updated_at = date("Y-m-d H:i:s");
 						$stock->save();
 						$this->info("[Test Mode] Updated...".$stockCode);

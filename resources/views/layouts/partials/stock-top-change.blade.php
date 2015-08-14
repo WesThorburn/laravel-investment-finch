@@ -8,7 +8,7 @@
 						{{ $stockChange->stock->stock_code }}<a href="/stocks/{{$stockChange->stock->stock_code}}"></a>
 					</td>
 					<td>
-						{{ ucwords(strtolower($stockChange->stock->company_name)) }}
+						{{ $stockChange->stock->company_name }}
 					</td>
 					@if($timeFrame == 'week')
 						<td @if($stockChange->week_change < 0) class="color-red" 

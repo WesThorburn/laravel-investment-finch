@@ -49,7 +49,7 @@ function formatMoneyAmount($amount){
 }
 
 function formatCompanyName($stockCode, $name){
-	$reservedWords = ['Air'];
+	$reservedWords = ['Air', 'Pro'];
 
 	$standardUcWords = ucwords(strtolower($name));
 	$firstChar = substr($standardUcWords, 0, 1);
