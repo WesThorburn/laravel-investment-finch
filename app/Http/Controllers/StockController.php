@@ -65,6 +65,16 @@ class StockController extends Controller
         return redirect('/');
     }
 
+    public function getCurrentPrice($id){
+        return "$".StockMetrics::where('stock_code', $id)->pluck('last_trade');
+    }
+
+    public function getDayChange($id){
+        return view('layouts.partials.individual-stock-day-change')->with([
+            'dayChange' => StockMetrics::where('stock_code', $id)->pluck('day_change')
+        ]);
+    }
+
     public function graph($stockCode, $timeFrame, $dataType){
         $graphData = Stock::getGraphData($stockCode, $timeFrame, $dataType);
         $prices = \Lava::DataTable();

@@ -13,7 +13,9 @@
 		$(document).ready(
             function() {
                 setInterval(function() {
-                		$('#metrics').load('/ajax/relatedstocks/{{$stock->metrics->stock_code}}');
+                		$('#relatedStocks').load('/ajax/relatedstocks/{{$stock->metrics->stock_code}}');
+                		$('#stockPrice').load('/ajax/currentPrice/{{$stock->metrics->stock_code}}');
+                		$('#dayChange').load('/ajax/dayChange/{{$stock->metrics->stock_code}}');
                 }, 60000);
         	});
 
@@ -55,11 +57,20 @@
 				<h1 class="no-margin-top">{{ $stock->company_name }}</h1>
 				<h2>{{ $stock->sector }}</h2>
 				<h3>(ASX: {{ $stock->stock_code }})</h3>
-				<h2>${{ $metrics->last_trade }}
-					<small @if($metrics->day_change < 0) class="color-red" @elseif($metrics->day_change > 0) class="color-green" @endif>
-						{{ $metrics->day_change }}%
-					</small>
-				</h2>
+
+				<div class="default-margin-top"></div>
+
+				<h2 class="side-by-side quater-margin-right" id="stockPrice">${{ $metrics->last_trade }}</h2>
+				<h3 id="dayChange"
+					@if(rtrim($metrics->day_change, '%') < 0) 
+						class="side-by-side color-red" 
+					@elseif(rtrim($metrics->day_change, '%') > 0) 
+						class="side-by-side color-green" 
+					@endif>
+					{{ $metrics->day_change }}%
+				</h3>
+
+				<div class="default-margin-bottom"></div>
 			</div>
 		</div>
 	</div>
@@ -156,7 +167,7 @@
 		<div class="row">
 			@if($relatedStocks->first())
 				<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-7" @endif>
-					<div id="metrics">
+					<div id="relatedStocks">
 						@include('layouts.partials.related-stock-list-display')
 					</div>	
 				</div>		

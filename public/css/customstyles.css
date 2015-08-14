@@ -6,6 +6,11 @@ th{
 	font-size:12px;
 }
 
+.side-by-side{
+	vertical-align:absbottom; 
+	display:inline;
+}
+
 .half-width{
 	width:50%;
 }
@@ -44,6 +49,10 @@ th{
 
 .quater-margin-left{
 	margin-left:5px;
+}
+
+.quater-margin-right{
+	margin-right:5px;
 }
 
 .no-margin-top{
