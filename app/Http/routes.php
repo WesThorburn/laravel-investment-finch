@@ -1,7 +1,10 @@
 <?php
 Route::get('/', 'PageController@index');
 
+//Allows 'stock' and 'stocks' to be in the URL
+Route::resource('stock', 'StockController');
 Route::resource('stocks', 'StockController');
+
 Route::resource('search', 'SearchController');
 Route::resource('sectors', 'SectorController');
 
