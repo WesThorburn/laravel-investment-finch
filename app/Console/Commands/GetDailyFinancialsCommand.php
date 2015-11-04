@@ -78,6 +78,8 @@ class GetDailyFinancialsCommand extends Command
 			}
 
             if($this->option('testMode') != 'true'){
+                $this->info("Removing existing stock_code index in historicals");
+                \DB::statement("DROP INDEX `stock_code` ON historicals");
                 $this->info("Reapplying index to historicals table");
                 \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
                 $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
