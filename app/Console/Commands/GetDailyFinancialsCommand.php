@@ -62,7 +62,7 @@ class GetDailyFinancialsCommand extends Command
 						$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
 						Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 							"stock_code" => $stockCode,
-							"date" => "2015-10-30",//date("Y-m-d"),
+							"date" => date("Y-m-d"),
 							"open" => $individualRecord[1],
 							"high" => $individualRecord[2],
 							"low" => $individualRecord[3],
