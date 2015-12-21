@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Home1
+	Home
 @stop
 
 @section('body')
