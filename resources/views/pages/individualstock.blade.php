@@ -28,7 +28,7 @@
 		});
 
 		function getGraphData(timeFrame, dataType){
-			$.getJSON('/graph/'+ '{{ $stock->stock_code }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
+			$.getJSON('/stockGraph/'+ '{{ $stock->stock_code }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('StockPrice', dataTableJson, function (chart) {
 				});
 			});

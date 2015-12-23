@@ -8,7 +8,8 @@ Route::resource('stocks', 'StockController');
 Route::resource('search', 'SearchController');
 Route::resource('sectors', 'SectorController');
 
-Route::get('graph/{stockCode}/{timeFrame}/{dataType}', 'StockController@graph');
+Route::get('stockGraph/{stockCode}/{timeFrame}/{dataType}', 'GraphController@stock');
+Route::get('sectorGraph/{sectorName}/{timeFrame}/{dataType}', 'GraphController@sector');
 
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('currentPrice/{stockCode}', 'StockController@getCurrentPrice');

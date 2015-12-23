@@ -12,7 +12,6 @@ use App\Models\SectorHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use Carbon\Carbon;
-use Khill\Lavacharts\Lavacharts;
 
 class StockController extends Controller
 {
@@ -73,15 +72,6 @@ class StockController extends Controller
         return view('layouts.partials.individual-stock-day-change')->with([
             'dayChange' => StockMetrics::where('stock_code', $id)->pluck('day_change')
         ]);
-    }
-
-    public function graph($stockCode, $timeFrame, $dataType){
-        $graphData = Stock::getGraphData($stockCode, $timeFrame, $dataType);
-        $prices = \Lava::DataTable();
-        $prices->addStringColumn('Date')
-            ->addNumberColumn($dataType)
-            ->addRows($graphData);
-        return $prices->toJson();
     }
 
     public function relatedStocks($id){
