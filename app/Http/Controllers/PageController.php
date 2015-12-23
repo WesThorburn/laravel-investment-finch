@@ -19,7 +19,6 @@ class PageController extends Controller
         $allNonOmittedStocks = StockMetrics::omitOutliers()->lists('stock_code');
 
         $marketGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap');
-            $stockPriceLava = new Lavacharts;
             $marketCaps = \Lava::DataTable();
             $marketCaps->addStringColumn('Date')
                 ->addNumberColumn('Market Cap')
@@ -30,7 +29,7 @@ class PageController extends Controller
             ->setOptions([
                 'width' => 725,
                 'height' => 360,
-                'title' => 'Total Market Cap'
+                'title' => 'Total Market Cap (Billions)'
             ]);
 
         return view('pages.home')->with([

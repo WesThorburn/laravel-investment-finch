@@ -12,6 +12,7 @@ use App\Models\SectorHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use Carbon\Carbon;
+use Khill\Lavacharts\Lavacharts;
 
 class StockController extends Controller
 {

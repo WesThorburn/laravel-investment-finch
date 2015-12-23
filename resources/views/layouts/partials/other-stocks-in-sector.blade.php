@@ -33,7 +33,7 @@
 <script>
 	$(document).ready(function(){
 		$('#stocks_in_sector').DataTable({
-			"pageLength": 18,
+			"pageLength": 12,
 			"dom": 'tp',
 			"stateSave": true
 		});
