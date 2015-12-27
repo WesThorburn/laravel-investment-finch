@@ -28,7 +28,7 @@ function getMarketStatus(){
 
 function isTradingDay(){
 	if(Carbon::now()->isWeekDay()){
-		$marketClosedDays = ['2015-01-01','2015-01-26','2015-04-03','2015-04-06','2015-04-25','2015-06-08'];
+		$marketClosedDays = ['2015-01-01','2015-01-26','2015-04-03','2015-04-06','2015-04-25','2015-06-08','2015-12-25','2015-12-28'];
 		if(!in_array(date("Y-m-d"), $marketClosedDays)){
 			return true;
 		}
