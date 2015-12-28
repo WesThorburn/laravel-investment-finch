@@ -1,7 +1,8 @@
 <?php
 Route::get('/', 'PageController@index');
+Route::get('/topGainsLosses', 'PageController@topGainsLosses');
 
-//Allows 'stock' and 'stocks' to be in the URL
+//Allows both 'stock' and 'stocks' to be in the URL
 Route::resource('stock', 'StockController');
 Route::resource('stocks', 'StockController');
 

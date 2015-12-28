@@ -29,19 +29,19 @@ class StockGains extends Model
         return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
     }
 
-    public static function getTopStocksThisWeek($stockList, $limit = 10){
+    public static function getTopStocksThisWeek($stockList, $limit = 13){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'desc')->take($limit)->get();
     }
 
-    public static function getBottomStocksThisWeek($stockList, $limit = 10){
+    public static function getBottomStocksThisWeek($stockList, $limit = 13){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('week_change', 'asc')->take($limit)->get();
     }
 
-    public static function getTopStocksThisMonth($stockList, $limit = 10){
+    public static function getTopStocksThisMonth($stockList, $limit = 13){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('month_change', 'desc')->take($limit)->get();
     }
 
-    public static function getBottomStocksThisMonth($stockList, $limit = 10){
+    public static function getBottomStocksThisMonth($stockList, $limit = 13){
         return StockGains::whereIn('stock_code', $stockList)->orderBy('month_change', 'asc')->take($limit)->get();
     }
 

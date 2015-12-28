@@ -16,8 +16,6 @@ class PageController extends Controller
 {
     public function index()
     {
-        $allNonOmittedStocks = StockMetrics::omitOutliers()->lists('stock_code');
-
         $marketGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap');
             $marketCaps = \Lava::DataTable();
             $marketCaps->addStringColumn('Date')
@@ -37,7 +35,14 @@ class PageController extends Controller
             'sectorDayGains' => SectorHistoricals::getSectorDayChanges('sectorDayGain'),
             'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
             'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayGain'),
-            'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss'),
+            'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss')
+        ]);
+    }
+
+    public function topGainsLosses(){
+        $allNonOmittedStocks = StockMetrics::omitOutliers()->lists('stock_code');
+
+        return view('pages.topGainsLosses')->with([
             'topWeeklyGains' => StockGains::getTopStocksThisWeek($allNonOmittedStocks),
             'topWeeklyLosses' => StockGains::getBottomStocksThisWeek($allNonOmittedStocks),
             'topMonthlyGains' => StockGains::getTopStocksThisMonth($allNonOmittedStocks),
