@@ -31,7 +31,9 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('stocks:resetDayChange')->dailyAt('00:00');
+		if(isTradingDay()){
+			$schedule->command('stocks:resetDayChange')->dailyAt('04:00');
+		}
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
 		$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
 

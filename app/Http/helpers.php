@@ -10,7 +10,7 @@ function getCurrentTimeIntVal(){
 function getMarketStatus(){
 	if(getCurrentTimeIntVal() >= 100000 && getCurrentTimeIntVal() <= 160000){
 		if(isTradingDay()){
-			if(date("Y-m-d") == "2015-12-24" || date("Y-m-d") == "2015-12-31"){
+			if(date("Y-m-d") == "2016-12-23" || date("Y-m-d") == "2016-12-30" || date("Y-m-d") == "2015-12-31"){
 				if(getCurrentTimeIntVal() <= 141000){
 					return "Market Open";
 				}
@@ -28,7 +28,7 @@ function getMarketStatus(){
 
 function isTradingDay(){
 	if(Carbon::now()->isWeekDay()){
-		$marketClosedDays = ['2015-01-01','2015-01-26','2015-04-03','2015-04-06','2015-04-25','2015-06-08','2015-12-25','2015-12-28'];
+		$marketClosedDays = ['2016-01-01','2016-01-26','2016-03-25','2016-03-28','2016-04-25','2016-06-13','2016-12-26','2016-12-27'];
 		if(!in_array(date("Y-m-d"), $marketClosedDays)){
 			return true;
 		}
