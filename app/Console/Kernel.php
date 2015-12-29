@@ -44,6 +44,6 @@ class Kernel extends ConsoleKernel {
 		}
 		$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:25');
 		$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
-		$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('16:35');
+		$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('03:35');
 	}
 }

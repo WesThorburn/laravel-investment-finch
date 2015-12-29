@@ -45,8 +45,8 @@ class StockGains extends Model
         return StockGains::whereIn('stock_code', $stockList)->orderBy('month_change', 'asc')->take($limit)->get();
     }
 
-    public static function getTopStocksThisYear($limit = 18){
+    public static function getTopStocks12Months($limit = 18){
         $stockList = StockMetrics::omitOutliers()->where('market_cap', '>=', 100)->lists('stock_code');
-        return StockGains::whereIn('stock_code', $stockList)->where('this_year_change', '<', 250)->orderBy('this_year_change', 'desc')->take($limit)->get();
+        return StockGains::whereIn('stock_code', $stockList)->where('year_change', '<', 250)->orderBy('year_change', 'desc')->take($limit)->get();
     }
 }

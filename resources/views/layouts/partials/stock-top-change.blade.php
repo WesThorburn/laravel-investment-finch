@@ -16,11 +16,11 @@
 							@endif>
 							{{ $stockChange->week_change }}%
 						</td>
-					@elseif($timeFrame == 'ytd')
+					@elseif($timeFrame == '12months')
 						<td @if($stockChange->this_year_change < 0) class="color-red" 
 							@elseif($stockChange->this_year_change > 0) class="color-green"
 							@endif>
-							{{ $stockChange->this_year_change }}%
+							{{ $stockChange->year_change }}%
 						</td>
 					@elseif($timeFrame == 'month')
 						<td @if($stockChange->month_change < 0) class="color-red" 

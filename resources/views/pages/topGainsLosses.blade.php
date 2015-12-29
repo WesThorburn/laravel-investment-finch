@@ -54,9 +54,9 @@
 			<div class="col-md-4 no-padding-left">
 				@include('layouts.partials.stock-top-change', 
 					[
-						'stockChanges' => $topStocksThisYear, 
-						'title' => "Best Performing Stocks ".date('Y'),
-						'timeFrame' => 'ytd'
+						'stockChanges' => $topStocks12Months, 
+						'title' => "Best Performing Stocks (12 Months)",
+						'timeFrame' => '12months'
 					])
 			</div>
 		</div>
