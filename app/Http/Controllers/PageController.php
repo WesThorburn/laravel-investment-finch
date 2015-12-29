@@ -16,18 +16,37 @@ class PageController extends Controller
 {
     public function index()
     {
-        $marketGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap');
-            $marketCaps = \Lava::DataTable();
-            $marketCaps->addStringColumn('Date')
-                ->addNumberColumn('Market Cap')
-                ->addRows($marketGraphData);
+        //Line graph for market cap
+        $totalMarketCapGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'total_market_cap');
+        $marketCaps = \Lava::DataTable();
+        $marketCaps->addStringColumn('Date')
+            ->addNumberColumn('Market Cap')
+            ->addRows($totalMarketCapGraphData);
 
         $marketCapsLava = \Lava::AreaChart('MarketCaps')
             ->dataTable($marketCaps)
             ->setOptions([
                 'width' => 725,
                 'height' => 360,
-                'title' => 'Total Market Cap (Billions)'
+                'title' => 'ASX Market Cap (Billions)'
+            ]);
+
+        //Pie/DonutChart for Sectors' Market Caps
+        $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'individual_sectors');
+        $sectorCaps = \Lava::DataTable();
+        $sectorCaps->addStringColumn('Sector Name') 
+            ->addNumberColumn('Percent')
+            ->addNumberColumn('Sector Cap')
+            ->addRows($individualSectorCapsGraphData);
+
+        $sectorCapsLava = \Lava::DonutChart('Sectors')
+            ->dataTable($sectorCaps)
+            ->setOptions([
+                'width' => 725,
+                'height' => 360,
+                'title' => 'Sector Caps (Billions)',
+                'pieHole' => 0.3,
+                'pieSliceText' => 'label',
             ]);
 
         return view('pages.home')->with([

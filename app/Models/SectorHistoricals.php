@@ -139,29 +139,30 @@ class SectorHistoricals extends Model
     }
 
     public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType){
-        $historicals = SectorHistoricals::where(['sector' => $sectorName])->dateCondition($timeFrame)->orderBy('date')->get();
         $graphData = array();
-        foreach($historicals as $record){
-            if($dataType == 'Market Cap'){
-                $recordValue = $record->total_sector_market_cap;
+        if($dataType == 'individual_sectors'){
+            $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+            $sectors = SectorHistoricals::where('date', $mostRecentDate)->get();
+            $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
+            foreach($sectors as $sector){
+                if($sector->sector != 'All'){
+                    $sectorPercent = 100/$allSectorsMarketCap*$sector->total_sector_market_cap;
+                    array_push($graphData, array($sector->sector, $sectorPercent, $sector->total_sector_market_cap));
+                }
             }
-            elseif($dataType == 'Volume'){
-                $recordValue = $record->average_daily_volume;
-            }
-            array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
         }
-        /*
-        Display Current Day's Progress, only available after  4:30pm, unless % current day change is used
-
-        //Add Current day's trade value to graph data 
-        //10:32am allows time for the metrics to be populated
-        if(isTradingDay() 
-            && getCurrentTimeIntVal() >= 103200
-            && !Historicals::where(['stock_code' => $stockCode, 'date' => date('Y-m-d')])->first()){
-            $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
-            $metricDate = explode(" ", $stockMetric->updated_at)[0];
-            array_push($graphData, array(getCarbonDateFromDate($metricDate)->toFormattedDateString(), $stockMetric->last_trade));
-        }*/
+        else{
+            $historicals = SectorHistoricals::where(['sector' => $sectorName])->dateCondition($timeFrame)->orderBy('date')->get();
+            foreach($historicals as $record){
+                if($dataType == 'total_market_cap'){
+                    $recordValue = $record->total_sector_market_cap;
+                }
+                elseif($dataType == 'volume'){
+                    $recordValue = $record->average_daily_volume;
+                }
+                array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
+            }
+        }
         return $graphData;
     }
 }
