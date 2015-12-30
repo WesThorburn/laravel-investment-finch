@@ -36,7 +36,7 @@ function isTradingDay(){
 	}
 }
 
-function formatMoneyAmount($amount){
+function formatMoneyAmountToLetter($amount){
 	if(!$amount){
 		return "";
 	}
@@ -45,6 +45,21 @@ function formatMoneyAmount($amount){
 	}
 	elseif($amount < 1000){
 		return $amount . "M";
+	}
+}
+
+function formatMoneyAmountToNumber($amount){
+	if(substr($amount, -1) == 'B'){
+		return floatval(substr($amount, 0, -1))*1000;
+	}
+	elseif(substr($amount, -1) == 'M'){
+		return floatval(substr($amount, 0, -1));
+	}
+}
+
+function formatHundredThousandToMillion($amount){
+	if($amount > 10000 || $amount < -10000){
+		return $amount/1000000;
 	}
 }
 

@@ -7,7 +7,7 @@
 	            <th>Sector</th>
 	            <th>Share Price</th>
 	            <th>Day Change</th>
-	            <th>Mkt Cap</th>
+	            <th>Mkt Cap (M)</th>
 	            <th>Volume</th>
 	            <th>EBITDA (m)</th>
 	            <th>EPS Current Year</th>
@@ -32,7 +32,7 @@
 							@endif>
 							{{ $stock->day_change }}%
 						</td>
-						<td>{{ formatMoneyAmount($stock->market_cap) }}</td>
+						<td>{{ $stock->market_cap }}</td>
 						<td>{{ $stock->average_daily_volume }}</td>
 						<td>{{ $stock->EBITDA }}</td>
 						<td>{{ $stock->earnings_per_share_current }}</td>

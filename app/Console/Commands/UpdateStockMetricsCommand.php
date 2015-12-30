@@ -56,7 +56,7 @@ class UpdateStockMetricsCommand extends Command {
 						"last_trade" => $individualMetric[1],
 						"day_change" => substr($individualMetric[2], 1, -2),
 						"average_daily_volume" => $individualMetric[3],
-						"EBITDA" => $individualMetric[4],
+						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[4]),
 						"earnings_per_share_current" => $individualMetric[5],
 						"earnings_per_share_next_year" => $individualMetric[6],
 						"price_to_sales" => $individualMetric[7],
@@ -66,10 +66,11 @@ class UpdateStockMetricsCommand extends Command {
 						"year_low" => $individualMetric[11],
 						"fifty_day_moving_average" => $individualMetric[12],
 						"two_hundred_day_moving_average" => $individualMetric[13],
-						"market_cap" => UpdateStockMetricsCommand::getMarketCap($individualMetric[14]),
+						"market_cap" => formatMoneyAmountToNumber($individualMetric[14]),
 						"dividend_yield" => $individualMetric[15],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);
+					$this->info($stockCode." | EBITDA ".UpdateStockMetricsCommand::formatEBITDA($individualMetric[4]));
 				}
 			}
 			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
@@ -92,14 +93,15 @@ class UpdateStockMetricsCommand extends Command {
 			return "TLS.AX+CBA.AX";
 		}
 	}
-	//Formats Market cap and returns it in Millions
-	private static function getMarketCap($individualMetric){
-		if(substr($individualMetric, -1) == 'B'){
-			return floatval(substr($individualMetric, 0, -1))*1000;
+	//Checks EBITDA value and calls appropriate helper function to format it
+	private static function formatEBITDA($ebitda){
+		if(substr($ebitda, -1) == 'B' || substr($ebitda, -1) == 'M'){
+			return formatMoneyAmountToNumber($ebitda);
 		}
-		elseif(substr($individualMetric, -1) == 'M'){
-			return floatval(substr($individualMetric, 0, -1));
+		elseif($ebitda > 10000 || $ebitda < -10000){
+			return formatHundredThousandToMillion($ebitda);
 		}
+		return $ebitda;
 	}
 	/**
 	 * Get the console command arguments.
