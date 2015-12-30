@@ -15,6 +15,7 @@ class StockMetrics extends Model {
 		"earnings_per_share_current",
 		"earnings_per_share_next_year",
 		"price_to_earnings",
+		"price_to_sales",
 		"price_to_book",
 		"year_high",
 		"year_low",

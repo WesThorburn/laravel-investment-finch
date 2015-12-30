@@ -45,7 +45,7 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
-			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2a2j4ee8rp6kjm3m4j1y";
+			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2a2j4ee8p5rp6kjm3m4j1y";
 			$metrics = explode("\n", file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
@@ -59,14 +59,15 @@ class UpdateStockMetricsCommand extends Command {
 						"EBITDA" => $individualMetric[4],
 						"earnings_per_share_current" => $individualMetric[5],
 						"earnings_per_share_next_year" => $individualMetric[6],
-						"price_to_earnings" => $individualMetric[7],
-						"price_to_book" => $individualMetric[8],
-						"year_high" => $individualMetric[9],
-						"year_low" => $individualMetric[10],
-						"fifty_day_moving_average" => $individualMetric[11],
-						"two_hundred_day_moving_average" => $individualMetric[12],
-						"market_cap" => UpdateStockMetricsCommand::getMarketCap($individualMetric[13]),
-						"dividend_yield" => $individualMetric[14],
+						"price_to_sales" => $individualMetric[7],
+						"price_to_earnings" => $individualMetric[8],
+						"price_to_book" => $individualMetric[9],
+						"year_high" => $individualMetric[10],
+						"year_low" => $individualMetric[11],
+						"fifty_day_moving_average" => $individualMetric[12],
+						"two_hundred_day_moving_average" => $individualMetric[13],
+						"market_cap" => UpdateStockMetricsCommand::getMarketCap($individualMetric[14]),
+						"dividend_yield" => $individualMetric[15],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);
 				}

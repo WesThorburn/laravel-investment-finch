@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel {
 
       	//Only run these between 10:30 and 17:00 Sydney Time
 		if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 170000 && isTradingDay()){
-			$schedule->command('stocks:updateStockMetrics')->everyMinute();
-			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->everyMinute();
+			$schedule->command('stocks:updateStockMetrics')->cron("*/2 * * * *");
+			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
 		}
 		$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:25');
 		$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
