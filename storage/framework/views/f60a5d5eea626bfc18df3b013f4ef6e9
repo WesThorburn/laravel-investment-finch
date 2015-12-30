@@ -1,0 +1,10 @@
+<h3
+	<?php if(rtrim($dayChange, '%') < 0): ?> 
+		class="side-by-side color-red" 
+	<?php elseif(rtrim($dayChange, '%') > 0): ?> 
+		class="side-by-side color-green"
+	<?php else: ?>
+		class="side-by-side"
+	<?php endif; ?>>
+	<?php echo e($dayChange); ?>%
+</h3>

@@ -1,0 +1,37 @@
+<div class="panel panel-default">
+	<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="sector_table">
+		<thead>
+	        <tr>
+	            <th>Sector</th>
+	            <th><?php echo e($sectorWeekDay); ?>'s Change</th>
+	        </tr>
+	    </thead>
+	    <tbody data-link="row" class="rowlink">
+			<?php foreach($sectors as $sector): ?>
+				<tr <?php if($sector->sector == $selectedSector): ?> class="table-row-active" <?php endif; ?>>
+					<td>
+						<a href="/sectors/<?php echo e($sector->sector); ?>"><?php echo e($sector->sector); ?></a>
+					</td>
+					<td>
+						<div 
+							<?php if($sector->day_change < 0): ?> class="color-red" 
+								<?php elseif($sector->day_change > 0): ?> class="color-green"
+							<?php endif; ?>>
+							<?php echo e($sector->day_change); ?>%
+						</div>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#sector_table').DataTable({
+			"pageLength": 30,
+			"dom": '',
+			"stateSave": true
+		});
+	});
+</script>

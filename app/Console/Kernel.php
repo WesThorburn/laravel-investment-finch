@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\UpdateSectorMetricsCommand',
 		'App\Console\Commands\CalculateStockChangeCommand',
 		'App\Console\Commands\FillSectorHistoricalsCommand',
-		'App\Console\Commands\GetBusinessSummariesCommand'
+		'App\Console\Commands\GetCompanySummariesCommand'
 	];
 
 	/**
@@ -35,6 +35,7 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:resetDayChange')->dailyAt('04:00');
 		}
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
+		$schedule->command('stocks:getCompanySummaries')->dailyAt('02:01');
 		$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
 
       	//Only run these between 10:30 and 17:00 Sydney Time

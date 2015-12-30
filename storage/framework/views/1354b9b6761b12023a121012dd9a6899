@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" id="stock_table">
+	    <thead>
+	        <tr>
+	            <th>Code</th>
+	            <th>Name</th>
+	            <th>Sector</th>
+	            <th>Share Price</th>
+	            <th>Day Change</th>
+	            <th>Mkt Cap (M)</th>
+	            <th>Volume</th>
+	            <th>EBITDA (m)</th>
+	            <th>EPS Current Year</th>
+	            <th>P / E Ratio</th>
+	            <th>Price / Book</th>
+	            <th>52 Week High</th>
+	            <th>52 Week Low</th>
+	        </tr>
+	    </thead>
+		<div class="panel-body">
+		    <tbody data-link="row" class="rowlink">
+			    <?php foreach($stocks as $stock): ?>
+					<tr>
+						<td>
+							<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
+						</td>
+						<td><?php echo e($stock->stock->company_name); ?></td>
+						<td><?php echo e($stock->stock->sector); ?></td>
+						<td>$<?php echo e($stock->last_trade); ?></td>
+						<td <?php if($stock->day_change < 0): ?> class="color-red" 
+							<?php elseif($stock->day_change > 0): ?> class="color-green"
+							<?php endif; ?>>
+							<?php echo e($stock->day_change); ?>%
+						</td>
+						<td><?php echo e($stock->market_cap); ?></td>
+						<td><?php echo e($stock->average_daily_volume); ?></td>
+						<td><?php echo e($stock->EBITDA); ?></td>
+						<td><?php echo e($stock->earnings_per_share_current); ?></td>
+						<td><?php echo e($stock->price_to_earnings); ?></td>
+						<td><?php echo e($stock->price_to_book); ?></td>
+						<td><?php echo e($stock->year_high); ?></td>
+						<td><?php echo e($stock->year_low); ?></td>
+					</tr>
+				<?php endforeach; ?>
+		    </tbody>
+		</div>
+	</table>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#stock_table').DataTable({
+			"lengthMenu": [20,50,100],
+			"stateSave": true
+		});
+	});
+</script>
