@@ -70,7 +70,6 @@ class UpdateStockMetricsCommand extends Command {
 						"dividend_yield" => $individualMetric[15],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);
-					$this->info($stockCode." | EBITDA ".UpdateStockMetricsCommand::formatEBITDA($individualMetric[4]));
 				}
 			}
 			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");

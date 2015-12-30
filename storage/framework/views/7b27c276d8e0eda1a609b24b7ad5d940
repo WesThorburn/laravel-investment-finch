@@ -12,22 +12,22 @@
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
-		    @foreach($relatedStocks as $stock)
+		    <?php foreach($relatedStocks as $stock): ?>
 				<tr>
 					<td>
-						{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
+						<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
 					</td>
-					<td>{{ $stock->stock->company_name }}</td>
-					<td>{{ $stock->stock->sector }}</td>
-					<td>${{ $stock->last_trade }}</td>
-					<td @if($stock->day_change < 0) class="color-red" 
-						@elseif($stock->day_change > 0) class="color-green"
-						@endif>
-						{{ $stock->day_change }}%
+					<td><?php echo e($stock->stock->company_name); ?></td>
+					<td><?php echo e($stock->stock->sector); ?></td>
+					<td>$<?php echo e($stock->last_trade); ?></td>
+					<td <?php if($stock->day_change < 0): ?> class="color-red" 
+						<?php elseif($stock->day_change > 0): ?> class="color-green"
+						<?php endif; ?>>
+						<?php echo e($stock->day_change); ?>%
 					</td>
-					<td>{{ $stock->market_cap }}</td>
+					<td><?php echo e($stock->market_cap); ?></td>
 				</tr>
-			@endforeach
+			<?php endforeach; ?>
 	    </tbody>
 	</table>
 </div>

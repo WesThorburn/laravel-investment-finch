@@ -23,7 +23,7 @@
 						@endif>
 						{{ $stock->day_change }}%
 					</td>
-					<td>{{ formatMoneyAmount($stock->market_cap) }}</td>
+					<td>{{ $stock->market_cap }}</td>
 				</tr>
 			@endforeach
 	    </tbody>

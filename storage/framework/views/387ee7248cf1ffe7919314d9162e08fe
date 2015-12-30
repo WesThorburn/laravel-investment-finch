@@ -1,0 +1,18 @@
+<?php if($marketChangeMessage): ?>
+	<?php if($marketChange > 0): ?>
+		<div class="color-green quarter-margin-top">
+			<?php echo e($marketChangeMessage); ?>
+
+		</div>
+	<?php elseif($marketChange < 0): ?>
+		<div class="color-red">
+			<?php echo e($marketChangeMessage); ?>
+
+		</div>
+	<?php elseif($marketChange == 0): ?>
+		<div>
+			<?php echo e($marketChangeMessage); ?>
+
+		</div>
+	<?php endif; ?>
+<?php endif; ?>

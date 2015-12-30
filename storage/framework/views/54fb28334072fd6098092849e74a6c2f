@@ -1,0 +1,10 @@
+<div class="pull-right half-margin-top">
+	<?php echo Form::open(['action' => 'StockController@show', 'method' => 'get', 'class' => 'form-group form-inline']); ?>
+
+		<?php echo Form::text('stockCodeFind', null, ['class' => 'form-control', 'placeholder' => 'Find Stock Code']); ?>
+
+		<?php echo Form::submit("Find", ['class' => 'btn btn-default form-control']); ?>
+
+	<?php echo Form::close(); ?>
+
+</div>

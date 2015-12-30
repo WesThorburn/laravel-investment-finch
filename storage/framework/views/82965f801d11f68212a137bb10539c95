@@ -1,0 +1,7 @@
+<span <?php if($marketStatus == "Market Open"): ?>
+	class="color-green"
+	<?php elseif($marketStatus == "Market Closed"): ?>
+	class="color-red"
+	<?php endif; ?>>
+	<b><?php echo e($marketStatus); ?></b>
+</span> <b> - <?php echo e($serverTime); ?>

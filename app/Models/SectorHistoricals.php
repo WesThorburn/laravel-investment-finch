@@ -146,7 +146,12 @@ class SectorHistoricals extends Model
             $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
             foreach($sectors as $sector){
                 if($sector->sector != 'All'){
-                    $sectorPercent = 100/$allSectorsMarketCap*$sector->total_sector_market_cap;
+                    if($allSectorsMarketCap != 0 && $sector->total_sector_market_cap != 0){
+                        $sectorPercent = 100/$allSectorsMarketCap*$sector->total_sector_market_cap;
+                    }
+                    else{
+                        $sectorPercent = 0;
+                    }
                     array_push($graphData, array($sector->sector, $sectorPercent, $sector->total_sector_market_cap));
                 }
             }
