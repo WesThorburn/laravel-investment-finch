@@ -14,13 +14,14 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
 		'App\Console\Commands\UpdateStockListCommand',
 		'App\Console\Commands\UpdateStockMetricsCommand',
-		'App\Console\Commands\GetHistoricalFinancialsCommand',
+		'App\Console\Commands\FillHistoricalFinancialsCommand',
 		'App\Console\Commands\GetDailyFinancialsCommand',
 		'App\Console\Commands\ResetDayChangeCommand',
 		'App\Console\Commands\UpdateSectorMetricsCommand',
 		'App\Console\Commands\CalculateStockChangeCommand',
 		'App\Console\Commands\FillSectorHistoricalsCommand',
-		'App\Console\Commands\GetCompanySummariesCommand'
+		'App\Console\Commands\GetCompanySummariesCommand',
+		'App\Console\Commands\FillHistoricalMovingAveragesCommand'
 	];
 
 	/**

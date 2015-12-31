@@ -17,7 +17,9 @@ class Historicals extends Model
         'low',
         'close',
         'volume',
-        'adj_close'
+        'adj_close',
+        'fifty_day_moving_average',
+        'two_hundred_day_moving_average'
     ];
 
     public function scopeDateCondition($query, $timeframe){

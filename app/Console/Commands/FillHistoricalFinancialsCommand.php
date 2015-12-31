@@ -6,14 +6,14 @@ use App\Models\Historicals;
 use App\Models\Stock;
 use Illuminate\Console\Command;
 
-class GetHistoricalFinancialsCommand extends Command
+class FillHistoricalFinancialsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stocks:getHistoricalFinancials';
+    protected $signature = 'stocks:fillHistoricalFinancials';
 
     /**
      * The console command description.
