@@ -38,35 +38,29 @@ class UpdateStockListCommand extends Command {
 	 */
 	public function fire()
 	{
-		$companyListFromASX = array_slice(explode(PHP_EOL, file_get_contents("http://www.asx.com.au/asx/research/ASXListedCompanies.csv")), 3);
+		$companyListFromASX = UpdateStockListCommand::getCompanyList($this->option('testMode'));
 		$numberOfStocks = count($companyListFromASX);
 		foreach($companyListFromASX as $key => $companyRow){
 			if($companyRow != null){
 				$stockCode = explode(',"', explode('",', $companyRow)[1])[0];
-				//Only insert full stock list if not in test mode
-				if(!$this->option('testMode')){
-					Stock::updateOrCreate(['stock_code' => $stockCode], [
-						'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
-					    'company_name' => formatCompanyName($stockCode, substr(explode('",', $companyRow)[0], 1)),
-					    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2),
-					    'updated_at' => date("Y-m-d H:i:s")
-					]);
-					$this->info("Updating... ".round(($key+1)*(100/$numberOfStocks), 2)."%");
-				}
-				else{
-					if($stockCode == 'TLS' || $stockCode == 'CBA'){
-						$stock = Stock::where('stock_code', $stockCode)->first();
-						$stock->company_name = formatCompanyName($stockCode, $stock->company_name);
-						$stock->updated_at = date("Y-m-d H:i:s");
-						$stock->save();
-						$this->info("[Test Mode] Updated...".$stockCode);
-					}
-				}
+				Stock::updateOrCreate(['stock_code' => $stockCode], [
+					'stock_code' => explode(',"', explode('",', $companyRow)[1])[0], 
+				    'company_name' => formatCompanyName($stockCode, substr(explode('",', $companyRow)[0], 1)),
+				    'sector' => substr(explode(',"', explode('",', $companyRow)[1])[1], 0, -2),
+				    'updated_at' => date("Y-m-d H:i:s")
+				]);
+				$this->info("Updating... ".round(($key+1)*(100/$numberOfStocks), 2)."%");
 			}
 		}
 		$this->info('The list of stocks was updated successfully!');
 	}
-
+	private static function getCompanyList($testMode){
+		if($testMode){
+			//Test Mode file only contains TLS and CBA
+			return array_slice(explode(PHP_EOL, file_get_contents('database/files/testCompanyList.csv')), 3);
+		}
+		return array_slice(explode(PHP_EOL, file_get_contents("http://www.asx.com.au/asx/research/ASXListedCompanies.csv")), 3);
+	}
 	/**
 	 * Get the console command arguments.
 	 *

@@ -32,18 +32,4 @@ class AjaxIndividualStockPageTest extends TestCase{
 			->see(date('M'))
 			->see(date('Y'));
 	}
-
-	public function testSectorGraph(){
-		$this->visit('/sectorGraph/Bank/last_month/Market%20Cap')
-			->see('Date')
-			->see('Market Cap')
-			->see(date('M'))
-			->see(date('Y'));
-
-		$this->visit('/sectorGraph/Bank/last_6_months/Market%20Cap')
-			->see('Date')
-			->see('Market Cap')
-			->see(date('M'))
-			->see(date('Y'));
-	}
 }

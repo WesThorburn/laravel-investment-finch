@@ -60,14 +60,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
-							<button class="btn btn-default active" onclick="getGraphData('last_month', 'total_market_cap')" id="last_month">30 Days</button>
-							<button class="btn btn-default" onclick="getGraphData('last_3_months', 'total_market_cap')" id="last_3_months">3 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_6_months', 'total_market_cap')" id="last_6_months">6 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_year', 'total_market_cap')" id="last_year">12 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_2_years', 'total_market_cap')" id="last_2_years">2 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('last_5_years', 'total_market_cap')" id="last_5_years">5 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('last_10_years', 'total_market_cap')" id="last_10_years">10 Years</button>
-							<button class="btn btn-default" onclick="getGraphData('all_time', 'total_market_cap')" id="all_time">All</button>
+							<button class="btn btn-default active" onclick="getGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>
+							<button class="btn btn-default" onclick="getGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
+							<button class="btn btn-default" onclick="getGraphData('all_time', 'Market Cap')" id="all_time">All</button>
 						</div>
 					</div>
 					<div class="panel-body">

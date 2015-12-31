@@ -3,7 +3,7 @@
 class HomePageTest extends TestCase{
 	public function testIndexPage(){
 		$this->visit('/')
-			->see("Total Market Cap (Billions)")->see("Market Cap")
+			->see("ASX Market Cap (Billions)")->see("Market Cap")
 			->see("Best Performing Sectors")->see("Worst Performing Sectors");
 	}
 

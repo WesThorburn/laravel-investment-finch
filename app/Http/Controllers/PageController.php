@@ -17,7 +17,7 @@ class PageController extends Controller
     public function index()
     {
         //Line graph for market cap
-        $totalMarketCapGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'total_market_cap');
+        $totalMarketCapGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap');
         $marketCaps = \Lava::DataTable();
         $marketCaps->addStringColumn('Date')
             ->addNumberColumn('Market Cap')
@@ -32,7 +32,7 @@ class PageController extends Controller
             ]);
 
         //Pie/DonutChart for Sectors' Market Caps
-        $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'individual_sectors');
+        $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Individual Sectors');
         $sectorCaps = \Lava::DataTable();
         $sectorCaps->addStringColumn('Sector Name') 
             ->addNumberColumn('Percent')

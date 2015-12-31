@@ -4,13 +4,13 @@ class SectorPageTest extends TestCase{
 	public function testSectorPage(){
 		$this->visit('/sectors')
 			->see("Sector")->see("Change")
-			->click("Bank")
-			->seePageIs("/sectors/Bank")
+			->click("Banks")
+			->seePageIs("/sectors/Banks")
 			->see("ANZ")->see("Australia and new zealand banking group limited");		
 	}
 
 	public function testStockLink(){
-		$this->visit("/sectors/Bank")
+		$this->visit("/sectors/Banks")
 			->click("ANZ")
 			->seePageIs("/stocks/ANZ")
 			->see("AUSTRALIA AND NEW ZEALAND BANKING GROUP LIMITED")

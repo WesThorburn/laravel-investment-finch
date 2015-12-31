@@ -157,8 +157,8 @@
 							</tr>
 							<tr>
 								<td>Market Cap</td>
-								<td>{{ $metrics->market_cap }}</td>
-								<td>{{ $sectorAverage->average_sector_market_cap }}</td>
+								<td>{{ formatMoneyAmountToLetter($metrics->market_cap) }}</td>
+								<td>{{ formatMoneyAmountToLetter($sectorAverage->average_sector_market_cap) }}</td>
 							</tr>
 						</tbody>
 					</table>

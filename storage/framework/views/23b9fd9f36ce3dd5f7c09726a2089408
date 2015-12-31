@@ -156,8 +156,8 @@
 							</tr>
 							<tr>
 								<td>Market Cap</td>
-								<td><?php echo e($metrics->market_cap); ?></td>
-								<td><?php echo e($sectorAverage->average_sector_market_cap); ?></td>
+								<td><?php echo e(formatMoneyAmountToLetter($metrics->market_cap)); ?></td>
+								<td><?php echo e(formatMoneyAmountToLetter($sectorAverage->average_sector_market_cap)); ?></td>
 							</tr>
 						</tbody>
 					</table>

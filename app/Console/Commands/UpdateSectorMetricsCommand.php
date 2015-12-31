@@ -43,11 +43,11 @@ class UpdateSectorMetricsCommand extends Command
     {
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
-            foreach(['Bank', 'Telecommunication Service'] as $sector){
+            foreach(['Banks', 'Telecommunication Services'] as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
                 UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
             }
-            $this->info('Bank & Telecommunication Service sectors updated.');
+            $this->info('Banks & Telecommunication Services sectors updated.');
         }
         else{
             $this->info("Updating sector metrics...");

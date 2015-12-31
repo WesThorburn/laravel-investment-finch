@@ -140,7 +140,7 @@ class SectorHistoricals extends Model
 
     public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType){
         $graphData = array();
-        if($dataType == 'individual_sectors'){
+        if($dataType == 'Individual Sectors'){
             $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
             $sectors = SectorHistoricals::where('date', $mostRecentDate)->get();
             $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
@@ -159,10 +159,10 @@ class SectorHistoricals extends Model
         else{
             $historicals = SectorHistoricals::where(['sector' => $sectorName])->dateCondition($timeFrame)->orderBy('date')->get();
             foreach($historicals as $record){
-                if($dataType == 'total_market_cap'){
+                if($dataType == 'Market Cap'){
                     $recordValue = $record->total_sector_market_cap;
                 }
-                elseif($dataType == 'volume'){
+                elseif($dataType == 'Volume'){
                     $recordValue = $record->average_daily_volume;
                 }
                 array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));

@@ -19,7 +19,7 @@ class SectorController extends Controller
 
     public function show($sectorName)
     {
-        $sectorGraphData = SectorHistoricals::getGraphData($sectorName, 'last_month', 'total_market_cap');
+        $sectorGraphData = SectorHistoricals::getGraphData($sectorName, 'last_month', 'Market Cap');
             $sectorCaps = \Lava::DataTable();
             $sectorCaps->addStringColumn('Date')
                 ->addNumberColumn('Sector Cap')
