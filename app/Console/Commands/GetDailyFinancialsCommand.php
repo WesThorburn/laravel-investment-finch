@@ -69,6 +69,8 @@ class GetDailyFinancialsCommand extends Command
 							"close" => $individualRecord[4],
 							"volume" => $individualRecord[5],
 							"adj_close" => $individualRecord[4],
+                            "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
+                            "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
 							"updated_at" => date("Y-m-d H:i:s")
 						]);
 					}

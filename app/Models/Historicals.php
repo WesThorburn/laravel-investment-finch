@@ -48,4 +48,9 @@ class Historicals extends Model
     		return $query;
     	}
     }
+
+    public static function getMovingAverage($stockCode, $timeFrame){
+        $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take($timeFrame)->lists('close');
+        return $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
+    }
 }
