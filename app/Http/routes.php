@@ -23,7 +23,7 @@ Route::group(['prefix' => 'ajax'], function(){
 });
 
 /*route::get('/test', function(){
-
+	return Carbon::now()->subMonth();
 });
 
 Route::controllers([

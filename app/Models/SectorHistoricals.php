@@ -157,7 +157,7 @@ class SectorHistoricals extends Model
             }
         }
         else{
-            $historicals = SectorHistoricals::where(['sector' => $sectorName])->dateCondition($timeFrame)->orderBy('date')->get();
+            $historicals = SectorHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
             foreach($historicals as $record){
                 if($dataType == 'Market Cap'){
                     $recordValue = $record->total_sector_market_cap;
