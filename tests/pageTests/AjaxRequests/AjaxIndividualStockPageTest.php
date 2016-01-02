@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Historicals;
+
 class AjaxIndividualStockPageTest extends TestCase{
 	public function testCurrentStockPrice(){
 		$this->visit('ajax/currentPrice/CBA');
@@ -19,17 +21,21 @@ class AjaxIndividualStockPageTest extends TestCase{
 	}
 
 	public function testStockGraph(){
+		$mostRecentDateInGraph = Historicals::getMostRecentHistoricalDate('CBA');
+		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 0);
+		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
+
 		$this->visit('/stockGraph/CBA/last_month/Price')
 			->see('Date')
 			->see('Price')
-			->see(date('M'))
-			->see(date('Y'));
+			->see($mostRecentMonth)
+			->see($mostRecentYear);
 
 		$this->visit('/stockGraph/CBA/all_time/Price')
 			->see('Date')
 			->see('Price')
 			->see('Feb 1, 2000')
-			->see(date('M'))
-			->see(date('Y'));
+			->see($mostRecentMonth)
+			->see($mostRecentYear);
 	}
 }

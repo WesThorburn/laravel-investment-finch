@@ -53,4 +53,8 @@ class Historicals extends Model
         $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take($timeFrame)->lists('close');
         return $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
     }
+
+    public static function getMostRecentHistoricalDate($stockCode){
+        return Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take(1)->lists('date')[0];
+    }
 }

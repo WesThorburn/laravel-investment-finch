@@ -92,7 +92,7 @@ class GetDailyFinancialsCommand extends Command
         }
     }
 
-    //Gets list of stock codes separated by addition symbols
+    //Gets list of stock codes separated by addition symbols, test mode only involves TLS and CBA
 	private static function getStockCodeParameter($testMode = 'false'){
         if($testMode != 'true'){
             date_default_timezone_set("Australia/Sydney");

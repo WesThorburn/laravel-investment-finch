@@ -22,8 +22,9 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('/marketchange', 'SearchController@marketChange');
 });
 
+
 /*route::get('/test', function(){
-	return Carbon::now()->subMonth();
+	
 });
 
 Route::controllers([
