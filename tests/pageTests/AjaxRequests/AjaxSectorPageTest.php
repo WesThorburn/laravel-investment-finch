@@ -20,16 +20,19 @@ class AjaxSectorPageTest extends TestCase{
 			->see('Australia And New Zealand Banking Group Limited');
 	}
 	public function testSectorGraph(){
+		$mostRecentDateInGraph = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 0);
+		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 		$this->visit('/sectorGraph/Banks/last_month/Market%20Cap')
 			->see('Date')
 			->see('Market Cap')
-			->see(date('M'))
-			->see(date('Y'));
+			->see($mostRecentMonth)
+			->see($mostRecentYear);
 
 		$this->visit('/sectorGraph/Banks/last_6_months/Market%20Cap')
 			->see('Date')
 			->see('Market Cap')
-			->see(date('M'))
-			->see(date('Y'));
+			->see($mostRecentMonth)
+			->see($mostRecentYear);
 	}
 }

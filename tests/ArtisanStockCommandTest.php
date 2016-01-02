@@ -21,7 +21,6 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function testGetDailyFinancials(){
 		$this->artisan("stocks:getDailyFinancials", ['--testMode' => true]);
-		//Historicals table will only be updated if it's a trading day
 		if(isTradingDay()){
 			$this->seeInDatabase('historicals', ['stock_code' => 'TLS', 'date' => date("Y-m-d")]);
 			$this->seeInDatabase('historicals', ['stock_code' => 'CBA','date' => date("Y-m-d")]);
