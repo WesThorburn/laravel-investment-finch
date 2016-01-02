@@ -109,20 +109,21 @@ class UpdateSectorMetricsCommand extends Command
             $averageSectorMarketCap = 0;
         }
         
-
-        SectorHistoricals::updateOrCreate(
-            [
-                'sector' => $sectorName,
-                'date' => date("Y-m-d")
-            ], 
-            [
-                'sector' => $sectorName,
-                'date' => date("Y-m-d"),
-                'total_sector_market_cap' => $totalSectorMarketCaps,
-                'day_change' => round($percentChange, 2),
-                'average_sector_market_cap' => $averageSectorMarketCap
-            ]
-        );
+        if(isTradingDay()){
+            SectorHistoricals::updateOrCreate(
+                [
+                    'sector' => $sectorName,
+                    'date' => date("Y-m-d")
+                ], 
+                [
+                    'sector' => $sectorName,
+                    'date' => date("Y-m-d"),
+                    'total_sector_market_cap' => $totalSectorMarketCaps,
+                    'day_change' => round($percentChange, 2),
+                    'average_sector_market_cap' => $averageSectorMarketCap
+                ]
+            );
+        }
     }
 
     public static function calculateMetric($metricName, $listOfStocks, $sectorName){
@@ -138,14 +139,17 @@ class UpdateSectorMetricsCommand extends Command
         else{
             $averageSectorMetricValue = 0;
         }
-        SectorHistoricals::updateOrCreate(
-            [
-                'sector' => $sectorName,
-                'date' => date("Y-m-d")
-            ], 
-            [
-              $metricName => round($averageSectorMetricValue, 2),
-            ]
-        );
+
+        if(isTradingDay()){
+            SectorHistoricals::updateOrCreate(
+                [
+                    'sector' => $sectorName,
+                    'date' => date("Y-m-d")
+                ], 
+                [
+                  $metricName => round($averageSectorMetricValue, 2),
+                ]
+            );
+        }
     }
 }

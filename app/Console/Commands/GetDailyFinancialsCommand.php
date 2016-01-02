@@ -39,27 +39,27 @@ class GetDailyFinancialsCommand extends Command
      * @return mixed
      */
     public function handle()
-    {
-        if(isTradingDay()){
-            $this->info("This process can take several minutes...");
-            $this->info("Getting daily financials...");
-            $stockCodes = Stock::all()->lists('stock_code');
+    {   
+        $this->info("This process can take several minutes...");
+        $this->info("Getting daily financials...");
+        $stockCodes = Stock::all()->lists('stock_code');
 
-            $numberOfStocks = count($stockCodes);
-			$iterationNumber = 1;
-			$maxIterations = ceil($numberOfStocks/100);
-            if($this->option('testMode') == 'true'){
-                $maxIterations = 1;
-                $this->info("[Test Mode]");
-            }
-			while($iterationNumber <= $maxIterations){
-                $stockCodeParameter = GetDailyFinancialsCommand::getStockCodeParameter($this->option('testMode'));
-                $financialsURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sohgl1v";
-				$dailyRecords = explode("\n", file_get_contents($financialsURL));
-				foreach($dailyRecords as $record){
-					if($record != null){
-						$individualRecord = explode(',', $record);
-						$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
+        $numberOfStocks = count($stockCodes);
+		$iterationNumber = 1;
+		$maxIterations = ceil($numberOfStocks/100);
+        if($this->option('testMode') == 'true'){
+            $maxIterations = 1;
+            $this->info("[Test Mode]");
+        }
+		while($iterationNumber <= $maxIterations){
+            $stockCodeParameter = GetDailyFinancialsCommand::getStockCodeParameter($this->option('testMode'));
+            $financialsURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sohgl1v";
+			$dailyRecords = explode("\n", file_get_contents($financialsURL));
+			foreach($dailyRecords as $record){
+				if($record != null){
+					$individualRecord = explode(',', $record);
+					$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
+                    if(isTradingDay()){
 						Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 							"stock_code" => $stockCode,
 							"date" => date("Y-m-d"),
@@ -73,22 +73,19 @@ class GetDailyFinancialsCommand extends Command
                             "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
 							"updated_at" => date("Y-m-d H:i:s")
 						]);
-					}
+                    }
 				}
-				$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
-				$iterationNumber++;
 			}
+			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
+			$iterationNumber++;
+		}
 
-            if($this->option('testMode') != 'true'){
-                $this->info("Removing existing stock_code index in historicals");
-                \DB::statement("DROP INDEX `stock_code` ON historicals");
-                $this->info("Reapplying index to historicals table");
-                \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
-                $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
-            }
-        }
-        else{
-            $this->info("This command can only be run on trading days.");
+        if(isTradingDay() && $this->option('testMode') != 'true'){
+            $this->info("Removing existing stock_code index in historicals");
+            \DB::statement("DROP INDEX `stock_code` ON historicals");
+            $this->info("Reapplying index to historicals table");
+            \DB::statement("ALTER TABLE `historicals` ADD INDEX (`stock_code`)");
+            $this->info("Finished getting daily financials for ".$numberOfStocks. " stocks.");
         }
     }
 
