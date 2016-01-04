@@ -67,6 +67,12 @@ class Stock extends Model {
 			elseif($dataType == 'Volume'){
 				$recordValue = $record->volume;
 			}
+			elseif($dataType == '50_day_MA'){
+				$recordValue = $record->fifty_day_moving_average;
+			}
+			elseif($dataType == '200_day_MA'){
+				$recordValue = $record->two_hundred_day_moving_average;
+			}
 			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
 		}
 		//Add Current day's trade value to graph data 

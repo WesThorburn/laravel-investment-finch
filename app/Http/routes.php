@@ -22,9 +22,7 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('/marketchange', 'SearchController@marketChange');
 });
 
-
 /*route::get('/test', function(){
-	
 });
 
 Route::controllers([
