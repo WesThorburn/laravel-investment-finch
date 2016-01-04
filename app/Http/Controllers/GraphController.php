@@ -14,19 +14,21 @@ class GraphController extends Controller
 {
     public function stock($stockCode, $timeFrame, $dataType){
         $graphData = Stock::getGraphData($stockCode, $timeFrame, $dataType);
-        return $this->graph($graphData, $dataType);
+        $prices = \Lava::DataTable();
+        $prices->addStringColumn('Date')
+            ->addNumberColumn($dataType)
+            ->addNumberColumn('50 Day Moving Average')
+            ->addNumberColumn('200 Day Moving Average')
+            ->addRows($graphData);
+        return $prices->toJson();
     }
 
     public function sector($sectorName, $timeFrame, $dataType){
         $graphData = SectorHistoricals::getGraphData($sectorName, $timeFrame, $dataType);
-        return $this->graph($graphData, $dataType);
-    }
-
-    public function graph($data, $dataType){
         $prices = \Lava::DataTable();
         $prices->addStringColumn('Date')
             ->addNumberColumn($dataType)
-            ->addRows($data);
+            ->addRows( $graphData);
         return $prices->toJson();
     }
 }

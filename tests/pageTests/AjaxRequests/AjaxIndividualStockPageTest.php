@@ -21,17 +21,17 @@ class AjaxIndividualStockPageTest extends TestCase{
 	}
 
 	public function testStockGraph(){
-		$mostRecentDateInGraph = Historicals::getMostRecentHistoricalDate('CBA');
+		$mostRecentDateInGraph = Historicals::getMostRecentHistoricalDate('TLS');
 		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 2);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 
-		$this->visit('/stockGraph/CBA/last_month/Price')
+		$this->visit('/stockGraph/TLS/last_month/Price')
 			->see('Date')
 			->see('Price')
 			->see($mostRecentMonth)
 			->see($mostRecentYear);
 
-		$this->visit('/stockGraph/CBA/all_time/Price')
+		$this->visit('/stockGraph/TLS/all_time/Price')
 			->see('Date')
 			->see('Price')
 			->see('Feb 1, 2000')

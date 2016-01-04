@@ -41,9 +41,11 @@ class StockController extends Controller
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
                 ->addNumberColumn('Price')
+                ->addNumberColumn('50 Day Moving Average')
+                ->addNumberColumn('200 Day Moving Average')
                 ->addRows($priceGraphData);
 
-            $stockPriceLava = \Lava::AreaChart('StockPrice')
+            $stockPriceLava = \Lava::LineChart('StockPrice')
                 ->dataTable($prices)
                 ->setOptions([
                     'width' => 620,

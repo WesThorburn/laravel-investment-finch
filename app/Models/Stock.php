@@ -62,18 +62,11 @@ class Stock extends Model {
 		$graphData = array();
 		foreach($historicals as $record){
 			if($dataType == 'Price'){
-				$recordValue = $record->close;
+				$price = $record->close;
+				$fiftyDayMovingAverage = $record->fifty_day_moving_average;
+				$twoHundredDayMovingAverage = $record->two_hundred_day_moving_average;
 			}
-			elseif($dataType == 'Volume'){
-				$recordValue = $record->volume;
-			}
-			elseif($dataType == '50_day_MA'){
-				$recordValue = $record->fifty_day_moving_average;
-			}
-			elseif($dataType == '200_day_MA'){
-				$recordValue = $record->two_hundred_day_moving_average;
-			}
-			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
+			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $price, $fiftyDayMovingAverage, $twoHundredDayMovingAverage));
 		}
 		//Add Current day's trade value to graph data 
 		//10:32am allows time for the metrics to be populated

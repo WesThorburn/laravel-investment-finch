@@ -95,7 +95,7 @@
 					</div>
 					<div class="panel-body">
 						<div id="stock_price_div" class="pull-left">
-							@areachart('StockPrice', 'stock_price_div')
+							@linechart('StockPrice', 'stock_price_div')
 						</div>
 					</div>
 				</div>

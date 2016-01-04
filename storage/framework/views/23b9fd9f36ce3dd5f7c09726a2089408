@@ -94,7 +94,7 @@
 					</div>
 					<div class="panel-body">
 						<div id="stock_price_div" class="pull-left">
-							<?php echo Lava::renderAreaChart('StockPrice', 'stock_price_div'); ?>
+							<?php echo Lava::renderLineChart('StockPrice', 'stock_price_div'); ?>
 						</div>
 					</div>
 				</div>
