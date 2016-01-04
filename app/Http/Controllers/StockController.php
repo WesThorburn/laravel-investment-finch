@@ -37,7 +37,6 @@ class StockController extends Controller
         }
         if(Stock::where('stock_code', $id)->first()){
             $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
-            $stockPriceLava = new Lavacharts;
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
                 ->addNumberColumn('Price')
