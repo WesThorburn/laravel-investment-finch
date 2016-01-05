@@ -7,7 +7,7 @@
 	            <th>Name</th>
 	            <th>Share Price</th>
 	            <th>Day Change</th>
-	            <th>Mkt Cap</th>
+	            <th>Mkt Cap (M)</th>
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
