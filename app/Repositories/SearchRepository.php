@@ -28,10 +28,6 @@ Class SearchRepository implements SearchRepositoryInterface{
 		$max52WeekHigh = StockMetrics::max('year_high');
 		$min52WeekLow = StockMetrics::min('year_low');
 		$max52WeekLow = StockMetrics::max('year_low');
-		$min50DayMA = StockMetrics::min('fifty_day_moving_average');
-		$max50DayMA = StockMetrics::max('fifty_day_moving_average');
-		$min200DayMA = StockMetrics::min('two_hundred_day_moving_average');
-		$max200DayMA = StockMetrics::max('two_hundred_day_moving_average');
 		$minMarketCap = StockMetrics::min('market_cap');
 		$maxMarketCap = StockMetrics::max('market_cap');
 		$minDividendYield = StockMetrics::min('dividend_yield');
@@ -109,22 +105,6 @@ Class SearchRepository implements SearchRepositoryInterface{
 			$max52WeekLow = $request->max52WeekLow;
 		}
 
-		if($request->min50DayMA != null){
-			$min50DayMA = $request->min50DayMA;
-		}
-
-		if($request->max50DayMA != null){
-			$max50DayMA = $request->max50DayMA;
-		}
-
-		if($request->min200DayMA != null){
-			$min200DayMA = $request->min200DayMA;
-		}
-
-		if($request->max200DayMA != null){
-			$max200DayMA = $request->max200DayMA;
-		}
-
 		if($request->minMarketCap != null){
 			$minMarketCap = $request->minMarketCap;
 		}
@@ -145,7 +125,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 			$request->stockSector = "All";
 		}
 
-		//Make sure results are ommited even if box isn't ticked.
+		//Omit results if box isn't ticked.
 		if($request->omitCondition == null){
 			$request->omitCondition = 'omit';
 		}
@@ -160,8 +140,6 @@ Class SearchRepository implements SearchRepositoryInterface{
 			->whereBetween('price_to_book', [$minPriceBook, $maxPriceBook])
 			->whereBetween('year_high', [$min52WeekHigh, $max52WeekHigh])
 			->whereBetween('year_low', [$min52WeekLow, $max52WeekLow ])
-			->whereBetween('fifty_day_moving_average', [$min50DayMA, $max50DayMA])
-			->whereBetween('two_hundred_day_moving_average', [$min200DayMA, $max200DayMA])
 			->whereBetween('market_cap', [$minMarketCap, $maxMarketCap])
 			->whereBetween('dividend_yield', [$minDividendYield, $maxDividendYield])
 			->omitOutliers($request->omitCondition)

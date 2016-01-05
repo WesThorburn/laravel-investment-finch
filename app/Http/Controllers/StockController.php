@@ -60,6 +60,7 @@ class StockController extends Controller
                 'stock' => Stock::where('stock_code', $id)->first(),
                 'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit'),
                 'metrics' => StockMetrics::where('stock_code', $id)->first(),
+                'mostRecentStockHistoricals' => Historicals::where('stock_code', $id)->orderBy('date', 'DESC')->limit(1)->first(),
                 'sectorAverage' => SectorHistoricals::where(['sector' => $sector, 'date' => $motRecentSectorHistoricalsDate])->first()
             ]);
         }

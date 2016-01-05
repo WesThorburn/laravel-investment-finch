@@ -146,12 +146,12 @@
 							</tr>
 							<tr>
 								<td>50 Day Moving Average</td>
-								<td><?php echo e($metrics->fifty_day_moving_average); ?></td>
+								<td><?php echo e($mostRecentStockHistoricals->fifty_day_moving_average); ?></td>
 								<td>-</td>
 							</tr>
 							<tr>
 								<td>200 Day Moving Average</td>
-								<td><?php echo e($metrics->two_hundred_day_moving_average); ?></td>
+								<td><?php echo e($mostRecentStockHistoricals->two_hundred_day_moving_average); ?></td>
 								<td>-</td>
 							</tr>
 							<tr>
