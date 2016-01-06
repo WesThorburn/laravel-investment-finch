@@ -18,8 +18,8 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 	Route::get('sectors/{sectorName}/daychanges', 'SectorController@sectorDayChanges');
 	Route::get('sectors/{sectorName}/otherstocksinsector', 'SectorController@otherStocksInSector');
-	Route::get('/marketstatus','SearchController@marketStatus');
-	Route::get('/marketchange', 'SearchController@marketChange');
+	Route::get('/marketstatus','MarketController@status');
+	Route::get('/marketchange', 'MarketController@change');
 });
 
 /*route::get('/test', function(){
