@@ -43,6 +43,9 @@ class UpdateStockMetricsCommand extends Command {
 			$maxIterations = 1;
 			$this->info("[Test Mode]");
 		}
+
+		UpdateStockMetricsCommand::insertMetricRowsForNewStocks();
+
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
 			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2a2j4ee8p5rp6kjj1y";
@@ -75,11 +78,18 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		$this->info('All stock metrics were updated successfully!');
 	}
+	//Creates rows for stocks that aren't yet in the metrics table (Required because getStockCodeParameter gets the 100 oldest metrics)
+	private static function insertMetricRowsForNewStocks(){
+		$stockCodes = Stock::lists('stock_code');
+		foreach($stockCodes as $stockCode){
+			StockMetrics::updateOrCreate(['stock_code' => $stockCode], []);
+		}
+	}
 	//Gets list of stock codes separated by addition symbols, only TLS and CBA in test mode
 	private static function getStockCodeParameter($testMode = false){
 		if(!$testMode){
 			//Limit of 100 at a time due to yahoo's url length limit
-			$stockCodeList = Stock::whereIn('stock_code', StockMetrics::where('updated_at', '<', Carbon::now()->subSeconds(60))->orderBy('updated_at')->take(100)->lists('stock_code'))->lists('stock_code');
+			$stockCodeList = StockMetrics::where('updated_at', '<', Carbon::now()->subSeconds(60))->orderBy('updated_at')->take(100)->lists('stock_code');
 			$stockCodeParameter = "";
 			foreach($stockCodeList as $stockCode){
 				$stockCodeParameter .= "+".$stockCode.".AX";
