@@ -147,12 +147,20 @@
 							</tr>
 							<tr>
 								<td>50 Day Moving Average</td>
-								<td>{{ $mostRecentStockHistoricals->fifty_day_moving_average }}</td>
+								<td>
+									@if($mostRecentStockHistoricals)
+										{{ $mostRecentStockHistoricals->fifty_day_moving_average }}
+									@endif
+								</td>
 								<td>-</td>
 							</tr>
 							<tr>
 								<td>200 Day Moving Average</td>
-								<td>{{ $mostRecentStockHistoricals->two_hundred_day_moving_average }}</td>
+								<td>
+									@if($mostRecentStockHistoricals)
+										{{ $mostRecentStockHistoricals->two_hundred_day_moving_average }}
+									@endif
+								</td>
 								<td>-</td>
 							</tr>
 							<tr>
