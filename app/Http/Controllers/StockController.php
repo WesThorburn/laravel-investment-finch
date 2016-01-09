@@ -46,6 +46,14 @@ class StockController extends Controller
 
             $stockPriceLava = \Lava::LineChart('StockPrice')
                 ->dataTable($prices)
+                ->customize([
+                    'explorer' => [
+                        'actions' => [
+                            'dragToZoom',
+                            'rightClickToReset'
+                         ]
+                     ]
+                ])
                 ->setOptions([
                     'width' => 620,
                     'height' => 360,
