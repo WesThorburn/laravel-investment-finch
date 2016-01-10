@@ -45,7 +45,7 @@ class UpdateSectorMetricsCommand extends Command
             $this->info("[Test Mode]");
             foreach(['Banks', 'Telecommunication Services'] as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-                UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
+                UpdateSectorMetricsCommand::calculateSectorDayGain($stocksInSector, $sector);
             }
             $this->info('Banks & Telecommunication Services sectors updated.');
         }
@@ -56,7 +56,7 @@ class UpdateSectorMetricsCommand extends Command
 
             foreach($sectors as $sector){
                 $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-                UpdateSectorMetricsCommand::calculateDayGain($stocksInSector, $sector);
+                UpdateSectorMetricsCommand::calculateSectorDayGain($stocksInSector, $sector);
 
                 if($this->option('mode') == 'full'){
                     $sectorMetrics = [
@@ -75,12 +75,12 @@ class UpdateSectorMetricsCommand extends Command
             }
             //Calculate change for whole market
             $allStockCodes = Stock::lists('stock_code');
-            UpdateSectorMetricsCommand::calculateDayGain($allStockCodes, "All");
+            UpdateSectorMetricsCommand::calculateSectorDayGain($allStockCodes, "All");
             $this->info("Sector day changes have been updated!");
         }
     }
 
-    private static function calculateDayGain($listOfStocks, $sectorName){
+    private static function calculateSectorDayGain($listOfStocks, $sectorName){
         $marketCaps = array();
         $marketCapDayChanges = array();
         foreach($listOfStocks as $stock){
