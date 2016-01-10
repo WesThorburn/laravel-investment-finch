@@ -91,16 +91,19 @@ class UpdateSectorMetricsCommand extends Command
         }
 
         //Calculate Market Cap % Change
-        $totalSectorMarketCaps = array_sum($marketCaps);
+        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+        $yesterdaysTotalMarketCap = SectorHistoricals::where(['date' => $mostRecentSectorHistoricalsDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
+
         $totalSectorDayChange = array_sum($marketCapDayChanges);
-        if($totalSectorMarketCaps > 0){
-            $percentChange = (100/$totalSectorMarketCaps)*$totalSectorDayChange;
+        if($yesterdaysTotalMarketCap > 0){
+            $percentChange = (100/$yesterdaysTotalMarketCap)*$totalSectorDayChange;
         }
         else{
             $percentChange = 0;
         }
 
         //Calculate Sector's Average Market Cap
+        $totalSectorMarketCaps = array_sum($marketCaps);
         $numberOfMarketCaps = count($marketCaps);
         if($numberOfMarketCaps > 0){
             $averageSectorMarketCap = $totalSectorMarketCaps/$numberOfMarketCaps;
