@@ -138,6 +138,10 @@ class SectorHistoricals extends Model
         return SectorHistoricals::orderBy('date', 'desc')->take(1)->lists('date')[0];
     }
 
+    public static function getYesterdaysSectorHistoricalsDate(){
+        return SectorHistoricals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
+    }
+
     public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType){
         $graphData = array();
         if($dataType == 'Individual Sectors'){
