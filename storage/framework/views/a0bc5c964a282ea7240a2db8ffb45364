@@ -18,8 +18,8 @@
 							<?php echo e($stockChange->week_change); ?>%
 						</td>
 					<?php elseif($timeFrame == '12months'): ?>
-						<td <?php if($stockChange->this_year_change < 0): ?> class="color-red" 
-							<?php elseif($stockChange->this_year_change > 0): ?> class="color-green"
+						<td <?php if($stockChange->year_change < 0): ?> class="color-red" 
+							<?php elseif($stockChange->year_change > 0): ?> class="color-green"
 							<?php endif; ?>>
 							<?php echo e($stockChange->year_change); ?>%
 						</td>
