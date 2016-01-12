@@ -45,4 +45,13 @@ class StockMetrics extends Model {
 	public static function getMetricsByStockList($listOfStocks, $omitCondition){
 		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->with('stock')->get();
 	}
+
+	public static function getAverageMetric($metricName, $listOfStocks, $sectorName){
+        $sectorMetrics = array();
+        foreach($listOfStocks as $stock){
+            $sectorMetric = StockMetrics::where('stock_code', $stock)->pluck($metricName);
+            array_push($sectorMetrics, $sectorMetric);
+        }
+        return array_sum($sectorMetrics)/count($sectorMetrics);
+    }
 }

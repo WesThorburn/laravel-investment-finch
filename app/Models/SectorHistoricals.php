@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StockMetrics;
 
 class SectorHistoricals extends Model
 {
@@ -173,5 +174,28 @@ class SectorHistoricals extends Model
             }
         }
         return $graphData;
+    }
+
+     public static function getSectorPercentChange($sectorName, $stocksInSector){
+        $yesterdaysSectorHistoricalsDate = SectorHistoricals::getYesterdaysSectorHistoricalsDate();
+        $yesterdaysTotalMarketCap = SectorHistoricals::where(['date' => $yesterdaysSectorHistoricalsDate, 'sector' => $sectorName])->pluck('total_sector_market_cap');
+
+        if($yesterdaysTotalMarketCap > 0){
+            return (100/$yesterdaysTotalMarketCap)*SectorHistoricals::getSectorTotalChange($stocksInSector);
+        }
+        return 0;
+    }
+
+    public static function getSectorTotalChange($stocksInSector){
+        $marketCapDayChanges = array();
+        foreach($stocksInSector as $stock){
+            $metric = StockMetrics::where('stock_code', $stock)->first();
+            array_push($marketCapDayChanges, $metric->market_cap - ($metric->market_cap/(($metric->day_change/100)+1)));
+        }
+        return array_sum($marketCapDayChanges);
+    }
+
+    public static function getTotalSectorMarketCap($stocksInSector){
+        return StockMetrics::whereIn('stock_code', $stocksInSector)->sum('market_cap');
     }
 }

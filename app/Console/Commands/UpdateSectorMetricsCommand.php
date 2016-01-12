@@ -65,7 +65,7 @@ class UpdateSectorMetricsCommand extends Command
                 $stocksInSector = Stock::lists('stock_code');
             }
             if(count($stocksInSector) > 0){
-                $totalSectorMarketCap = UpdateSectorMetricsCommand::getTotalSectorMarketCap($stocksInSector);
+                $totalSectorMarketCap = SectorHistoricals::getTotalSectorMarketCap($stocksInSector);
                 if(isTradingDay()){
                     SectorHistoricals::updateOrCreate(
                         [
@@ -76,7 +76,7 @@ class UpdateSectorMetricsCommand extends Command
                             'sector' => $sectorName,
                             'date' => date("Y-m-d"),
                             'total_sector_market_cap' => $totalSectorMarketCap,
-                            'day_change' => round(UpdateSectorMetricsCommand::getSectorPercentChange($sectorName, $stocksInSector), 2),
+                            'day_change' => round(SectorHistoricals::getSectorPercentChange($sectorName, $stocksInSector), 2),
                             'average_sector_market_cap' => $totalSectorMarketCap/count($stocksInSector)
                         ]
                     );
@@ -89,7 +89,7 @@ class UpdateSectorMetricsCommand extends Command
                                     'date' => date("Y-m-d")
                                 ], 
                                 [
-                                    $metricName => round(UpdateSectorMetricsCommand::getAverageMetric($metricName, $stocksInSector, $sectorName), 2),
+                                    $metricName => round(StockMetrics::getAverageMetric($metricName, $stocksInSector, $sectorName), 2),
                                 ]
                             );
                         }
@@ -97,37 +97,5 @@ class UpdateSectorMetricsCommand extends Command
                 }
             }
         }
-    }
-
-    public static function getAverageMetric($metricName, $listOfStocks, $sectorName){
-        $sectorMetrics = array();
-        foreach($listOfStocks as $stock){
-            $sectorMetric = StockMetrics::where('stock_code', $stock)->pluck($metricName);
-            array_push($sectorMetrics, $sectorMetric);
-        }
-        return array_sum($sectorMetrics)/count($sectorMetrics);
-    }
-
-    private function getSectorPercentChange($sectorName, $stocksInSector){
-        $yesterdaysSectorHistoricalsDate = SectorHistoricals::getYesterdaysSectorHistoricalsDate();
-        $yesterdaysTotalMarketCap = SectorHistoricals::where(['date' => $yesterdaysSectorHistoricalsDate, 'sector' => $sectorName])->pluck('total_sector_market_cap');
-
-        if($yesterdaysTotalMarketCap > 0){
-            return (100/$yesterdaysTotalMarketCap)*UpdateSectorMetricsCommand::getSectorTotalChange($stocksInSector);
-        }
-        return 0;
-    }
-
-    private function getSectorTotalChange($stocksInSector){
-        $marketCapDayChanges = array();
-        foreach($stocksInSector as $stock){
-            $metric = StockMetrics::where('stock_code', $stock)->first();
-            array_push($marketCapDayChanges, $metric->market_cap - ($metric->market_cap/(($metric->day_change/100)+1)));
-        }
-        return array_sum($marketCapDayChanges);
-    }
-
-    private function getTotalSectorMarketCap($stocksInSector){
-        return StockMetrics::whereIn('stock_code', $stocksInSector)->sum('market_cap');
     }
 }
