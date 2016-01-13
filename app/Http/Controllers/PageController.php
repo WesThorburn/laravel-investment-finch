@@ -31,16 +31,20 @@ class PageController extends Controller
                 'title' => 'ASX Market Cap (Billions)'
             ]);
 
-        //Pie/DonutChart for Sectors' Market Caps
+        //DonutChart for Sectors' Market Caps
         $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Individual Sectors');
         $sectorCaps = \Lava::DataTable();
         $sectorCaps->addStringColumn('Sector Name') 
             ->addNumberColumn('Percent')
-            ->addNumberColumn('Sector Cap')
             ->addRows($individualSectorCapsGraphData);
 
         $sectorCapsLava = \Lava::DonutChart('Sectors')
             ->dataTable($sectorCaps)
+            ->customize([
+            	'tooltip' => [
+            		'text' => 'percentage'
+            	]
+            ])
             ->setOptions([
                 'width' => 725,
                 'height' => 360,
