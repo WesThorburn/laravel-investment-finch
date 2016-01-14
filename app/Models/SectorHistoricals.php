@@ -143,44 +143,45 @@ class SectorHistoricals extends Model
         return SectorHistoricals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
     }
 
-    public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType, $sectorLimit){
+    public static function getAllSectorGraphData($sectorLimit){
         $graphData = array();
-        if($dataType == 'Individual Sectors'){
-            $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-            $sectors = SectorHistoricals::where('date', $mostRecentDate)
-                ->where('sector', '!=', 'All')
-                ->orderBy('total_sector_market_cap', 'DESC')
-                ->limit(SectorHistoricals::sectorLimitToNumber($sectorLimit))
-                ->get();
-            $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
-            foreach($sectors as $sector){
-                if($sector->sector != 'All'){
-                    if($allSectorsMarketCap > 0 && $sector->total_sector_market_cap > 0){
-                        $sectorPercent = 100/$allSectorsMarketCap*$sector->total_sector_market_cap;
-                    }
-                    else{
-                        $sectorPercent = 0;
-                    }
-                    array_push($graphData, array($sector->sector, round($sectorPercent, 2)));
+        $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+        $sectors = SectorHistoricals::where('date', $mostRecentDate)
+            ->where('sector', '!=', 'All')
+            ->orderBy('total_sector_market_cap', 'DESC')
+            ->limit(SectorHistoricals::sectorLimitToNumber($sectorLimit))
+            ->get();
+        $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
+        foreach($sectors as $sector){
+            if($sector->sector != 'All'){
+                if($allSectorsMarketCap > 0 && $sector->total_sector_market_cap > 0){
+                    $sectorPercent = 100/$allSectorsMarketCap*$sector->total_sector_market_cap;
                 }
-            }
-        }
-        else{
-            $historicals = SectorHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
-            foreach($historicals as $record){
-                if($dataType == 'Market Cap'){
-                    $recordValue = $record->total_sector_market_cap;
+                else{
+                    $sectorPercent = 0;
                 }
-                elseif($dataType == 'Volume'){
-                    $recordValue = $record->average_daily_volume;
-                }
-                array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
+                array_push($graphData, array($sector->sector, round($sectorPercent, 2)));
             }
         }
         return $graphData;
     }
 
-     public static function getSectorPercentChange($sectorName, $stocksInSector){
+    public static function getIndividualSectorGraphData($sectorName, $timeFrame = 'last_month', $dataType){
+        $graphData = array();
+        $historicals = SectorHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
+        foreach($historicals as $record){
+            if($dataType == 'Market Cap'){
+                $recordValue = $record->total_sector_market_cap;
+            }
+            elseif($dataType == 'Volume'){
+                $recordValue = $record->average_daily_volume;
+            }
+            array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
+        }
+        return $graphData;
+    }
+
+    public static function getSectorPercentChange($sectorName, $stocksInSector){
         $yesterdaysSectorHistoricalsDate = SectorHistoricals::getYesterdaysSectorHistoricalsDate();
         $yesterdaysTotalMarketCap = SectorHistoricals::where(['date' => $yesterdaysSectorHistoricalsDate, 'sector' => $sectorName])->pluck('total_sector_market_cap');
 
