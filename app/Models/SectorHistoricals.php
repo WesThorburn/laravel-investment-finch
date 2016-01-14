@@ -143,11 +143,15 @@ class SectorHistoricals extends Model
         return SectorHistoricals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
     }
 
-    public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType){
+    public static function getGraphData($sectorName, $timeFrame = 'last_month', $dataType, $sectorLimit){
         $graphData = array();
         if($dataType == 'Individual Sectors'){
             $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-            $sectors = SectorHistoricals::where('date', $mostRecentDate)->get();
+            $sectors = SectorHistoricals::where('date', $mostRecentDate)
+                ->where('sector', '!=', 'All')
+                ->orderBy('total_sector_market_cap', 'DESC')
+                ->limit(SectorHistoricals::sectorLimitToNumber($sectorLimit))
+                ->get();
             $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
             foreach($sectors as $sector){
                 if($sector->sector != 'All'){
@@ -197,5 +201,19 @@ class SectorHistoricals extends Model
 
     public static function getTotalSectorMarketCap($stocksInSector){
         return StockMetrics::whereIn('stock_code', $stocksInSector)->sum('market_cap');
+    }
+
+    private static function sectorLimitToNumber($sectorLimit){
+        if($sectorLimit == 'all'){
+            $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+            return SectorHistoricals::where('date', $mostRecentDate)
+                ->where('sector', '!=', 'All')
+                ->lists('sector')
+                ->count();
+        }
+        else{
+            $explodedSectorLimit = explode('_', $sectorLimit);
+            return end($explodedSectorLimit);
+        }
     }
 }

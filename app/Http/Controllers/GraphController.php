@@ -24,11 +24,20 @@ class GraphController extends Controller
     }
 
     public function sector($sectorName, $timeFrame, $dataType){
-        $graphData = SectorHistoricals::getGraphData($sectorName, $timeFrame, $dataType);
+        $graphData = SectorHistoricals::getGraphData($sectorName, $timeFrame, $dataType, '');
         $prices = \Lava::DataTable();
         $prices->addStringColumn('Date')
             ->addNumberColumn($dataType)
-            ->addRows( $graphData);
+            ->addRows($graphData);
         return $prices->toJson();
+    }
+
+    public function sectorCapsPieChart($numberOfSectors){
+        $graphData = SectorHistoricals::getGraphData('All', 'last_month', 'Individual Sectors', $numberOfSectors);
+        $sectorCaps = \Lava::DataTable();
+        $sectorCaps->addStringColumn('Sector Name') 
+            ->addNumberColumn('Percent')
+            ->addRows($graphData);
+        return $sectorCaps->toJson();
     }
 }

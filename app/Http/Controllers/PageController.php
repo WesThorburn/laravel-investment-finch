@@ -17,7 +17,7 @@ class PageController extends Controller
     public function index()
     {
         //Line graph for market cap
-        $totalMarketCapGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap');
+        $totalMarketCapGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Market Cap', '');
         $marketCaps = \Lava::DataTable();
         $marketCaps->addStringColumn('Date')
             ->addNumberColumn('Market Cap')
@@ -31,14 +31,14 @@ class PageController extends Controller
                 'title' => 'ASX Market Cap (Billions)'
             ]);
 
-        //DonutChart for Sectors' Market Caps
-        $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Individual Sectors');
+        //PieChart for Sectors' Market Caps
+        $individualSectorCapsGraphData = SectorHistoricals::getGraphData('All', 'last_month', 'Individual Sectors', 'top_5');
         $sectorCaps = \Lava::DataTable();
         $sectorCaps->addStringColumn('Sector Name') 
             ->addNumberColumn('Percent')
             ->addRows($individualSectorCapsGraphData);
 
-        $sectorCapsLava = \Lava::DonutChart('Sectors')
+        $sectorCapsLava = \Lava::PieChart('Sectors')
             ->dataTable($sectorCaps)
             ->customize([
             	'tooltip' => [
@@ -49,7 +49,6 @@ class PageController extends Controller
                 'width' => 725,
                 'height' => 360,
                 'title' => 'Sector Caps (Billions)',
-                'pieHole' => 0.3,
                 'pieSliceText' => 'label',
             ]);
 

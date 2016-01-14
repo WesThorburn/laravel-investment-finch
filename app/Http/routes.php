@@ -11,6 +11,7 @@ Route::resource('sectors', 'SectorController');
 
 Route::get('stockGraph/{stockCode}/{timeFrame}/{dataType}', 'GraphController@stock');
 Route::get('sectorGraph/{sectorName}/{timeFrame}/{dataType}', 'GraphController@sector');
+Route::get('sectorCapsPieChart/{numberOfSectors}', 'GraphController@sectorCapsPieChart');
 
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('currentPrice/{stockCode}', 'StockController@getCurrentPrice');
