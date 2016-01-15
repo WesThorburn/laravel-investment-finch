@@ -90,4 +90,8 @@ class StockController extends Controller
             'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit')
         ]);
     }
+
+    public function stocks(){
+        return StockMetrics::with('stock')->orderBy('market_cap', 'DESC')->paginate(20);
+    }
 }

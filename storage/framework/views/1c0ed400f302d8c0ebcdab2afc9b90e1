@@ -1,3 +1,7 @@
+<?php $__env->startSection('head'); ?>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('nav'); ?>
 	<?php echo $__env->make('layouts.partials.nav-buttons', ['page' => 'stocks'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
@@ -8,7 +12,7 @@
 
 <?php $__env->startSection('body'); ?>
 	<script>
-		$(document).ready(
+/*		$(document).ready(
             function() {
                 setInterval(function() {
                 	if(window.location.search == ""){
@@ -18,25 +22,26 @@
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
                 	}
                 }, 60000);
-            });
+            });*/
 	</script>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="pull-left">
+				<!--<div class="pull-left">
 					<?php echo Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']); ?>
 
 						<?php echo Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control']); ?>
 
 						<?php echo Form::submit("Filter Sector", ['class' => 'btn btn-default form-control']); ?>
 
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="metrics">
-					<?php echo $__env->make('layouts.partials.stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					<!--<?php echo $__env->make('layouts.partials.stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>-->
+					<?php echo $__env->make('layouts.partials.angular-stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 				</div>
 			</div>
 		</div>
