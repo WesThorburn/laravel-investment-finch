@@ -8,11 +8,7 @@
 		<meta name="description" content="The only Australian Stock Market website that allows users to search for and rank stocks based on pre-defined metrics. A simple open source project built upon the Yahoo finance API."/>
 
 		<!-- CSS -->
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="/css/bootstrap-theme.css">
-		<link rel="stylesheet" href="/css/dataTables.bootstrap.css">
-		<link rel="stylesheet" href="/css/jasny-bootstrap.css">
-		<link rel="stylesheet" href="/css/customstyles.css">
+		<link rel="stylesheet" href="/css/all.css">
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" type="image/png" href="/images/favicon.ico"/>

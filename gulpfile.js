@@ -12,5 +12,11 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
+    mix.styles([
+    	'bootstrap.css',
+    	'bootstrap-theme.css',
+    	'customstyles.css',
+    	'dataTables.bootstrap.css',
+    	'jasny-bootstrap.css'
+    ]);
 });
