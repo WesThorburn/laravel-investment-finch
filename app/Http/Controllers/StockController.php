@@ -13,6 +13,7 @@ use App\Models\Stock;
 use App\Models\StockMetrics;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
+use Yajra\Datatables\Datatables;
 
 class StockController extends Controller
 {
@@ -92,6 +93,8 @@ class StockController extends Controller
     }
 
     public function stocks(){
-        return StockMetrics::with('stock')->orderBy('market_cap', 'DESC')->paginate(20);
+        $stocks = StockMetrics::with('stock')->orderBy('stock_metrics.market_cap', 'DESC');
+        return \Datatables::of($stocks)
+            ->make(true);
     }
 }

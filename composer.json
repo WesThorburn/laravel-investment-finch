@@ -10,7 +10,7 @@
 		"doctrine/dbal": "2.5.1",
 		"nesbot/carbon": "^1.19",
 		"khill/lavacharts": "2.5.*",
-		"yajra/laravel-datatables-oracle": "~5.0"
+		"yajra/laravel-datatables-oracle": "~6.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

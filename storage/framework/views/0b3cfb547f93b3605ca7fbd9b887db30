@@ -1,8 +1,8 @@
 <div class="container" ng-app="stocksApp" ng-controller="stocksController">
 	<div class="row">
 		<div class="panel panel-default">
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" id="stock_table">
-			    <thead>
+			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" ng-table="vm.tableParams" id="stock_table" show-filter="true">
+			    <!-- <thead>
 			        <tr>
 			            <th>Code</th>
 			            <th>Name</th>
@@ -18,11 +18,13 @@
 			            <th>52 Week High</th>
 			            <th>52 Week Low</th>
 			        </tr>
-			    </thead>
+			    </thead> -->
 				<div class="panel-body">
 				    <tbody>
 				    	<tr ng-repeat="stock in stocks" ng-click="showStock(stock.stock_code)">
-				    		<td>{{ stock.stock_code }}</td>
+				    		<td title="'Code'" filter="{ stock_code: 'text'}" sortable="'stock_code'">
+				    			{{ stock.stock_code }}
+				    		</td>
 				    		<td>{{ stock.stock.company_name }}</td>
 				    		<td>{{ stock.stock.sector }}</td>
 				    		<td>{{ stock.last_trade }}</td>
@@ -42,12 +44,15 @@
 				</div>
 			</table>
 		</div>
-		<button class="btn btn-primary" ng-click="nextPage()">Next</button>
+		<div class="btn-group">
+			<button class="btn btn-default" ng-click="flipPage(-1)">Prev</button>
+			<button class="btn btn-default" ng-click="flipPage(1)">Next</button>
+		</div>
 	</div>
 </div>
 
 <script>
-	var stocksApp = angular.module('stocksApp', []);
+	var stocksApp = angular.module('stocksApp', ["ngTable"]);
 	stocksApp.controller('stocksController', function($scope, $http){
 		$scope.stocks = [];
 		$scope.lastpage = 1;
@@ -64,8 +69,13 @@
 			});
 		};
 
-		$scope.nextPage = function(){
-			$scope.lastpage += 1;
+		$scope.flipPage = function(numPages){
+			$scope.lastpage += numPages;
+			if($scope.lastpage < 1){
+				//Ensure page number cannot be < 1
+				$scope.lastpage = 1;
+			}
+
 			$http({
 				url: '/ajax/stocks',
 				method: 'GET',

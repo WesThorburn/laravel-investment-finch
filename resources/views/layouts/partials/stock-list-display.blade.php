@@ -19,29 +19,6 @@
 	    </thead>
 		<div class="panel-body">
 		    <tbody data-link="row" class="rowlink">
-			    @foreach($stocks as $stock)
-					<tr>
-						<td>
-							{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
-						</td>
-						<td>{{ $stock->stock->company_name }}</td>
-						<td>{{ $stock->stock->sector }}</td>
-						<td>${{ $stock->last_trade }}</td>
-						<td @if($stock->day_change < 0) class="color-red" 
-							@elseif($stock->day_change > 0) class="color-green"
-							@endif>
-							{{ $stock->day_change }}%
-						</td>
-						<td>{{ $stock->market_cap }}</td>
-						<td>{{ $stock->average_daily_volume }}</td>
-						<td>{{ $stock->EBITDA }}</td>
-						<td>{{ $stock->earnings_per_share_current }}</td>
-						<td>{{ $stock->price_to_earnings }}</td>
-						<td>{{ $stock->price_to_book }}</td>
-						<td>{{ $stock->year_high }}</td>
-						<td>{{ $stock->year_low }}</td>
-					</tr>
-				@endforeach
 		    </tbody>
 		</div>
 	</table>
@@ -50,8 +27,25 @@
 <script>
 	$(document).ready(function(){
 		$('#stock_table').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": '/ajax/stocks',
 			"lengthMenu": [20,50,100],
-			"stateSave": true
+			"columns": [
+				{data: 'stock_code', name: 'stock_code'},
+				{data: 'stock.company_name', name: 'name'},
+				{data: 'stock.sector', name: 'sector', searchable: false}, 
+				{data: 'last_trade', name: 'last_trade', searchable: false}, 
+	            {data: 'day_change', name: 'day_change', searchable: false}, 
+	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
+	            {data: 'average_daily_volume', name: 'average_daily_volume', searchable: false}, 
+	            {data: 'EBITDA', name: 'EBITDA', searchable: false}, 
+	            {data: 'earnings_per_share_current', name: 'earnings_per_share_current', searchable: false}, 
+	            {data: 'price_to_earnings', name: 'price_to_earnings', searchable: false}, 
+	            {data: 'price_to_book', name: 'price_to_book', searchable: false}, 
+	            {data: 'year_high', name: 'year_high', searchable: false}, 
+	            {data: 'year_low', name: 'year_low', searchable: false}, 
+			]
 		});
 	});
 </script>

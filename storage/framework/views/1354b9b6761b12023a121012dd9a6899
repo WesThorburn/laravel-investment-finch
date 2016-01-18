@@ -19,29 +19,6 @@
 	    </thead>
 		<div class="panel-body">
 		    <tbody data-link="row" class="rowlink">
-			    <?php foreach($stocks as $stock): ?>
-					<tr>
-						<td>
-							<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
-						</td>
-						<td><?php echo e($stock->stock->company_name); ?></td>
-						<td><?php echo e($stock->stock->sector); ?></td>
-						<td>$<?php echo e($stock->last_trade); ?></td>
-						<td <?php if($stock->day_change < 0): ?> class="color-red" 
-							<?php elseif($stock->day_change > 0): ?> class="color-green"
-							<?php endif; ?>>
-							<?php echo e($stock->day_change); ?>%
-						</td>
-						<td><?php echo e($stock->market_cap); ?></td>
-						<td><?php echo e($stock->average_daily_volume); ?></td>
-						<td><?php echo e($stock->EBITDA); ?></td>
-						<td><?php echo e($stock->earnings_per_share_current); ?></td>
-						<td><?php echo e($stock->price_to_earnings); ?></td>
-						<td><?php echo e($stock->price_to_book); ?></td>
-						<td><?php echo e($stock->year_high); ?></td>
-						<td><?php echo e($stock->year_low); ?></td>
-					</tr>
-				<?php endforeach; ?>
 		    </tbody>
 		</div>
 	</table>
@@ -50,8 +27,25 @@
 <script>
 	$(document).ready(function(){
 		$('#stock_table').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": '/ajax/stocks',
 			"lengthMenu": [20,50,100],
-			"stateSave": true
+			"columns": [
+				{data: 'stock_code', name: 'stock_code'},
+				{data: 'stock.company_name', name: 'name'},
+				{data: 'stock.sector', name: 'sector', searchable: false}, 
+				{data: 'last_trade', name: 'last_trade', searchable: false}, 
+	            {data: 'day_change', name: 'day_change', searchable: false}, 
+	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
+	            {data: 'average_daily_volume', name: 'average_daily_volume', searchable: false}, 
+	            {data: 'EBITDA', name: 'EBITDA', searchable: false}, 
+	            {data: 'earnings_per_share_current', name: 'earnings_per_share_current', searchable: false}, 
+	            {data: 'price_to_earnings', name: 'price_to_earnings', searchable: false}, 
+	            {data: 'price_to_book', name: 'price_to_book', searchable: false}, 
+	            {data: 'year_high', name: 'year_high', searchable: false}, 
+	            {data: 'year_low', name: 'year_low', searchable: false}, 
+			]
 		});
 	});
 </script>
