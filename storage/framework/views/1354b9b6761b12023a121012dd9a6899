@@ -17,16 +17,15 @@
 	            <th>52 Week Low</th>
 	        </tr>
 	    </thead>
-		<div class="panel-body">
-		    <tbody data-link="row" class="rowlink">
-		    </tbody>
-		</div>
+	    <div class="panel-body">
+	    	<tbody></tbody>
+	    </div>
 	</table>
 </div>
 
 <script>
 	$(document).ready(function(){
-		$('#stock_table').DataTable({
+		var stockTable = $('#stock_table').DataTable({
 			"processing": true,
 			"serverSide": true,
 			"ajax": '/ajax/stocks',
@@ -46,6 +45,10 @@
 	            {data: 'year_high', name: 'year_high', searchable: false}, 
 	            {data: 'year_low', name: 'year_low', searchable: false}, 
 			]
+		});
+		$('#stock_table').delegate('tr', 'click', function(){
+			var data = stockTable.row(this).data();
+			window.location.assign('/stock/'+ data.stock_code)
 		});
 	});
 </script>
