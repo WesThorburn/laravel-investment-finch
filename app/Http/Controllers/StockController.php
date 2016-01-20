@@ -93,8 +93,22 @@ class StockController extends Controller
     }
 
     public function stocks(){
-        $stocks = StockMetrics::with('stock')->orderBy('stock_metrics.market_cap', 'DESC');
-        return \Datatables::of($stocks)
-            ->make(true);
+        $stocks = StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')
+            ->select([
+                'stock_metrics.stock_code', 
+                'stocks.company_name', 
+                'stocks.sector', 
+                'stock_metrics.last_trade',
+                'stock_metrics.day_change',
+                'stock_metrics.market_cap',
+                'stock_metrics.average_daily_volume',
+                'stock_metrics.EBITDA',
+                'stock_metrics.earnings_per_share_current',
+                'stock_metrics.price_to_earnings',
+                'stock_metrics.price_to_book',
+                'stock_metrics.year_high',
+                'stock_metrics.year_low'
+            ]);
+        return \Datatables::of($stocks)->make(true);
     }
 }

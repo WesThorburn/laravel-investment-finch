@@ -26,14 +26,14 @@
 <script>
 	$(document).ready(function(){
 		var stockTable = $('#stock_table').DataTable({
-			"processing": true,
-			"serverSide": true,
-			"ajax": '/ajax/stocks',
-			"lengthMenu": [20,50,100],
-			"columns": [
-				{data: 'stock_code', name: 'stock_code'},
-				{data: 'stock.company_name', name: 'name'},
-				{data: 'stock.sector', name: 'sector', searchable: false}, 
+			processing: true,
+			serverSide: true,
+			ajax: '/ajax/stocks',
+			lengthMenu: [20,50,100],
+			columns: [
+				{data: 'stock_code', name: 'stocks.stock_code'},
+				{data: 'company_name', name: 'company_name'},
+				{data: 'sector', name: 'sector'}, 
 				{data: 'last_trade', name: 'last_trade', searchable: false}, 
 	            {data: 'day_change', name: 'day_change', searchable: false}, 
 	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
@@ -46,9 +46,13 @@
 	            {data: 'year_low', name: 'year_low', searchable: false}, 
 			]
 		});
-		$('#stock_table').delegate('tr', 'click', function(){
+		//Allow Columns to be ordered
+		
+		//Make table rows clickable
+		$('#stock_table').delegate('tbody > tr', 'click', function(){
 			var data = stockTable.row(this).data();
 			window.location.assign('/stock/'+ data.stock_code)
 		});
+
 	});
 </script>
