@@ -67,7 +67,7 @@ class UpdateStockMetricsCommand extends Command {
 						"price_to_book" => $individualMetric[9],
 						"year_high" => $individualMetric[10],
 						"year_low" => $individualMetric[11],
-						"market_cap" => formatMoneyAmountToNumber($individualMetric[12]),
+						"market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[12])),
 						"dividend_yield" => $individualMetric[13],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);
@@ -109,6 +109,14 @@ class UpdateStockMetricsCommand extends Command {
 			return formatHundredThousandToMillion($ebitda);
 		}
 		return $ebitda;
+	}
+	//Temporary Function to manually correct market caps provided by Yahoo Finance API
+	private static function correctMarketCap($stockCode, $marketCap){
+		$stocksWithIncorrectMarketCaps = ["URF","MOV","TIX","NSR","PGF","FGG","PAI","CQA","BPA","IDR","CMA","WAX","FGX","TOF","EMF","USG","BAF","UPD","KLO","SAO","EAI","USF","WDE","WMK","GDF","BIQ","AYZ","ENC","AHJ","BWR","AYK","AIK","APW","AYD","AWQ","PAF","RYD","UPG","TOT","IIL","AYH","FSI","8EC","VGI","TML","SCG","GC1","AOD","KLR","MKE","AAI","KFG","AIQ","AUP","FDC","PTX","DTX","USR","AKY","EOR","BOP","AIB","SXI","SLE","NTL","EGP","MFE","MUB","OGH","ELR","OEG","DAF","EQU","ASN","SXS","SZG","RCF","AQJ","PRH"];
+		if(in_array($stockCode, $stocksWithIncorrectMarketCaps)){
+			return $marketCap/1000;
+		}
+		return $marketCap;
 	}
 	/**
 	 * Get the console command arguments.
