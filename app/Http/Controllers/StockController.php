@@ -109,6 +109,16 @@ class StockController extends Controller
                 'stock_metrics.year_high',
                 'stock_metrics.year_low'
             ]);
-        return \Datatables::of($stocks)->make(true);
+        return \Datatables::of($stocks)
+            ->editColumn('day_change', function($stock){
+                if($stock->day_change > 0){
+                    return "<div class='color-green'>".$stock->day_change."%"."</div>";
+                }
+                elseif($stock->day_change < 0){
+                    return "<div class='color-red'>".$stock->day_change."%"."</div>";
+                }
+                return $stock->day_change.'%';
+            })
+            ->make(true);
     }
 }

@@ -17,9 +17,9 @@
 	            <th>52 Week Low</th>
 	        </tr>
 	    </thead>
-	    <div class="panel-body">
-	    	<tbody></tbody>
-	    </div>
+    	<div class="panel-body">
+    		<tbody></tbody>
+    	</div>
 	</table>
 </div>
 
@@ -30,6 +30,9 @@
 			serverSide: true,
 			ajax: '/ajax/stocks',
 			lengthMenu: [20,50,100],
+			fnColumnCallback: function(nColumn){
+				console.log(nColumn);
+			},
 			columns: [
 				{data: 'stock_code', name: 'stocks.stock_code'},
 				{data: 'company_name', name: 'company_name'},
@@ -45,9 +48,7 @@
 	            {data: 'year_high', name: 'year_high', searchable: false}, 
 	            {data: 'year_low', name: 'year_low', searchable: false}, 
 			]
-		});
-		//Allow Columns to be ordered
-		
+		});		
 		//Make table rows clickable
 		$('#stock_table').delegate('tbody > tr', 'click', function(){
 			var data = stockTable.row(this).data();

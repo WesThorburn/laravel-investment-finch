@@ -73,6 +73,13 @@
 	</script>
 	<div class="container">
 		<div class="row">
+			<div class="col-md-12">
+				<div class="alert alert-warning" role="alert">
+					Please be aware that the Yahoo Finance API is reporting certain stocks' market caps in Billions instead of Millions. This is causing incorrect sector and market cap totals to be generated. 
+				</div>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
