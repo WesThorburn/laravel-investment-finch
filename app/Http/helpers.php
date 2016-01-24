@@ -7,23 +7,21 @@ function getCurrentTimeIntVal(){
     return intval(str_replace(':', '', date('H:i:s')));
 }
 
-function getMarketStatus(){
-	if(getCurrentTimeIntVal() >= 100000 && getCurrentTimeIntVal() <= 160000){
-		if(isTradingDay()){
-			if(date("Y-m-d") == "2016-12-23" || date("Y-m-d") == "2016-12-30" || date("Y-m-d") == "2015-12-31"){
+function isMarketOpen(){
+	if(isTradingDay()){
+		if(getCurrentTimeIntVal() >= 100000 && getCurrentTimeIntVal() <= 160000){
+			//Allowance for days where market closes early. 
+			if(date("Y-m-d") == "2016-12-23" || date("Y-m-d") == "2016-12-30"){
 				if(getCurrentTimeIntVal() <= 141000){
-					return "Market Open";
+					return true;
 				}
-				else{
-					return "Market Closed";
-				}
+				return false;
 			}
-			else{
-				return "Market Open";
-			}
+			return true;
 		}
+		return false;
 	}
-	return "Market Closed";
+	return false;
 }
 
 function isTradingDay(){

@@ -19,10 +19,16 @@ class MarketController extends Controller
 	}
 
 	public function status(){
+		if(isMarketOpen()){
+			$marketStatus = "Market Open";
+		}
+		else{
+			$marketStatus = "Market Closed";
+		}
 		return view('layouts.partials.market-status-display')
 			->with([
-				'marketStatus' => getMarketStatus(),
-				'serverTime' => getServerTime()
+				'serverTime' => getServerTime(),
+				'marketStatus' => $marketStatus
 			]);
 	}
 }
