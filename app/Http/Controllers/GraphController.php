@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\SectorHistoricals;
 use App\Models\Stock;
+use App\Models\StockMetrics;
 use Khill\Lavacharts\Lavacharts;
 
 class GraphController extends Controller
@@ -39,5 +40,14 @@ class GraphController extends Controller
             ->addNumberColumn('Percent')
             ->addRows($graphData);
         return $sectorCaps->toJson();
+    }
+
+    public function stocksInSectorPieChart($sectorName, $numberOfStocks){
+        $graphData = StockMetrics::getMarketCapsInSectorGraphData($sectorName, $numberOfStocks);
+        $stockMarketCaps = \Lava::DataTable();
+        $stockMarketCaps->addStringColumn('Company Name')
+            ->addNumberColumn('Percent')
+            ->addRows($graphData);
+        return $stockMarketCaps->toJson();
     }
 }

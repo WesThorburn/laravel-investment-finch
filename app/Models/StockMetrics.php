@@ -42,6 +42,24 @@ class StockMetrics extends Model {
 		return $query;
 	}
 
+	public function scopeLimit($query, $limit){
+		if($limit == 'top_5'){
+			return $query->take(5);
+		}
+		elseif($limit == 'top_10'){
+			return $query->take(10);
+		}
+		elseif($limit == 'top_15'){
+			return $query->take(15);
+		}
+		elseif($limit == 'top_20'){
+			return $query->take(20);
+		}
+		elseif($limit == 'all'){
+			return $query;
+		}
+	}
+
 	public static function getMetricsByStockList($listOfStocks, $omitCondition){
 		return StockMetrics::whereIn('stock_code', $listOfStocks)->omitOutliers($omitCondition)->with('stock')->get();
 	}
@@ -53,5 +71,22 @@ class StockMetrics extends Model {
             array_push($sectorMetrics, $sectorMetric);
         }
         return array_sum($sectorMetrics)/count($sectorMetrics);
+    }
+
+    public static function getMarketCapsInSectorGraphData($sectorName, $numberOfStocks){
+    	$graphData = array();
+    	$stocksInSector = Stock::where('sector', htmlspecialchars_decode($sectorName))->lists('stock_code');
+    	$marketCaps = StockMetrics::with('stock')->select('stock_code','market_cap')->whereIn('stock_code', $stocksInSector)->orderBy('market_cap', 'DESC')->limit($numberOfStocks)->get();
+    	$sumOfMarketCaps = $marketCaps->sum('market_cap');
+    	foreach($marketCaps as $stock){
+    		if($sumOfMarketCaps > 0 && $stock->market_cap > 0){
+    			$percentageShare = 100/$sumOfMarketCaps * $stock->market_cap;
+    		}
+    		else{
+    			$percentageShare = 0;
+    		}
+    		array_push($graphData, array($stock->stock->company_name, round($percentageShare, 2)));
+    	}
+    	return $graphData;
     }
 }

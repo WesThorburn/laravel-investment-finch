@@ -33,6 +33,27 @@ class SectorController extends Controller
                 'title' => 'Total Sector Cap (Billions)'
             ]);
 
+        //Pie Chart For Stocks In Sector
+        $marketCapsInSectorGraphData = StockMetrics::getMarketCapsInSectorGraphData($sectorName, 'top_5');
+        $marketCapsInSector = \Lava::DataTable();
+        $marketCapsInSector->addStringColumn('Company Name')
+            ->addNumberColumn('Percent')
+            ->addRows($marketCapsInSectorGraphData);
+
+        $marketCapsInSectorLava = \Lava::PieChart('SectorStocks')
+            ->dataTable($marketCapsInSector)
+            ->customize([
+                'tooltip' => [
+                    'text' => 'percentage'
+                ]
+            ])
+            ->setOptions([
+                'width' => 725,
+                'height' => 360,
+                'title' => 'Stocks In Sector',
+                'pieSliceText' => 'label',
+            ]);
+
         return view('pages.sectors')->with([
             'sectorCapsLava' => $sectorCapsLava,
         	'selectedSector' => $sectorName,

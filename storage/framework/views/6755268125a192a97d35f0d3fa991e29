@@ -26,7 +26,7 @@
 		    });
 		});
 
-		function getGraphData(timeFrame, dataType){
+		function getSectorGraphData(timeFrame, dataType){
 			$.getJSON('/sectorGraph/'+ '<?php echo e($selectedSector); ?>/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('SectorCaps', dataTableJson, function (chart) {
 				});
@@ -48,6 +48,25 @@
 			document.getElementById(timeFrame).className = "btn btn-default active";
 		}
 
+		function getMarketCapsGraphData(numberOfStocks){
+			$.getJSON('stocksInSectorPieChart/'+ '<?php echo e($selectedSector); ?>/'+ numberOfStocks, function(dataTableJson){
+				lava.loadData('SectorStocks', dataTableJson, function(chart){
+				});
+			});
+			var numberOfStocksButtonIds = [
+				"top_5", 
+				"top_10", 
+				"top_15", 
+				"top_20", 
+				"all"
+			];
+
+			numberOfStocksButtonIds.forEach(function(buttonId){
+				document.getElementById(buttonId).className = "btn btn-default";
+			});
+			document.getElementById(numberOfStocks).className = "btn btn-default active";
+		}
+
 	</script>
 	<div class="container">
 		<div class="row">
@@ -62,14 +81,34 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="btn-group btn-group-sm pull-center" role="group">
-									<button class="btn btn-default active" onclick="getGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>
-									<button class="btn btn-default" onclick="getGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
-									<button class="btn btn-default" onclick="getGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
-									<button class="btn btn-default" onclick="getGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
-									<button class="btn btn-default" onclick="getGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
-									<button class="btn btn-default" onclick="getGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
-									<button class="btn btn-default" onclick="getGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
-									<button class="btn btn-default" onclick="getGraphData('all_time', 'Market Cap')" id="all_time">All</button>
+									<button class="btn btn-default active" onclick="getMarketCapsGraphData('top_5')" id="top_5">Top 5</button>
+									<button class="btn btn-default" onclick="getMarketCapsGraphData('top_10')" id="top_10">Top 10</button>
+									<button class="btn btn-default" onclick="getMarketCapsGraphData('top_15')" id="top_15">Top 15</button>
+									<button class="btn btn-default" onclick="getMarketCapsGraphData('top_20')" id="top_20">Top 20</button>
+									<button class="btn btn-default" onclick="getMarketCapsGraphData('all')" id="all">All</button>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div id="sector_stocks_div" class="pull-left">
+									<?php echo Lava::renderPieChart('SectorStocks', 'sector_stocks_div'); ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="btn-group btn-group-sm pull-center" role="group">
+									<button class="btn btn-default active" onclick="getSectorGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('all_time', 'Market Cap')" id="all_time">All</button>
 								</div>
 							</div>
 							<div class="panel-body">
