@@ -23,6 +23,9 @@ class StockMetrics extends Model {
 		"two_hundred_day_moving_average",
 		"market_cap",
 		"dividend_yield",
+		"trend_short_term",
+		"trend_medium_term",
+		"trend_long_term",
 		"updated_at"
 	];
 

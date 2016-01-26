@@ -21,7 +21,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\CalculateStockChangeCommand',
 		'App\Console\Commands\FillSectorHistoricalsCommand',
 		'App\Console\Commands\GetCompanySummariesCommand',
-		'App\Console\Commands\FillHistoricalMovingAveragesCommand'
+		'App\Console\Commands\FillHistoricalMovingAveragesCommand',
+		'App\Console\Commands\CalculateTrendCommand'
 	];
 
 	/**
@@ -34,6 +35,7 @@ class Kernel extends ConsoleKernel {
 	{
 		if(isTradingDay()){
 			$schedule->command('stocks:calculateStockChange')->weekdays()->dailyAt('03:35');
+			$schedule->command('stocks:calculateTrend')->dailyAt('02:15');
 			$schedule->command('stocks:resetDayChange')->dailyAt('04:00');
 			//Full sector metric update once before and once after each trading day
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
@@ -48,6 +50,6 @@ class Kernel extends ConsoleKernel {
 		}
 
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
-		$schedule->command('stocks:getCompanySummaries')->dailyAt('02:01');
+		$schedule->command('stocks:getCompanySummaries')->dailyAt('02:05');
 	}
 }
