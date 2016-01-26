@@ -54,7 +54,7 @@ class CalculateTrendCommand extends Command
 
     public function getTrend($stockCode, $timeFrame){
     	$records = Historicals::select(['fifty_day_moving_average', 'two_hundred_day_moving_average'])
-        	->where('stock_code', $stockCode)->orderBy('date', 'DESC')->take($timeFrame)->get();
+        	->where('stock_code', $stockCode)->orderBy('date', 'ASC')->take($timeFrame)->get();
 
         //Check to ensure $records isn't empty
         if($records->first()){
