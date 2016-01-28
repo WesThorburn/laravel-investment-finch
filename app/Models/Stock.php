@@ -11,7 +11,13 @@ class Stock extends Model {
 		'stock_code',
 		'company_name',
 		'sector',
-		'business_summary'
+		'business_summary',
+		'asx_20',
+		'asx_50',
+		'asx_100',
+		'asx_200',
+		'asx_300',
+		'all_ords'
 	];
 
 	public function metrics(){
