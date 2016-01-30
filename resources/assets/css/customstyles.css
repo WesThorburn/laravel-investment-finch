@@ -136,6 +136,13 @@ th{
 	background-color:#D9E0DC;
 }
 
+.stocks-page-header{
+	font-size:22px;
+	font-weight:bold;
+	margin-top:12px;
+	margin-bottom:-35px;
+}
+
 @media(min-width: 768px){
 	.no-padding-left{
 		padding-left:0px;

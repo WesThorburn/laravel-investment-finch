@@ -1,6 +1,16 @@
+<ul class="nav nav-tabs">
+	<li role="presentation" class="active"><a href="/stocks/all">All Stocks</a></li>
+	<li role="presentation"><a href="/stocks/asx20">ASX 20</a></li>
+	<li role="presentation"><a href="/stocks/asx50">ASX 50</a></li>
+	<li role="presentation"><a href="/stocks/asx100">ASX 100</a></li>
+	<li role="presentation"><a href="/stocks/asx200">ASX 200</a></li>
+	<li role="presentation"><a href="/stocks/asx300">ASX 300</a></li>
+	<li role="presentation"><a href="/stocks/allOrds">All Ords</a></li>
+</ul>
 <div class="panel panel-default">
 	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" id="stock_table">
 	    <thead>
+	    	<h1 class="stocks-page-header text-center">All Stocks</h1>
 	        <tr>
 	            <th>Code</th>
 	            <th>Name</th>

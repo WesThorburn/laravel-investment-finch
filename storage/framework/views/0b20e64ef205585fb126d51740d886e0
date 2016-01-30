@@ -11,7 +11,7 @@
 	<ul class="nav navbar-nav">
 		<li class="nav-button <?php if($page == 'home'): ?> active <?php endif; ?>"><a href="/">Home</a></li>
 		<li class="nav-button <?php if($page == 'sectors'): ?> active <?php endif; ?>"><a href="/sectors">Sectors</a></li>
-		<li class="nav-button <?php if($page == 'stocks'): ?> active <?php endif; ?>"><a href="/stocks">Stocks</a></li>
+		<li class="nav-button <?php if($page == 'stocks'): ?> active <?php endif; ?>"><a href="/stocks/allStocks">Stocks</a></li>
 		<li class="nav-button <?php if($page == 'topGainsLosses'): ?> active <?php endif; ?>"><a href="/topGainsLosses">Gains/Losses</a></li>
 		<li class="nav-button <?php if($page == 'search'): ?> active <?php endif; ?>"><a href="/search">Search <span class="sr-only">(current)</span></a></li>
 	</ul>

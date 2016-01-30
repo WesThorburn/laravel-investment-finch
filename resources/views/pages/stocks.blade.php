@@ -33,15 +33,6 @@
 				</div>
 			</div>
 		</div> -->
-		<ul class="nav nav-tabs">
-			<li role="presentation" class="active"><a href="#">All Stocks</a></li>
-			<li role="presentation"><a href="#">ASX 20</a></li>
-			<li role="presentation"><a href="#">ASX 50</a></li>
-			<li role="presentation"><a href="#">ASX 100</a></li>
-			<li role="presentation"><a href="#">ASX 200</a></li>
-			<li role="presentation"><a href="#">ASX 300</a></li>
-			<li role="presentation"><a href="#">All Ords</a></li>
-		</ul>
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="metrics">
