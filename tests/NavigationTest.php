@@ -2,7 +2,7 @@
 
 class NavigationTest extends TestCase{
 	public function testHomeButton(){
-		$this->visit('/search')
+		$this->visit('/sectors')
 			->click('Home')
 			->seePageIs('/');
 	}
@@ -13,11 +13,5 @@ class NavigationTest extends TestCase{
 			->click('Sectors')
 			->see('Sector')
 			->see('Change');
-	}
-
-	public function testScreenerButton(){
-		$this->visit('/')
-			->click('Search')
-			->seePageIs('/search');
 	}
 }

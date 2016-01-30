@@ -21,20 +21,6 @@
             });*/
 	</script>
 	<div class="container">
-		<!-- <div class="row">
-			<div class="col-sm-12">
-				<div class="pull-left">
-					<?php echo Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']); ?>
-
-						<?php echo Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control']); ?>
-
-						<?php echo Form::submit("Filter Sector", ['class' => 'btn btn-default form-control']); ?>
-
-					<?php echo Form::close(); ?>
-
-				</div>
-			</div>
-		</div> -->
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="metrics">

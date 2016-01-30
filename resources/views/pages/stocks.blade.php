@@ -23,16 +23,6 @@
             });*/
 	</script>
 	<div class="container">
-		<!-- <div class="row">
-			<div class="col-sm-12">
-				<div class="pull-left">
-					{!! Form::open(['action' => 'SearchController@show', 'method' => 'get', 'class' => 'form-group form-inline']) !!}
-						{!! Form::select('stockSector', $stockSectors, $stockSectorName, ['class' => 'form-control']) !!}
-						{!! Form::submit("Filter Sector", ['class' => 'btn btn-default form-control']) !!}
-					{!! Form::close() !!}
-				</div>
-			</div>
-		</div> -->
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="metrics">

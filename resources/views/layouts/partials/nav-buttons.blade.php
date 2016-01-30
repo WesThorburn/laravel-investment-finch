@@ -13,7 +13,6 @@
 		<li class="nav-button @if($page == 'sectors') active @endif"><a href="/sectors">Sectors</a></li>
 		<li class="nav-button @if($page == 'stocks') active @endif"><a href="/stocks/allStocks">Stocks</a></li>
 		<li class="nav-button @if($page == 'topGainsLosses') active @endif"><a href="/topGainsLosses">Gains/Losses</a></li>
-		<li class="nav-button @if($page == 'search') active @endif"><a href="/search">Search <span class="sr-only">(current)</span></a></li>
 	</ul>
 	<!--
 	Removed until login functionality is added
