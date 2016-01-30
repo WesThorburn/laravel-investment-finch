@@ -85,5 +85,31 @@ class Stock extends Model {
 		}
 		return $graphData;
 	}
+
+	public static function formatMarketIndex($index){
+		switch ($index){
+			case 'all':
+				return "All ASX Stocks";
+				break;
+			case 'asx20':
+				return "ASX 20 | Top 20 Stocks";
+				break;
+			case 'asx50':
+				return "ASX 50 | Top 50 Stocks";
+				break;
+			case 'asx100':
+				return "ASX 100 | Top 100 Stocks";
+				break;
+			case 'asx200':
+				return "ASX 200 | Top 200 Stocks";
+				break;
+			case 'asx300':
+				return "ASX 300 | Top 300 Stocks";
+				break;
+			case 'allOrds':
+				return "All Ords | All Ordinaries";
+				break;
+		}
+	}
 	
 }

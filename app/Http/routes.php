@@ -6,6 +6,8 @@ Route::get('/topGainsLosses', 'PageController@topGainsLosses');
 Route::resource('stock', 'StockController');
 Route::resource('stocks', 'StockController');
 
+Route::get('index/{marketIndex}', 'StockController@index');
+
 Route::resource('search', 'SearchController');
 Route::resource('sectors', 'SectorController');
 

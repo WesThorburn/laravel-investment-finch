@@ -17,12 +17,10 @@ use Yajra\Datatables\Datatables;
 
 class StockController extends Controller
 {
-    public function index(SearchRequest $request){
-        $stocks = StockMetrics::getMetricsByStockList(Stock::lists('stock_code'), "omit");
+    public function index($marketIndex){
         return view('pages.stocks')->with([
-            'stockSectors' => Stock::getSectorDropdown(),
-            'stocks' => $stocks,
-            'stockSectorName' => $request->stockSector
+            'marketIndex' => $marketIndex,
+            'formattedMarketIndex' => Stock::formatMarketIndex($marketIndex)
         ]);
     }
 
