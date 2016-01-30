@@ -90,7 +90,8 @@ class StockController extends Controller
         ]);
     }
 
-    public function stocks(){
+    public function stocks($marketIndex){
+        $stockCodesInMarketIndex = Stock::withMarketIndex($marketIndex)->lists('stock_code');
         $stocks = StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')
             ->select([
                 'stock_metrics.stock_code', 
@@ -106,7 +107,8 @@ class StockController extends Controller
                 'stock_metrics.price_to_book',
                 'stock_metrics.year_high',
                 'stock_metrics.year_low'
-            ]);
+            ])
+            ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
         return \Datatables::of($stocks)
             ->editColumn('day_change', function($stock){
                 if($stock->day_change > 0){

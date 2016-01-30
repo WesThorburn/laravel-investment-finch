@@ -19,7 +19,7 @@ Route::get('sectors/stocksInSectorPieChart/{sectorName}/{numberOfStocks}', 'Grap
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('currentPrice/{stockCode}', 'StockController@getCurrentPrice');
 	Route::get('dayChange/{stockCode}', 'StockController@getDayChange');
-	Route::get('stocks', 'StockController@stocks');
+	Route::get('stocks/{marketIndex}', 'StockController@stocks');
 	Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 	Route::get('sectors/{sectorName}/daychanges', 'SectorController@sectorDayChanges');
 	Route::get('sectors/{sectorName}/otherstocksinsector', 'SectorController@otherStocksInSector');

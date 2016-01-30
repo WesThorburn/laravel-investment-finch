@@ -32,6 +32,30 @@ class Stock extends Model {
 		return $this->hasOne('App\Models\SectorHistoricals', 'sector', 'sector');
 	}
 
+	public function scopeWithMarketIndex($query, $marketIndex){
+		switch ($marketIndex){
+			case 'asx20':
+				return $query->where('asx_20', 1);
+				break;
+			case 'asx50':
+				return $query->where('asx_50', 1);
+				break;
+			case 'asx100':
+				return $query->where('asx_100', 1);
+				break;
+			case 'asx200':
+				return $query->where('asx_200', 1);
+				break;
+			case 'asx300':
+				return $query->where('asx_300', 1);
+				break;
+			case 'allOrds':
+				return $query->where('all_ords', 1);
+				break;
+		}
+		return $query;
+	}
+
 	public static function getListOfSectors(){
 		return \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
 	}

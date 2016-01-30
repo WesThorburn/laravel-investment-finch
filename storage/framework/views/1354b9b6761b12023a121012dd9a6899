@@ -38,7 +38,7 @@
 		var stockTable = $('#stock_table').DataTable({
 			processing: true,
 			serverSide: true,
-			ajax: '/ajax/stocks',
+			ajax: '/ajax/stocks/<?php echo e($marketIndex); ?>',
 			lengthMenu: [20,50,100],
 			fnColumnCallback: function(nColumn){
 				console.log(nColumn);
