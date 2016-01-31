@@ -143,6 +143,21 @@ th{
 	margin-bottom:-35px;
 }
 
+.stocks-page-nav-tabs{
+	margin-left:2px;
+	border:none;
+}
+
+.stocks-page-nav-tabs > li > a{
+	color:#555;
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover{
+	border-color:#2e3e44;
+	border-bottom-color: transparent;
+}
+
 @media(min-width: 768px){
 	.no-padding-left{
 		padding-left:0px;

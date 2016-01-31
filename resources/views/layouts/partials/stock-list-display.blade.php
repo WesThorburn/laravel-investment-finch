@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs stocks-page-nav-tabs">
 	<li role="presentation" @if($marketIndex == 'all') class="active" @endif><a href="/index/all">All Stocks</a></li>
 	<li role="presentation" @if($marketIndex == 'asx20') class="active" @endif><a href="/index/asx20">ASX 20</a></li>
 	<li role="presentation" @if($marketIndex == 'asx50') class="active" @endif><a href="/index/asx50">ASX 50</a></li>
