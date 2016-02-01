@@ -13,14 +13,8 @@
 		$(document).ready(
             function() {
                 setInterval(function() {
-/*                	if(window.location.search == ""){
-                		$('#metrics').load('/search/%7Bsearch%7D?viewType=partial');
-                	}
-                	else{
-						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
-                	}*/
-                	$('#sectorDayGain').load('/sectors/topPerforming/{top}');
-                	$('#sectorDayLoss').load('/sectors/topPerforming/{bottom}');
+                	$('#sectorDayGain').load('ajax/sectors/topPerforming/top');
+                	$('#sectorDayLoss').load('ajax/sectors/topPerforming/bottom');
                 }, 60000);
             });
 
@@ -33,7 +27,7 @@
 		});
 
 		function getMarketCapGraphData(timeFrame, dataType){
-			$.getJSON('/sectorGraph/'+ 'All/' + timeFrame + '/' + dataType, function (dataTableJson) {
+			$.getJSON('ajax/graph/sector/'+ 'All/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('MarketCaps', dataTableJson, function (chart) {
 				});
 			});
@@ -55,7 +49,7 @@
 		}
 
 		function getSectorCapGraphData(numberOfSectors, dataType){
-			$.getJSON('/sectorCapsPieChart/'+ numberOfSectors, function (dataTableJson) {
+			$.getJSON('ajax/graph/sectorPie/'+ numberOfSectors, function (dataTableJson) {
 				lava.loadData('Sectors', dataTableJson, function (chart) {
 				});
 			});

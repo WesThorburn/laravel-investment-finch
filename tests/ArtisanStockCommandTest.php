@@ -1,6 +1,11 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class ArtisanStockCommandTest extends TestCase{
+
+	use DatabaseTransactions;
+	
 	public function testUpdateStockList(){
 		$this->artisan("stocks:updateStockList", ['--testMode' => true]);
 		$this->seeInDatabase('stocks', [

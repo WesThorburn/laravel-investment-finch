@@ -1,23 +1,14 @@
 <?php
 Route::get('/', 'PageController@index');
-Route::get('/topGainsLosses', 'PageController@topGainsLosses');
-
-//Allows both 'stock' and 'stocks' to be in the URL
-Route::resource('stock', 'StockController');
-Route::resource('stocks', 'StockController');
-
-Route::get('index/{marketIndex}', 'StockController@index');
-
+Route::resource('stock', 'StockController'); //'stock' and 'stocks' can both be routed
+Route::resource('stocks', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('sectors', 'SectorController');
-
-Route::get('stockGraph/{stockCode}/{timeFrame}/{dataType}', 'GraphController@stock');
-Route::get('sectorGraph/{sectorName}/{timeFrame}/{dataType}', 'GraphController@sector');
-Route::get('sectorCapsPieChart/{numberOfSectors}', 'GraphController@sectorCapsPieChart');
-Route::get('sectors/stocksInSectorPieChart/{sectorName}/{numberOfStocks}', 'GraphController@stocksInSectorPieChart');
+Route::get('index/{marketIndex}', 'StockController@index');
+Route::get('topGainsLosses', 'PageController@topGainsLosses');
 
 Route::group(['prefix' => 'ajax'], function(){
-	Route::get('currentPrice/{stockCode}', 'StockController@getCurrentPrice');
-	Route::get('dayChange/{stockCode}', 'StockController@getDayChange');
+	Route::get('stock/currentPrice/{stockCode}', 'StockController@getCurrentPrice');
+	Route::get('stock/dayChange/{stockCode}', 'StockController@getDayChange');
 	Route::get('stocks/{marketIndex}', 'StockController@stocks');
 	Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 	Route::get('sectors/topPerforming/{topOrBottom}', 'SectorController@topPerformingSectors');
@@ -25,6 +16,13 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('sectors/{sectorName}/otherstocksinsector', 'SectorController@otherStocksInSector');
 	Route::get('/marketstatus','MarketController@status');
 	Route::get('/marketchange', 'MarketController@change');
+
+	Route::group(['prefix' => 'graph'], function(){
+		Route::get('stock/{stockCode}/{timeFrame}/{dataType}', 'GraphController@stock');
+		Route::get('sector/{sectorName}/{timeFrame}/{dataType}', 'GraphController@sector');
+		Route::get('sectorPie/{numberOfSectors}', 'GraphController@sectorCapsPieChart');
+		Route::get('sectors/stocksInSectorPieChart/{sectorName}/{numberOfStocks}', 'GraphController@stocksInSectorPieChart');
+	});
 });
 
 /*route::get('/test', function(){

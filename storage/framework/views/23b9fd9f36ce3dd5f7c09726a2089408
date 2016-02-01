@@ -13,8 +13,8 @@
             function() {
                 setInterval(function() {
                 		$('#relatedStocks').load('/ajax/relatedstocks/<?php echo e($stock->metrics->stock_code); ?>');
-                		$('#stockPrice').load('/ajax/currentPrice/<?php echo e($stock->metrics->stock_code); ?>');
-                		$('#dayChange').load('/ajax/dayChange/<?php echo e($stock->metrics->stock_code); ?>');
+                		$('#stockPrice').load('/ajax/stock/currentPrice/<?php echo e($stock->metrics->stock_code); ?>');
+                		$('#dayChange').load('/ajax/stock/dayChange/<?php echo e($stock->metrics->stock_code); ?>');
                 }, 60000);
         	});
 
@@ -27,7 +27,7 @@
 		});
 
 		function getGraphData(timeFrame, dataType){
-			$.getJSON('/stockGraph/'+ '<?php echo e($stock->stock_code); ?>/' + timeFrame + '/' + dataType, function (dataTableJson) {
+			$.getJSON('ajax/graph/stock/'+ '<?php echo e($stock->stock_code); ?>/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('StockPrice', dataTableJson, function (chart) {
 				});
 			});

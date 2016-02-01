@@ -26,15 +26,13 @@ class AjaxSectorPageTest extends TestCase{
 		$mostRecentDateInGraph = SectorHistoricals::getMostRecentSectorHistoricalsDate();
 		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 2);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
-		$this->visit('/sectorGraph/Banks/last_month/Market%20Cap')
-			->see('Date')
-			->see('Market Cap')
+		$this->visit('ajax/graph/sector/Banks/last_month/Market%20Cap')
+			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Market Cap"}],"rows"')
 			->see($mostRecentMonth)
 			->see($mostRecentYear);
 
-		$this->visit('/sectorGraph/Banks/last_6_months/Market%20Cap')
-			->see('Date')
-			->see('Market Cap')
+		$this->visit('ajax/graph/sector/Banks/last_6_months/Market%20Cap')
+			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Market Cap"}],"rows"')
 			->see($mostRecentMonth)
 			->see($mostRecentYear);
 	}

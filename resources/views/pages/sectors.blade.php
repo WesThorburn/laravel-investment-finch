@@ -29,7 +29,7 @@
 		});
 
 		function getSectorGraphData(timeFrame, dataType){
-			$.getJSON('/sectorGraph/'+ '{{ $selectedSector }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
+			$.getJSON('ajax/graph/sector/'+ '{{ $selectedSector }}/' + timeFrame + '/' + dataType, function (dataTableJson) {
 				lava.loadData('SectorCaps', dataTableJson, function (chart) {
 				});
 			});

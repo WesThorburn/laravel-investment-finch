@@ -13,10 +13,11 @@ class SectorPageTest extends TestCase{
 		$this->visit("/sectors/Banks")
 			->click("ANZ")
 			->seePageIs("/stocks/ANZ")
-			->see("AUSTRALIA AND NEW ZEALAND BANKING GROUP LIMITED")
+			->see("Australia And New Zealand Banking Group Limited")
 			->see("(ASX: ANZ)")
 			->see("Price of ANZ")
 			->see("Key Metrics")
-			->see("Related Stocks");
+			->see("Related Stocks")
+			->see("Business Summary");
 	}
 }
