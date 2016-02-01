@@ -19,30 +19,4 @@ class SearchController extends Controller {
 	public function __construct(SearchRepositoryInterface $search){
 		$this->search = $search;
 	}
-	
-	public function index(){
-		return view('pages.search')->with([
-			'sectors' => Stock::getSectorDropdown()
-		]);
-	}
-
-	public function show(SearchRequest $request){
-		$stocks = StockMetrics::getMetricsByStockList($this->search->getSearchResults($request), $request->omitCondition);
-		if($request->viewType == 'partial'){
-			if($request->section == 'sectorDayGain' || $request->section == 'sectorDayLoss'){
-				return view('layouts.partials.sector-day-change-display')
-					->with([
-						'sectorChanges' => SectorHistoricals::getSectorDayChanges($request->section), 
-						'title' => SectorHistoricals::getSectorDayChangeTitle($request->section)
-					]);
-			}
-			return view('layouts.partials.stock-list-display')->with(['stocks' => $stocks]);
-		}
-		
-		return view('pages.stocks')->with([
-			'stocks' => $stocks,
-			'stockSectors' => Stock::getSectorDropdown(),
-			'stockSectorName' => $request->stockSector
-		]);
-	}
 }

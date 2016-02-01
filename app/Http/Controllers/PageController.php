@@ -54,10 +54,10 @@ class PageController extends Controller
 
         return view('pages.home')->with([
             'marketCapsLava' => $marketCapsLava,
-            'sectorDayGains' => SectorHistoricals::getSectorDayChanges('sectorDayGain'),
-            'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('sectorDayLoss'),
-            'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayGain'),
-            'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('sectorDayLoss')
+            'sectorDayGains' => SectorHistoricals::getSectorDayChanges('top'),
+            'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('bottom'),
+            'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('top'),
+            'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('bottom')
         ]);
     }
 

@@ -58,7 +58,7 @@ class SectorController extends Controller
             'sectorCapsLava' => $sectorCapsLava,
         	'selectedSector' => $sectorName,
             'selectedSectorDayChange' => SectorHistoricals::getSelectedSectorDayChange($sectorName),
-        	'sectors' => SectorHistoricals::getSectorDayChanges("sectorDayGain", 30),
+        	'sectors' => SectorHistoricals::getSectorDayChanges("top", 30),
         	'sectorWeekDay' => SectorHistoricals::getSectorWeekDay(),
         	'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'all'),
         ]);
@@ -67,7 +67,7 @@ class SectorController extends Controller
     public function sectorDayChanges($sectorName){
         return view('layouts.partials.all-sectors-day-change-display')->with([
             'selectedSector' => $sectorName,
-            'sectors' => SectorHistoricals::getSectorDayChanges("sectorDayGain", 30),
+            'sectors' => SectorHistoricals::getSectorDayChanges("top", 30),
             'sectorWeekDay' => SectorHistoricals::getSectorWeekDay()
         ]);
     }
@@ -77,5 +77,13 @@ class SectorController extends Controller
             'selectedSector' => $sectorName,
             'stocksInSector' => StockMetrics::getMetricsByStockList(Stock::where('sector', $sectorName)->lists('stock_code'), 'all')
         ]);
+    }
+
+    public function topPerformingSectors($topOrBottom){
+        return view('layouts.partials.sector-day-change-display')
+            ->with([
+                'sectorChanges' => SectorHistoricals::getSectorDayChanges($topOrBottom), 
+                'title' => SectorHistoricals::getSectorDayChangeTitle($topOrBottom)
+            ]);
     }
 }

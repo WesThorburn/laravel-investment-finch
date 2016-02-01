@@ -11,14 +11,14 @@
 		$(document).ready(
             function() {
                 setInterval(function() {
-                	if(window.location.search == ""){
+/*                	if(window.location.search == ""){
                 		$('#metrics').load('/search/%7Bsearch%7D?viewType=partial');
                 	}
                 	else{
 						$('#metrics').load('/search/%7Bsearch%7D'+window.location.search+'&viewType=partial');
-                	}
-                	$('#sectorDayGain').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayGain');
-                	$('#sectorDayLoss').load('/search/%7Bsearch%7D?viewType=partial&section=sectorDayLoss');
+                	}*/
+                	$('#sectorDayGain').load('/sectors/topPerforming/{top}');
+                	$('#sectorDayLoss').load('/sectors/topPerforming/{bottom}');
                 }, 60000);
             });
 

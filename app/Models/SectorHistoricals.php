@@ -65,10 +65,10 @@ class SectorHistoricals extends Model
     }
 
     public static function getSectorDayChanges($section, $limit = 5){
-        if($section == 'sectorDayGain'){
+        if($section == 'top'){
             $order = "desc";
         }
-        elseif($section == 'sectorDayLoss'){
+        elseif($section == 'bottom'){
             $order = "asc";
         }
     	return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
@@ -88,10 +88,10 @@ class SectorHistoricals extends Model
 
     public static function getSectorDayChangeTitle($section){
         $dayForTitle = SectorHistoricals::getSectorWeekDay();
-        if($section == 'sectorDayGain'){
+        if($section == 'top'){
             return $dayForTitle."'s Best Performing Sectors";
         }
-        elseif($section == 'sectorDayLoss'){
+        elseif($section == 'bottom'){
             return $dayForTitle."'s Worst Performing Sectors";
         }
     }
