@@ -32,7 +32,7 @@
 								@{{ stock.day_change }}%
 							</td>
 							<td>@{{ stock.market_cap }}</td>
-							<td>@{{ stock.average_daily_volume }}</td>
+							<td>@{{ stock.volume }}</td>
 							<td>@{{ stock.EBITDA }}</td>
 							<td>@{{ stock.earnings_per_share_current }}</td>
 							<td>@{{ stock.price_to_earnings }}</td>

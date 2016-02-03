@@ -100,7 +100,7 @@ class StockController extends Controller
                 'stock_metrics.last_trade',
                 'stock_metrics.day_change',
                 'stock_metrics.market_cap',
-                'stock_metrics.average_daily_volume',
+                'stock_metrics.volume',
                 'stock_metrics.EBITDA',
                 'stock_metrics.earnings_per_share_current',
                 'stock_metrics.price_to_earnings',

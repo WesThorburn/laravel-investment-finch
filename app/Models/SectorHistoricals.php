@@ -13,7 +13,7 @@ class SectorHistoricals extends Model
     	'date',
         'total_sector_market_cap',
     	'day_change',
-        'average_daily_volume',
+        'volume',
         'EBITDA',
         'earnings_per_share_current',
         'earnings_per_share_next_year',
@@ -174,7 +174,7 @@ class SectorHistoricals extends Model
                 $recordValue = $record->total_sector_market_cap;
             }
             elseif($dataType == 'Volume'){
-                $recordValue = $record->average_daily_volume;
+                $recordValue = $record->volume;
             }
             array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
         }

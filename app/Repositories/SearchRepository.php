@@ -12,8 +12,8 @@ Class SearchRepository implements SearchRepositoryInterface{
 		$allSectors = [];
 		$minPrice = StockMetrics::min('last_trade');
 		$maxPrice = StockMetrics::max('last_trade');
-		$minVolume = StockMetrics::min('average_daily_volume');
-		$maxVolume = StockMetrics::max('average_daily_volume');
+		$minVolume = StockMetrics::min('volume');
+		$maxVolume = StockMetrics::max('volume');
 		$minEBITDA = StockMetrics::min('EBITDA');
 		$maxEBITDA = StockMetrics::max('EBITDA');
 		$minEPSCurrentYear = StockMetrics::min('earnings_per_share_current');
@@ -132,7 +132,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 		
 		return StockMetrics::whereIn('stock_code', $this->getStocksBySector($request->stockSector))
 			->whereBetween('last_trade', [$minPrice, $maxPrice])
-			->whereBetween('average_daily_volume', [$minVolume, $maxVolume])
+			->whereBetween('volume', [$minVolume, $maxVolume])
 			->whereBetween('EBITDA', [$minEBITDA, $maxEBITDA])
 			->whereBetween('earnings_per_share_current', [$minEPSCurrentYear, $maxEPSCurrentYear])
 			->whereBetween('earnings_per_share_next_year', [$minEPSNextYear, $maxEPSNextYear])

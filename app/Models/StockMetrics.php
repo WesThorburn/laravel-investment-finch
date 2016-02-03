@@ -10,7 +10,7 @@ class StockMetrics extends Model {
 		"stock_code",
 		"last_trade",
 		"day_change",
-		"average_daily_volume",
+		"volume",
 		"EBITDA",
 		"earnings_per_share_current",
 		"earnings_per_share_next_year",
@@ -36,7 +36,7 @@ class StockMetrics extends Model {
 	public function scopeOmitOutliers($query, $omitCondition = 'omit'){
 		if($omitCondition == 'omit'){
 			return $query->where('last_trade', '>=', '0.05')
-				->where('average_daily_volume', '!=', 0)
+				->where('volume', '!=', 0)
 				->where('earnings_per_share_current', '>=', 0.01)
 				->where('price_to_earnings', '>=', 0.01)
 				->where('price_to_book', '>=', 0.01)

@@ -25,7 +25,7 @@ class UpdateSectorMetricsCommand extends Command
     protected $description = 'Updates the metrics for each sector. --mode=partial includes only Market Cap --mode=full includes all metrics';
 
     private $sectorMetrics = [
-            'average_daily_volume', 
+            'volume', 
             'EBITDA', 
             'earnings_per_share_current', 
             'earnings_per_share_next_year', 
