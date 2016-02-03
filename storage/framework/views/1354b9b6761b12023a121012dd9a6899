@@ -50,7 +50,7 @@
 				{data: 'last_trade', name: 'last_trade', searchable: false}, 
 	            {data: 'day_change', name: 'day_change', searchable: false}, 
 	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
-	            {data: 'average_daily_volume', name: 'average_daily_volume', searchable: false}, 
+	            {data: 'volume', name: 'volume', searchable: false}, 
 	            {data: 'EBITDA', name: 'EBITDA', searchable: false}, 
 	            {data: 'earnings_per_share_current', name: 'earnings_per_share_current', searchable: false}, 
 	            {data: 'price_to_earnings', name: 'price_to_earnings', searchable: false}, 
