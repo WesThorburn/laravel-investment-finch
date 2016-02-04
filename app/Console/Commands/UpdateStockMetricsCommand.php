@@ -116,7 +116,7 @@ class UpdateStockMetricsCommand extends Command {
 		if(in_array($stockCode, $stocksWithIncorrectMarketCaps)){
 			return $marketCap/1000;
 		}
-		return $marketCap;
+		return $marketCap/1000; //Attempt to correct market cap error on 04-02-2016
 	}
 	/**
 	 * Get the console command arguments.
