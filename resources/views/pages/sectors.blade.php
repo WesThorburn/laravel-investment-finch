@@ -51,7 +51,7 @@
 		}
 
 		function getMarketCapsGraphData(numberOfStocks){
-			$.getJSON('stocksInSectorPieChart/'+ '{{ $selectedSector }}/'+ numberOfStocks, function(dataTableJson){
+			$.getJSON('../ajax/graph/sectors/stocksInSectorPieChart/'+ '{{ $selectedSector }}/'+ numberOfStocks, function(dataTableJson){
 				lava.loadData('SectorStocks', dataTableJson, function(chart){
 				});
 			});
