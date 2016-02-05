@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\FillHistoricalFinancialsCommand',
 		'App\Console\Commands\GetDailyFinancialsCommand',
 		'App\Console\Commands\ResetDayChangeCommand',
-		'App\Console\Commands\UpdateSectorMetricsCommand',
+		'App\Console\Commands\UpdateSectorIndexMetricsCommand',
 		'App\Console\Commands\CalculateStockChangeCommand',
 		'App\Console\Commands\FillSectorIndexHistoricalsCommand',
 		'App\Console\Commands\GetCompanySummariesCommand',
@@ -41,15 +41,15 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateStockAnalysis')->dailyAt('02:30');
 			$schedule->command('stocks:resetDayChange')->dailyAt('04:00');
 			//Full sector metric update once before and once after each trading day
-			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
-			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:25');
+			$schedule->command('stocks:updateSectorIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
+			$schedule->command('stocks:updateSectorIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:25');
 			$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:30');
 		}
 		
       	//Only run these between 10:30 and 17:00 Sydney Time
 		if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 170000 && isTradingDay()){
 			$schedule->command('stocks:updateStockMetrics')->cron("*/2 * * * *");
-			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
+			$schedule->command('stocks:updateSectorIndexMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
 		}
 
 		$schedule->command('stocks:updateStockList')->dailyAt('02:00');
