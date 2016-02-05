@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\SearchRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Historicals;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use Carbon\Carbon;
@@ -60,7 +60,7 @@ class StockController extends Controller
                 ]);
 
             $sector = Stock::where('stock_code', $id)->pluck('sector');
-            $motRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+            $motRecentSectorIndexHistoricalsDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
 
             return view('pages.individualstock')->with([
                 'stockPriceLava' => $stockPriceLava,
@@ -68,7 +68,7 @@ class StockController extends Controller
                 'relatedStocks' => StockMetrics::getMetricsByStockList(Stock::getRelatedStocks($id), 'omit'),
                 'metrics' => StockMetrics::where('stock_code', $id)->first(),
                 'mostRecentStockHistoricals' => Historicals::where('stock_code', $id)->orderBy('date', 'DESC')->limit(1)->first(),
-                'sectorAverage' => SectorHistoricals::where(['sector' => $sector, 'date' => $motRecentSectorHistoricalsDate])->first()
+                'sectorAverage' => SectorIndexHistoricals::where(['sector' => $sector, 'date' => $motRecentSectorIndexHistoricalsDate])->first()
             ]);
         }
         return redirect('/');

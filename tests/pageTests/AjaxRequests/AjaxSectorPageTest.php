@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 
 class AjaxSectorPageTest extends TestCase{
 	public function testSectorDayChanges(){
@@ -23,7 +23,7 @@ class AjaxSectorPageTest extends TestCase{
 	}
 	
 	public function testSectorGraph(){
-		$mostRecentDateInGraph = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+		$mostRecentDateInGraph = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
 		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 2);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 		$this->visit('ajax/graph/sector/Banks/last_month/Market%20Cap')

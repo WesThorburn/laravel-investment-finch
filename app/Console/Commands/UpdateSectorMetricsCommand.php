@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 
@@ -65,9 +65,9 @@ class UpdateSectorMetricsCommand extends Command
                 $stocksInSector = Stock::lists('stock_code');
             }
             if(count($stocksInSector) > 0){
-                $totalSectorMarketCap = SectorHistoricals::getTotalSectorMarketCap($stocksInSector);
+                $totalSectorMarketCap = SectorIndexHistoricals::getTotalSectorMarketCap($stocksInSector);
                 if(isTradingDay()){
-                    SectorHistoricals::updateOrCreate(
+                    SectorIndexHistoricals::updateOrCreate(
                         [
                             'sector' => $sectorName,
                             'date' => date("Y-m-d")
@@ -76,14 +76,14 @@ class UpdateSectorMetricsCommand extends Command
                             'sector' => $sectorName,
                             'date' => date("Y-m-d"),
                             'total_sector_market_cap' => $totalSectorMarketCap,
-                            'day_change' => round(SectorHistoricals::getSectorPercentChange($sectorName, $stocksInSector), 2),
+                            'day_change' => round(SectorIndexHistoricals::getSectorPercentChange($sectorName, $stocksInSector), 2),
                             'average_sector_market_cap' => $totalSectorMarketCap/count($stocksInSector)
                         ]
                     );
 
                     if($this->option('mode') == 'full'){
                         foreach($this->sectorMetrics as $metricName){
-                            SectorHistoricals::updateOrCreate(
+                            SectorIndexHistoricals::updateOrCreate(
                                 [
                                     'sector' => $sectorName,
                                     'date' => date("Y-m-d")

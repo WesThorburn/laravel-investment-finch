@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Stock;
 use App\Models\StockMetrics;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use App\Models\Historicals;
 
 class UpdateStockAnalysisCommand extends Command
@@ -107,7 +107,7 @@ class UpdateStockAnalysisCommand extends Command
 
     private function getMetricsDescription(StockMetrics $stockMetrics){
         $description = "";
-        $sectorMetrics = SectorHistoricals::where('sector', $stockMetrics->stock->sector)->orderBy('date', 'desc')->first();
+        $sectorMetrics = SectorIndexHistoricals::where('sector', $stockMetrics->stock->sector)->orderBy('date', 'desc')->first();
 
         //EBITDA
         if($stockMetrics->EBITDA != 0){

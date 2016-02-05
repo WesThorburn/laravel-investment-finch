@@ -29,7 +29,7 @@ class Stock extends Model {
 	}
 
 	public function sector(){
-		return $this->hasOne('App\Models\SectorHistoricals', 'sector', 'sector');
+		return $this->hasOne('App\Models\SectorIndexHistoricals', 'sector', 'sector');
 	}
 
 	public function scopeWithMarketIndex($query, $marketIndex){

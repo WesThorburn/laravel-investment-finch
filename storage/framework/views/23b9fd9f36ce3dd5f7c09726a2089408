@@ -166,7 +166,7 @@
 							</tr>
 							<tr>
 								<td>Market Cap</td>
-								<td><?php echo e(formatMoneyAmountToLetter($metrics->market_cap)); ?></td>
+								<td><?php echo e(formatMoneyAmountToLetter(round($metrics->market_cap, 2))); ?></td>
 								<td><?php echo e(formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2))); ?></td>
 							</tr>
 						</tbody>

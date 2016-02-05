@@ -6,16 +6,16 @@ use Illuminate\Console\Command;
 use App\Models\Historicals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 
-class FillSectorHistoricalsCommand extends Command
+class FillSectorIndexHistoricalsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stocks:fillSectorHistoricals';
+    protected $signature = 'stocks:fillSectorIndexHistoricals';
 
     /**
      * The console command description.
@@ -46,10 +46,10 @@ class FillSectorHistoricalsCommand extends Command
         $sectors = \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
         foreach($sectors as $sector){
             $stocksInSector = Stock::where('sector', $sector)->lists('stock_code');
-            FillSectorHistoricalsCommand::calculateDayGain($stocksInSector, $sector, $providedDate);
+            FillSectorIndexHistoricalsCommand::calculateDayGain($stocksInSector, $sector, $providedDate);
         }
         $allStockCodes = Stock::lists('stock_code');
-        FillSectorHistoricalsCommand::calculateDayGain($allStockCodes, "All", $providedDate);
+        FillSectorIndexHistoricalsCommand::calculateDayGain($allStockCodes, "All", $providedDate);
         $this->info("Sector historicals have been filled for: ".$providedDate);
     }
 
@@ -60,7 +60,7 @@ class FillSectorHistoricalsCommand extends Command
             $marketCap = StockMetrics::where('stock_code', $stock)->pluck('market_cap');
             $open = Historicals::where('stock_code', $stock)->where('date', $providedDate)->pluck('open');
             $close = Historicals::where('stock_code', $stock)->where('date', $providedDate)->pluck('close');
-            $dayChange = FillSectorHistoricalsCommand::getDayChange($open, $close);
+            $dayChange = FillSectorIndexHistoricalsCommand::getDayChange($open, $close);
             array_push($marketCaps, $marketCap);
             array_push($marketCapDayChanges, $marketCap - ($marketCap/(($dayChange/100)+1)));
         }
@@ -73,7 +73,7 @@ class FillSectorHistoricalsCommand extends Command
             $percentChange = 0;
         }
         
-        SectorHistoricals::updateOrCreate(
+        SectorIndexHistoricals::updateOrCreate(
             [
                 'sector' => $sectorName,
                 'date' => $providedDate

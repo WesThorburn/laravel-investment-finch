@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 
 class MarketController extends Controller
 {
     public function change(){
 		return view('layouts.partials.market-change-display')
 			->with([
-				'marketChangeMessage' => SectorHistoricals::getMarketChangeMessage(),
-				'marketChange' => SectorHistoricals::getMarketChange()
+				'marketChangeMessage' => SectorIndexHistoricals::getMarketChangeMessage(),
+				'marketChange' => SectorIndexHistoricals::getMarketChange()
 			]);
 	}
 

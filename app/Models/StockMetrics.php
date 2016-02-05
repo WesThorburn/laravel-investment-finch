@@ -26,6 +26,7 @@ class StockMetrics extends Model {
 		"trend_short_term",
 		"trend_medium_term",
 		"trend_long_term",
+		"analysis",
 		"updated_at"
 	];
 
@@ -91,9 +92,5 @@ class StockMetrics extends Model {
     		array_push($graphData, array($stock->stock->company_name, round($percentageShare, 2)));
     	}
     	return $graphData;
-    }
-
-    private function generateAnalysis(StockMetrics $stockMetrics){
-        return $stockMetrics->stock->company_name;
     }
 }

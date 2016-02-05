@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\StockGains;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use App\Models\StockMetrics;
 use Khill\Lavacharts\Lavacharts;
 
@@ -17,7 +17,7 @@ class PageController extends Controller
     public function index()
     {
         //Line graph for market cap
-        $totalMarketCapGraphData = SectorHistoricals::getIndividualSectorGraphData('All', 'last_month', 'Market Cap');
+        $totalMarketCapGraphData = SectorIndexHistoricals::getIndividualSectorGraphData('All', 'last_month', 'Market Cap');
         $marketCaps = \Lava::DataTable();
         $marketCaps->addStringColumn('Date')
             ->addNumberColumn('Market Cap')
@@ -32,7 +32,7 @@ class PageController extends Controller
             ]);
 
         //PieChart for Sectors' Market Caps
-        $individualSectorCapsGraphData = SectorHistoricals::getAllSectorGraphData('top_5');
+        $individualSectorCapsGraphData = SectorIndexHistoricals::getAllSectorGraphData('top_5');
         $sectorCaps = \Lava::DataTable();
         $sectorCaps->addStringColumn('Sector Name') 
             ->addNumberColumn('Percent')
@@ -54,10 +54,10 @@ class PageController extends Controller
 
         return view('pages.home')->with([
             'marketCapsLava' => $marketCapsLava,
-            'sectorDayGains' => SectorHistoricals::getSectorDayChanges('top'),
-            'sectorDayLosses' => SectorHistoricals::getSectorDayChanges('bottom'),
-            'sectorDayGainTitle' => SectorHistoricals::getSectorDayChangeTitle('top'),
-            'sectorDayLossTitle' => SectorHistoricals::getSectorDayChangeTitle('bottom')
+            'sectorDayGains' => SectorIndexHistoricals::getSectorDayChanges('top'),
+            'sectorDayLosses' => SectorIndexHistoricals::getSectorDayChanges('bottom'),
+            'sectorDayGainTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('top'),
+            'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom')
         ]);
     }
 

@@ -4,12 +4,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\StockMetrics;
 
-class SectorHistoricals extends Model
+class SectorIndexHistoricals extends Model
 {
-    protected $table = 'sector_historicals';
+    protected $table = 'sector_index_historicals';
 
     protected $fillable = [
     	'sector',
+        'stock_index',
     	'date',
         'total_sector_market_cap',
     	'day_change',
@@ -57,7 +58,7 @@ class SectorHistoricals extends Model
     }
 
     public static function getBestPerformingSector(){
-        $bestPerformingSector = SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
+        $bestPerformingSector = SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->orderBy('day_change', 'desc')
             ->take(1)
             ->lists('sector');
@@ -71,7 +72,7 @@ class SectorHistoricals extends Model
         elseif($section == 'bottom'){
             $order = "asc";
         }
-    	return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
+    	return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->where('sector', '!=', 'Class Pend')
             ->where('sector', '!=', 'Not Applic')
             ->where('sector', '!=', 'All')
@@ -81,13 +82,13 @@ class SectorHistoricals extends Model
     }
 
     public static function getSelectedSectorDayChange($sectorName){
-        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
+        return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->where('sector', $sectorName)
             ->pluck('day_change');
     }
 
     public static function getSectorDayChangeTitle($section){
-        $dayForTitle = SectorHistoricals::getSectorWeekDay();
+        $dayForTitle = SectorIndexHistoricals::getSectorWeekDay();
         if($section == 'top'){
             return $dayForTitle."'s Best Performing Sectors";
         }
@@ -97,26 +98,26 @@ class SectorHistoricals extends Model
     }
 
     public static function getSectorWeekDay(){
-        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-        if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
+        $mostRecentSectorIndexHistoricalsDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
+        if($mostRecentSectorIndexHistoricalsDate == date("Y-m-d")){
             //Most Recent Date is today
             return "Today";
         }
         else{
-            return date("l", strtotime($mostRecentSectorHistoricalsDate));
+            return date("l", strtotime($mostRecentSectorIndexHistoricalsDate));
         }
     }
 
     public static function getMarketChange(){
-        return SectorHistoricals::where('date', SectorHistoricals::getMostRecentSectorHistoricalsDate())
+        return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->where('sector', 'All')
             ->pluck('day_change');
     }
 
     public static function getMarketChangeMessage(){
-        $mostRecentSectorHistoricalsDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-        $marketChange = SectorHistoricals::getMarketChange();
-        if($mostRecentSectorHistoricalsDate == date("Y-m-d")){
+        $mostRecentSectorIndexHistoricalsDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
+        $marketChange = SectorIndexHistoricals::getMarketChange();
+        if($mostRecentSectorIndexHistoricalsDate == date("Y-m-d")){
             if($marketChange < 0){
                 return "The ASX is down ".$marketChange."% today.";
             }
@@ -125,7 +126,7 @@ class SectorHistoricals extends Model
             }
         }
         else{
-            $dayForTitle = date("l", strtotime($mostRecentSectorHistoricalsDate));
+            $dayForTitle = date("l", strtotime($mostRecentSectorIndexHistoricalsDate));
             if($marketChange < 0){
                 return "The ASX was down ".$marketChange."% on ".$dayForTitle.".";
             }
@@ -135,23 +136,23 @@ class SectorHistoricals extends Model
         }
     }
 
-    public static function getMostRecentSectorHistoricalsDate(){
-        return SectorHistoricals::orderBy('date', 'desc')->take(1)->lists('date')[0];
+    public static function getMostRecentSectorIndexHistoricalsDate(){
+        return SectorIndexHistoricals::orderBy('date', 'desc')->take(1)->lists('date')[0];
     }
 
-    public static function getYesterdaysSectorHistoricalsDate(){
-        return SectorHistoricals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
+    public static function getYesterdaysSectorIndexHistoricalsDate(){
+        return SectorIndexHistoricals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
     }
 
     public static function getAllSectorGraphData($sectorLimit){
         $graphData = array();
-        $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-        $sectors = SectorHistoricals::where('date', $mostRecentDate)
+        $mostRecentDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
+        $sectors = SectorIndexHistoricals::where('date', $mostRecentDate)
             ->where('sector', '!=', 'All')
             ->orderBy('total_sector_market_cap', 'DESC')
-            ->limit(SectorHistoricals::sectorLimitToNumber($sectorLimit))
+            ->limit(SectorIndexHistoricals::sectorLimitToNumber($sectorLimit))
             ->get();
-        $allSectorsMarketCap = SectorHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
+        $allSectorsMarketCap = SectorIndexHistoricals::where(['date' => $mostRecentDate, 'sector' => 'All'])->pluck('total_sector_market_cap');
         foreach($sectors as $sector){
             if($sector->sector != 'All'){
                 if($allSectorsMarketCap > 0 && $sector->total_sector_market_cap > 0){
@@ -168,7 +169,7 @@ class SectorHistoricals extends Model
 
     public static function getIndividualSectorGraphData($sectorName, $timeFrame = 'last_month', $dataType){
         $graphData = array();
-        $historicals = SectorHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
+        $historicals = SectorIndexHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
         foreach($historicals as $record){
             if($dataType == 'Market Cap'){
                 $recordValue = $record->total_sector_market_cap;
@@ -182,11 +183,11 @@ class SectorHistoricals extends Model
     }
 
     public static function getSectorPercentChange($sectorName, $stocksInSector){
-        $yesterdaysSectorHistoricalsDate = SectorHistoricals::getYesterdaysSectorHistoricalsDate();
-        $yesterdaysTotalMarketCap = SectorHistoricals::where(['date' => $yesterdaysSectorHistoricalsDate, 'sector' => $sectorName])->pluck('total_sector_market_cap');
+        $yesterdaysSectorIndexHistoricalsDate = SectorIndexHistoricals::getYesterdaysSectorIndexHistoricalsDate();
+        $yesterdaysTotalMarketCap = SectorIndexHistoricals::where(['date' => $yesterdaysSectorIndexHistoricalsDate, 'sector' => $sectorName])->pluck('total_sector_market_cap');
 
         if($yesterdaysTotalMarketCap > 0){
-            return (100/$yesterdaysTotalMarketCap)*SectorHistoricals::getSectorTotalChange($stocksInSector);
+            return (100/$yesterdaysTotalMarketCap)*SectorIndexHistoricals::getSectorTotalChange($stocksInSector);
         }
         return 0;
     }
@@ -206,8 +207,8 @@ class SectorHistoricals extends Model
 
     private static function sectorLimitToNumber($sectorLimit){
         if($sectorLimit == 'all'){
-            $mostRecentDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
-            return SectorHistoricals::where('date', $mostRecentDate)
+            $mostRecentDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
+            return SectorIndexHistoricals::where('date', $mostRecentDate)
                 ->where('sector', '!=', 'All')
                 ->lists('sector')
                 ->count();

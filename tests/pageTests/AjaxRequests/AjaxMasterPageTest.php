@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use Carbon\Carbon;
 
 class AjaxMasterPageTest extends TestCase{
@@ -23,7 +23,7 @@ class AjaxMasterPageTest extends TestCase{
 	}
 
 	public function testMarketChange(){
-		$mostRecentHistoricalDate = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+		$mostRecentHistoricalDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
 		$carbonMostRecentHistoricalDate = getCarbonDateFromDate($mostRecentHistoricalDate);
 		if($carbonMostRecentHistoricalDate->isToday()){
 			$this->visit('/ajax/marketchange')

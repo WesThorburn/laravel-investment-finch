@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 
 class AjaxHomePageTest extends TestCase{
 	public function testBestPerformingSectors(){
@@ -16,7 +16,7 @@ class AjaxHomePageTest extends TestCase{
 	}
 
 	public function testASXMarketCapLineGraph(){
-		$mostRecentDateInGraph = SectorHistoricals::getMostRecentSectorHistoricalsDate();
+		$mostRecentDateInGraph = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
 		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 2);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 		$this->visit('/ajax/graph/sector/All/last_month/Market%20Cap')

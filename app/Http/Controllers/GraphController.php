@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\SectorHistoricals;
+use App\Models\SectorIndexHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
 use Khill\Lavacharts\Lavacharts;
@@ -25,7 +25,7 @@ class GraphController extends Controller
     }
 
     public function sector($sectorName, $timeFrame, $dataType){
-        $graphData = SectorHistoricals::getIndividualSectorGraphData($sectorName, $timeFrame, $dataType);
+        $graphData = SectorIndexHistoricals::getIndividualSectorGraphData($sectorName, $timeFrame, $dataType);
         $prices = \Lava::DataTable();
         $prices->addStringColumn('Date')
             ->addNumberColumn($dataType)
@@ -34,7 +34,7 @@ class GraphController extends Controller
     }
 
     public function sectorCapsPieChart($numberOfSectors){
-        $graphData = SectorHistoricals::getAllSectorGraphData($numberOfSectors);
+        $graphData = SectorIndexHistoricals::getAllSectorGraphData($numberOfSectors);
         $sectorCaps = \Lava::DataTable();
         $sectorCaps->addStringColumn('Sector Name') 
             ->addNumberColumn('Percent')
