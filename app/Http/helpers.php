@@ -34,14 +34,20 @@ function isTradingDay(){
 	}
 }
 
-function formatMoneyAmountToLetter($amount){
+function formatMoneyAmountToLetter($amount, $wordFormat = false){
 	if(!$amount){
 		return "";
 	}
 	elseif($amount >= 1000){
+		if($wordFormat){
+			return ($amount/1000) . " billion";
+		}
 		return ($amount/1000) . "B";
 	}
 	elseif($amount < 1000){
+		if($wordFormat){
+			return $amount . " million";
+		}
 		return $amount . "M";
 	}
 }

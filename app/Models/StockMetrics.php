@@ -92,4 +92,8 @@ class StockMetrics extends Model {
     	}
     	return $graphData;
     }
+
+    private function generateAnalysis(StockMetrics $stockMetrics){
+        return $stockMetrics->stock->company_name;
+    }
 }

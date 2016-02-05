@@ -166,24 +166,39 @@
 							<tr>
 								<td>Market Cap</td>
 								<td>{{ formatMoneyAmountToLetter($metrics->market_cap) }}</td>
-								<td>{{ formatMoneyAmountToLetter($sectorAverage->average_sector_market_cap) }}</td>
+								<td>{{ formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2)) }}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
-			@if($relatedStocks->first())
-				<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-7" @endif>
-					<div id="relatedStocks">
-						@include('layouts.partials.related-stock-list-display')
-					</div>	
-				</div>		
-			@endif
-			@if($stock->business_summary != "")
-				<div @if(!$relatedStocks->first()) class="col-md-12" @else class="col-md-5" @endif>
+			<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-7" @endif>
+				<div class="row">
+					<div class="col-md-12">
+						@if($relatedStocks->first())
+							<div id="relatedStocks">
+								@include('layouts.partials.related-stock-list-display')
+							</div>
+						@endif
+					</div>
+					<div class="col-md-12">
+						@if($metrics->analysis != "")
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<b>Stock Analysis</b>
+								</div>
+								<div class="panel-body">
+									{{ $metrics->analysis }}
+								</div>
+							</div>
+						@endif
+					</div>
+				</div>
+			</div>
+			<div @if(!$relatedStocks->first() && $metrics->analysis != "") class="col-md-12" @else class="col-md-5" @endif>
+				@if($stock->business_summary != "")
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>Business Summary</b>
@@ -192,10 +207,12 @@
 							{{ $stock->business_summary }}
 						</div>
 					</div>
-				</div>
-			@endif
+				@endif
+			</div>
 		</div>
 	</div>
+
+
 @stop
 
 @section('footer')

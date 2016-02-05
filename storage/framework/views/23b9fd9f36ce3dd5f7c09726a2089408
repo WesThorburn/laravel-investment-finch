@@ -167,24 +167,40 @@
 							<tr>
 								<td>Market Cap</td>
 								<td><?php echo e(formatMoneyAmountToLetter($metrics->market_cap)); ?></td>
-								<td><?php echo e(formatMoneyAmountToLetter($sectorAverage->average_sector_market_cap)); ?></td>
+								<td><?php echo e(formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2))); ?></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
-			<?php if($relatedStocks->first()): ?>
-				<div <?php if($stock->business_summary == ""): ?> class="col-md-12" <?php else: ?> class="col-md-7" <?php endif; ?>>
-					<div id="relatedStocks">
-						<?php echo $__env->make('layouts.partials.related-stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-					</div>	
-				</div>		
-			<?php endif; ?>
-			<?php if($stock->business_summary != ""): ?>
-				<div <?php if(!$relatedStocks->first()): ?> class="col-md-12" <?php else: ?> class="col-md-5" <?php endif; ?>>
+			<div <?php if($stock->business_summary == ""): ?> class="col-md-12" <?php else: ?> class="col-md-7" <?php endif; ?>>
+				<div class="row">
+					<div class="col-md-12">
+						<?php if($relatedStocks->first()): ?>
+							<div id="relatedStocks">
+								<?php echo $__env->make('layouts.partials.related-stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+							</div>
+						<?php endif; ?>
+					</div>
+					<div class="col-md-12">
+						<?php if($metrics->analysis != ""): ?>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<b>Stock Analysis</b>
+								</div>
+								<div class="panel-body">
+									<?php echo e($metrics->analysis); ?>
+
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+			<div <?php if(!$relatedStocks->first() && $metrics->analysis != ""): ?> class="col-md-12" <?php else: ?> class="col-md-5" <?php endif; ?>>
+				<?php if($stock->business_summary != ""): ?>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>Business Summary</b>
@@ -194,10 +210,12 @@
 
 						</div>
 					</div>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
+
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer'); ?>
