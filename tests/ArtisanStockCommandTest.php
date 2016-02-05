@@ -39,7 +39,7 @@ class ArtisanStockCommandTest extends TestCase{
 	}
 
 	public function testUpdateSectorChange(){
-		$this->artisan("stocks:updateSectorIndexMetrics", ['--testMode' => true]);
+		$this->artisan("stocks:updateSectorMetrics", ['--testMode' => true]);
 		if(isTradingDay()){
 			$this->seeInDatabase('sector_index_historicals', ['sector' => 'Telecommunication Services', 'date' => date("Y-m-d")]);
 			$this->seeInDatabase('sector_index_historicals', ['sector' => 'Banks', 'date' => date("Y-m-d")]);

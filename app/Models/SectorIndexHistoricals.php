@@ -59,6 +59,7 @@ class SectorIndexHistoricals extends Model
 
     public static function getBestPerformingSector(){
         $bestPerformingSector = SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
+            ->where('stock_index', 0)
             ->orderBy('day_change', 'desc')
             ->take(1)
             ->lists('sector');
@@ -73,6 +74,7 @@ class SectorIndexHistoricals extends Model
             $order = "asc";
         }
     	return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
+            ->where('stock_index', 0)
             ->where('sector', '!=', 'Class Pend')
             ->where('sector', '!=', 'Not Applic')
             ->where('sector', '!=', 'All')
@@ -148,6 +150,7 @@ class SectorIndexHistoricals extends Model
         $graphData = array();
         $mostRecentDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
         $sectors = SectorIndexHistoricals::where('date', $mostRecentDate)
+            ->where('stock_index', 0)
             ->where('sector', '!=', 'All')
             ->orderBy('total_sector_market_cap', 'DESC')
             ->limit(SectorIndexHistoricals::sectorLimitToNumber($sectorLimit))
@@ -209,6 +212,7 @@ class SectorIndexHistoricals extends Model
         if($sectorLimit == 'all'){
             $mostRecentDate = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
             return SectorIndexHistoricals::where('date', $mostRecentDate)
+                ->where('stock_index', 0)
                 ->where('sector', '!=', 'All')
                 ->lists('sector')
                 ->count();

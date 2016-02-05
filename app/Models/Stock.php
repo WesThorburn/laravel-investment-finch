@@ -32,7 +32,7 @@ class Stock extends Model {
 		return $this->hasOne('App\Models\SectorIndexHistoricals', 'sector', 'sector');
 	}
 
-	public function scopeWithMarketIndex($query, $marketIndex){
+	public static function scopeWithMarketIndex($query, $marketIndex){
 		switch ($marketIndex){
 			case 'asx20':
 				return $query->where('asx_20', 1);
@@ -58,6 +58,17 @@ class Stock extends Model {
 
 	public static function getListOfSectors(){
 		return \DB::table('stocks')->select(\DB::raw('DISTINCT sector'))->lists('sector');
+	}
+
+	public static function getListOfIndexes(){
+		return [
+			'asx20',
+			'asx50',
+			'asx100',
+			'asx200',
+			'asx300',
+			'allOrds'
+		];
 	}
 
 	public static function getSectorDropdown(){

@@ -8,21 +8,21 @@ use App\Models\StockMetrics;
 
 use Illuminate\Console\Command;
 
-class UpdateSectorIndexMetricsCommand extends Command
+class UpdateSectorMetricsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stocks:updateSectorIndexMetrics {--testMode=false}{--mode=full}';
+    protected $signature = 'stocks:updateSectorMetrics {--testMode=false}{--mode=full}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updates the metrics for each sector and index. --mode=partial includes only Market Cap --mode=full includes all metrics';
+    protected $description = 'Updates the metrics for each sector. --mode=partial includes only Market Cap --mode=full includes all metrics';
 
     private $sectorMetrics = [
             'volume', 
@@ -49,7 +49,7 @@ class UpdateSectorIndexMetricsCommand extends Command
      */
     public function handle()
     {
-        $this->info("Updating ".$this->option('mode')." sector and index metrics. This may take several minutes...");
+        $this->info("Updating ".$this->option('mode')." sector metrics. This may take several minutes...");
 
         $listOfSectors = Stock::getListOfSectors();
         array_push($listOfSectors, 'All');
