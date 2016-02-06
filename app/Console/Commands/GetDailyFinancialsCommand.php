@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Historicals;
 use App\Models\Stock;
+use App\Models\StockMetrics;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -60,6 +61,8 @@ class GetDailyFinancialsCommand extends Command
 					$individualRecord = explode(',', $record);
 					$stockCode = substr(explode('.', $individualRecord[0])[0], 1);
                     if(isTradingDay()){
+                        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
 						Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 							"stock_code" => $stockCode,
 							"date" => date("Y-m-d"),
@@ -71,6 +74,19 @@ class GetDailyFinancialsCommand extends Command
 							"adj_close" => $individualRecord[4],
                             "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
                             "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
+                            "EBITDA" => $stockMetrics->EBITDA,
+                            "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
+                            "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,
+                            "price_to_earnings"=> $stockMetrics->price_to_earnings,
+                            "price_to_sales"=> $stockMetrics->price_to_sales,
+                            "price_to_book"=> $stockMetrics->price_to_book,
+                            "year_high"=> $stockMetrics->year_high,
+                            "year_low"=> $stockMetrics->year_low,
+                            "market_cap"=> $stockMetrics->market_cap,
+                            "dividend_yield"=> $stockMetrics->dividend_yield,
+                            "trend_short_term"=> $stockMetrics->trend_short_term,
+                            "trend_medium_term"=> $stockMetrics->trend_medium_term,
+                            "trend_long_term"=> $stockMetrics->trend_long_term,
 							"updated_at" => date("Y-m-d H:i:s")
 						]);
                     }
