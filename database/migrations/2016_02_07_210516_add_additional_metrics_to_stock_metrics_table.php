@@ -13,11 +13,11 @@ class AddAdditionalMetricsToStockMetricsTable extends Migration
     public function up()
     {
         Schema::table('stock_metrics', function (Blueprint $table) {
-            $table->decimal('open', 7, 3);
-            $table->decimal('high', 7, 3);
-            $table->decimal('low', 7, 3);
-            $table->decimal('close', 7, 3);
-            $table->decimal('adj_close', 7, 3);
+            $table->decimal('open', 7, 3)->after('day_change');
+            $table->decimal('high', 7, 3)->after('open');
+            $table->decimal('low', 7, 3)->after('high');
+            $table->decimal('close', 7, 3)->after('low');
+            $table->decimal('adj_close', 7, 3)->after('close');
         });
     }
 
