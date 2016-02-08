@@ -199,7 +199,7 @@ class SectorIndexHistoricals extends Model
         $marketCapDayChanges = array();
         foreach($stocksInSector as $stock){
             $metric = StockMetrics::where('stock_code', $stock)->first();
-            array_push($marketCapDayChanges, $metric->market_cap - ($metric->market_cap/(($metric->day_change/100)+1)));
+            array_push($marketCapDayChanges, $metric->market_cap - ($metric->market_cap/(($metric->percent_change/100)+1)));
         }
         return array_sum($marketCapDayChanges);
     }

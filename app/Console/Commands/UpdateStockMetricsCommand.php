@@ -4,6 +4,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Models\StockMetrics;
 use App\Models\Stock;
+use App\Models\Historicals;
 use Carbon\Carbon;
 
 class UpdateStockMetricsCommand extends Command {
@@ -44,6 +45,7 @@ class UpdateStockMetricsCommand extends Command {
 		}
 
 		UpdateStockMetricsCommand::insertMetricRowsForNewStocks();
+		$yesterdaysHistoricalDate = Historicals::getYesterdaysHistoricalsDate();
 
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
@@ -56,7 +58,7 @@ class UpdateStockMetricsCommand extends Command {
 					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
-						"day_change" => substr($individualMetric[2], 1, -2),
+						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -1), $stockCode, $yesterdaysHistoricalDate),
 						"open" => $individualMetric[3],
 						"high" => $individualMetric[4],
 						"low" => $individualMetric[5],
@@ -121,6 +123,15 @@ class UpdateStockMetricsCommand extends Command {
 			return $marketCap/1000;
 		}
 		return $marketCap;
+	}
+
+	//Nulls current day's percentage change if it's the exact same as yesterday's
+	private static function correctPercentChange($percentChange, $stockCode, $yesterdaysHistoricalDate){
+		$yesterdaysPercentChange = Historicals::where(['stock_code' => $stockCode, 'date' => $yesterdaysHistoricalDate])->pluck('percent_change');
+		if($percentChange == $yesterdaysPercentChange){
+			return 0;
+		}
+		return $percentChange;
 	}
 	/**
 	 * Get the console command arguments.

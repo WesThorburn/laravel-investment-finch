@@ -80,7 +80,7 @@ class StockController extends Controller
 
     public function getDayChange($id){
         return view('layouts.partials.individual-stock-day-change')->with([
-            'dayChange' => StockMetrics::where('stock_code', $id)->pluck('day_change')
+            'dayChange' => StockMetrics::where('stock_code', $id)->pluck('percent_change')
         ]);
     }
 
@@ -98,7 +98,7 @@ class StockController extends Controller
                 'stocks.company_name', 
                 'stocks.sector', 
                 'stock_metrics.last_trade',
-                'stock_metrics.day_change',
+                'stock_metrics.percent_change',
                 'stock_metrics.market_cap',
                 'stock_metrics.volume',
                 'stock_metrics.EBITDA',
@@ -110,14 +110,14 @@ class StockController extends Controller
             ])
             ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
         return \Datatables::of($stocks)
-            ->editColumn('day_change', function($stock){
-                if($stock->day_change > 0){
-                    return "<div class='color-green'>".$stock->day_change."%"."</div>";
+            ->editColumn('percent_change', function($stock){
+                if($stock->percent_change > 0){
+                    return "<div class='color-green'>".$stock->percent_change."%"."</div>";
                 }
-                elseif($stock->day_change < 0){
-                    return "<div class='color-red'>".$stock->day_change."%"."</div>";
+                elseif($stock->percent_change < 0){
+                    return "<div class='color-red'>".$stock->percent_change."%"."</div>";
                 }
-                return $stock->day_change.'%';
+                return $stock->percent_change.'%';
             })
             ->make(true);
     }

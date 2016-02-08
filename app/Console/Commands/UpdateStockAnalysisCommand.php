@@ -56,37 +56,8 @@ class UpdateStockAnalysisCommand extends Command
 
     private function generateAnalysis(StockMetrics $stockMetrics){
         return $stockMetrics->stock_code . ' ' .
-            $this->getTrendDescription($stockMetrics).
             $this->getMovingAverageDescription($stockMetrics).
             $this->getMetricsDescription($stockMetrics);
-    }
-
-    private function getTrendDescription(StockMetrics $stockMetrics){
-        $description = "";
-        if($stockMetrics->trend_short_term == "None" && $stockMetrics->trend_medium_term == "None" && $stockMetrics->trend_long_term == "None" ||
-           $stockMetrics->trend_short_term == null && $stockMetrics->trend_medium_term == null && $stockMetrics->trend_long_term == null){
-            return "shows no trend over the last 250 days. ";
-        }
-
-        if($stockMetrics->trend_long_term == 'Up'){
-            $description .= "shows an upward trend over the last 250 days. ";
-        }
-        elseif($stockMetrics->trend_long_term == 'Down'){
-            $description .= "shows a downward trend over the last 250 days. ";
-        }
-        elseif($stockMetrics->trend_medium_term == 'Up'){
-            $description .= "shows an upward trend over the last 150 days. ";
-        }
-        elseif($stockMetrics->trend_medium_term == 'Down'){
-            $description .= "shows a downward trend over the last 150 days. ";
-        }
-        elseif($stockMetrics->trend_short_term == 'Up'){
-            $description .= "shows an upward trend over the last 50 days. ";
-        }
-        elseif($stockMetrics->trend_short_term == 'Down'){
-            $description .= "shows a downward trend over the last 50 days. ";
-        }
-        return $description;
     }
 
     private function getMovingAverageDescription(StockMetrics $stockMetrics){

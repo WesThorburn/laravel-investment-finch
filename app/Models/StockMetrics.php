@@ -9,7 +9,7 @@ class StockMetrics extends Model {
 	protected $fillable = [
 		"stock_code",
 		"last_trade",
-		"day_change",
+		"percent_change",
 		"volume",
 		"EBITDA",
 		"earnings_per_share_current",
