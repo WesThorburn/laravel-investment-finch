@@ -118,9 +118,9 @@ class UpdateStockMetricsCommand extends Command {
 	private static function correctMarketCap($stockCode, $marketCap){
 		$stocksWithIncorrectMarketCaps = ["URF","MOV","TIX","NSR","PGF","FGG","PAI","CQA","BPA","IDR","CMA","WAX","FGX","TOF","EMF","USG","BAF","UPD","KLO","SAO","EAI","USF","WDE","WMK","GDF","BIQ","AYZ","ENC","AHJ","BWR","AYK","AIK","APW","AYD","AWQ","PAF","RYD","UPG","TOT","IIL","AYH","FSI","8EC","VGI","TML","SCG","GC1","AOD","KLR","MKE","AAI","KFG","AIQ","AUP","FDC","PTX","DTX","USR","AKY","EOR","BOP","AIB","SXI","SLE","NTL","EGP","MFE","MUB","OGH","ELR","OEG","DAF","EQU","ASN","SXS","SZG","RCF","AQJ","PRH","OOK","AYJ","POW", "IVQ"];
 		if(in_array($stockCode, $stocksWithIncorrectMarketCaps)){
-			return $marketCap/1000;
+			return $marketCap;
 		}
-		return $marketCap/1000; //Attempt to correct market cap error on 04-02-2016
+		return $marketCap;
 	}
 	/**
 	 * Get the console command arguments.
