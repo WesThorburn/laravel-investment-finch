@@ -61,14 +61,14 @@
 
 				<h2 class="side-by-side quater-margin-right" id="stockPrice">$<?php echo e($metrics->last_trade); ?></h2>
 				<h3 id="dayChange"
-					<?php if(rtrim($metrics->day_change, '%') < 0): ?> 
+					<?php if(rtrim($metrics->percent_change, '%') < 0): ?> 
 						class="side-by-side color-red" 
-					<?php elseif(rtrim($metrics->day_change, '%') > 0): ?> 
+					<?php elseif(rtrim($metrics->percent_change, '%') > 0): ?> 
 						class="side-by-side color-green" 
 					<?php else: ?>
 						class="side-by-side"
 					<?php endif; ?>>
-					<?php echo e($metrics->day_change); ?>%
+					<?php echo e($metrics->percent_change); ?>%
 				</h3>
 
 				<div class="default-margin-bottom"></div>

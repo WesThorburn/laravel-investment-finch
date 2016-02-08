@@ -48,7 +48,7 @@
 				{data: 'company_name', name: 'company_name'},
 				{data: 'sector', name: 'sector'}, 
 				{data: 'last_trade', name: 'last_trade', searchable: false}, 
-	            {data: 'day_change', name: 'day_change', searchable: false}, 
+	            {data: 'percent_change', name: 'percent_change', searchable: false}, 
 	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
 	            {data: 'volume', name: 'volume', searchable: false}, 
 	            {data: 'EBITDA', name: 'EBITDA', searchable: false}, 

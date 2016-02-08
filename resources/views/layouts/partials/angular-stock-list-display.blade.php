@@ -29,7 +29,7 @@
 				    		<td>@{{ stock.stock.sector }}</td>
 				    		<td>@{{ stock.last_trade }}</td>
 				    		<td>
-								@{{ stock.day_change }}%
+								@{{ stock.percent_change }}%
 							</td>
 							<td>@{{ stock.market_cap }}</td>
 							<td>@{{ stock.volume }}</td>

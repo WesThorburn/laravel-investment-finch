@@ -20,10 +20,10 @@
 					<td><?php echo e($stock->stock->company_name); ?></td>
 					<td><?php echo e($stock->stock->sector); ?></td>
 					<td>$<?php echo e($stock->last_trade); ?></td>
-					<td <?php if($stock->day_change < 0): ?> class="color-red" 
-						<?php elseif($stock->day_change > 0): ?> class="color-green"
+					<td <?php if($stock->percent_change < 0): ?> class="color-red" 
+						<?php elseif($stock->percent_change > 0): ?> class="color-green"
 						<?php endif; ?>>
-						<?php echo e($stock->day_change); ?>%
+						<?php echo e($stock->percent_change); ?>%
 					</td>
 					<td><?php echo e($stock->market_cap); ?></td>
 				</tr>

@@ -103,7 +103,7 @@ class UpdateStockMetricsCommand extends Command {
 			return substr($stockCodeParameter, 1);
 		}
 		else{
-			return "TLS.AX+CBA.AX";
+			return "TLS.AX+CBA.AX+MOV.AX";
 		}
 	}
 	//Checks EBITDA value and calls appropriate helper function to format it
@@ -130,6 +130,9 @@ class UpdateStockMetricsCommand extends Command {
 		$yesterdaysPercentChange = Historicals::where(['stock_code' => $stockCode, 'date' => $yesterdaysHistoricalDate])->pluck('percent_change');
 		if($percentChange == $yesterdaysPercentChange){
 			return 0;
+		}
+		if($stockCode == 'MOV'){
+			dd($yesterdaysPercentChange);
 		}
 		return $percentChange;
 	}

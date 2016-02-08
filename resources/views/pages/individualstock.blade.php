@@ -62,14 +62,14 @@
 
 				<h2 class="side-by-side quater-margin-right" id="stockPrice">${{ $metrics->last_trade }}</h2>
 				<h3 id="dayChange"
-					@if(rtrim($metrics->day_change, '%') < 0) 
+					@if(rtrim($metrics->percent_change, '%') < 0) 
 						class="side-by-side color-red" 
-					@elseif(rtrim($metrics->day_change, '%') > 0) 
+					@elseif(rtrim($metrics->percent_change, '%') > 0) 
 						class="side-by-side color-green" 
 					@else
 						class="side-by-side"
 					@endif>
-					{{ $metrics->day_change }}%
+					{{ $metrics->percent_change }}%
 				</h3>
 
 				<div class="default-margin-bottom"></div>
