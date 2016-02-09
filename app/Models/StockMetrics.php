@@ -6,28 +6,9 @@ class StockMetrics extends Model {
 
 	protected $table = 'stock_metrics';
 
-	protected $fillable = [
-		"stock_code",
-		"last_trade",
-		"percent_change",
-		"volume",
-		"EBITDA",
-		"earnings_per_share_current",
-		"earnings_per_share_next_year",
-		"price_to_earnings",
-		"price_to_sales",
-		"price_to_book",
-		"year_high",
-		"year_low",
-		"fifty_day_moving_average",
-		"two_hundred_day_moving_average",
-		"market_cap",
-		"dividend_yield",
-		"trend_short_term",
-		"trend_medium_term",
-		"trend_long_term",
-		"analysis",
-		"updated_at"
+	protected $guarded = [
+		"id",
+		"created_at"
 	];
 
 	public function stock(){
