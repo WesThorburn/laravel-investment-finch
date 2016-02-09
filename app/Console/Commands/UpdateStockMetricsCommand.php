@@ -57,7 +57,7 @@ class UpdateStockMetricsCommand extends Command {
 					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
-						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -1), $stockCode),
+						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -2), $stockCode),
 						"open" => $individualMetric[3],
 						"high" => $individualMetric[4],
 						"low" => $individualMetric[5],
