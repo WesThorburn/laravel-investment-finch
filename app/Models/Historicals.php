@@ -70,8 +70,4 @@ class Historicals extends Model
     public static function getMostRecentHistoricalDate($stockCode){
         return Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take(1)->lists('date')[0];
     }
-
-    public static function getYesterdaysHistoricalsDate(){
-        return Historicals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
-    }
 }

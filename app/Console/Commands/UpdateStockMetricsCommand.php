@@ -45,7 +45,6 @@ class UpdateStockMetricsCommand extends Command {
 		}
 
 		UpdateStockMetricsCommand::insertMetricRowsForNewStocks();
-		$yesterdaysHistoricalDate = Historicals::getYesterdaysHistoricalsDate();
 
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
@@ -58,7 +57,7 @@ class UpdateStockMetricsCommand extends Command {
 					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
-						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -1), $stockCode, $yesterdaysHistoricalDate),
+						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -1), $stockCode),
 						"open" => $individualMetric[3],
 						"high" => $individualMetric[4],
 						"low" => $individualMetric[5],
@@ -126,8 +125,9 @@ class UpdateStockMetricsCommand extends Command {
 	}
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
-	private static function correctPercentChange($percentChange, $stockCode, $yesterdaysHistoricalDate){
-		$yesterdaysPercentChange = Historicals::where(['stock_code' => $stockCode, 'date' => $yesterdaysHistoricalDate])->pluck('percent_change');
+	private static function correctPercentChange($percentChange, $stockCode){
+		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate($stockCode);
+		$yesterdaysPercentChange = Historicals::where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->pluck('percent_change');
 		if($percentChange == $yesterdaysPercentChange){
 			return 0;
 		}
