@@ -43,7 +43,7 @@ class FillHistoricalFinancialsCommand extends Command
         if($this->confirm('Do you wish to continue?'))
         {
             $this->info("Downloading historical financials...");
-            $historicals = Historicals::where('date', '2016-02-08')->get();
+            $historicals = Historicals::where(['date' => '2016-02-08', 'close' => 0.000])->get();
             $numberOfStocks = $historicals->count();
             foreach($historicals as $key => $historical){
                 $historicalSheetUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$historical->stock_code.".AX&d=1&e=9&f=2016&g=d&a=1&b=8&c=2016&ignore=.csv";

@@ -102,7 +102,7 @@ class UpdateStockMetricsCommand extends Command {
 			return substr($stockCodeParameter, 1);
 		}
 		else{
-			return "TLS.AX+CBA.AX+MOV.AX";
+			return "TLS.AX+CBA.AX";
 		}
 	}
 	//Checks EBITDA value and calls appropriate helper function to format it
