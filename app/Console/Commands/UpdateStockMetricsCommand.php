@@ -131,9 +131,6 @@ class UpdateStockMetricsCommand extends Command {
 		if($percentChange == $yesterdaysPercentChange){
 			return 0;
 		}
-		if($stockCode == 'MOV'){
-			dd($yesterdaysPercentChange);
-		}
 		return $percentChange;
 	}
 	/**
