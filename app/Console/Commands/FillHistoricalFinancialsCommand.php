@@ -39,30 +39,25 @@ class FillHistoricalFinancialsCommand extends Command
      */
     public function handle()
     {
-        $this->info("This is involves downloading and storing several million records. This may take several hours...");
+    	$this->info("This is involves downloading and storing several million records. This may take several hours...");
         if($this->confirm('Do you wish to continue?'))
         {
             $this->info("Downloading historical financials...");
             $historicals = Historicals::where(['date' => '2016-02-08', 'close' => 0.000])->get();
             $numberOfStocks = $historicals->count();
             foreach($historicals as $key => $historical){
-                $historicalSheetUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$historical->stock_code.".AX&d=1&e=9&f=2016&g=d&a=1&b=8&c=2016&ignore=.csv";
-                if(get_headers($historicalSheetUrl, 1)[0] == 'HTTP/1.1 200 OK')
-                {
-                    file_put_contents('database/files/spreadsheet.txt', trim(str_replace("Date,Open,High,Low,Close,Volume,Adj Close", "", file_get_contents($historicalSheetUrl))));
-                    $spreadSheetFile = fopen('database/files/spreadsheet.txt', 'r');
-                    $dailyTradeRecord = array();
-                    $line = fgets($spreadSheetFile);
-                    $pieces = explode(',', $line);
+            	$this->info("Loading: ".$historical->stock_code);
+        		$yesterdays = Historicals::where(['stock_code' => $historical->stock_code, 'date' => '2016-02-05'])->first();
 
-                	$historical->open = $pieces[1];
-                    $historical->high = $pieces[2];
-                    $historical->low = $pieces[3];
-                    $historical->close = $pieces[4];
-                    $historical->volume = $pieces[5];
-                    $historical->adj_close = $pieces[6];
-                    $historical->save();
-                }
+        		$historical = Historicals::where(['stock_code' => $historical->stock_code, 'date' => '2016-02-08'])->first();
+
+            	$historical->open = $yesterdays->open;
+                $historical->high = $yesterdays->high;
+                $historical->low = $yesterdays->low;
+                $historical->close = $yesterdays->close;
+                $historical->volume = $yesterdays->volume;
+                $historical->adj_close = $yesterdays->adj_close;
+                $historical->save();
                 $this->info("Completed: ".$historical->stock_code." ".($key+1)."/".$numberOfStocks." - ".round(($key+1)*(100/$numberOfStocks), 2)."%");
             }
             $this->info("The historical financials have been downloaded.");
