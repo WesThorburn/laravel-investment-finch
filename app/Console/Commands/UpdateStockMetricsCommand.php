@@ -61,7 +61,7 @@ class UpdateStockMetricsCommand extends Command {
 						"open" => $individualMetric[3],
 						"high" => $individualMetric[4],
 						"low" => $individualMetric[5],
-						"close" => 0.000, //No Data Available
+						"close" => $individualMetric[1], //Last Trade after closing time
 						"adj_close" => 0.000, //No Data Available
 						"volume" => $individualMetric[6],
 						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[7]),
