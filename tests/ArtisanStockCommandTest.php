@@ -34,8 +34,8 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function testResetDayChange(){
 		$this->artisan("stocks:resetDayChange", ['--testMode' => true]);
-		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS', 'day_change' => '0.00']);
-		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA', 'day_change' => '0.00']);
+		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS', 'percent_change' => '0.00']);
+		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA', 'percent_change' => '0.00']);
 	}
 
 	public function testUpdateSectorChange(){

@@ -39,26 +39,40 @@ class FillHistoricalFinancialsCommand extends Command
      */
     public function handle()
     {
-    	$this->info("This is involves downloading and storing several million records. This may take several hours...");
+        $this->info("This is involves downloading and storing several million records. This may take several hours...");
         if($this->confirm('Do you wish to continue?'))
         {
             $this->info("Downloading historical financials...");
-            $historicals = Historicals::where(['date' => '2016-02-08', 'close' => 0.000])->get();
-            $numberOfStocks = $historicals->count();
-            foreach($historicals as $key => $historical){
-            	$this->info("Loading: ".$historical->stock_code);
-        		$yesterdays = Historicals::where(['stock_code' => $historical->stock_code, 'date' => '2016-02-05'])->first();
-
-        		$historical = Historicals::where(['stock_code' => $historical->stock_code, 'date' => '2016-02-08'])->first();
-
-            	$historical->open = $yesterdays->open;
-                $historical->high = $yesterdays->high;
-                $historical->low = $yesterdays->low;
-                $historical->close = $yesterdays->close;
-                $historical->volume = $yesterdays->volume;
-                $historical->adj_close = $yesterdays->adj_close;
-                $historical->save();
-                $this->info("Completed: ".$historical->stock_code." ".($key+1)."/".$numberOfStocks." - ".round(($key+1)*(100/$numberOfStocks), 2)."%");
+            $numberOfStocks = Stock::count();
+            foreach(Stock::lists('stock_code') as $key => $stockCode){
+                if(!Historicals::where(['stock_code' => $stockCode, 'date' => '2015-08-11'])->first()){
+                    $historicalSheetUrl = "http://real-chart.finance.yahoo.com/table.csv?s=".$stockCode.".AX&d=7&e=12&f=2015&g=d&a=7&b=11&c=2015&ignore=.csv";
+                    if(get_headers($historicalSheetUrl, 1)[0] == 'HTTP/1.1 200 OK')
+                    {
+                        file_put_contents('database/files/spreadsheet.txt', trim(str_replace("Date,Open,High,Low,Close,Volume,Adj Close", "", file_get_contents($historicalSheetUrl))));
+                        $spreadSheetFile = fopen('database/files/spreadsheet.txt', 'r');
+                        $dailyTradeRecord = array();
+                        while(!feof($spreadSheetFile)){
+                            $line = fgets($spreadSheetFile);
+                            $pieces = explode(',', $line);
+                            array_push($dailyTradeRecord, array(
+                                'stock_code' => $stockCode,
+                                'date' => $pieces[0],
+                                'open' => $pieces[1],
+                                'high' => $pieces[2],
+                                'low' => $pieces[3],
+                                'close' => $pieces[4],
+                                'volume' => $pieces[5],
+                                'adj_close' => $pieces[6],
+                                'created_at' => date("Y-m-d H:i:s"),
+                                'updated_at' => date("Y-m-d H:i:s")
+                            ));
+                        }
+                        //\DB::table('historicals')->where('stock_code', $stockCode)->delete();
+                        \DB::table('historicals')->insert($dailyTradeRecord);
+                    }
+                }
+                $this->info("Completed: ".$stockCode." ".($key+1)."/".$numberOfStocks." - ".round(($key+1)*(100/$numberOfStocks), 2)."%");
             }
             $this->info("The historical financials have been downloaded.");
         }
