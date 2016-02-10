@@ -57,7 +57,7 @@ class UpdateStockMetricsCommand extends Command {
 					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 						"stock_code" => $stockCode,
 						"last_trade" => $individualMetric[1],
-						"percent_change" => UpdateStockMetricsCommand::correctPercentChange(substr($individualMetric[2], 1, -2), $stockCode),
+						"percent_change" => UpdateStockMetricsCommand::correctPercentChange($individualMetric[1], substr($individualMetric[2], 1, -2), $stockCode),
 						'day_change' => $individualMetric[3],
 						"open" => $individualMetric[4],
 						"high" => $individualMetric[5],
@@ -126,10 +126,10 @@ class UpdateStockMetricsCommand extends Command {
 	}
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
-	private static function correctPercentChange($percentChange, $stockCode){
+	private static function correctPercentChange($lastTrade, $percentChange, $stockCode){
 		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate($stockCode);
-		$yesterdaysPercentChange = Historicals::where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->pluck('percent_change');
-		if($percentChange == $yesterdaysPercentChange){
+		$yesterdaysRecord = Historicals::select('percent_change', 'close')->where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->first();
+		if($yesterdaysRecord && $percentChange == $yesterdaysRecord->percent_change && $lastTrade == $yesterdaysRecord->close){
 			return 0;
 		}
 		return $percentChange;
