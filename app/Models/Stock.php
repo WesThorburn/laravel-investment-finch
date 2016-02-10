@@ -7,18 +7,7 @@ class Stock extends Model {
 
 	protected $table = 'stocks';
 
-	protected $fillable = [
-		'stock_code',
-		'company_name',
-		'sector',
-		'business_summary',
-		'asx_20',
-		'asx_50',
-		'asx_100',
-		'asx_200',
-		'asx_300',
-		'all_ords'
-	];
+	protected $guarded = ['id', 'created_at'];
 
 	public function metrics(){
 		return $this->hasOne('App\Models\StockMetrics', 'stock_code', 'stock_code');

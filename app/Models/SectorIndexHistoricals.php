@@ -8,23 +8,7 @@ class SectorIndexHistoricals extends Model
 {
     protected $table = 'sector_index_historicals';
 
-    protected $fillable = [
-    	'sector',
-        'stock_index',
-    	'date',
-        'total_sector_market_cap',
-    	'day_change',
-        'volume',
-        'EBITDA',
-        'earnings_per_share_current',
-        'earnings_per_share_next_year',
-        'price_to_earnings',
-        'price_to_book',
-        'dividend_yield',
-        'average_sector_market_cap',
-    	'created_at',
-    	'updated_at'
-    ];
+    protected $guarded = ['id','created_at'];
 
     public function scopeDateCondition($query, $timeframe){
         if($timeframe == 'last_month'){

@@ -6,10 +6,7 @@ class StockMetrics extends Model {
 
 	protected $table = 'stock_metrics';
 
-	protected $guarded = [
-		"id",
-		"created_at"
-	];
+	protected $guarded = ['id','created_at'];
 
 	public function stock(){
 		return $this->belongsTo('App\Models\Stock', 'stock_code', 'stock_code');
