@@ -40,7 +40,10 @@ class Historicals extends Model
 
     public static function getMovingAverage($stockCode, $timeFrame){
         $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take($timeFrame)->lists('close');
-        return $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
+        if(count($recordsInTimeFrame) > 0){
+            return $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
+        }
+        return null;
     }
 
     public static function getMostRecentHistoricalDate($stockCode){

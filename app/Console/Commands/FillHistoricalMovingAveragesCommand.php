@@ -45,19 +45,17 @@ class FillHistoricalMovingAveragesCommand extends Command
 
             foreach($uniqueStockCodes as $stockKey => $stockCode){
                 $this->info("Processing Stock Code: ".$stockCode." ".round(($stockKey+1)*(100/$numberOfStocks), 2)."%");
-                foreach([50,200] as $timeFrame){
-                    $historicalDates = Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-08'])->lists('date');
-                    $numberOfDates = count($historicalDates);
-                    foreach($historicalDates as $dateKey => $date){         
-                        $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->skip($dateKey)->take($timeFrame)->lists('close');
+                foreach([50,200] as $timeFrame){ 
+                    $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->skip(1)->take($timeFrame)->lists('close');
+                    if(count($recordsInTimeFrame) > 0){
                         $averageOfRecordsInTimeFrame = $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
                         if($timeFrame == 50){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => $date])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-08'])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
                         }
                         elseif($timeFrame == 200){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => $date])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-08'])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
                         }
-                        $this->line(round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode." | ".$timeFrame." Day | Date: ".$date." ".round(($dateKey+1)*(100/$numberOfDates), 2)."%");
+                        $this->line(round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode." | ".$timeFrame." Day");
                     }
                 }
             }
