@@ -59,8 +59,6 @@ class SectorIndexHistoricals extends Model
         }
     	return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->where('stock_index', 0)
-            ->where('sector', '!=', 'Class Pend')
-            ->where('sector', '!=', 'Not Applic')
             ->where('sector', '!=', 'All')
             ->orderBy('day_change', $order)
             ->take($limit)
