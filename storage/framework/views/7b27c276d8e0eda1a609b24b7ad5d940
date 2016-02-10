@@ -23,7 +23,7 @@
 					<td <?php if($stock->percent_change < 0): ?> class="color-red" 
 						<?php elseif($stock->percent_change > 0): ?> class="color-green"
 						<?php endif; ?>>
-						<?php echo e($stock->percent_change); ?>%
+						<?php echo e(number_format($stock->percent_change, 2)); ?>%
 					</td>
 					<td><?php echo e($stock->market_cap); ?></td>
 				</tr>

@@ -21,7 +21,7 @@
 					<td @if($stock->percent_change < 0) class="color-red" 
 						@elseif($stock->percent_change > 0) class="color-green"
 						@endif>
-						{{ $stock->percent_change }}%
+						{{ number_format($stock->percent_change, 2) }}%
 					</td>
 					<td>{{ $stock->market_cap }}</td>
 				</tr>

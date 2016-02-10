@@ -112,12 +112,12 @@ class StockController extends Controller
         return \Datatables::of($stocks)
             ->editColumn('percent_change', function($stock){
                 if($stock->percent_change > 0){
-                    return "<div class='color-green'>".$stock->percent_change."%"."</div>";
+                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
                 }
                 elseif($stock->percent_change < 0){
-                    return "<div class='color-red'>".$stock->percent_change."%"."</div>";
+                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
                 }
-                return $stock->percent_change.'%';
+                return number_format($stock->percent_change, 2).'%';
             })
             ->make(true);
     }

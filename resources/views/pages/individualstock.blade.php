@@ -69,7 +69,7 @@
 					@else
 						class="side-by-side"
 					@endif>
-					{{ $metrics->percent_change }}%
+					{{ number_format($metrics->percent_change, 2) }}%
 				</h3>
 
 				<div class="default-margin-bottom"></div>

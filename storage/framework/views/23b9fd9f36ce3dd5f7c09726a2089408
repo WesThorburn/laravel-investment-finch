@@ -68,7 +68,7 @@
 					<?php else: ?>
 						class="side-by-side"
 					<?php endif; ?>>
-					<?php echo e($metrics->percent_change); ?>%
+					<?php echo e(number_format($metrics->percent_change, 2)); ?>%
 				</h3>
 
 				<div class="default-margin-bottom"></div>
