@@ -54,8 +54,8 @@ class PageController extends Controller
 
         return view('pages.home')->with([
             'marketCapsLava' => $marketCapsLava,
-            'sectorDayGains' => SectorIndexHistoricals::getSectorDayChanges('top'),
-            'sectorDayLosses' => SectorIndexHistoricals::getSectorDayChanges('bottom'),
+            'sectorDayGains' => SectorIndexHistoricals::getSectorDayChanges('top', 5, true),
+            'sectorDayLosses' => SectorIndexHistoricals::getSectorDayChanges('bottom', 5, true),
             'sectorDayGainTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('top'),
             'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom')
         ]);

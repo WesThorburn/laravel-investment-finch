@@ -37,6 +37,13 @@ class SectorIndexHistoricals extends Model
         }
     }
 
+    public function scopeOmitNonClassifiedSectors($query, $omitNonClassifiedSectors){
+        if($omitNonClassifiedSectors){
+            return $query->where('sector', '!=', 'Class Pend')->where('sector', '!=', 'Not Applic');
+        }
+        return $query;
+    }
+
     public function stock(){
         return $this->belongsTo('App\Models\Stock', 'sector', 'sector');
     }
@@ -50,7 +57,7 @@ class SectorIndexHistoricals extends Model
         return $bestPerformingSector[0];
     }
 
-    public static function getSectorDayChanges($section, $limit = 5){
+    public static function getSectorDayChanges($section, $limit = 5, $omitNonClassifiedSectors = false){
         if($section == 'top'){
             $order = "desc";
         }
@@ -60,6 +67,7 @@ class SectorIndexHistoricals extends Model
     	return SectorIndexHistoricals::where('date', SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate())
             ->where('stock_index', 0)
             ->where('sector', '!=', 'All')
+            ->omitNonClassifiedSectors($omitNonClassifiedSectors)
             ->orderBy('day_change', $order)
             ->take($limit)
             ->get();
