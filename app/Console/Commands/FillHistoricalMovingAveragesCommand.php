@@ -50,10 +50,10 @@ class FillHistoricalMovingAveragesCommand extends Command
                     if(count($recordsInTimeFrame) > 0){
                         $averageOfRecordsInTimeFrame = $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
                         if($timeFrame == 50){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-08'])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-09'])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
                         }
                         elseif($timeFrame == 200){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-08'])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-09'])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
                         }
                         $this->line(round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode." | ".$timeFrame." Day");
                     }
