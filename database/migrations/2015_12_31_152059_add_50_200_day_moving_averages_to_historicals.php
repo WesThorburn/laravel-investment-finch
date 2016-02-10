@@ -13,8 +13,8 @@ class Add50200DayMovingAveragesToHistoricals extends Migration
     public function up()
     {
         Schema::table('historicals', function (Blueprint $table) {
-            $table->decimal('fifty_day_moving_average', '7', '3')->after('adj_close');
-            $table->decimal('two_hundred_day_moving_average', '7', '3')->after('fifty_day_moving_average');
+            $table->decimal('fifty_day_moving_average', '7', '3')->after('adj_close')->nullable();
+            $table->decimal('two_hundred_day_moving_average', '7', '3')->after('fifty_day_moving_average')->nullable();
         });
     }
 
