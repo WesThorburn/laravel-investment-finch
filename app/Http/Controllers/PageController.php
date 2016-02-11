@@ -57,7 +57,9 @@ class PageController extends Controller
             'sectorDayGains' => SectorIndexHistoricals::getSectorDayChanges('top', 5, true),
             'sectorDayLosses' => SectorIndexHistoricals::getSectorDayChanges('bottom', 5, true),
             'sectorDayGainTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('top'),
-            'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom')
+            'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom'),
+            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(10)->get(),
+            'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers"
         ]);
     }
 

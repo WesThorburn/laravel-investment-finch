@@ -5,7 +5,8 @@ class HomePageTest extends TestCase{
 		$this->visit('/')
 			->see("ASX Market Cap (Billions)")->see("Market Cap")
 			->see("Best Performing Sectors")->see("Worst Performing Sectors")
-			->see("Sector Caps (Billions)");
+			->see("Sector Caps (Billions)")
+			->see("Market Movers");
 	}
 
 	public function testStockFind(){
