@@ -63,6 +63,7 @@ class GetDailyFinancialsCommand extends Command
                     "percent_change" => $stockMetrics->percent_change,
                     "day_change" => $stockMetrics->day_change,
 					"volume" => $stockMetrics->volume,
+                    "shares" => $stockMetrics->shares,
 					"adj_close" => $stockMetrics->adj_close,
                     "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
                     "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
