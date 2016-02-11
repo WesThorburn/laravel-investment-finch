@@ -48,7 +48,7 @@ class UpdateStockMetricsCommand extends Command {
 
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
-			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2c1ohgvj4ee8p5rp6kjj1y";
+			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2c1ohgvf6j4ee8p5rp6kjj1y";
 			$metrics = explode("\n", file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
@@ -65,16 +65,17 @@ class UpdateStockMetricsCommand extends Command {
 						"close" => $individualMetric[1], //Last Trade after closing time
 						"adj_close" => 0.000, //No Data Available
 						"volume" => $individualMetric[7],
-						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[8]),
-						"earnings_per_share_current" => $individualMetric[9],
-						"earnings_per_share_next_year" => $individualMetric[10],
-						"price_to_sales" => $individualMetric[11],
-						"price_to_earnings" => $individualMetric[12],
-						"price_to_book" => $individualMetric[13],
-						"year_high" => $individualMetric[14],
-						"year_low" => $individualMetric[15],
-						"market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[16])),
-						"dividend_yield" => $individualMetric[17],
+						"shares" => $individualMetric[8],
+						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[9]),
+						"earnings_per_share_current" => $individualMetric[10],
+						"earnings_per_share_next_year" => $individualMetric[11],
+						"price_to_sales" => $individualMetric[12],
+						"price_to_earnings" => $individualMetric[13],
+						"price_to_book" => $individualMetric[14],
+						"year_high" => $individualMetric[15],
+						"year_low" => $individualMetric[16],
+						"market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[17])),
+						"dividend_yield" => $individualMetric[18],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);
 				}
