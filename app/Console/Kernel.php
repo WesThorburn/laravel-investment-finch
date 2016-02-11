@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateStockAnalysis')->dailyAt('02:30');
 			$schedule->command('stocks:resetDayChange')->dailyAt('04:00');
 			//Full sector metric update once before and once after each trading day
-			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:30');
+			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:35');
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:35');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:40');
