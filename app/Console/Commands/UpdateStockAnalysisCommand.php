@@ -55,9 +55,7 @@ class UpdateStockAnalysisCommand extends Command
     }
 
     private function generateAnalysis(StockMetrics $stockMetrics){
-        return $stockMetrics->stock_code . ' ' .
-            $this->getMovingAverageDescription($stockMetrics).
-            $this->getMetricsDescription($stockMetrics);
+        return $this->getMovingAverageDescription($stockMetrics).$this->getMetricsDescription($stockMetrics);
     }
 
     private function getMovingAverageDescription(StockMetrics $stockMetrics){
