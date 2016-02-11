@@ -110,6 +110,18 @@ class StockController extends Controller
             ])
             ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
         return \Datatables::of($stocks)
+            ->editColumn('volume', function($stock){
+                return number_format($stock->volume);
+            })
+            ->editColumn('market_cap', function($stock){
+                if($stock->market_cap == 0.00){
+                    return null;
+                }
+                elseif($stock->market_cap < 1000){
+                    return number_format($stock->market_cap, 2, '.', '');
+                }
+                return number_format($stock->market_cap);
+            })
             ->editColumn('percent_change', function($stock){
                 if($stock->percent_change > 0){
                     return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";

@@ -102,7 +102,7 @@
 			<div class="col-md-5">
 				<div class="panel panel-default">
 					<div class="panel-heading"><b>Key Metrics</b></div>
-					<table class="table table-bordered">
+					<table class="table table-bordered metrics-table">
 						<tbody>
 							<tr>
 								<td></td>
@@ -112,7 +112,7 @@
 							<tr>
 								<td>EBITDA</td>
 								<td><?php echo e($metrics->EBITDA); ?></td>
-								<td>-</td>
+								<td><?php echo e($sectorAverage->EBITDA); ?></td>
 							</tr>
 							<tr>
 								<td>EPS (This Year)</td>
@@ -133,6 +133,21 @@
 								<td>Price/Book</td>
 								<td><?php echo e($metrics->price_to_book); ?></td>
 								<td><?php echo e($sectorAverage->price_to_book); ?></td>
+							</tr>
+							<tr>
+								<td>Market Cap</td>
+								<td><?php echo e(formatMoneyAmountToLetter(round($metrics->market_cap, 2))); ?></td>
+								<td><?php echo e(formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2))); ?></td>
+							</tr>
+							<tr>
+								<td>Daily Volume</td>
+								<td><?php echo e(number_format($metrics->volume)); ?></td>
+								<td><?php echo e(number_format($sectorAverage->volume)); ?></td>
+							</tr>
+							<tr>
+								<td>Total Shares</td>
+								<td><?php echo e(number_format($metrics->shares)); ?></td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>52 Week High</td>
@@ -163,11 +178,6 @@
 									<?php endif; ?>
 								</td>
 								<td>-</td>
-							</tr>
-							<tr>
-								<td>Market Cap</td>
-								<td><?php echo e(formatMoneyAmountToLetter(round($metrics->market_cap, 2))); ?></td>
-								<td><?php echo e(formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2))); ?></td>
 							</tr>
 						</tbody>
 					</table>

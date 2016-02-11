@@ -103,7 +103,7 @@
 			<div class="col-md-5">
 				<div class="panel panel-default">
 					<div class="panel-heading"><b>Key Metrics</b></div>
-					<table class="table table-bordered">
+					<table class="table table-bordered metrics-table">
 						<tbody>
 							<tr>
 								<td></td>
@@ -113,7 +113,7 @@
 							<tr>
 								<td>EBITDA</td>
 								<td>{{ $metrics->EBITDA }}</td>
-								<td>-</td>
+								<td>{{ $sectorAverage->EBITDA }}</td>
 							</tr>
 							<tr>
 								<td>EPS (This Year)</td>
@@ -134,6 +134,21 @@
 								<td>Price/Book</td>
 								<td>{{ $metrics->price_to_book }}</td>
 								<td>{{ $sectorAverage->price_to_book }}</td>
+							</tr>
+							<tr>
+								<td>Market Cap</td>
+								<td>{{ formatMoneyAmountToLetter(round($metrics->market_cap, 2)) }}</td>
+								<td>{{ formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2)) }}</td>
+							</tr>
+							<tr>
+								<td>Daily Volume</td>
+								<td>{{ number_format($metrics->volume) }}</td>
+								<td>{{ number_format($sectorAverage->volume) }}</td>
+							</tr>
+							<tr>
+								<td>Total Shares</td>
+								<td>{{ number_format($metrics->shares) }}</td>
+								<td>-</td>
 							</tr>
 							<tr>
 								<td>52 Week High</td>
@@ -162,11 +177,6 @@
 									@endif
 								</td>
 								<td>-</td>
-							</tr>
-							<tr>
-								<td>Market Cap</td>
-								<td>{{ formatMoneyAmountToLetter(round($metrics->market_cap, 2)) }}</td>
-								<td>{{ formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2)) }}</td>
 							</tr>
 						</tbody>
 					</table>

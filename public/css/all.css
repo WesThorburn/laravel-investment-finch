@@ -7139,6 +7139,11 @@ th{
 	margin-bottom:0px;
 }
 
+.metrics-table.table > tbody > tr > td{
+	padding:5px;
+	cursor:default;
+}
+
 .col-left-right-20px-padding{
 	padding-left:20px;
 	padding-right:20px;
