@@ -61,15 +61,17 @@ class BackfillMarketCapData extends Command
 	        			$currentHistoricalRecord = Historicals::where(['stock_code' => $stockCode, 'date' => $date])->first();
 	        			$previousHistoricalRecord = Historicals::where(['stock_code' => $stockCode, 'date' => $previousDate])->first();
 
-	        			$dayChange = $previousHistoricalRecord->close-$currentHistoricalRecord->close;
-	        			$percentageChange = number_format((100/$previousHistoricalRecord->close)*($dayChange), 2);
-	        			
-	        			$previousHistoricalRecord->percent_change = $percentageChange;
-	        			$previousHistoricalRecord->day_change = $dayChange;
-	        			$previousHistoricalRecord->save();
+	        			if($previousHistoricalRecord->close > 0){
+		        			$dayChange = $previousHistoricalRecord->close-$currentHistoricalRecord->close;
+		        			$percentageChange = number_format((100/$previousHistoricalRecord->close)*($dayChange), 2);
+		        			
+		        			$previousHistoricalRecord->percent_change = $percentageChange;
+		        			$previousHistoricalRecord->day_change = $dayChange;
+		        			$previousHistoricalRecord->save();
 
-	        			$currentHistoricalRecord->market_cap = $previousHistoricalRecord->market_cap*(1-($previousHistoricalRecord->percent_change/100));
-	        			$currentHistoricalRecord->save();
+		        			$currentHistoricalRecord->market_cap = $previousHistoricalRecord->market_cap*(1-($previousHistoricalRecord->percent_change/100));
+		        			$currentHistoricalRecord->save();
+		        		}
 	        		}
 	        		//Set current date to previous date for next iteration
 	        		$previousDate = $date;
