@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\CalculateTrendCommand',
 		'App\Console\Commands\GetASXListsCommand',
 		'App\Console\Commands\UpdateStockAnalysisCommand',
-		'App\Console\Commands\UpdateIndexMetricsCommand'
+		'App\Console\Commands\UpdateIndexMetricsCommand',
+		'App\Console\Commands\BackfillMarketCapData'
 	];
 
 	/**
