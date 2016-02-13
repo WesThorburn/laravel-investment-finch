@@ -9,6 +9,7 @@ Route::get('topGainsLosses', 'PageController@topGainsLosses');
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('stock/currentPrice/{stockCode}', 'StockController@getCurrentPrice');
 	Route::get('stock/dayChange/{stockCode}', 'StockController@getDayChange');
+	Route::get('stocks/highestVolume', 'StockController@highestVolume');
 	Route::get('stocks/{marketIndex}', 'StockController@stocks');
 	Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
 	Route::get('sectors/topPerforming/{topOrBottom}', 'SectorController@topPerformingSectors');

@@ -90,6 +90,13 @@ class StockController extends Controller
         ]);
     }
 
+    public function highestVolume(){
+        return view('layouts.partials.highest-volume-stocks-display')->with([
+            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(10)->get(),
+            'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers"
+        ]);
+    }
+
     public function stocks($marketIndex){
         $stockCodesInMarketIndex = Stock::withMarketIndex($marketIndex)->lists('stock_code');
         $stocks = StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')

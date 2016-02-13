@@ -15,6 +15,7 @@
                 setInterval(function() {
                 	$('#sectorDayGain').load('ajax/sectors/topPerforming/top');
                 	$('#sectorDayLoss').load('ajax/sectors/topPerforming/bottom');
+                	$('#highestVolumeStocks').load('ajax/stocks/highestVolume');
                 }, 60000);
             });
 
