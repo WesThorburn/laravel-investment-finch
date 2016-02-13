@@ -54,7 +54,6 @@ class BackfillSectorCapData extends Command
             $sectorHistoricalRecords = SectorIndexHistoricals::where('date', '>', '2015-08-12')
                 ->where('date', '<', '2016-02-10')
                 ->orderBy('date', 'DESC')
-                ->take(10)
                 ->lists('date');
 
             $listOfSectors = Stock::getListOfSectors();
