@@ -21,7 +21,7 @@ class BackfillMarketCapData extends Command
      *
      * @var string
      */
-    protected $description = 'Backfills historical ';
+    protected $description = 'Backfills historical market cap data for each stock.';
 
     /**
      * Create a new command instance.
