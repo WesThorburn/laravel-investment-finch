@@ -6,13 +6,17 @@ class AjaxHomePageTest extends TestCase{
 	public function testBestPerformingSectors(){
 		$this->visit('/ajax/sectors/topPerforming/top')
 			->see("Best Performing Sectors")
-			->see("%");
+			->see("%")
+			->dontSee("Class Pend")
+			->dontSee("Not Applic");
 	}
 
 	public function testWorstPerformingSectors(){
 		$this->visit('/ajax/sectors/topPerforming/bottom')
 			->see("Worst Performing Sectors")
-			->see("%");
+			->see("%")
+			->dontSee("Class Pend")
+			->dontSee("Not Applic");
 	}
 
 	public function testASXMarketCapLineGraph(){

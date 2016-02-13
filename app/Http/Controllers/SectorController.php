@@ -82,8 +82,8 @@ class SectorController extends Controller
     public function topPerformingSectors($topOrBottom){
         return view('layouts.partials.sector-day-change-display')
             ->with([
-                'sectorChanges' => SectorIndexHistoricals::getSectorDayChanges($topOrBottom), 
-                'title' => SectorIndexHistoricals::getSectorDayChangeTitle($topOrBottom)
+                'sectorChanges' => SectorIndexHistoricals::getSectorDayChanges($topOrBottom, 5, true), 
+                'title' => SectorIndexHistoricals::getSectorDayChangeTitle($topOrBottom, 5, true)
             ]);
     }
 }
