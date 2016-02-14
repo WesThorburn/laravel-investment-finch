@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\SectorIndexHistoricals;
 use App\Models\Stock;
 use App\Models\StockMetrics;
+use App\Models\Historicals;
 
 class BackfillSectorCapData extends Command
 {
@@ -51,7 +52,8 @@ class BackfillSectorCapData extends Command
     {
         $this->info("This process may take several hours...");
         if($this->confirm('Do you wish to continue?')){
-            $sectorHistoricalRecords = SectorIndexHistoricals::where('date', '>', '2015-08-12')
+            $sectorHistoricalRecords = SectorIndexHistoricals::select(\DB::raw('DISTINCT date'))
+                ->where('date', '>', '2015-08-12')
                 ->where('date', '<', '2016-02-10')
                 ->orderBy('date', 'DESC')
                 ->lists('date');
@@ -61,6 +63,8 @@ class BackfillSectorCapData extends Command
 
             $numberOfDates = count($sectorHistoricalRecords);
 
+            $previousDate = null;
+
             foreach($sectorHistoricalRecords as $dateKey => $date){
                 $this->info("Processing Date: ".$date);
                 foreach($listOfSectors as $sectorName){
@@ -69,8 +73,9 @@ class BackfillSectorCapData extends Command
                     if($sectorName ==  'All'){
                         $stocksInSector = Stock::lists('stock_code');
                     }
+
                     if(count($stocksInSector) > 0){
-                        $totalSectorMarketCap = SectorIndexHistoricals::getTotalSectorMarketCap($stocksInSector);
+                        $totalSectorMarketCap = Historicals::where('date', $date)->whereIn('stock_code', $stocksInSector)->sum('market_cap');
                         SectorIndexHistoricals::updateOrCreate(
                             [
                                 'sector' => $sectorName,
@@ -80,27 +85,23 @@ class BackfillSectorCapData extends Command
                                 'sector' => $sectorName,
                                 'date' => $date,
                                 'total_sector_market_cap' => $totalSectorMarketCap,
-                                'day_change' => round(SectorIndexHistoricals::getSectorPercentChange($sectorName, $stocksInSector), 2),
                                 'average_sector_market_cap' => $totalSectorMarketCap/count($stocksInSector)
                             ]
                         );
 
-                        foreach($this->sectorMetrics as $metricName){
-                            $this->info("Sector: ".$sectorName."  Processing Metric: ".$metricName);
-                            SectorIndexHistoricals::updateOrCreate(
-                                [
-                                    'sector' => $sectorName,
-                                    'date' => $date
-                                ], 
-                                [
-                                    $metricName => round(StockMetrics::getAverageMetric($metricName, $stocksInSector, $sectorName), 2),
-                                ]
-                            );
-                            $this->info("Sector: ".$sectorName."  Completed Metric: ".$metricName);
+                        if($previousDate){
+                            $previousSectorHistorical = SectorIndexHistoricals::where(['date' => $previousDate, 'sector' => $sectorName])->first();
+                            if($previousSectorHistorical->total_sector_market_cap > 0){
+                                //Dates are DESC which means previous record is the day AFTER the current record (previous-current)
+                                $dayChange = $previousSectorHistorical->total_sector_market_cap-$totalSectorMarketCap;
+                                $previousSectorHistorical->day_change = round((100/$previousSectorHistorical->total_sector_market_cap)*($dayChange), 3);
+                                $previousSectorHistorical->save();
+                            }
                         }
                     }
-                    $this->info("Completed: ".$sectorName);
+                    $this->info("Completed: ".$sectorName." Total Sector Cap: ".$totalSectorMarketCap);
                 }
+                $previousDate = $date;
                 $this->info("Completed: ".$date. " ".round((100/$numberOfDates)*($dateKey+1), 2)."%");
             }
         }
