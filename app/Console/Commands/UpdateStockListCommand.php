@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Models\Stock;
+use App\Models\StockMetrics;
 
 class UpdateStockListCommand extends Command {
 
@@ -64,7 +65,8 @@ class UpdateStockListCommand extends Command {
 		}
 		$inactiveStocks = array_diff($existingStocksList->toArray(), $activeStocksList);
 		foreach($inactiveStocks as $stockCode){
-			$stock = Stock::where('stock_code', $stockCode)->delete();
+			$stocks = Stock::where('stock_code', $stockCode)->delete();
+			$stockMetrics = StockMetrics::where('stock_code', $stockCode)->delete();
 		}
 		$this->info('The list of stocks was updated successfully!');
 	}
