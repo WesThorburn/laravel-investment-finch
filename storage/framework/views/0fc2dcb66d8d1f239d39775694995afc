@@ -1,0 +1,6 @@
+<?php $__env->startSection('body'); ?>
+	<div class="col-md-8 col-md-offset-2">
+		<h1>Dashboard</h1>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
