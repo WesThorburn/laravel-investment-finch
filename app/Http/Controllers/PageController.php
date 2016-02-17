@@ -74,4 +74,10 @@ class PageController extends Controller
             'topStocks12Months' => StockGains::getTopStocks12Months(29)
         ]);
     }
+
+    public function dashboard(){
+        if(\Auth::check()) {
+            return view('pages.dashboard');
+        }
+    }
 }
