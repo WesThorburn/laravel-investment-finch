@@ -1,5 +1,6 @@
 <?php
 Route::get('/', 'PageController@index');
+Route::get('/dashboard', 'PageController@dashboard');
 Route::resource('stock', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('stocks', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('sectors', 'SectorController');
