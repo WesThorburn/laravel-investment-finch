@@ -26,10 +26,11 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
-/*route::get('/test', function(){
-});
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);*/
+]);
+
+/*route::get('/test', function(){
+});
+*/
