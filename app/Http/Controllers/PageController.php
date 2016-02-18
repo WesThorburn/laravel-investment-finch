@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Stock;
 use App\Models\StockGains;
 use App\Models\SectorIndexHistoricals;
 use App\Models\StockMetrics;
@@ -76,8 +77,11 @@ class PageController extends Controller
     }
 
     public function dashboard(){
-        if(\Auth::check()) {
-            return view('pages.dashboard');
+        if(\Auth::check()){
+            return view('pages.dashboard')->with([
+            	'discontinuedStocks' => Stock::onlyTrashed()->get()
+            ]);
         }
+        return redirect('/');
     }
 }

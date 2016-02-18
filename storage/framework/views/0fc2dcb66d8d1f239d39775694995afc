@@ -1,6 +1,9 @@
 <?php $__env->startSection('body'); ?>
 	<div class="col-md-8 col-md-offset-2">
 		<h1>Dashboard</h1>
+		<?php foreach($discontinuedStocks as $stock): ?>
+			<p><?php echo e($stock->stock_code); ?></p>
+		<?php endforeach; ?>
 	</div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
