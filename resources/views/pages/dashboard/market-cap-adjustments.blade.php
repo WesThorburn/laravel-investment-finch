@@ -34,7 +34,7 @@
 								{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 							</td>
 							<td>{{ $stock->stock->company_name }}</td>
-							<td>{{ $stock->market_cap/1000 }}</td>
+							<td>{{ $stock->market_cap*1000 }}</td>
 							<td>{{ $stock->market_cap }}</td>
 							<td>{{ $stock->last_trade }}</td>
 							<td>{{ $stock->volume }}</td>
