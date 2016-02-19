@@ -84,7 +84,7 @@ class PageController extends Controller
 
     public function marketCapAdjustments(){
         return view('pages/dashboard/market-cap-adjustments')->with([
-            'discontinuedStocks' => Stock::onlyTrashed()->get()
+            'marketCapAdjustments' => StockMetrics::where('market_cap_requires_adjustment', 1)->get()
         ]);
     }
 }

@@ -15,25 +15,29 @@
 			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
 		</ul>
 		<div class="panel panel-default">
-			<div class="panel-heading"><b>Discontinued Stocks</b></div>
+			<div class="panel-heading"><b>Stocks with Adjusted Market Caps (/1000)</b></div>
 			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
 			    <thead>
 			        <tr>
 			            <th>Code</th>
 			            <th>Name</th>
-			            <th>Sector</th>
-			            <th>Deleted At</th>
+			            <th>Market Cap Before</th>
+			            <th>Market Cap After</th>
+			            <th>Stock Price</th>
+			            <th>Volume</th>
 			        </tr>
 			    </thead>
 			    <tbody data-link="row" class="rowlink">
-				    @foreach($discontinuedStocks as $stock)
+				    @foreach($marketCapAdjustments as $stock)
 						<tr>
 							<td>
 								{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 							</td>
-							<td>{{ $stock->company_name }}</td>
-							<td>{{ $stock->sector }}</td>
-							<td>{{ $stock->deleted_at }}</td>
+							<td>{{ $stock->stock->company_name }}</td>
+							<td>{{ $stock->market_cap/1000 }}</td>
+							<td>{{ $stock->market_cap }}</td>
+							<td>{{ $stock->last_trade }}</td>
+							<td>{{ $stock->volume }}</td>
 						</tr>
 					@endforeach
 			    </tbody>
