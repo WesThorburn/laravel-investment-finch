@@ -11,8 +11,8 @@
 @section('body')
 	<div class="col-md-6 col-md-offset-3">
 		<ul class="nav nav-tabs stocks-page-nav-tabs">
-			<li role="presentation" class="active"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
-			<li role="presentation"><a href="/dashboard/marketCapAdjustment">Market Cap Adjustments</a></li>
+			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
+			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
 		</ul>
 		<div class="panel panel-default">
 			<div class="panel-heading"><b>Discontinued Stocks</b></div>

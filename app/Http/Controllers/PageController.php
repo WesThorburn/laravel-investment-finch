@@ -76,9 +76,15 @@ class PageController extends Controller
         ]);
     }
 
-    public function dashboard(){
-        return view('pages.dashboard')->with([
+    public function discontinued(){
+        return view('pages/dashboard/discontinued')->with([
         	'discontinuedStocks' => Stock::onlyTrashed()->get()
+        ]);
+    }
+
+    public function marketCapAdjustments(){
+        return view('pages/dashboard/market-cap-adjustments')->with([
+            'discontinuedStocks' => Stock::onlyTrashed()->get()
         ]);
     }
 }

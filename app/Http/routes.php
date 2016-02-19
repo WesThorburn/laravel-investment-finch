@@ -27,8 +27,8 @@ Route::group(['prefix' => 'ajax'], function(){
 });
 
 Route::group(['prefix' => 'dashboard'], function(){
-	Route::get('/discontinued', 'PageController@dashboard');
-	Route::get('/marketCapAdjustment', 'PageController@dashboard');
+	Route::get('/discontinued', 'PageController@discontinued');
+	Route::get('/marketCapAdjustments', 'PageController@marketCapAdjustments');
 });
 
 

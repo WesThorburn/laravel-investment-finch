@@ -1,0 +1,54 @@
+<?php $__env->startSection('nav'); ?>
+	<?php echo $__env->make('layouts.partials.nav-buttons', ['page' => 'dashboard'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('title'); ?>
+	Dashboard
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+	<div class="col-md-6 col-md-offset-3">
+		<ul class="nav nav-tabs stocks-page-nav-tabs">
+			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
+			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
+		</ul>
+		<div class="panel panel-default">
+			<div class="panel-heading"><b>Discontinued Stocks</b></div>
+			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
+			    <thead>
+			        <tr>
+			            <th>Code</th>
+			            <th>Name</th>
+			            <th>Sector</th>
+			            <th>Deleted At</th>
+			        </tr>
+			    </thead>
+			    <tbody data-link="row" class="rowlink">
+				    <?php foreach($discontinuedStocks as $stock): ?>
+						<tr>
+							<td>
+								<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
+							</td>
+							<td><?php echo e($stock->company_name); ?></td>
+							<td><?php echo e($stock->sector); ?></td>
+							<td><?php echo e($stock->deleted_at); ?></td>
+						</tr>
+					<?php endforeach; ?>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+			$('#deleted_stocks').DataTable({
+				"dom": 'tp',
+				"pageLength": 20,
+				"lengthMenu": [20,50,100],
+				"stateSave": true,
+				"order": [[ 3, "desc" ]]
+			});
+		});
+	</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
