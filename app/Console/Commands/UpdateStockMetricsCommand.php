@@ -123,7 +123,7 @@ class UpdateStockMetricsCommand extends Command {
 		if(in_array($stockCode, $stocksWithIncorrectMarketCaps)){
 			return $marketCap/1000;
 		}
-		return $marketCap;
+		return $marketCap/1000;
 	}
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
