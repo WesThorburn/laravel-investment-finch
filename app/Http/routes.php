@@ -32,6 +32,15 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-/*route::get('/test', function(){
+use App\Models\StockMetrics;
+
+route::get('/test', function(){
+	$stocksWithIncorrectMarketCaps = ["URF","MOV","TIX","NSR","PGF","FGG","PAI","CQA","BPA","IDR","CMA","WAX","FGX","TOF","EMF","USG","BAF","UPD","KLO","SAO","EAI","USF","WDE","WMK","GDF","BIQ","AYZ","ENC","AHJ","BWR","AYK","AIK","APW","AYD","AWQ","PAF","RYD","UPG","TOT","IIL","AYH","FSI","8EC","VGI","TML","SCG","GC1","AOD","KLR","MKE","AAI","KFG","AIQ","AUP","FDC","PTX","DTX","USR","AKY","EOR","BOP","AIB","SXI","SLE","NTL","EGP","MFE","MUB","OGH","ELR","OEG","DAF","EQU","ASN","SXS","SZG","RCF","AQJ","PRH","OOK","AYJ","POW", "IVQ", "CR8", "CGW", "LVT", "TV2", "HML", "WNR"];
+	foreach($stocksWithIncorrectMarketCaps as $stock){
+		$metric = StockMetrics::where('stock_code', $stock)->first();
+		if($metric){
+			$metric->market_cap_requires_adjustment = 1;
+			$metric->save();
+		}
+	}
 });
-*/
