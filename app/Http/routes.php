@@ -26,6 +26,11 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
+//Registration routes disabled until public-user functionality is ready
+Route::any('auth/register', function(){
+	return redirect('/');
+});
+
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function(){
 	Route::get('/discontinued', 'PageController@discontinued');
 	Route::get('/marketCapAdjustments', 'PageController@marketCapAdjustments');
