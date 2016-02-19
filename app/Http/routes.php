@@ -1,6 +1,5 @@
 <?php
 Route::get('/', 'PageController@index');
-Route::get('/dashboard', 'PageController@dashboard');
 Route::resource('stock', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('stocks', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('sectors', 'SectorController');
@@ -26,6 +25,12 @@ Route::group(['prefix' => 'ajax'], function(){
 		Route::get('sectors/stocksInSectorPieChart/{sectorName}/{numberOfStocks}', 'GraphController@stocksInSectorPieChart');
 	});
 });
+
+Route::group(['prefix' => 'dashboard'], function(){
+	Route::get('/discontinued', 'PageController@dashboard');
+	Route::get('/marketCapAdjustment', 'PageController@dashboard');
+});
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

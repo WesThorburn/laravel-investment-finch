@@ -77,11 +77,8 @@ class PageController extends Controller
     }
 
     public function dashboard(){
-        if(\Auth::check()){
-            return view('pages.dashboard')->with([
-            	'discontinuedStocks' => Stock::onlyTrashed()->get()
-            ]);
-        }
-        return redirect('/');
+        return view('pages.dashboard')->with([
+        	'discontinuedStocks' => Stock::onlyTrashed()->get()
+        ]);
     }
 }
