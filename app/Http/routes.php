@@ -26,11 +26,10 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
-Route::group(['prefix' => 'dashboard'], function(){
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function(){
 	Route::get('/discontinued', 'PageController@discontinued');
 	Route::get('/marketCapAdjustments', 'PageController@marketCapAdjustments');
 });
-
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
