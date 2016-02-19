@@ -1,7 +1,15 @@
 @extends('layouts.master')
 
+@section('nav')
+	@include('layouts.partials.nav-buttons', ['page' => 'dashboard'])
+@stop
+
+@section('title')
+	Dashboard
+@stop
+
 @section('body')
-	<div class="col-md-6 col-md-offset-2">
+	<div class="col-md-6 col-md-offset-3">
 		<div class="panel panel-default">
 			<div class="panel-heading"><b>Discontinued Stocks</b></div>
 			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
@@ -35,7 +43,8 @@
 				"dom": 'tp',
 				"pageLength": 20,
 				"lengthMenu": [20,50,100],
-				"stateSave": true
+				"stateSave": true,
+				"order": [[ 3, "desc" ]]
 			});
 		});
 	</script>
