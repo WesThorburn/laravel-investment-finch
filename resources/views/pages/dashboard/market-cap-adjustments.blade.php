@@ -14,7 +14,7 @@
 			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
 			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
 		</ul>
-		<div class="panel panel-default">
+		<div class="panel panel-default single-pixel-top-margin">
 			<div class="panel-heading"><b>Stocks with Adjusted Market Caps (/1000)</b></div>
 			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
 			    <thead>

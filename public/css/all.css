@@ -7123,6 +7123,10 @@ th{
 	margin-right:5px;
 }
 
+.single-pixel-top-margin{
+	margin-top:1px;
+}
+
 .no-margin-top{
 	margin-top:none;
 }
