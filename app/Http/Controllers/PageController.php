@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Stock;
 use App\Models\StockGains;
+use App\Models\Historicals;
 use App\Models\SectorIndexHistoricals;
 use App\Models\StockMetrics;
 use Khill\Lavacharts\Lavacharts;
@@ -83,8 +84,15 @@ class PageController extends Controller
     }
 
     public function marketCapAdjustments(){
+        $marketCapAdjustments = StockMetrics::whereNotIn('stock_code', Stock::onlyTrashed()->lists('stock_code'))->where('market_cap_requires_adjustment', 1)->get();
+        $yesterdaysHistoricalDate = Historicals::getYesterdaysHistoricalsDate();
+
+        foreach($marketCapAdjustments as $stock){
+            $stock->yesterdays_market_cap = Historicals::where(['stock_code' => $stock->stock_code, 'date' => $yesterdaysHistoricalDate])->pluck('market_cap');
+        }
+
         return view('pages/dashboard/market-cap-adjustments')->with([
-            'marketCapAdjustments' => StockMetrics::where('market_cap_requires_adjustment', 1)->get()
+            'marketCapAdjustments' => $marketCapAdjustments
         ]);
     }
 }

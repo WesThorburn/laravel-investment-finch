@@ -32,7 +32,7 @@
 								<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
 							</td>
 							<td><?php echo e($stock->stock->company_name); ?></td>
-							<td><?php echo e(number_format($stock->market_cap*1000)); ?></td>
+							<td><?php echo e(number_format($stock->yesterdays_market_cap)); ?></td>
 							<td><?php echo e($stock->market_cap); ?></td>
 							<td><?php echo e($stock->last_trade); ?></td>
 							<td><?php echo e($stock->volume); ?></td>
