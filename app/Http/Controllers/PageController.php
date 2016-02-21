@@ -97,6 +97,9 @@ class PageController extends Controller
     }
 
     public function addStockForAdjustment(Request $request){
-        
+        $stockMetric = StockMetrics::where('stock_code', $request->stockCodeAdd)->first();
+        $stockMetric->market_cap_requires_adjustment = $request->adjustment;
+        $stockMetric->save();
+        return redirect('/dashboard/marketCapAdjustments');
     }
 }

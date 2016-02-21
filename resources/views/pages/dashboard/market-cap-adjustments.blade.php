@@ -51,6 +51,7 @@
 			</div>
 			<div class="panel-body">
 				{!! Form::open(['action' => 'PageController@addStockForAdjustment', 'method' => 'post', 'class' => 'form-group form-inline']) !!}
+					{!! Form::hidden('adjustment', true) !!}
 					{!! Form::text('stockCodeAdd', null, ['class' => 'form-control', 'placeholder' => 'Add Stock Code']) !!}
 					{!! Form::submit("Add", ['class' => 'btn btn-default form-control']) !!}
 				{!! Form::close() !!}
