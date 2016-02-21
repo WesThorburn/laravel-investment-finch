@@ -97,6 +97,6 @@ class PageController extends Controller
     }
 
     public function addStockForAdjustment(Request $request){
-        dd($request);
+        
     }
 }

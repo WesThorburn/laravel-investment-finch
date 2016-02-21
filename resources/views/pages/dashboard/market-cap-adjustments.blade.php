@@ -47,7 +47,7 @@
 	<div class="col-md-3 col-md-offset-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<b>Add a stock code</b>
+				<b>Add a Stock Code that requires a Market Cap Adjustment</b>
 			</div>
 			<div class="panel-body">
 				{!! Form::open(['action' => 'PageController@addStockForAdjustment', 'method' => 'post', 'class' => 'form-group form-inline']) !!}
