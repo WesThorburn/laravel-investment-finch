@@ -7162,6 +7162,10 @@ th{
 	padding:3px 3px 3px 10px;
 }
 
+.glyphicon-remove{
+	color:red;
+}
+
 .color-red{
 	color:red;
 }
