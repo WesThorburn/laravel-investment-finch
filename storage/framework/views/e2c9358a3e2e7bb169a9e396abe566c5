@@ -23,6 +23,7 @@
 			            <th>Current Market Cap</th>
 			            <th>Stock Price</th>
 			            <th>Volume</th>
+			            <th></th>
 			        </tr>
 			    </thead>
 			    <tbody data-link="row" class="rowlink">
@@ -36,6 +37,18 @@
 							<td><?php echo e($stock->market_cap); ?></td>
 							<td><?php echo e($stock->last_trade); ?></td>
 							<td><?php echo e($stock->volume); ?></td>
+							<td>
+								<?php echo Form::open(['method' => 'post', 'action' => ['DashboardController@changeStockAdjustmentStatus', $stock->stock_code]]); ?>
+
+									<?php echo Form::hidden('adjustment', false); ?>
+
+									<?php echo Form::hidden('stockCode', $stock->stock_code); ?>
+
+									<?php echo Form::button("", ['type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']); ?>
+
+								<?php echo Form::close(); ?>
+
+							</td>
 						</tr>
 					<?php endforeach; ?>
 			    </tbody>
@@ -48,11 +61,11 @@
 				<b>Add a Stock Code that requires a Market Cap Adjustment</b>
 			</div>
 			<div class="panel-body">
-				<?php echo Form::open(['action' => 'DashboardController@addStockForAdjustment', 'method' => 'post', 'class' => 'form-group form-inline']); ?>
+				<?php echo Form::open(['action' => 'DashboardController@changeStockAdjustmentStatus', 'method' => 'post', 'class' => 'form-group form-inline']); ?>
 
 					<?php echo Form::hidden('adjustment', true); ?>
 
-					<?php echo Form::text('stockCodeAdd', null, ['class' => 'form-control', 'placeholder' => 'Add Stock Code']); ?>
+					<?php echo Form::text('stockCode', null, ['class' => 'form-control', 'placeholder' => 'Add Stock Code']); ?>
 
 					<?php echo Form::submit("Add", ['class' => 'btn btn-default form-control']); ?>
 

@@ -34,7 +34,7 @@ Route::any('auth/register', function(){
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function(){
 	Route::get('/discontinued', 'DashboardController@discontinued');
 	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustments');
-	Route::post('/marketCapAdjustments/{stockCode}', 'DashboardController@addStockForAdjustment');
+	Route::post('/marketCapAdjustments/{stockCode}', 'DashboardController@changeStockAdjustmentStatus');
 });
 
 Route::controllers([
