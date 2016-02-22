@@ -48,7 +48,7 @@
 				<b>Add a Stock Code that requires a Market Cap Adjustment</b>
 			</div>
 			<div class="panel-body">
-				<?php echo Form::open(['action' => 'PageController@addStockForAdjustment', 'method' => 'post', 'class' => 'form-group form-inline']); ?>
+				<?php echo Form::open(['action' => 'DashboardController@addStockForAdjustment', 'method' => 'post', 'class' => 'form-group form-inline']); ?>
 
 					<?php echo Form::hidden('adjustment', true); ?>
 
