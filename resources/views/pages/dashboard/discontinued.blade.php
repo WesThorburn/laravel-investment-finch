@@ -1,18 +1,20 @@
-<?php $__env->startSection('nav'); ?>
-	<?php echo $__env->make('layouts.partials.nav-buttons', ['page' => 'dashboard'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php $__env->stopSection(); ?>
+@extends('layouts.master')
 
-<?php $__env->startSection('title'); ?>
+@section('nav')
+	@include('layouts.partials.nav-buttons', ['page' => 'dashboard'])
+@stop
+
+@section('title')
 	Dashboard
-<?php $__env->stopSection(); ?>
+@stop
 
-<?php $__env->startSection('body'); ?>
+@section('body')
 	<div class="col-md-6 col-md-offset-3">
 		<ul class="nav nav-tabs stocks-page-nav-tabs">
 			<li role="presentation" class="active"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
-			<li role="presentation"><a href="/dashboard/marketCapAdjustment">Market Cap Adjustments</a></li>
+			<li role="presentation"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
 		</ul>
-		<div class="panel panel-default">
+		<div class="panel panel-default single-pixel-top-margin">
 			<div class="panel-heading"><b>Discontinued Stocks</b></div>
 			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
 			    <thead>
@@ -24,16 +26,16 @@
 			        </tr>
 			    </thead>
 			    <tbody data-link="row" class="rowlink">
-				    <?php foreach($discontinuedStocks as $stock): ?>
+				    @foreach($discontinuedStocks as $stock)
 						<tr>
 							<td>
-								<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
+								{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 							</td>
-							<td><?php echo e($stock->company_name); ?></td>
-							<td><?php echo e($stock->sector); ?></td>
-							<td><?php echo e($stock->deleted_at); ?></td>
+							<td>{{ $stock->company_name }}</td>
+							<td>{{ $stock->sector }}</td>
+							<td>{{ $stock->deleted_at }}</td>
 						</tr>
-					<?php endforeach; ?>
+					@endforeach
 			    </tbody>
 			</table>
 		</div>
@@ -50,5 +52,4 @@
 			});
 		});
 	</script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@stop

@@ -7123,6 +7123,10 @@ th{
 	margin-right:5px;
 }
 
+.single-pixel-top-margin{
+	margin-top:1px;
+}
+
 .no-margin-top{
 	margin-top:none;
 }
@@ -7156,6 +7160,10 @@ th{
 .alert-minimal{
 	margin-bottom:0px;
 	padding:3px 3px 3px 10px;
+}
+
+.glyphicon-remove{
+	color:red;
 }
 
 .color-red{

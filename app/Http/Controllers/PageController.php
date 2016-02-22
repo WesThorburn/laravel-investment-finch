@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Stock;
 use App\Models\StockGains;
+use App\Models\Historicals;
 use App\Models\SectorIndexHistoricals;
 use App\Models\StockMetrics;
 use Khill\Lavacharts\Lavacharts;
@@ -74,14 +75,5 @@ class PageController extends Controller
             'topMonthlyLosses' => StockGains::getBottomStocksThisMonth($allNonOmittedStocks),
             'topStocks12Months' => StockGains::getTopStocks12Months(29)
         ]);
-    }
-
-    public function dashboard(){
-        if(\Auth::check()){
-            return view('pages.dashboard')->with([
-            	'discontinuedStocks' => Stock::onlyTrashed()->get()
-            ]);
-        }
-        return redirect('/');
     }
 }
