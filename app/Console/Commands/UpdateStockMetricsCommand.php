@@ -122,7 +122,7 @@ class UpdateStockMetricsCommand extends Command {
 		if(StockMetrics::where('stock_code', $stockCode)->pluck('market_cap_requires_adjustment')){
 			return $marketCap/1000;
 		}
-		return $marketCap;
+		return $marketCap/1000;
 	}
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
