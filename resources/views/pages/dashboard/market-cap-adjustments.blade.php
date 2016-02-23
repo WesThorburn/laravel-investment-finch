@@ -16,13 +16,14 @@
 		</ul>
 		<div class="panel panel-default single-pixel-top-margin">
 			<div class="panel-heading"><b>Stocks with Adjusted Market Caps (/1000)</b></div>
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="deleted_stocks">
+			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="adjusted_stocks">
 			    <thead>
 			        <tr>
 			            <th>Code</th>
 			            <th>Name</th>
-			            <th>Previous Day's Market Cap</th>
+			            <th>Yesterday's Market Cap</th>
 			            <th>Current Market Cap</th>
+			            <th>Difference</th>
 			            <th>Stock Price</th>
 			            <th>Volume</th>
 			            <th></th>
@@ -37,6 +38,7 @@
 							<td>{{ $stock->stock->company_name }}</td>
 							<td>{{ number_format($stock->yesterdays_market_cap, 2) }}</td>
 							<td>{{ $stock->current_market_cap }}</td>
+							<td>{{ number_format(($stock->current_market_cap-$stock->yesterdays_market_cap),2) }}</td>
 							<td>{{ $stock->last_trade }}</td>
 							<td>{{ $stock->volume }}</td>
 							<td>
@@ -69,12 +71,12 @@
 
 	<script>
 		$(document).ready(function(){
-			$('#deleted_stocks').DataTable({
+			$('#adjusted_stocks').DataTable({
 				"dom": 'tp',
 				"pageLength": 20,
 				"lengthMenu": [20,50,100],
 				"stateSave": true,
-				"order": [[ 3, "desc" ]]
+				"order": [[ 4, "asc" ]]
 			});
 		});
 	</script>
