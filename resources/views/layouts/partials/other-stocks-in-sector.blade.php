@@ -23,7 +23,7 @@
 						@endif>
 						{{ number_format($stock->percent_change, 2) }}%
 					</td>
-					<td>{{ $stock->market_cap }}</td>
+					<td>{{ $stock->current_market_cap }}</td>
 				</tr>
 			@endforeach
 	    </tbody>

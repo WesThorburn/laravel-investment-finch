@@ -19,15 +19,8 @@ class DashboardController extends Controller
     }
 
     public function marketCapAdjustments(){
-        $marketCapAdjustments = StockMetrics::whereNotIn('stock_code', Stock::onlyTrashed()->lists('stock_code'))->where('market_cap_requires_adjustment', 1)->get();
-        $yesterdaysHistoricalDate = Historicals::getYesterdaysHistoricalsDate();
-
-        foreach($marketCapAdjustments as $stock){
-            $stock->yesterdays_market_cap = Historicals::where(['stock_code' => $stock->stock_code, 'date' => $yesterdaysHistoricalDate])->pluck('market_cap');
-        }
-
         return view('pages/dashboard/market-cap-adjustments')->with([
-            'marketCapAdjustments' => $marketCapAdjustments
+            'marketCapAdjustments' => StockMetrics::where('market_cap_requires_adjustment', 1)->get()
         ]);
     }
 

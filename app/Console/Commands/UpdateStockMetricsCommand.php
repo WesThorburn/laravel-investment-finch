@@ -74,7 +74,7 @@ class UpdateStockMetricsCommand extends Command {
 						"price_to_book" => $individualMetric[14],
 						"year_high" => $individualMetric[15],
 						"year_low" => $individualMetric[16],
-						"market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[17])),
+						"current_market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[17])),
 						"dividend_yield" => $individualMetric[18],
 						"updated_at" => date("Y-m-d H:i:s")
 					]);

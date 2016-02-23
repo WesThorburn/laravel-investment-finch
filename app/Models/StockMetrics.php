@@ -24,7 +24,7 @@ class StockMetrics extends Model {
 				->where('earnings_per_share_current', '>=', 0.01)
 				->where('price_to_earnings', '>=', 0.01)
 				->where('price_to_book', '>=', 0.01)
-				->where('market_cap', '!=', 'N/A');
+				->where('current_market_cap', '!=', 'N/A');
 		}
 		return $query;
 	}
@@ -63,11 +63,11 @@ class StockMetrics extends Model {
     public static function getMarketCapsInSectorGraphData($sectorName, $numberOfStocks){
     	$graphData = array();
     	$stocksInSector = Stock::where('sector', htmlspecialchars_decode($sectorName))->lists('stock_code');
-    	$marketCaps = StockMetrics::with('stock')->select('stock_code','market_cap')->whereIn('stock_code', $stocksInSector)->orderBy('market_cap', 'DESC')->limit($numberOfStocks)->get();
-    	$sumOfMarketCaps = $marketCaps->sum('market_cap');
+    	$marketCaps = StockMetrics::with('stock')->select('stock_code','current_market_cap')->whereIn('stock_code', $stocksInSector)->orderBy('current_market_cap', 'DESC')->limit($numberOfStocks)->get();
+    	$sumOfMarketCaps = $marketCaps->sum('current_market_cap');
     	foreach($marketCaps as $stock){
-    		if($sumOfMarketCaps > 0 && $stock->market_cap > 0){
-    			$percentageShare = 100/$sumOfMarketCaps * $stock->market_cap;
+    		if($sumOfMarketCaps > 0 && $stock->current_market_cap > 0){
+    			$percentageShare = 100/$sumOfMarketCaps * $stock->current_market_cap;
     		}
     		else{
     			$percentageShare = 0;

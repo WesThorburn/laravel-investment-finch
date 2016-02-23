@@ -189,13 +189,13 @@ class SectorIndexHistoricals extends Model
         $marketCapDayChanges = array();
         foreach($stocksInSector as $stock){
             $metric = StockMetrics::where('stock_code', $stock)->first();
-            array_push($marketCapDayChanges, $metric->market_cap - ($metric->market_cap/(($metric->percent_change/100)+1)));
+            array_push($marketCapDayChanges, $metric->current_market_cap - ($metric->current_market_cap/(($metric->percent_change/100)+1)));
         }
         return array_sum($marketCapDayChanges);
     }
 
     public static function getTotalSectorMarketCap($stocksInSector){
-        return StockMetrics::whereIn('stock_code', $stocksInSector)->sum('market_cap');
+        return StockMetrics::whereIn('stock_code', $stocksInSector)->sum('current_market_cap');
     }
 
     private static function sectorLimitToNumber($sectorLimit){

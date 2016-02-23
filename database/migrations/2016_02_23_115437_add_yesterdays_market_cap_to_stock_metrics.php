@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRequiresMarketCapAdjustmentToMetricsTable extends Migration
+class AddYesterdaysMarketCapToStockMetrics extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddRequiresMarketCapAdjustmentToMetricsTable extends Migration
     public function up()
     {
         Schema::table('stock_metrics', function (Blueprint $table) {
-            $table->boolean('market_cap_requires_adjustment')->after('market_cap');
+            $table->decimal('yesterdays_market_cap', 8, 2)->nullable()->after('year_low');
         });
     }
 
@@ -25,7 +25,7 @@ class AddRequiresMarketCapAdjustmentToMetricsTable extends Migration
     public function down()
     {
         Schema::table('stock_metrics', function (Blueprint $table) {
-            $table->dropColumn('market_cap_requires_adjustment');
+            $table->dropColumn('yesterdays_market_cap');
         });
     }
 }

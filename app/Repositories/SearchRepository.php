@@ -28,8 +28,8 @@ Class SearchRepository implements SearchRepositoryInterface{
 		$max52WeekHigh = StockMetrics::max('year_high');
 		$min52WeekLow = StockMetrics::min('year_low');
 		$max52WeekLow = StockMetrics::max('year_low');
-		$minMarketCap = StockMetrics::min('market_cap');
-		$maxMarketCap = StockMetrics::max('market_cap');
+		$minMarketCap = StockMetrics::min('current_market_cap');
+		$maxMarketCap = StockMetrics::max('current_market_cap');
 		$minDividendYield = StockMetrics::min('dividend_yield');
 		$maxDividendYield = StockMetrics::max('dividend_yield');
 		
@@ -140,7 +140,7 @@ Class SearchRepository implements SearchRepositoryInterface{
 			->whereBetween('price_to_book', [$minPriceBook, $maxPriceBook])
 			->whereBetween('year_high', [$min52WeekHigh, $max52WeekHigh])
 			->whereBetween('year_low', [$min52WeekLow, $max52WeekLow ])
-			->whereBetween('market_cap', [$minMarketCap, $maxMarketCap])
+			->whereBetween('current_market_cap', [$minMarketCap, $maxMarketCap])
 			->whereBetween('dividend_yield', [$minDividendYield, $maxDividendYield])
 			->omitOutliers($request->omitCondition)
 			->lists('stock_code');

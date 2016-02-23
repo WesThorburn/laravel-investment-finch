@@ -49,7 +49,7 @@
 				{data: 'sector', name: 'sector'}, 
 				{data: 'last_trade', name: 'last_trade', searchable: false}, 
 	            {data: 'percent_change', name: 'percent_change', searchable: false}, 
-	            {data: 'market_cap', name: 'market_cap', searchable: false}, 
+	            {data: 'current_market_cap', name: 'current_market_cap', searchable: false}, 
 	            {data: 'volume', name: 'volume', searchable: false}, 
 	            {data: 'EBITDA', name: 'EBITDA', searchable: false}, 
 	            {data: 'earnings_per_share_current', name: 'earnings_per_share_current', searchable: false}, 
