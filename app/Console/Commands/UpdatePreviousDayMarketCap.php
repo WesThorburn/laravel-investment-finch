@@ -40,11 +40,19 @@ class UpdatePreviousDayMarketCap extends Command
      */
     public function handle()
     {
+        $this->info("Updating previous day's market caps.");
         $stockCodes = Stock::lists('stock_code');
-        foreach($stockCodes as $stockCode){
+        $numberOfStocks = count($stockCodes);
+
+        foreach($stockCodes as $key => $stockCode){
             $metric = StockMetrics::where('stock_code', $stockCode)->first();
-            $metric->yesterdays_market_cap = $metric->current_market_cap;
-            $metric->save();
+            if($metric){
+                //Both values will be identical until the UpdateStockMetrics command updates the current_market_cap values during the day
+                $metric->yesterdays_market_cap = $metric->current_market_cap;
+                $metric->save();
+            }
+            $this->info("Completed: ".$stockCode." ".round((100/$numberOfStocks)*($key+1),2)."%");
         }
+        $this->info("Finished updating previous day's market caps.");
     }
 }
