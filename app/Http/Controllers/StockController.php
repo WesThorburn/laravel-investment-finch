@@ -106,7 +106,7 @@ class StockController extends Controller
                 'stocks.sector', 
                 'stock_metrics.last_trade',
                 'stock_metrics.percent_change',
-                'stock_metrics.market_cap',
+                'stock_metrics.current_market_cap',
                 'stock_metrics.volume',
                 'stock_metrics.EBITDA',
                 'stock_metrics.earnings_per_share_current',
@@ -120,14 +120,14 @@ class StockController extends Controller
             ->editColumn('volume', function($stock){
                 return number_format($stock->volume);
             })
-            ->editColumn('market_cap', function($stock){
-                if($stock->market_cap == 0.00){
+            ->editColumn('current_market_cap', function($stock){
+                if($stock->current_market_cap == 0.00){
                     return null;
                 }
-                elseif($stock->market_cap < 1000){
-                    return number_format($stock->market_cap, 2, '.', '');
+                elseif($stock->current_market_cap < 1000){
+                    return number_format($stock->current_market_cap, 2, '.', '');
                 }
-                return number_format($stock->market_cap);
+                return number_format($stock->current_market_cap);
             })
             ->editColumn('percent_change', function($stock){
                 if($stock->percent_change > 0){

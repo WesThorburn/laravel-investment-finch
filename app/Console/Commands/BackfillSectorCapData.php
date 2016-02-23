@@ -75,7 +75,7 @@ class BackfillSectorCapData extends Command
                     }
 
                     if(count($stocksInSector) > 0){
-                        $totalSectorMarketCap = Historicals::where('date', $date)->whereIn('stock_code', $stocksInSector)->sum('market_cap');
+                        $totalSectorMarketCap = Historicals::where('date', $date)->whereIn('stock_code', $stocksInSector)->sum('current_market_cap');
                         SectorIndexHistoricals::updateOrCreate(
                             [
                                 'sector' => $sectorName,

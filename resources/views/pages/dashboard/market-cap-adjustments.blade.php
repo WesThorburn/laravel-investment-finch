@@ -36,7 +36,7 @@
 							</td>
 							<td>{{ $stock->stock->company_name }}</td>
 							<td>{{ number_format($stock->yesterdays_market_cap, 2) }}</td>
-							<td>{{ $stock->market_cap }}</td>
+							<td>{{ $stock->current_market_cap }}</td>
 							<td>{{ $stock->last_trade }}</td>
 							<td>{{ $stock->volume }}</td>
 							<td>

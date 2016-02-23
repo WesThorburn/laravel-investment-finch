@@ -31,7 +31,7 @@
 				    		<td>
 								@{{ stock.percent_change }}%
 							</td>
-							<td>@{{ stock.market_cap }}</td>
+							<td>@{{ stock.current_market_cap }}</td>
 							<td>@{{ stock.volume }}</td>
 							<td>@{{ stock.EBITDA }}</td>
 							<td>@{{ stock.earnings_per_share_current }}</td>

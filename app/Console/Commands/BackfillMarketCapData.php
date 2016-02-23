@@ -69,7 +69,7 @@ class BackfillMarketCapData extends Command
 		        			$previousHistoricalRecord->day_change = $dayChange;
 		        			$previousHistoricalRecord->save();
 
-		        			$currentHistoricalRecord->market_cap = $previousHistoricalRecord->market_cap*(1-($previousHistoricalRecord->percent_change/100));
+		        			$currentHistoricalRecord->current_market_cap = $previousHistoricalRecord->current_market_cap*(1-($previousHistoricalRecord->percent_change/100));
 		        			$currentHistoricalRecord->save();
 		        		}
 	        		}

@@ -75,7 +75,7 @@ class GetDailyFinancialsCommand extends Command
                     "price_to_book"=> $stockMetrics->price_to_book,
                     "year_high"=> $stockMetrics->year_high,
                     "year_low"=> $stockMetrics->year_low,
-                    "market_cap"=> $stockMetrics->market_cap,
+                    "market_cap"=> $stockMetrics->current_market_cap,
                     "dividend_yield"=> $stockMetrics->dividend_yield,
                     "trend_short_term"=> $stockMetrics->trend_short_term,
                     "trend_medium_term"=> $stockMetrics->trend_medium_term,

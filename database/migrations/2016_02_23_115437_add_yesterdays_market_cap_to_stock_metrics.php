@@ -13,7 +13,7 @@ class AddYesterdaysMarketCapToStockMetrics extends Migration
     public function up()
     {
         Schema::table('stock_metrics', function (Blueprint $table) {
-            $table->decimal('yesterdays_market_cap', 8, 2)->after('year_low');
+            $table->decimal('yesterdays_market_cap', 8, 2)->nullable()->after('year_low');
         });
     }
 

@@ -25,7 +25,7 @@
 						<?php endif; ?>>
 						<?php echo e(number_format($stock->percent_change, 2)); ?>%
 					</td>
-					<td><?php echo e($stock->market_cap); ?></td>
+					<td><?php echo e($stock->current_market_cap); ?></td>
 				</tr>
 			<?php endforeach; ?>
 	    </tbody>

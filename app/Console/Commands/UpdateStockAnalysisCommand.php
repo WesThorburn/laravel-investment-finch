@@ -127,14 +127,14 @@ class UpdateStockAnalysisCommand extends Command
         }
 
         //Market Cap
-        if($stockMetrics->market_cap != 0){
-            if($stockMetrics->market_cap > $sectorMetrics->average_sector_market_cap){
-                $description .= $stockMetrics->stock_code."'s Market Cap is ".formatMoneyAmountToLetter($stockMetrics->market_cap, true).
+        if($stockMetrics->current_market_cap != 0){
+            if($stockMetrics->current_market_cap > $sectorMetrics->average_sector_market_cap){
+                $description .= $stockMetrics->stock_code."'s Market Cap is ".formatMoneyAmountToLetter($stockMetrics->current_market_cap, true).
                 " which is higher than the average sector market cap of ".formatMoneyAmountToLetter($sectorMetrics->average_sector_market_cap, true).
                 ". This could mean ".$stockMetrics->stock_code." is less volatile than other ".$stockMetrics->stock->sector.' stocks.';
             }
-            elseif($stockMetrics->market_cap < $sectorMetrics->average_sector_market_cap){
-                $description .= $stockMetrics->stock_code."'s Market Cap is ".formatMoneyAmountToLetter($stockMetrics->market_cap, true).
+            elseif($stockMetrics->current_market_cap < $sectorMetrics->average_sector_market_cap){
+                $description .= $stockMetrics->stock_code."'s Market Cap is ".formatMoneyAmountToLetter($stockMetrics->current_market_cap, true).
                 " which is lower than the average sector market cap of ".formatMoneyAmountToLetter($sectorMetrics->average_sector_market_cap, true).
                 ". This could mean ".$stockMetrics->stock_code." is more volatile than other ".$stockMetrics->stock->sector.' stocks.';
             }

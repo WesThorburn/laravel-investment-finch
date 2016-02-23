@@ -57,7 +57,7 @@ class FillSectorIndexHistoricalsCommand extends Command
         $marketCaps = array();
         $marketCapDayChanges = array();
         foreach($listOfStocks as $stock){
-            $marketCap = StockMetrics::where('stock_code', $stock)->pluck('market_cap');
+            $marketCap = StockMetrics::where('stock_code', $stock)->pluck('current_market_cap');
             $open = Historicals::where('stock_code', $stock)->where('date', $providedDate)->pluck('open');
             $close = Historicals::where('stock_code', $stock)->where('date', $providedDate)->pluck('close');
             $dayChange = FillSectorIndexHistoricalsCommand::getDayChange($open, $close);

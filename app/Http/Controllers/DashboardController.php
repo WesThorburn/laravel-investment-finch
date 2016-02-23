@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $yesterdaysHistoricalDate = Historicals::getYesterdaysHistoricalsDate();
 
         foreach($marketCapAdjustments as $stock){
-            $stock->yesterdays_market_cap = Historicals::where(['stock_code' => $stock->stock_code, 'date' => $yesterdaysHistoricalDate])->pluck('market_cap');
+            $stock->yesterdays_market_cap = Historicals::where(['stock_code' => $stock->stock_code, 'date' => $yesterdaysHistoricalDate])->pluck('current_market_cap');
         }
 
         return view('pages/dashboard/market-cap-adjustments')->with([

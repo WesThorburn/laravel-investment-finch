@@ -30,7 +30,7 @@ class StockGains extends Model
     }
 
     public static function getTopStocks12Months($limit = 18){
-        $stockList = StockMetrics::omitOutliers()->where('market_cap', '>=', 100)->lists('stock_code');
+        $stockList = StockMetrics::omitOutliers()->where('current_market_cap', '>=', 100)->lists('stock_code');
         return StockGains::whereIn('stock_code', $stockList)->where('year_change', '<', 250)->orderBy('year_change', 'desc')->take($limit)->get();
     }
 }

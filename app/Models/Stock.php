@@ -76,11 +76,11 @@ class Stock extends Model {
 	public static function getRelatedStocks($stockCode){
 		$otherStocksInSector = Stock::where('sector', Stock::where('stock_code', $stockCode)->pluck('sector'))->lists('stock_code');
 		if(count($otherStocksInSector) > 10){
-			$individualMarketCap = StockMetrics::where('stock_code', $stockCode)->pluck('market_cap');
+			$individualMarketCap = StockMetrics::where('stock_code', $stockCode)->pluck('current_market_cap');
 			$relatedStocks = StockMetrics::whereIn('stock_code', $otherStocksInSector)
 				->where('stock_code', '!=', $stockCode)
-				->where('market_cap', '<=', ($individualMarketCap*10))
-				->where('market_cap', '>=', ($individualMarketCap/10))
+				->where('current_market_cap', '<=', ($individualMarketCap*10))
+				->where('current_market_cap', '>=', ($individualMarketCap/10))
 				->lists('stock_code');
 				
 			//If Mkt Cap conditions leave too few left, just return $otherStocksInSector
