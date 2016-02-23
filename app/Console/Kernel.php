@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\UpdateStockAnalysisCommand',
 		'App\Console\Commands\UpdateIndexMetricsCommand',
 		'App\Console\Commands\BackfillMarketCapData',
-		'App\Console\Commands\BackfillSectorCapData'
+		'App\Console\Commands\BackfillSectorCapData',
+		'App\Console\Commands\UpdatePreviousDayMarketCap'
 	];
 
 	/**
