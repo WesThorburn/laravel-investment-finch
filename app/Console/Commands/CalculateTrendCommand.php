@@ -43,11 +43,13 @@ class CalculateTrendCommand extends Command
         $stockCodes = Stock::lists('stock_code');
         $numberOfStocks = count($stockCodes);
         foreach($stockCodes as $key => $stock){
-        	$stockMetrics = StockMetrics::where('stock_code', $stock)->first();
-        	$stockMetrics->trend_short_term = $this->getTrend($stock, 50);
-        	$stockMetrics->trend_medium_term = $this->getTrend($stock, 150);
-        	$stockMetrics->trend_long_term = $this->getTrend($stock, 250);
-        	$stockMetrics->save();
+        	$stockMetric = StockMetrics::where('stock_code', $stock)->first();
+            if($stockMetric){
+            	$stockMetric->trend_short_term = $this->getTrend($stock, 50);
+            	$stockMetric->trend_medium_term = $this->getTrend($stock, 150);
+            	$stockMetric->trend_long_term = $this->getTrend($stock, 250);
+            	$stockMetric->save();
+            }
 			$this->info($stock ." | ". round($key * (100/$numberOfStocks), 2).'%');
         }
     }
