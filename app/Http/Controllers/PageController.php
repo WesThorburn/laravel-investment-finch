@@ -68,7 +68,7 @@ class PageController extends Controller
     public function performance(){
         $allNonOmittedStocks = StockMetrics::omitOutliers()->lists('stock_code');
 
-        return view('pages.topGainsLosses')->with([
+        return view('pages.performance')->with([
             'topWeeklyGains' => StockGains::getTopStocksThisWeek($allNonOmittedStocks),
             'topWeeklyLosses' => StockGains::getBottomStocksThisWeek($allNonOmittedStocks),
             'topMonthlyGains' => StockGains::getTopStocksThisMonth($allNonOmittedStocks),

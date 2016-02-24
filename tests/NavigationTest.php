@@ -46,9 +46,9 @@ class NavigationTest extends TestCase{
 			->seePageIs('/index/allOrds');
 	}
 
-	public function testGainsAndLossesPage(){
+	public function testPerformancePage(){
 		$this->visit('/')
-			->click('Gains/Losses')
+			->click('Performance')
 			->assertResponseOk();
 	}
 }
