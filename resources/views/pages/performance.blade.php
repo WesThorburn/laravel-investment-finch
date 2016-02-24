@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('nav')
-	@include('layouts.partials.nav-buttons', ['page' => 'topGainsLosses'])
+	@include('layouts.partials.nav-buttons', ['page' => 'performance'])
 @stop
 
 @section('title')
-	Top Gains and Losses
+	Performance
 @stop
 
 @section('body')

@@ -4,7 +4,7 @@ Route::resource('stock', 'StockController'); //'stock' and 'stocks' can both be 
 Route::resource('stocks', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('sectors', 'SectorController');
 Route::get('index/{marketIndex}', 'StockController@index');
-Route::get('topGainsLosses', 'PageController@topGainsLosses');
+Route::get('performance', 'PageController@performance');
 
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('stock/currentPrice/{stockCode}', 'StockController@getCurrentPrice');

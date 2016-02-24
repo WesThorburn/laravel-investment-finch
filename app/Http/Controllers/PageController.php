@@ -65,7 +65,7 @@ class PageController extends Controller
         ]);
     }
 
-    public function topGainsLosses(){
+    public function performance(){
         $allNonOmittedStocks = StockMetrics::omitOutliers()->lists('stock_code');
 
         return view('pages.topGainsLosses')->with([
