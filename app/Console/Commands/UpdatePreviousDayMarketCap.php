@@ -14,7 +14,7 @@ class UpdatePreviousDayMarketCap extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:updatePreviousDayMarketCap';
+    protected $signature = 'stocks:updatePreviousDayMarketCap {--testMode=false}';
 
     /**
      * The console command description.
@@ -42,6 +42,12 @@ class UpdatePreviousDayMarketCap extends Command
     {
         $this->info("Updating previous day's market caps.");
         $stockCodes = Stock::lists('stock_code');
+
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            $stockCodes = ['TLS', 'CBA'];
+        }
+
         $numberOfStocks = count($stockCodes);
 
         foreach($stockCodes as $key => $stockCode){

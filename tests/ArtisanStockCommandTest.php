@@ -55,4 +55,8 @@ class ArtisanStockCommandTest extends TestCase{
 	public function testUpdateStockAnalysis(){
 		$this->artisan("stocks:updateStockAnalysis", ['--testMode' => true]);
 	}
+
+	public function updatePreviousDayMarketCap(){
+		$this->artisan("stocks:updatePreviousDayMarketCap", ['--testMode' => true]);
+	}
 }
