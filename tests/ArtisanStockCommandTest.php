@@ -36,11 +36,18 @@ class ArtisanStockCommandTest extends TestCase{
 		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA', 'percent_change' => '0.00']);
 	}
 
-	public function testUpdateSectorChange(){
+	public function testUpdateSectorMetrics(){
 		$this->artisan("stocks:updateSectorMetrics", ['--testMode' => true]);
 		if(isTradingDay()){
 			$this->seeInDatabase('sector_index_historicals', ['sector' => 'Telecommunication Services', 'date' => date("Y-m-d")]);
 			$this->seeInDatabase('sector_index_historicals', ['sector' => 'Banks', 'date' => date("Y-m-d")]);
+		}
+	}
+
+	public function testUpdateIndexMetrics(){
+		$this->artisan("stocks:updateIndexMetrics", ['--testMode' => true]);
+		if(isTradingDay()){
+			$this->seeInDatabase('sector_index_historicals', ['sector' => 'ASX 20 | Top 20 Stocks', 'date' => date("Y-m-d")]);
 		}
 	}
 
@@ -58,13 +65,6 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function updatePreviousDayMarketCap(){
 		$this->artisan("stocks:updatePreviousDayMarketCap", ['--testMode' => true]);
-	}
-
-	public function testUpdateIndexMetrics(){
-		$this->artisan("stocks:updateIndexMetrics", ['--testMode' => true]);
-		if(isTradingDay()){
-			$this->seeInDatabase('sector_index_historicals', ['sector' => 'ASX 20 | Top 20 Stocks', 'date' => date("Y-m-d")]);
-		}
 	}
 
 	public function testGetCompanySummaries(){
