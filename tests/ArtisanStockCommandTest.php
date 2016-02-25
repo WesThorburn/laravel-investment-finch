@@ -51,4 +51,9 @@ class ArtisanStockCommandTest extends TestCase{
 		$this->seeInDatabase('stock_gains', ['stock_code' => 'TLS']);
 		$this->seeInDatabase('stock_gains', ['stock_code' => 'CBA']);
 	}
+
+	public function testCalculateTrend(){
+		//Verify that command runs with no errors
+		$this->artisan("stocks:calculateTrend", ['--testMode' => true]);
+	}
 }

@@ -14,7 +14,7 @@ class CalculateTrendCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:calculateTrend';
+    protected $signature = 'stocks:calculateTrend {--testMode=false}';
 
     /**
      * The console command description.
@@ -41,6 +41,12 @@ class CalculateTrendCommand extends Command
     public function handle()
     {
         $stockCodes = Stock::lists('stock_code');
+
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            $stockCodes = ['CBA', 'TLS'];
+        }
+
         $numberOfStocks = count($stockCodes);
         foreach($stockCodes as $key => $stock){
         	$stockMetrics = StockMetrics::where('stock_code', $stock)->first();
