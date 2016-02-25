@@ -15,7 +15,7 @@ class UpdateStockAnalysisCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:updateStockAnalysis';
+    protected $signature = 'stocks:updateStockAnalysis {--testMode=false}';
 
     /**
      * The console command description.
@@ -42,6 +42,12 @@ class UpdateStockAnalysisCommand extends Command
     public function handle()
     {
         $stocks = Stock::lists('stock_code');
+
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            $stocks = ['TLS', 'CBA'];
+        }
+
         $numberOfStocks = count($stocks);
 
         foreach($stocks as $key => $stock){

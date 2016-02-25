@@ -52,5 +52,7 @@ class ArtisanStockCommandTest extends TestCase{
 		$this->artisan("stocks:calculateTrend", ['--testMode' => true]);
 	}
 
-	
+	public function testUpdateStockAnalysis(){
+		$this->artisan("stocks:updateStockAnalysis", ['--testMode' => true]);
+	}
 }
