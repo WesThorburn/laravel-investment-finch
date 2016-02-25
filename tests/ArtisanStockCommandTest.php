@@ -20,8 +20,6 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function testUpdateStockMetrics(){
 		$this->artisan("stocks:updateStockMetrics", ['--testMode' => true]);
-		$this->seeInDatabase('stock_metrics', ['stock_code' => 'TLS']);
-		$this->seeInDatabase('stock_metrics', ['stock_code' => 'CBA']);
 	}
 
 	public function testGetDailyFinancials(){
@@ -48,12 +46,11 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function testCalculateStockChange(){
 		$this->artisan("stocks:calculateStockChange", ['--testMode' => true]);
-		$this->seeInDatabase('stock_gains', ['stock_code' => 'TLS']);
-		$this->seeInDatabase('stock_gains', ['stock_code' => 'CBA']);
 	}
 
 	public function testCalculateTrend(){
-		//Verify that command runs with no errors
 		$this->artisan("stocks:calculateTrend", ['--testMode' => true]);
 	}
+
+	
 }
