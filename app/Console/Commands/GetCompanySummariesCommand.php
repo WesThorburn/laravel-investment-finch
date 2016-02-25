@@ -12,7 +12,7 @@ class GetCompanySummariesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:getCompanySummaries';
+    protected $signature = 'stocks:getCompanySummaries {--testMode=false}';
 
     /**
      * The console command description.
@@ -40,6 +40,12 @@ class GetCompanySummariesCommand extends Command
     {
         $this->info("Locating and storing company summaries...");
         $stocks = Stock::lists('stock_code');
+
+        if($this->option('testMode') == 'true'){
+            $this->info("[Test Mode]");
+            $stocks = ['CBA', 'TLS'];
+        }
+        
         $numberOfStocks = count($stocks);
         foreach($stocks as $key => $stockCode){
             //Check if there is already a summary

@@ -66,4 +66,8 @@ class ArtisanStockCommandTest extends TestCase{
 			$this->seeInDatabase('sector_index_historicals', ['sector' => 'ASX 20 | Top 20 Stocks', 'date' => date("Y-m-d")]);
 		}
 	}
+
+	public function testGetCompanySummaries(){
+		$this->artisan("stocks:getCompanySummaries", ['--testMode' => true]);
+	}
 }
