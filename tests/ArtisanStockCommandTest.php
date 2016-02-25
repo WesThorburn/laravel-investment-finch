@@ -59,4 +59,11 @@ class ArtisanStockCommandTest extends TestCase{
 	public function updatePreviousDayMarketCap(){
 		$this->artisan("stocks:updatePreviousDayMarketCap", ['--testMode' => true]);
 	}
+
+	public function testUpdateIndexMetrics(){
+		$this->artisan("stocks:updateIndexMetrics", ['--testMode' => true]);
+		if(isTradingDay()){
+			$this->seeInDatabase('sector_index_historicals', ['sector' => 'ASX 20 | Top 20 Stocks', 'date' => date("Y-m-d")]);
+		}
+	}
 }
