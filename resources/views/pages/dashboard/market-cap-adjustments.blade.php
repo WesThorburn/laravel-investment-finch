@@ -45,7 +45,7 @@
 								{!! Form::open(['method' => 'post', 'action' => ['DashboardController@changeStockAdjustmentStatus', $stock->stock_code]]) !!}
 									{!! Form::hidden('adjustment', false) !!}
 									{!! Form::hidden('stockCode', $stock->stock_code) !!}
-									{!! Form::button("", ['type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']) !!}
+									{!! Form::button("", ['name' => 'removeFromList', 'type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']) !!}
 								{!! Form::close() !!}
 							</td>
 						</tr>

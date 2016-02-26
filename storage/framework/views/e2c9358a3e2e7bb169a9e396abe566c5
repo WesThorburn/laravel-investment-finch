@@ -46,7 +46,7 @@
 
 									<?php echo Form::hidden('stockCode', $stock->stock_code); ?>
 
-									<?php echo Form::button("", ['type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']); ?>
+									<?php echo Form::button("", ['name' => 'removeFromList', 'type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']); ?>
 
 								<?php echo Form::close(); ?>
 
