@@ -51,4 +51,9 @@ class NavigationTest extends TestCase{
 			->click('Performance')
 			->assertResponseOk();
 	}
+
+	public function testLoginPage(){
+		$this->visit('/auth/login')
+			->assertResponseOk();
+	}
 }
