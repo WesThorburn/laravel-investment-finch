@@ -8,6 +8,13 @@ class AuthenticationTest extends TestCase{
 			->seePageIs('/auth/login');
 	}
 
+	public function testFailedLogIn(){
+		$this->visit('/auth/login')
+			->press('Login')
+			->see('Whoops!')
+			->see('There were some problems with your input.');
+	}
+
 	public function testLoggedIn(){
 		$user = User::where('email', 'wjthorburn@live.com.au')->first();
 		$this->actingAs($user)
