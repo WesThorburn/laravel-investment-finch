@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPegRatioToStockmetrics extends Migration
+class AddPegRatioToSectorIndexHistoricals extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddPegRatioToStockmetrics extends Migration
      */
     public function up()
     {
-        Schema::table('stock_metrics', function (Blueprint $table) {
+        Schema::table('sector_index_historicals', function (Blueprint $table) {
             $table->decimal('peg_ratio', 8, 2)->after('price_to_book')->nullable();
         });
     }
@@ -24,7 +24,7 @@ class AddPegRatioToStockmetrics extends Migration
      */
     public function down()
     {
-        Schema::table('stock_metrics', function (Blueprint $table) {
+        Schema::table('sector_index_historicals', function (Blueprint $table) {
             $table->dropColumn('peg_ratio');
         });
     }

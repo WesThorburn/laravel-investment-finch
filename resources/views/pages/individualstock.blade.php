@@ -136,6 +136,11 @@
 								<td>{{ $sectorAverage->price_to_book }}</td>
 							</tr>
 							<tr>
+								<td>PEG Ratio</td>
+								<td>{{ $metrics->peg_ratio }}</td>
+								<td></td>
+							</tr>
+							<tr>
 								<td>Market Cap</td>
 								<td>{{ formatMoneyAmountToLetter(round($metrics->current_market_cap, 2)) }}</td>
 								<td>{{ formatMoneyAmountToLetter(round($sectorAverage->average_sector_market_cap, 2)) }}</td>
