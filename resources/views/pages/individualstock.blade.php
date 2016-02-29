@@ -138,7 +138,7 @@
 							<tr>
 								<td>PEG Ratio</td>
 								<td>{{ $metrics->peg_ratio }}</td>
-								<td></td>
+								<td>{{ $sectorAverage->peg_ratio }}</td>
 							</tr>
 							<tr>
 								<td>Market Cap</td>

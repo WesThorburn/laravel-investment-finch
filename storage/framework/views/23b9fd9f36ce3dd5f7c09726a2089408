@@ -137,7 +137,7 @@
 							<tr>
 								<td>PEG Ratio</td>
 								<td><?php echo e($metrics->peg_ratio); ?></td>
-								<td></td>
+								<td><?php echo e($sectorAverage->peg_ratio); ?></td>
 							</tr>
 							<tr>
 								<td>Market Cap</td>
