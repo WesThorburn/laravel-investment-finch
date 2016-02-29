@@ -30,7 +30,8 @@ class UpdateIndexMetricsCommand extends Command
             'earnings_per_share_current', 
             'earnings_per_share_next_year', 
             'price_to_earnings', 
-            'price_to_book', 
+            'price_to_book',
+            'peg_ratio',
             'dividend_yield'
         ];
     /**
