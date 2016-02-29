@@ -73,6 +73,7 @@ class GetDailyFinancialsCommand extends Command
                     "price_to_earnings"=> $stockMetrics->price_to_earnings,
                     "price_to_sales"=> $stockMetrics->price_to_sales,
                     "price_to_book"=> $stockMetrics->price_to_book,
+                    "peg_ratio" => $stockMetrics->peg_ratio,
                     "year_high"=> $stockMetrics->year_high,
                     "year_low"=> $stockMetrics->year_low,
                     "market_cap"=> $stockMetrics->current_market_cap,
