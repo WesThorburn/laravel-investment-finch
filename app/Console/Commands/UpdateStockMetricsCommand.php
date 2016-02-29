@@ -64,7 +64,7 @@ class UpdateStockMetricsCommand extends Command {
 						"low" => $individualMetric[6],
 						"close" => $individualMetric[1], //Last Trade after closing time
 						"adj_close" => 0.000, //No Data Available
-						"volume" => $individualMetric[7],
+						"volume" => UpdateStockMetricsCommand::correctVolume($individualMetric[7], $stockCode),
 						"shares" => $individualMetric[8],
 						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[9]),
 						"earnings_per_share_current" => $individualMetric[10],
@@ -134,6 +134,16 @@ class UpdateStockMetricsCommand extends Command {
 			return 0;
 		}
 		return $percentChange;
+	}
+
+	//Nulls current day's volume if it's the exact same as yesterday's
+	private static function correctVolume($volume, $stockCode){
+		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate($stockCode);
+		$yesterdaysVolume = Historicals::where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->pluck('volume');
+		if($yesterdaysVolume == $volume){
+			return 0;
+		}
+		return $volume;
 	}
 	/**
 	 * Get the console command arguments.
