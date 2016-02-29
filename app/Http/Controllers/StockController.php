@@ -112,6 +112,7 @@ class StockController extends Controller
                 'stock_metrics.earnings_per_share_current',
                 'stock_metrics.price_to_earnings',
                 'stock_metrics.price_to_book',
+                'stock_metrics.peg_ratio',
                 'stock_metrics.year_high',
                 'stock_metrics.year_low'
             ])

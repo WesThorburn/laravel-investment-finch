@@ -23,6 +23,7 @@
 	            <th>EPS Current Year</th>
 	            <th>P / E Ratio</th>
 	            <th>Price / Book</th>
+	            <th>PEG Ratio</th>
 	            <th>52 Week High</th>
 	            <th>52 Week Low</th>
 	        </tr>
@@ -55,6 +56,7 @@
 	            {data: 'earnings_per_share_current', name: 'earnings_per_share_current', searchable: false}, 
 	            {data: 'price_to_earnings', name: 'price_to_earnings', searchable: false}, 
 	            {data: 'price_to_book', name: 'price_to_book', searchable: false}, 
+	            {data: 'peg_ratio', name: 'peg_ratio', searchable: false}, 
 	            {data: 'year_high', name: 'year_high', searchable: false}, 
 	            {data: 'year_low', name: 'year_low', searchable: false}, 
 			]
