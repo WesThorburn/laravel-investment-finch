@@ -19,13 +19,70 @@ class DashboardController extends Controller
     }
 
     public function marketCapAdjustmentsPage(){
-        return view('pages/dashboard/market-cap-adjustments')->with([
-            'marketCapAdjustments' => StockMetrics::where('market_cap_requires_adjustment', 1)->get()
-        ]);
+        return view('pages/dashboard/market-cap-adjustments');
     }
 
     public function ajaxMarketCapAdjustments(){
-        return "Ajax Route";
+        $stockCodesInMarketIndex = Stock::withMarketIndex('all')->lists('stock_code');
+        $stocks = StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')
+            ->select([
+                'stock_metrics.stock_code', 
+                'stocks.company_name',
+                'stock_metrics.yesterdays_market_cap',
+                'stock_metrics.current_market_cap',
+                'stock_metrics.percent_change',
+                \DB::raw('(stock_metrics.current_market_cap - stock_metrics.yesterdays_market_cap) AS difference'),
+                'stock_metrics.market_cap_requires_adjustment',
+            ])
+            ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
+        return \Datatables::of($stocks)
+            ->editColumn('yesterdays_market_cap', function($stock){
+                if($stock->yesterdays_market_cap == 0.00){
+                    return null;
+                }
+                elseif($stock->yesterdays_market_cap < 1000){
+                    return number_format($stock->yesterdays_market_cap, 2, '.', '');
+                }
+                return number_format($stock->yesterdays_market_cap);
+            })
+            ->editColumn('current_market_cap', function($stock){
+                if($stock->current_market_cap == 0.00){
+                    return null;
+                }
+                elseif($stock->current_market_cap < 1000){
+                    return number_format($stock->current_market_cap, 2, '.', '');
+                }
+                return number_format($stock->current_market_cap);
+            })
+            ->editColumn('difference', function($stock){
+                return number_format($stock->difference, 2, '.', '');
+            })
+            ->editColumn('percent_change', function($stock){
+                if($stock->percent_change > 0){
+                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                elseif($stock->percent_change < 0){
+                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                return number_format($stock->percent_change, 2).'%';
+            })
+            ->editColumn('market_cap_requires_adjustment', function($stock){
+                if($stock->market_cap_requires_adjustment){
+                    return "Yes";
+                }
+                else{
+                    return "No";
+                }
+            })
+            ->addColumn('change_adjustment', function($stock){
+                if($stock->market_cap_requires_adjustment){
+                    return '<a href="/" class="btn btn-default btn-row glyphicon glyphicon-remove center-block"></a>';
+                }
+                else{
+                    return '<a href="/" class="btn btn-default btn-row glyphicon glyphicon-plus center-block"></a>';
+                }
+            })
+            ->make(true);
     }
 
     public function changeStockAdjustmentStatus(Request $request){

@@ -18,9 +18,13 @@
 			    <thead>
 			        <tr>
 			            <th>Code</th>
-			            <th>Name</th>            
+			            <th>Name</th>  
+			            <th>Yesterday's Mkt Cap (M)</th>          
+			            <th>Current Mkt Cap (M)</th>
+			            <th>Difference (M)</th>
 			            <th>Day Change</th>
-			            <th>Mkt Cap (M)</th>
+			            <th>Requires Adjustment</th>
+			            <th></th>
 			        </tr>
 			    </thead>
 			    <div class="panel-body">
@@ -54,16 +58,21 @@
 		var stockTable = $('#adjusted_stocks').DataTable({
 			processing: true,
 			serverSide: true,
-			ajax: '/ajax/stocks/all',
+			ajax: '/dashboard/ajax/marketCapAdjustments',
 			lengthMenu: [20,50,100],
+			"order": [[ 4, "desc" ]],
 			fnColumnCallback: function(nColumn){
 				console.log(nColumn);
 			},
 			columns: [
 				{data: 'stock_code', name: 'stocks.stock_code'},
 				{data: 'company_name', name: 'company_name'},
-	            {data: 'percent_change', name: 'percent_change', searchable: false}, 
-	            {data: 'current_market_cap', name: 'current_market_cap', searchable: false}, 
+				{data: 'yesterdays_market_cap', name: 'yesterdays_market_cap', searchable: false},
+	            {data: 'current_market_cap', name: 'current_market_cap', searchable: false},
+	            {data: 'difference', name: 'difference', searchable: false},
+	            {data: 'percent_change', name: 'percent_change', searchable: false},
+	            {data: 'market_cap_requires_adjustment', name: 'market_cap_requires_adjustment'},
+	            {data: 'change_adjustment', name: 'change_adjustment'}
 			]
 		});		
 		//Make table rows clickable

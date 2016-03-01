@@ -7182,6 +7182,10 @@ th{
 	margin-top:8px;
 }
 
+.btn-row{
+	padding:0px 3px;
+}
+
 .panel{
 	border-color:#2e3e44;
 }
