@@ -18,10 +18,14 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function marketCapAdjustments(){
+    public function marketCapAdjustmentsPage(){
         return view('pages/dashboard/market-cap-adjustments')->with([
             'marketCapAdjustments' => StockMetrics::where('market_cap_requires_adjustment', 1)->get()
         ]);
+    }
+
+    public function ajaxMarketCapAdjustments(){
+        return "Ajax Route";
     }
 
     public function changeStockAdjustmentStatus(Request $request){

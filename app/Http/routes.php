@@ -33,8 +33,12 @@ Route::any('auth/register', function(){
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function(){
 	Route::get('/discontinued', 'DashboardController@discontinued');
-	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustments');
+	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustmentsPage');
 	Route::post('/marketCapAdjustments/{stockCode}', 'DashboardController@changeStockAdjustmentStatus');
+
+	Route::group(['prefix' => 'ajax'], function(){
+		Route::get('marketCapAdjustments', 'DashboardController@ajaxMarketCapAdjustments');
+	});
 });
 
 Route::controllers([
