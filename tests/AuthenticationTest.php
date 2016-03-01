@@ -21,7 +21,7 @@ class AuthenticationTest extends TestCase{
 			->visit('dashboard/discontinued')
 			->see('Discontinued Stocks')
 			->click('Market Cap Adjustments')
-			->see('Stocks with Adjusted Market Caps (/1000)');
+			->see('All Stocks');
 	}
 
 	public function testLogout(){
