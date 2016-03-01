@@ -71,10 +71,19 @@ class CalculateTrendCommand extends Command
 	    	$last50DayMA = $records->first()->fifty_day_moving_average;
 	    	$last200DayMA = $records->first()->two_hundred_day_moving_average;
 
+	    	//Detect upward trend
 			if($first50DayMA < $first200DayMA && $last50DayMA > $last200DayMA){
 				return "Up";
 			}
+			elseif($first50DayMA > $first200DayMA && $last50DayMA > $last200DayMA){
+				return "Up";
+			}
+
+			//Detect downward trend
 			elseif($first50DayMA > $first200DayMA && $last50DayMA < $last200DayMA){
+				return "Down";
+			}
+			elseif($first50DayMA < $first200DayMA && $last50DayMA < $last200DayMA){
 				return "Down";
 			}
 			return "None";
