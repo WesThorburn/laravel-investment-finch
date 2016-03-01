@@ -18,42 +18,14 @@
 			    <thead>
 			        <tr>
 			            <th>Code</th>
-			            <th>Name</th>
-			            <th>Yesterday's Market Cap</th>
-			            <th>Current Market Cap</th>
-			            <th>Difference</th>
-			            <th>Stock Price</th>
-			            <th>Volume</th>
-			            <th></th>
+			            <th>Name</th>            
+			            <th>Day Change</th>
+			            <th>Mkt Cap (M)</th>
 			        </tr>
 			    </thead>
-			    <tbody data-link="row" class="rowlink">
-				    <?php foreach($marketCapAdjustments as $stock): ?>
-						<tr>
-							<td>
-								<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
-							</td>
-							<td><?php echo e($stock->stock->company_name); ?></td>
-							<td><?php echo e(number_format($stock->yesterdays_market_cap, 2)); ?></td>
-							<td><?php echo e($stock->current_market_cap); ?></td>
-							<td><?php echo e(number_format(($stock->current_market_cap-$stock->yesterdays_market_cap),2)); ?></td>
-							<td><?php echo e($stock->last_trade); ?></td>
-							<td><?php echo e($stock->volume); ?></td>
-							<td>
-								<?php echo Form::open(['method' => 'post', 'action' => ['DashboardController@changeStockAdjustmentStatus', $stock->stock_code]]); ?>
-
-									<?php echo Form::hidden('adjustment', false); ?>
-
-									<?php echo Form::hidden('stockCode', $stock->stock_code); ?>
-
-									<?php echo Form::button("", ['name' => 'removeFromList', 'type' => 'submit', 'class' => 'glyphicon glyphicon-remove center-block', 'aria-hidden' => 'true']); ?>
-
-								<?php echo Form::close(); ?>
-
-							</td>
-						</tr>
-					<?php endforeach; ?>
-			    </tbody>
+			    <div class="panel-body">
+			    	<tbody></tbody>
+			    </div>
 			</table>
 		</div>
 	</div>
@@ -77,16 +49,30 @@
 		</div>
 	</div>
 
-	<script>
-		$(document).ready(function(){
-			$('#adjusted_stocks').DataTable({
-				"dom": 'tp',
-				"pageLength": 20,
-				"lengthMenu": [20,50,100],
-				"stateSave": true,
-				"order": [[ 4, "asc" ]]
-			});
+<script>
+	$(document).ready(function(){
+		var stockTable = $('#adjusted_stocks').DataTable({
+			processing: true,
+			serverSide: true,
+			ajax: '/ajax/stocks/all',
+			lengthMenu: [20,50,100],
+			fnColumnCallback: function(nColumn){
+				console.log(nColumn);
+			},
+			columns: [
+				{data: 'stock_code', name: 'stocks.stock_code'},
+				{data: 'company_name', name: 'company_name'},
+	            {data: 'percent_change', name: 'percent_change', searchable: false}, 
+	            {data: 'current_market_cap', name: 'current_market_cap', searchable: false}, 
+			]
+		});		
+		//Make table rows clickable
+		$('#stock_table').delegate('tbody > tr', 'click', function(){
+			var data = stockTable.row(this).data();
+			window.location.assign('/stock/'+ data.stock_code)
 		});
-	</script>
+
+	});
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
