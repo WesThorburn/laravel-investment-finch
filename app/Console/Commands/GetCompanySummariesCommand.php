@@ -50,13 +50,14 @@ class GetCompanySummariesCommand extends Command
         foreach($stocks as $key => $stockCode){
             //Check if there is already a summary
             if(Stock::where('stock_code', $stockCode)->pluck('business_summary') == null){
-                $pageContents = file_get_contents("https://au.finance.yahoo.com/q/pr?s=".$stockCode.".AX");
-                if(strpos($pageContents, "</th></tr></table><p>") && strpos($pageContents, '</p><p><a href="/q/ks?s='.$stockCode.'.AX"><b>')){
-                    $businessSummary = explode('</p><p><a href="/q/ks?s='.$stockCode.'.AX"><b>', explode("</th></tr></table><p>", $pageContents)[1]);
-                    if(strlen($businessSummary[0]) > 0){
-                        $stock = Stock::where('stock_code', $stockCode)->first();
-                        $stock->business_summary = $businessSummary[0];
-                        $stock->save();
+                if($pageContents = @file_get_contents("https://au.finance.yahoo.com/q/pr?s=".$stockCode.".AX")){
+                    if(strpos($pageContents, "</th></tr></table><p>") && strpos($pageContents, '</p><p><a href="/q/ks?s='.$stockCode.'.AX"><b>')){
+                        $businessSummary = explode('</p><p><a href="/q/ks?s='.$stockCode.'.AX"><b>', explode("</th></tr></table><p>", $pageContents)[1]);
+                        if(strlen($businessSummary[0]) > 0){
+                            $stock = Stock::where('stock_code', $stockCode)->first();
+                            $stock->business_summary = $businessSummary[0];
+                            $stock->save();
+                        }
                     }
                 }
             }
