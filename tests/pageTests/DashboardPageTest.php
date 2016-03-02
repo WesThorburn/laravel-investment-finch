@@ -9,15 +9,12 @@ class DashboardPageTest extends TestCase{
 	use DatabaseTransactions;
 
 	public function testAddStockForAdjustment(){
-		$this->visit('/dashboard/marketCapAdjustments')
-			->type('TLS', 'stockCode')
-			->press('Add')
-			->assertResponseOk();
+		$this->visit('/dashboard/marketCapAdjustments/CBA/1')
+			->seePageIs('/dashboard/marketCapAdjustments');
 	}
 
 	public function testRemoveStockFromAdjustmentList(){
-		$this->visit('/dashboard/marketCapAdjustments')
-			->press('removeFromList')
-			->assertResponseOk();
+		$this->visit('/dashboard/marketCapAdjustments/CBA/0')
+			->seePageIs('/dashboard/marketCapAdjustments');
 	}
 }
