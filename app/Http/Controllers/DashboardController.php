@@ -76,10 +76,10 @@ class DashboardController extends Controller
             })
             ->addColumn('change_adjustment', function($stock){
                 if($stock->market_cap_requires_adjustment){
-                    return '<a href="/marketCapAdjustments/'.$stock->stock_code.'/0" class="btn btn-default btn-row glyphicon glyphicon-remove center-block"></a>';
+                    return '<a href="/dashboard/marketCapAdjustments/'.$stock->stock_code.'/0" class="btn btn-default btn-row glyphicon glyphicon-remove center-block"></a>';
                 }
                 else{
-                    return '<a href="/marketCapAdjustments/'.$stock->stock_code.'/1" class="btn btn-default btn-row glyphicon glyphicon-plus center-block"></a>';
+                    return '<a href="/dashboard/marketCapAdjustments/'.$stock->stock_code.'/1" class="btn btn-default btn-row glyphicon glyphicon-plus center-block"></a>';
                 }
             })
             ->make(true);
