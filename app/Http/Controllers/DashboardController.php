@@ -85,10 +85,13 @@ class DashboardController extends Controller
             ->make(true);
     }
 
-    public function changeStockAdjustmentStatus(Request $request){
-        $stockMetric = StockMetrics::where('stock_code', $request->stockCode)->first();
-        $stockMetric->market_cap_requires_adjustment = $request->adjustment;
-        $stockMetric->save();
-        return redirect('/dashboard/marketCapAdjustments');
+    public function changeStockAdjustmentStatus($stockCode, $addOrRemove){
+        if($addOrRemove == 1 || $addOrRemove == 0){
+            $stockMetric = StockMetrics::where('stock_code', $request->stockCode)->first();
+            $stockMetric->market_cap_requires_adjustment = $addOrRemove;
+            $stockMetric->save();
+            return redirect('/dashboard/marketCapAdjustments');
+        }
+        return redirect('/');
     }
 }
