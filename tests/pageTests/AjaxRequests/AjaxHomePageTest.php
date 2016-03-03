@@ -21,7 +21,7 @@ class AjaxHomePageTest extends TestCase{
 
 	public function testASXMarketCapLineGraph(){
 		$mostRecentDateInGraph = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
-		$mostRecentMonth = jdmonthname(explode("-", $mostRecentDateInGraph)[1], 2);
+		$mostRecentMonth = getMonthNameFromNumber(explode("-", $mostRecentDateInGraph)[1]);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 		$this->visit('/ajax/graph/sector/All/last_month/Market%20Cap')
 			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Market Cap"}],"rows"')

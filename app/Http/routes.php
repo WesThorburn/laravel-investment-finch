@@ -46,5 +46,11 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-/*route::get('/test', function(){
-});*/
+use App\Models\SectorIndexHistoricals;
+
+route::get('/test', function(){
+	$mostRecentDateInGraph = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
+	$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
+	$mostRecentMonth = getMonthNameFromNumber(explode("-", $mostRecentDateInGraph)[1]);
+	dd($mostRecentMonth);
+});
