@@ -49,7 +49,7 @@ class UpdateStockMetricsCommand extends Command {
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
 			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2c1ohgvf6j4ee8p5rp6r5kjj1y";
-			$metrics = explode("\n", file_get_contents($stockURL));
+			$metrics = explode("\n", @file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
