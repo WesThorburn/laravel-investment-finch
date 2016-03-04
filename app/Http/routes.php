@@ -46,5 +46,13 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-/*route::get('/test', function(){
-});*/
+use App\Models\StockMetrics;
+
+route::get('/test', function(){
+	$billionCapStocks = StockMetrics::where('current_market_cap', '>', 1000)->lists('stock_code');
+	foreach($billionCapStocks as $stock){
+		$stock = StockMetrics::where('stock_code', $stock)->first();
+		$stock->billion_cap = 1;
+		$stock->save();
+	}
+});
