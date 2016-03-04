@@ -49,36 +49,38 @@ class UpdateStockMetricsCommand extends Command {
 		while($iterationNumber <= $maxIterations){
 			$stockCodeParameter = UpdateStockMetricsCommand::getStockCodeParameter($this->option('testMode'));
 			$stockURL = "http://finance.yahoo.com/d/quotes.csv?s=".$stockCodeParameter."&f=sl1p2c1ohgvf6j4ee8p5rp6r5kjj1y";
-			$metrics = explode("\n", file_get_contents($stockURL));
+			$metrics = explode("\n", @file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
 					$individualMetric = explode(',', $metric);
 					$stockCode = substr(explode('.', $individualMetric[0])[0], 1);
-					StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
-						"stock_code" => $stockCode,
-						"last_trade" => $individualMetric[1],
-						"percent_change" => UpdateStockMetricsCommand::correctPercentChange($individualMetric[1], substr($individualMetric[2], 1, -2), $stockCode),
-						'day_change' => $individualMetric[3],
-						"open" => $individualMetric[4],
-						"high" => $individualMetric[5],
-						"low" => $individualMetric[6],
-						"close" => $individualMetric[1], //Last Trade after closing time
-						"adj_close" => 0.000, //No Data Available
-						"volume" => UpdateStockMetricsCommand::correctVolume($individualMetric[7], $stockCode),
-						"shares" => $individualMetric[8],
-						"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[9]),
-						"earnings_per_share_current" => $individualMetric[10],
-						"earnings_per_share_next_year" => $individualMetric[11],
-						"price_to_sales" => $individualMetric[12],
-						"price_to_earnings" => $individualMetric[13],
-						"price_to_book" => $individualMetric[14],
-						"peg_ratio" => $individualMetric[15],
-						"year_high" => $individualMetric[16],
-						"year_low" => $individualMetric[17],
-						"current_market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[18])),
-						"dividend_yield" => $individualMetric[19],
-						"updated_at" => date("Y-m-d H:i:s")
-					]);
+					if($individualMetric[1]){
+						StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
+							"stock_code" => $stockCode,
+							"last_trade" => $individualMetric[1],
+							"percent_change" => UpdateStockMetricsCommand::correctPercentChange($individualMetric[1], substr($individualMetric[2], 1, -2), $stockCode),
+							'day_change' => $individualMetric[3],
+							"open" => $individualMetric[4],
+							"high" => $individualMetric[5],
+							"low" => $individualMetric[6],
+							"close" => $individualMetric[1], //Last Trade after closing time
+							"adj_close" => 0.000, //No Data Available
+							"volume" => UpdateStockMetricsCommand::correctVolume($individualMetric[7], $stockCode),
+							"shares" => $individualMetric[8],
+							"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[9]),
+							"earnings_per_share_current" => $individualMetric[10],
+							"earnings_per_share_next_year" => $individualMetric[11],
+							"price_to_sales" => $individualMetric[12],
+							"price_to_earnings" => $individualMetric[13],
+							"price_to_book" => $individualMetric[14],
+							"peg_ratio" => $individualMetric[15],
+							"year_high" => $individualMetric[16],
+							"year_low" => $individualMetric[17],
+							"current_market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[18])),
+							"dividend_yield" => $individualMetric[19],
+							"updated_at" => date("Y-m-d H:i:s")
+						]);
+					}
 				}
 			}
 			$this->info("Updating... ".round(($iterationNumber)*(100/$maxIterations), 2)."%");
