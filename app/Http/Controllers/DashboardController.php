@@ -19,7 +19,21 @@ class DashboardController extends Controller
     }
 
     public function marketCapAdjustmentsPage(){
-        return view('pages/dashboard/market-cap-adjustments');
+        return view('pages/dashboard/market-cap-adjustments')->with([
+            'flaggedStocks' => StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')
+                ->select([
+                    'stock_metrics.stock_code', 
+                    'stocks.company_name',
+                    'stock_metrics.yesterdays_market_cap',
+                    'stock_metrics.current_market_cap',
+                    'stock_metrics.percent_change',
+                    \DB::raw('(stock_metrics.current_market_cap - stock_metrics.yesterdays_market_cap) AS difference'),
+                    'stock_metrics.market_cap_requires_adjustment',
+                ])
+                ->where('current_market_cap', '>', 1000)
+                ->where('billion_cap', '!=', 1)
+                ->get()
+        ]);
     }
 
     public function ajaxMarketCapAdjustments(){
