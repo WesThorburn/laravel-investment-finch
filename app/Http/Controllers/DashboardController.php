@@ -30,8 +30,8 @@ class DashboardController extends Controller
                     \DB::raw('(stock_metrics.current_market_cap - stock_metrics.yesterdays_market_cap) AS difference'),
                     'stock_metrics.market_cap_requires_adjustment',
                 ])
-                ->where('current_market_cap', '>', 1000)
-                ->where('billion_cap', '!=', 1)
+                ->where('stock_metrics.current_market_cap', '>', 1000)
+                ->where('stock_metrics.billion_cap', null)
                 ->get()
         ]);
     }

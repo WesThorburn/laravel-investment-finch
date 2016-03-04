@@ -34,6 +34,43 @@
 			    </div>
 			</table>
 		</div>
+		@if($flaggedStocks->first())
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Flagged Stocks</b></div>
+				<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="flagged_stocks">
+				    <thead>
+				        <tr>
+				            <th>Code</th>
+				            <th>Yesterday's Mkt Cap (M)</th>          
+				            <th>Current Mkt Cap (M)</th>
+				            <th>Difference (M)</th>
+				            <th>Day Change</th>
+				            <th>Requires Adjustment</th>
+				        </tr>
+				    </thead>
+				    <tbody data-link="row" class="rowlink">
+					    @foreach($flaggedStocks as $stock)
+							<tr>
+								<td>
+									{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
+								</td>
+								<td>{{ $stock->yesterdays_market_cap }}</td>
+								<td>{{ $stock->current_market_cap }}</td>
+								<td>{{ $stock->current_market_cap - $stock->yesterdays_market_cap }}</td>
+								<td>{{ $stock->percent_change }}</td>
+								<td>
+									@if($stock->market_cap_requires_adjustment == 0)
+										No
+									@elseif($stock->market_cap_requires_adjustment == 1)
+										Yes
+									@endif
+								</td>
+							</tr>
+						@endforeach
+				    </tbody>
+				</table>
+			</div>
+		@endif
 	</div>
 
 	<script>
