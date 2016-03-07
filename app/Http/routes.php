@@ -26,7 +26,7 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function(){
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], function(){
 	Route::get('/discontinued', 'DashboardController@discontinued');
 	Route::get('/marketCapAdjustments/{stockCode}/{addOrRemove}', 'DashboardController@changeStockAdjustmentStatus');
 	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustmentsPage');
