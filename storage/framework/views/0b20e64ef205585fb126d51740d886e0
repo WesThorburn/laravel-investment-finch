@@ -14,8 +14,6 @@
 		<li class="nav-button <?php if($page == 'stocks'): ?> active <?php endif; ?>"><a href="/index/all">Stocks</a></li>
 		<li class="nav-button <?php if($page == 'performance'): ?> active <?php endif; ?>"><a href="/performance">Performance</a></li>
 	</ul>
-	<!--
-	Removed until login functionality is added
 	<div class="pull-right">
 		<ul class="nav navbar-nav">
 			<li>
@@ -27,5 +25,5 @@
 				<?php endif; ?>
 			</li>
 		</ul>
-	</div>-->
+	</div>
 </div>
