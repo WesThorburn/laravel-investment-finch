@@ -76,4 +76,12 @@ class PageController extends Controller
             'topStocks12Months' => StockGains::getTopStocks12Months(29)
         ]);
     }
+
+    public function portfolio(){
+        return view('pages.portfolio');
+    }
+
+    public function watchlist(){
+        return view('pages.watchlist');
+    }
 }
