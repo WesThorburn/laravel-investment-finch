@@ -6,6 +6,25 @@ Route::resource('sectors', 'SectorController');
 Route::get('index/{marketIndex}', 'StockController@index');
 Route::get('performance', 'PageController@performance');
 
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], function(){
+	Route::get('/discontinued', 'DashboardController@discontinued');
+	Route::get('/marketCapAdjustments/{stockCode}/{addOrRemove}', 'DashboardController@changeStockAdjustmentStatus');
+	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustmentsPage');
+
+	Route::group(['prefix' => 'ajax'], function(){
+		Route::get('marketCapAdjustments', 'DashboardController@ajaxMarketCapAdjustments');
+	});
+});
+
+Route::group(['prefix' => 'user', 'middleware' => ['auth']], function(){
+	Route::get('user/home', 'UserController@home');
+});
+
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
+
 Route::group(['prefix' => 'ajax'], function(){
 	Route::get('stock/currentPrice/{stockCode}', 'StockController@getCurrentPrice');
 	Route::get('stock/dayChange/{stockCode}', 'StockController@getDayChange');
@@ -26,32 +45,5 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], function(){
-	Route::get('/discontinued', 'DashboardController@discontinued');
-	Route::get('/marketCapAdjustments/{stockCode}/{addOrRemove}', 'DashboardController@changeStockAdjustmentStatus');
-	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustmentsPage');
-
-	Route::group(['prefix' => 'ajax'], function(){
-		Route::get('marketCapAdjustments', 'DashboardController@ajaxMarketCapAdjustments');
-	});
-});
-
-Route::group(['prefix' => 'user', 'middleware' => ['auth']], function(){
-	Route::get('user/home', 'UserController@home');
-});
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
-
-use App\Models\StockMetrics;
-
-route::get('/test', function(){
-	$billionCapStocks = StockMetrics::where('current_market_cap', '>', 1000)->lists('stock_code');
-	foreach($billionCapStocks as $stock){
-		$stock = StockMetrics::where('stock_code', $stock)->first();
-		$stock->billion_cap = 1;
-		$stock->save();
-	}
-});
+/*route::get('/test', function(){
+});*/
