@@ -13,6 +13,11 @@
 		<li class="nav-button <?php if($page == 'sectors'): ?> active <?php endif; ?>"><a href="/sectors">Sectors</a></li>
 		<li class="nav-button <?php if($page == 'stocks'): ?> active <?php endif; ?>"><a href="/index/all">Stocks</a></li>
 		<li class="nav-button <?php if($page == 'performance'): ?> active <?php endif; ?>"><a href="/performance">Performance</a></li>
+		<?php if(Auth::check()): ?>
+			<li class="nav-button <?php if($page == 'watchlsit'): ?> active <?php endif; ?>"><a href="/user/watchlist">Watchlist</a></li>
+			<li class="nav-button <?php if($page == 'portfolio'): ?> active <?php endif; ?>"><a href="/user/portfolio">Portfolio</a></li>
+			<li class="nav-button <?php if($page == 'account'): ?> active <?php endif; ?>"><a href="/user/account">Account</a></li>
+		<?php endif; ?>
 	</ul>
 	<div class="pull-right">
 		<ul class="nav navbar-nav">
