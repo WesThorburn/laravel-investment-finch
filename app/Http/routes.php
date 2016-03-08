@@ -36,6 +36,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], funct
 	});
 });
 
+Route::group(['prefix' => 'user', 'middleware' => ['auth']], function(){
+	Route::get('user/home', 'UserController@home');
+});
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
