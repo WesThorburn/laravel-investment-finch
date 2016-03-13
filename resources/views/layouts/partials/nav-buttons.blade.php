@@ -14,7 +14,7 @@
 		<li class="nav-button @if($page == 'stocks') active @endif"><a href="/index/all">Stocks</a></li>
 		<li class="nav-button @if($page == 'performance') active @endif"><a href="/performance">Performance</a></li>
 		@if(Auth::check())
-			<li class="nav-button @if($page == 'watchlsit') active @endif"><a href="/user/watchlist">Watchlist</a></li>
+			<li class="nav-button @if($page == 'watchlist') active @endif"><a href="/user/watchlist">Watchlist</a></li>
 			<li class="nav-button @if($page == 'portfolio') active @endif"><a href="/user/portfolio">Portfolio</a></li>
 			<li class="nav-button @if($page == 'account') active @endif"><a href="/user/account">Account</a></li>
 		@endif
