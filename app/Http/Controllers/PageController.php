@@ -78,10 +78,10 @@ class PageController extends Controller
     }
 
     public function portfolio(){
-        return view('pages.portfolio');
+        return view('pages.user.portfolio');
     }
 
     public function watchlist(){
-        return view('pages.watchlist');
+        return view('pages.user.watchlist');
     }
 }
