@@ -17,7 +17,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], funct
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function(){
-	Route::get('watchlist', 'PageController@watchlist');
+	Route::resource('watchlist', 'WatchlistController');
 	Route::get('portfolio', 'PageController@portfolio');
 	Route::get('account', 'UserController@index');
 });
