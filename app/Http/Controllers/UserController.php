@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Hash;
 use App\Http\Requests;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -73,17 +74,35 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         if(\Auth::user()->id == $id){
-            $this->validate($request, [
-                'name' => 'required|string|max:64'
-            ]);
-
             $user = User::where('id', $id)->first();
 
-            if($user->name != $request->name){
-                //Redirect if name is unchanged
-                $user->name = $request->name;
-                $user->save();
-                \Session::flash('nameChangeSuccess', 'Name was changed successfully!');
+            if($request->fieldToBeUpdated == 'name'){
+                $this->validate($request, [
+                    'name' => 'required|string|max:64'
+                ]);
+
+                if($user->name != $request->name){
+                    //Redirect if name is unchanged
+                    $user->name = $request->name;
+                    $user->save();
+                    \Session::flash('nameChangeSuccess', 'Name was changed successfully!');
+                }
+            }
+            elseif($request->fieldToBeUpdated == 'password'){
+               $this->validate($request, [
+                    'oldPassword' => 'required|max:64',
+                    'password' => 'required|confirmed|max:64',
+                    'password_confirmation' => 'required|max:64',
+                ]);
+
+                if(Hash::check($request->oldPassword, $user->password)){
+                    $user->password = Hash::make($request->password);
+                    $user->save();
+                    \Session::flash('passwordChangeSuccess', 'Your Password was changed successfully!');
+                }
+                else{
+                    \Session::flash('passwordChangeFailure', "The 'current password' you provided was incorrect!");
+                }
             }
         }
         return redirect('/user/account');

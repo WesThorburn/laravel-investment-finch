@@ -15,8 +15,10 @@
 						Account Information
 					</div>
 					<div class="panel-body">
+						<!-- Name -->
 						<form role="form" action="<?php echo e(action('UserController@update', ['id' => Auth::user()->id])); ?>" method="POST">
 							<input type="hidden" name="_method" value="put"/>
+							<input type="hidden" name="fieldToBeUpdated" value="name"/>
 							<?php echo e(csrf_field()); ?>
 
 							<label class="col-xs-3 text-right" for="name">Your Name</label>
@@ -44,6 +46,80 @@
 								<div class="alert alert-success">
 									<ul>
 							            <li><?php echo e(Session('nameChangeSuccess')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Password
+					</div>
+					<div class="panel-body">
+						<!-- Password -->
+						<form role="form" action="<?php echo e(action('UserController@update', ['id' => Auth::user()->id])); ?>" method="POST">
+							<input type="hidden" name="_method" value="put"/>
+							<input type="hidden" name="fieldToBeUpdated" value="password"/>
+							<?php echo e(csrf_field()); ?>
+
+							<!-- Current Password -->
+							<div class="col-xs-12 quarter-margin-top">
+								<label class="col-xs-4 text-right" for="oldPassword">Current Password</label>
+								<div class="col-xs-8">
+									<input name="oldPassword" id="oldPassword" type="password" class="form-control<?php echo e($errors->has('oldPassword') ? ' has-error' : ''); ?>" 
+									placeholder="Your Current Password" maxlength="64">
+								</div>
+							</div>
+
+							<!-- New Password 1 -->
+							<div class="col-xs-12 quarter-margin-top">
+								<label class="col-xs-4 text-right" for="password">New Password</label>
+								<div class="col-xs-8">
+									<input name="password" id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' has-error' : ''); ?>" 
+									placeholder="Your New Password" maxlength="64">
+								</div>
+							</div>
+
+							<!-- New Password 2 -->
+							<div class="col-xs-12 quarter-margin-top">
+								<label class="col-xs-4 text-right" for="password_confirmation">New Password Again</label>
+								<div class="col-xs-8">
+									<input name="password_confirmation" id="password_confirmation" type="password" class="form-control<?php echo e($errors->has('password') ? ' has-error' : ''); ?>" 
+									placeholder="Your New Password Again" maxlength="64">
+								</div>
+							</div>
+
+							<div class="col-xs-12 quarter-margin-top pull-right">
+								<div class="col-xs-4 col-xs-offset-4">
+									<button type="submit" class="btn btn-default">Change Password</button>
+								</div>
+							</div>
+						</form>
+						<?php if($errors->has('currentPassword') || $errors->has('password') || $errors->has('password_confirmation')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger">
+									<ul>
+							            <?php foreach($errors->all() as $error): ?>
+							                <li><?php echo e($error); ?></li>
+							            <?php endforeach; ?>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if(Session::has('passwordChangeSuccess')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-success">
+									<ul>
+							            <li><?php echo e(Session('passwordChangeSuccess')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php elseif(Session::has('passwordChangeFailure')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger">
+									<ul>
+							            <li><?php echo e(Session('passwordChangeFailure')); ?></li>
 							        </ul>
 								</div>
 							</div>
