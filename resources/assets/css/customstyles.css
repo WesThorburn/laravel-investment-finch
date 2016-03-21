@@ -111,6 +111,11 @@ th{
 	color:green;
 }
 
+.has-error{
+	border:1px solid #a94442;
+	background-color:#FFC3BD;
+}
+
 .hidden{
 	display:none;
 }

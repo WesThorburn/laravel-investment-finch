@@ -73,12 +73,15 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         if(\Auth::user()->id == $id){
+            $this->validate($request, [
+                'name' => 'required|string|max:64'
+            ]);
+        
             $user = User::where('id', $id)->first();
             $user->name = $request->name;
             $user->save();
             return redirect('/user/account');
         }
-        return "bal";
     }
 
     /**

@@ -22,12 +22,24 @@
 							{{ csrf_field() }}
 							<label class="col-xs-3 text-right" for="name">Your Name</label>
 							<div class="col-xs-7">
-								<input name="name" id="name" type="text" class="form-control" placeholder="Your Name" value="{{Auth::user()->name}}">
+								<input name="name" id="name" type="text" class="form-control{{ $errors->has('name') ? ' has-error' : ''}}" 
+								placeholder="Your Name" value="{{Auth::user()->name}}" maxlength="64">
 							</div>
 							<div class="col-xs-2 pull-left">
 								<button type="submit" class="btn btn-default">Save</button>
 							</div>
 						</form>
+						@if($errors->has('name'))
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger">
+									<ul>
+							            @foreach ($errors->all() as $error)
+							                <li>{{ $error }}</li>
+							            @endforeach
+							        </ul>
+								</div>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>
