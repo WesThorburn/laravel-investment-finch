@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	{{ Auth::user()->name }}'s' Account
+	{{ Auth::user()->name }}'s Account
 @stop
 
 @section('body')
@@ -36,6 +36,15 @@
 							            @foreach ($errors->all() as $error)
 							                <li>{{ $error }}</li>
 							            @endforeach
+							        </ul>
+								</div>
+							</div>
+						@endif
+						@if(Session::has('nameChangeSuccess'))
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-success">
+									<ul>
+							            <li>{{ Session('nameChangeSuccess') }}</li>
 							        </ul>
 								</div>
 							</div>

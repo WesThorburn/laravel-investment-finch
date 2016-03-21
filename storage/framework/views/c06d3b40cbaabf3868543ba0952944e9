@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('title'); ?>
-	<?php echo e(Auth::user()->name); ?>'s' Account
+	<?php echo e(Auth::user()->name); ?>'s Account
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('body'); ?>
@@ -35,6 +35,15 @@
 							            <?php foreach($errors->all() as $error): ?>
 							                <li><?php echo e($error); ?></li>
 							            <?php endforeach; ?>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if(Session::has('nameChangeSuccess')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-success">
+									<ul>
+							            <li><?php echo e(Session('nameChangeSuccess')); ?></li>
 							        </ul>
 								</div>
 							</div>

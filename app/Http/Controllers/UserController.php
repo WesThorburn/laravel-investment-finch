@@ -76,12 +76,17 @@ class UserController extends Controller
             $this->validate($request, [
                 'name' => 'required|string|max:64'
             ]);
-        
+
             $user = User::where('id', $id)->first();
-            $user->name = $request->name;
-            $user->save();
-            return redirect('/user/account');
+
+            if($user->name != $request->name){
+                //Redirect if name is unchanged
+                $user->name = $request->name;
+                $user->save();
+                \Session::flash('nameChangeSuccess', 'Name was changed successfully!');
+            }
         }
+        return redirect('/user/account');
     }
 
     /**
