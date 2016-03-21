@@ -85,7 +85,7 @@ class UserController extends Controller
                     //Redirect if name is unchanged
                     $user->name = $request->name;
                     $user->save();
-                    \Session::flash('nameChangeSuccess', 'Name was changed successfully!');
+                    \Session::flash('nameChangeSuccess', 'Your Name was changed successfully!');
                 }
             }
             elseif($request->fieldToBeUpdated == 'password'){
@@ -101,7 +101,7 @@ class UserController extends Controller
                     \Session::flash('passwordChangeSuccess', 'Your Password was changed successfully!');
                 }
                 else{
-                    \Session::flash('passwordChangeFailure', "The 'current password' you provided was incorrect!");
+                    \Session::flash('passwordChangeFailure', "The 'Current Password' you provided was incorrect!");
                 }
             }
         }

@@ -32,7 +32,7 @@
 						</form>
 						<?php if($errors->has('name')): ?>
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            <?php foreach($errors->all() as $error): ?>
 							                <li><?php echo e($error); ?></li>
@@ -43,7 +43,7 @@
 						<?php endif; ?>
 						<?php if(Session::has('nameChangeSuccess')): ?>
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-success">
+								<div class="alert alert-success three-quarter-margin-bottom">
 									<ul>
 							            <li><?php echo e(Session('nameChangeSuccess')); ?></li>
 							        </ul>
@@ -98,7 +98,7 @@
 						</form>
 						<?php if($errors->has('currentPassword') || $errors->has('password') || $errors->has('password_confirmation')): ?>
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            <?php foreach($errors->all() as $error): ?>
 							                <li><?php echo e($error); ?></li>
@@ -109,7 +109,7 @@
 						<?php endif; ?>
 						<?php if(Session::has('passwordChangeSuccess')): ?>
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-success">
+								<div class="alert alert-success three-quarter-margin-bottom">
 									<ul>
 							            <li><?php echo e(Session('passwordChangeSuccess')); ?></li>
 							        </ul>
@@ -117,7 +117,7 @@
 							</div>
 						<?php elseif(Session::has('passwordChangeFailure')): ?>
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            <li><?php echo e(Session('passwordChangeFailure')); ?></li>
 							        </ul>

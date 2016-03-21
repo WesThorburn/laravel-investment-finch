@@ -33,7 +33,7 @@
 						</form>
 						@if($errors->has('name'))
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            @foreach ($errors->all() as $error)
 							                <li>{{ $error }}</li>
@@ -44,7 +44,7 @@
 						@endif
 						@if(Session::has('nameChangeSuccess'))
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-success">
+								<div class="alert alert-success three-quarter-margin-bottom">
 									<ul>
 							            <li>{{ Session('nameChangeSuccess') }}</li>
 							        </ul>
@@ -98,7 +98,7 @@
 						</form>
 						@if($errors->has('currentPassword') || $errors->has('password') || $errors->has('password_confirmation'))
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            @foreach ($errors->all() as $error)
 							                <li>{{ $error }}</li>
@@ -109,7 +109,7 @@
 						@endif
 						@if(Session::has('passwordChangeSuccess'))
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-success">
+								<div class="alert alert-success three-quarter-margin-bottom">
 									<ul>
 							            <li>{{ Session('passwordChangeSuccess') }}</li>
 							        </ul>
@@ -117,7 +117,7 @@
 							</div>
 						@elseif(Session::has('passwordChangeFailure'))
 							<div class="col-xs-12 quarter-margin-top">
-								<div class="alert alert-danger">
+								<div class="alert alert-danger three-quarter-margin-bottom">
 									<ul>
 							            <li>{{ Session('passwordChangeFailure') }}</li>
 							        </ul>
