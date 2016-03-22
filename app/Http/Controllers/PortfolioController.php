@@ -38,10 +38,20 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'portfolioName' => 'required|string|max:64'
+        ]);
+
+        if(Portfolio::where(['user_id' => \Auth::user()->id, 'portfolio_name' => $request->portfolioName])->first()){
+            \Session::flash('portfolioNameError', 'You already have a portfolio with the same name!');
+            return redirect('user/portfolio');
+        }
+
         $portfolio = new Portfolio;
         $portfolio->user_id = \Auth::user()->id;
         $portfolio->portfolio_name = $request->portfolioName;
         $portfolio->save();
+        \Session::flash('portfolioCreateSuccess', 'Your Portfolio was created successfully!');
         return redirect('user/portfolio');
     }
 

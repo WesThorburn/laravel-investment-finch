@@ -48,6 +48,14 @@
 							        </ul>
 								</div>
 							</div>
+						<?php elseif(Session::has('portfolioNameError')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('portfolioNameError')); ?></li>
+							        </ul>
+								</div>
+							</div>
 						<?php endif; ?>
 					</div>
 				</div>

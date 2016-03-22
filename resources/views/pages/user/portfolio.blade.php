@@ -49,6 +49,14 @@
 							        </ul>
 								</div>
 							</div>
+						@elseif(Session::has('portfolioNameError'))
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <li>{{ Session('portfolioNameError') }}</li>
+							        </ul>
+								</div>
+							</div>
 						@endif
 					</div>
 				</div>
