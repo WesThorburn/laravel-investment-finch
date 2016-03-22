@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Models\Portfolio;
 use App\Http\Controllers\Controller;
 
 class PortfolioController extends Controller
@@ -37,7 +38,11 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        return "Reached Store";
+        $portfolio = new Portfolio;
+        $portfolio->user_id = \Auth::user()->id;
+        $portfolio->portfolio_name = $request->portfolioName;
+        $portfolio->save();
+        return redirect('user/portfolio');
     }
 
     /**
