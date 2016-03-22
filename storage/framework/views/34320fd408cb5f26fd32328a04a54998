@@ -7,6 +7,52 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('body'); ?>
-	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Create a portfolio
+					</div>
+					<div class="panel-body">
+						<!-- Name -->
+						<form role="form" action="<?php echo e(action('PortfolioController@store')); ?>" method="POST">
+							<?php echo e(csrf_field()); ?>
+
+							<div class="col-xs-12">
+								<label for="name">Portfolio Name</label>
+							</div>
+							<div class="col-xs-12">
+								<input name="portfolioName" id="portfolioName" type="text" class="form-control<?php echo e($errors->has('portfolioName') ? ' has-error' : ''); ?>" placeholder="Portfolio Name" maxlength="64">
+							</div>
+							<div class="col-xs-12 half-margin-top half-margin-bottom">
+								<button type="submit" class="btn btn-default">Create</button>
+							</div>
+						</form>
+						<?php if($errors->has('portfolioName')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <?php foreach($errors->all() as $error): ?>
+							                <li><?php echo e($error); ?></li>
+							            <?php endforeach; ?>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if(Session::has('portfolioCreateSuccess')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-success three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('portfolioCreateSuccess')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

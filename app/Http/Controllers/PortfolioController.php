@@ -26,7 +26,7 @@ class PortfolioController extends Controller
      */
     public function create()
     {
-        //
+    
     }
 
     /**
@@ -37,7 +37,7 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "Reached Store";
     }
 
     /**
