@@ -17,9 +17,9 @@
 					<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="portfolio_table">
 						<tbody data-link="row" class="rowlink">
 							<?php foreach($portfolios as $portfolio): ?>
-								<tr <?php if($portfolio->portfolio_name == $selectedPortfolio): ?> class="table-row-active" <?php endif; ?>>
+								<tr <?php if($portfolio->id == $selectedPortfolio): ?> class="table-row-active" <?php endif; ?>>
 									<td>
-										<a href="portfolio/<?php echo e($portfolio->id); ?>"><?php echo e($portfolio->portfolio_name); ?></a>
+										<a href="<?php echo e($portfolio->id); ?>"><?php echo e($portfolio->portfolio_name); ?></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

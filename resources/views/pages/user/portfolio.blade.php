@@ -19,9 +19,9 @@
 					<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="portfolio_table">
 						<tbody data-link="row" class="rowlink">
 							@foreach($portfolios as $portfolio)
-								<tr @if($portfolio->portfolio_name == $selectedPortfolio) class="table-row-active" @endif>
+								<tr @if($portfolio->id == $selectedPortfolio) class="table-row-active" @endif>
 									<td>
-										<a href="portfolio/{{$portfolio->id}}">{{$portfolio->portfolio_name}}</a>
+										<a href="{{$portfolio->id}}">{{$portfolio->portfolio_name}}</a>
 									</td>
 								</tr>
 							@endforeach
