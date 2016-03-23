@@ -17,7 +17,12 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        return redirect('user/portfolio/'.Portfolio::where('user_id', \Auth::user()->id)->first()->pluck('id'));
+        $userPortfolios = Portfolio::where('user_id', \Auth::user()->id)->get();
+        if($userPortfolios->count() > 0){
+            return redirect('user/portfolio/'.$userPortfolios->first()->pluck('id'));
+        }
+        return redirect('user/portfolio/0');
+        
     }
 
     /**
@@ -47,12 +52,15 @@ class PortfolioController extends Controller
             return redirect('user/portfolio');
         }
 
-        $portfolio = new Portfolio;
-        $portfolio->user_id = \Auth::user()->id;
-        $portfolio->portfolio_name = $request->portfolioName;
-        $portfolio->save();
+        $id = \DB::table('portfolios')->insertGetId([
+            'user_id' => \Auth::user()->id,
+            'portfolio_name' => $request->portfolioName,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
+
         \Session::flash('portfolioCreateSuccess', 'Your Portfolio was created successfully!');
-        return redirect('user/portfolio');
+        return redirect('user/portfolio/'.$id);
     }
 
     /**
