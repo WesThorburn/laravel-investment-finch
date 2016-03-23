@@ -17,7 +17,10 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        return view('pages.user.portfolio');
+        return view('pages.user.portfolio')->with([            
+            'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
+            'selectedPortfolio' => Portfolio::where('user_id', \Auth::user()->id)->first()->pluck('portfolio_name')
+        ]);
     }
 
     /**

@@ -14,6 +14,26 @@
 			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
+						Your Portfolios
+					</div>
+					<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="portfolio_table">
+						<tbody data-link="row" class="rowlink">
+							@foreach($portfolios as $portfolio)
+								<tr @if($portfolio->portfolio_name == $selectedPortfolio) class="table-row-active" @endif>
+									<td>
+										<a href="portfolio/{{$portfolio->id}}">{{$portfolio->portfolio_name}}</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
 						Create a portfolio
 					</div>
 					<div class="panel-body">
