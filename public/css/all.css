@@ -7158,12 +7158,20 @@ th{
 	padding-bottom:0px;
 }
 
-.1px-padding-left-right [class*="-2"]{
+.single-px-padding-left-right{
 	padding-left:1px !important;
 	padding-right:1px !important;
 }
 
-.5px-padding-left-right{
+.single-px-padding-left{
+	padding-left:1px !important;
+}
+
+.single-px-padding-right{
+	padding-right:1px !important;
+}
+
+.five-px-padding-left-right{
 	padding-left:5px !important;
 	padding-right:5px !important;
 }
