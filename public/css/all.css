@@ -7158,7 +7158,7 @@ th{
 	padding-bottom:0px;
 }
 
-.1px-padding-left-right{
+.1px-padding-left-right [class*="-2"]{
 	padding-left:1px !important;
 	padding-right:1px !important;
 }
