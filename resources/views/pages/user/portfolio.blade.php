@@ -81,6 +81,54 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Add a Stock to this Portfolio
+					</div>
+					<div class="panel-body">
+						<!-- Add Stock to Portfolio -->
+						<form role="form" action="{{action('PortfolioController@update', ['id' => $selectedPortfolio])}}" method="POST">
+							<input type="hidden" name="_method" value="put"/>
+							{{ csrf_field() }}
+							<div class="row">
+								<label class="col-xs-2 1px-padding-left-right" for="stockCode">Stock Code</label>
+								<label class="col-xs-2 1px-padding-left-right" for="purchasePrice">Purchase Price</label>
+								<label class="col-xs-2 1px-padding-left-right" for="purchaseQty">Quantity</label>
+								<label class="col-xs-2 1px-padding-left-right" for="brokerage">Brokerage</label>
+								<label class="col-xs-2 1px-padding-left-right" for="date">Purchase Date</label>
+							</div>
+							<div class="row">
+								<div class="col-xs-2 1px-padding-left-right">
+									<input name="stockCode" id="stockCode" type="text" class="form-control{{ $errors->has('stockCode') ? ' has-error' : ''}}" 
+									placeholder="Code" maxlength="3">
+								</div>
+								<div class="col-xs-2 1px-padding-left-right">
+									<div class="input-group">
+										<div class="input-group-addon">$</div>
+										<input name="purchasePrice" id="purchasePrice" type="text" class="form-control{{ $errors->has('purchasePrice') ? ' has-error' : ''}}">
+									</div>
+								</div>
+								<div class="col-xs-2 1px-padding-left-right">
+									<input name="brokerage" id="brokerage" type="text" class="form-control{{ $errors->has('brokerage') ? ' has-error' : ''}}" >
+								</div>
+								<div class="col-xs-2 1px-padding-left-right">
+									<div class="input-group">
+										<div class="input-group-addon">$</div>
+										<input name="brokerage" id="brokerage" type="text" class="form-control{{ $errors->has('brokerage') ? ' has-error' : ''}}">
+									</div>
+								</div>
+								<div class="col-xs-2 1px-padding-left-right">
+									<input name="date" id="date" type="date" class="form-control{{ $errors->has('date') ? ' has-error' : ''}}" >
+								</div>
+								<div class="col-xs-1 1px-padding-left-right">
+									<button type="submit" class="btn btn-default">Add</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 @stop
