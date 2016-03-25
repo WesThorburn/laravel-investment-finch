@@ -97,6 +97,14 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'stockCode' => 'required|string|max:3',
+            'purchasePrice' => 'required|regex:/^\d*(\.\d{1,3})?$/',
+            'quantity' => 'required|integer',
+            'brokerage' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+            'date' => 'required|date'
+        ]);
+
         //Check portfolio belongs to current user
         if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
             \DB::table('portfolio_stocks')->insert([

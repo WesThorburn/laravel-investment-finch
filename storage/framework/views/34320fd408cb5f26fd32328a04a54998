@@ -43,7 +43,7 @@
 								<label for="name">Portfolio Name</label>
 							</div>
 							<div class="col-xs-12">
-								<input name="portfolioName" id="portfolioName" type="text" class="form-control<?php echo e($errors->has('portfolioName') ? ' has-error' : ''); ?>" placeholder="Portfolio Name" maxlength="64">
+								<input name="portfolioName" id="portfolioName" type="text" class="form-control<?php echo e($errors->has('portfolioName') ? ' has-error' : ''); ?>" placeholder="Portfolio Name" maxlength="64" value=<?php echo e(old('portfolioName')); ?>>
 							</div>
 							<div class="col-xs-12 half-margin-top half-margin-bottom">
 								<button type="submit" class="btn btn-default">Create</button>
@@ -101,31 +101,42 @@
 							<div class="row">
 								<div class="col-xs-2 single-px-padding-right">
 									<input name="stockCode" id="stockCode" type="text" class="form-control<?php echo e($errors->has('stockCode') ? ' has-error' : ''); ?>" 
-									placeholder="Code" maxlength="3">
+									placeholder="Code" maxlength="3" value=<?php echo e(old('stockCode')); ?>>
 								</div>
 								<div class="col-xs-2 single-px-padding-left-right">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input name="purchasePrice" id="purchasePrice" type="text" class="form-control<?php echo e($errors->has('purchasePrice') ? ' has-error' : ''); ?>">
+										<input name="purchasePrice" id="purchasePrice" type="text" class="form-control<?php echo e($errors->has('purchasePrice') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchasePrice')); ?>>
 									</div>
 								</div>
 								<div class="col-xs-2 single-px-padding-left-right">
-									<input name="quantity" id="quantity" type="text" class="form-control<?php echo e($errors->has('quantity') ? ' has-error' : ''); ?>" >
+									<input name="quantity" id="quantity" type="text" class="form-control<?php echo e($errors->has('quantity') ? ' has-error' : ''); ?>" value=<?php echo e(old('quantity')); ?>>
 								</div>
 								<div class="col-xs-2 single-px-padding-left-right">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>">
+										<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('brokerage')); ?>>
 									</div>
 								</div>
 								<div class="col-xs-3 single-px-padding-left-right">
-									<input name="date" id="date" type="date" class="form-control<?php echo e($errors->has('date') ? ' has-error' : ''); ?>" >
+									<input name="date" id="date" type="date" class="form-control<?php echo e($errors->has('date') ? ' has-error' : ''); ?>" value=<?php echo e(old('date')); ?>>
 								</div>
 								<div class="col-xs-1 single-px-padding-left">
 									<button type="submit" class="btn btn-default">Add</button>
 								</div>
 							</div>
 						</form>
+						<?php if($errors->has('stockCode') || $errors->has('purchasePrice') || $errors->has('quantity') || $errors->has('brokerage') || $errors->has('date')): ?>
+							<div class="col-xs-12 default-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <?php foreach($errors->all() as $error): ?>
+							                <li><?php echo e($error); ?></li>
+							            <?php endforeach; ?>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
 						<?php if(Session::has('addStockToPortfolioSuccess')): ?>
 							<div class="col-xs-12 default-margin-top">
 								<div class="alert alert-success three-quarter-margin-bottom">
