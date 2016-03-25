@@ -49,7 +49,7 @@ class PortfolioController extends Controller
 
         if(Portfolio::where(['user_id' => \Auth::user()->id, 'portfolio_name' => $request->portfolioName])->first()){
             \Session::flash('portfolioNameError', 'You already have a portfolio with the same name!');
-            return redirect('user/portfolio');
+            return redirect()->back();
         }
 
         $id = \DB::table('portfolios')->insertGetId([
@@ -97,7 +97,11 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        //Check portfolio belongs to current user
+        if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
+            
+        }
+
     }
 
     /**
