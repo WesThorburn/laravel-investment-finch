@@ -126,6 +126,23 @@
 								</div>
 							</div>
 						</form>
+						@if(Session::has('addStockToPortfolioSuccess'))
+							<div class="col-xs-12 default-margin-top">
+								<div class="alert alert-success three-quarter-margin-bottom">
+									<ul>
+							            <li>{{ Session('addStockToPortfolioSuccess') }}</li>
+							        </ul>
+								</div>
+							</div>
+						@elseif(Session::has('addStockToPortfolioError'))
+							<div class="col-xs-12 default-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <li>{{ Session('addStockToPortfolioError') }}</li>
+							        </ul>
+								</div>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>

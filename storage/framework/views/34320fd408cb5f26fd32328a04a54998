@@ -126,6 +126,23 @@
 								</div>
 							</div>
 						</form>
+						<?php if(Session::has('addStockToPortfolioSuccess')): ?>
+							<div class="col-xs-12 default-margin-top">
+								<div class="alert alert-success three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('addStockToPortfolioSuccess')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php elseif(Session::has('addStockToPortfolioError')): ?>
+							<div class="col-xs-12 default-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('addStockToPortfolioError')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

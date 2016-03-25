@@ -101,7 +101,8 @@ class PortfolioController extends Controller
         if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
             
         }
-
+        \Session::flash('addStockToPortfolioError', 'There was an error adding this stock to your portfolio!');
+        return redirect()->back();
     }
 
     /**
