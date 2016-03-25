@@ -110,7 +110,7 @@
 									</div>
 								</div>
 								<div class="col-xs-2 single-px-padding-left-right">
-									<input name="brokerage" id="brokerage" type="text" class="form-control{{ $errors->has('brokerage') ? ' has-error' : ''}}" >
+									<input name="quantity" id="quantity" type="text" class="form-control{{ $errors->has('quantity') ? ' has-error' : ''}}" >
 								</div>
 								<div class="col-xs-2 single-px-padding-left-right">
 									<div class="input-group">

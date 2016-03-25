@@ -99,8 +99,21 @@ class PortfolioController extends Controller
     {
         //Check portfolio belongs to current user
         if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
-            
+            \DB::table('portfolio_stocks')->insert([
+                'portfolio_id' => $id,
+                'stock_code' => $request->stockCode,
+                'purchase_price' => $request->purchasePrice,
+                'purchase_qty' => $request->quantity,
+                'brokerage' => $request->brokerage,
+                'purchase_date' => $request->date,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+
+            \Session::flash('addStockToPortfolioSuccess', $request->stockCode.' was added to your Portfolio successfully!');
+            return redirect('user/portfolio/'.$id);
         }
+
         \Session::flash('addStockToPortfolioError', 'There was an error adding this stock to your portfolio!');
         return redirect()->back();
     }
