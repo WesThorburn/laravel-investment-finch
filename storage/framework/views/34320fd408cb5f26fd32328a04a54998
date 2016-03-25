@@ -115,13 +115,13 @@
 								<div class="col-xs-2 single-px-padding-left-right">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input name="brokerage" id="brokerage" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>">
+										<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>">
 									</div>
 								</div>
 								<div class="col-xs-3 single-px-padding-left-right">
 									<input name="date" id="date" type="date" class="form-control<?php echo e($errors->has('date') ? ' has-error' : ''); ?>" >
 								</div>
-								<div class="col-xs-1 single-px-padding-left-right">
+								<div class="col-xs-1 single-px-padding-left">
 									<button type="submit" class="btn btn-default">Add</button>
 								</div>
 							</div>
