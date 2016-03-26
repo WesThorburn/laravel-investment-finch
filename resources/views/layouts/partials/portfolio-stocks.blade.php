@@ -32,10 +32,26 @@
 					<td>{{ number_format($stock->purchase_price, 2) }}</td>
 					<td>{{ number_format($stock->last_trade, 2) }}</td>
 					<td>{{ number_format(($currentValue), 2) }}</td>
-					<td>{{ number_format($gainLoss, 2) }}</td>
-					<td>{{ number_format($percentGainLoss, 2) }}</td>
-					<td>{{ number_format($stock->day_change, 2) }}</td>
-					<td>{{ number_format($valueChange, 2) }}</td>
+					<td @if($gainLoss < 0) class="color-red" 
+						@elseif($gainLoss > 0) class="color-green"
+						@endif>
+						{{ number_format($gainLoss, 2) }}
+					</td>
+					<td @if($percentGainLoss < 0) class="color-red" 
+						@elseif($percentGainLoss > 0) class="color-green"
+						@endif>
+						{{ number_format($percentGainLoss, 2) }}
+					</td>
+					<td @if($stock->day_change < 0) class="color-red" 
+						@elseif($stock->day_change > 0) class="color-green"
+						@endif>
+						{{ number_format($stock->day_change, 2) }}
+					</td>
+					<td @if($valueChange < 0) class="color-red" 
+						@elseif($valueChange > 0) class="color-green"
+						@endif>
+						{{ number_format($valueChange, 2) }}
+					</td>
 				</tr>
 			@endforeach
 	    </tbody>
