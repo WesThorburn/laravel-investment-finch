@@ -19,7 +19,7 @@
 					<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="portfolio_table">
 						<tbody data-link="row" class="rowlink">
 							@foreach($portfolios as $portfolio)
-								<tr @if($portfolio->id == $selectedPortfolio) class="table-row-active" @endif>
+								<tr @if($portfolio->id == $selectedPortfolio->id) class="table-row-active" @endif>
 									<td>
 										<a href="{{$portfolio->id}}">{{$portfolio->portfolio_name}}</a>
 									</td>
@@ -28,6 +28,9 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+			<div class="col-md-8">
+				@include('layouts.partials.portfolio-stocks')
 			</div>
 		</div>
 		<div class="row">
@@ -88,7 +91,7 @@
 					</div>
 					<div class="panel-body">
 						<!-- Add Stock to Portfolio -->
-						<form role="form" action="{{action('PortfolioController@update', ['id' => $selectedPortfolio])}}" method="POST">
+						<form role="form" action="{{action('PortfolioController@update', ['id' => $selectedPortfolio->id])}}" method="POST">
 							<input type="hidden" name="_method" value="put"/>
 							{{ csrf_field() }}
 							<div class="row">
