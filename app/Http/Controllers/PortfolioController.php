@@ -75,8 +75,19 @@ class PortfolioController extends Controller
             'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
             'selectedPortfolio' => Portfolio::select('id', 'portfolio_name')->where('id', $id)->first(),
             'stocksInSelectedPortfolio' => \DB::table('portfolio_stocks')
-                ->select('portfolio_id', 'stock_code', 'purchase_price', 'purchase_qty', 'brokerage', 'purchase_date')
-                ->where('portfolio_id', $id)
+                ->join('stock_metrics', 'portfolio_stocks.stock_code', '=', 'stock_metrics.stock_code')
+                ->select(
+                    'portfolio_stocks.portfolio_id', 
+                    'portfolio_stocks.stock_code', 
+                    'portfolio_stocks.purchase_price', 
+                    'portfolio_stocks.purchase_qty', 
+                    'portfolio_stocks.brokerage', 
+                    'portfolio_stocks.purchase_date',
+                    'stock_metrics.last_trade',
+                    'stock_metrics.percent_change',
+                    'stock_metrics.day_change'
+                    )
+                ->where('portfolio_stocks.portfolio_id', $id)
                 ->get()
         ]);
     }
