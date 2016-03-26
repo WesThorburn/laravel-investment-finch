@@ -16,18 +16,26 @@
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
 		    @foreach($stocksInSelectedPortfolio as $stock)
+		    	<!-- Calculate Portfolio row values -->
+		    	<?php 
+		    		$currentValue = $stock->last_trade*$stock->purchase_qty; 
+		    		$purchaseValue = $stock->purchase_price*$stock->purchase_qty+$stock->brokerage;
+		    		$gainLoss = $currentValue-$purchaseValue;
+		    		$percentGainLoss = 100/$purchaseValue*$gainLoss;
+		    		$valueChange = $stock->purchase_qty*$stock->day_change;
+		    	?>
 				<tr>
 					<td>
 						{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 					</td>
 					<td>{{ number_format($stock->purchase_qty) }}</td>
-					<td>${{ number_format($stock->purchase_price, 2) }}</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>{{ number_format($stock->purchase_price, 2) }}</td>
+					<td>{{ number_format($stock->last_trade, 2) }}</td>
+					<td>{{ number_format(($currentValue), 2) }}</td>
+					<td>{{ number_format($gainLoss, 2) }}</td>
+					<td>{{ number_format($percentGainLoss, 2) }}</td>
+					<td>{{ number_format($stock->day_change, 2) }}</td>
+					<td>{{ number_format($valueChange, 2) }}</td>
 				</tr>
 			@endforeach
 	    </tbody>

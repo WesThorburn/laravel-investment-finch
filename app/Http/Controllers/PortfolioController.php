@@ -84,7 +84,6 @@ class PortfolioController extends Controller
                     'portfolio_stocks.brokerage', 
                     'portfolio_stocks.purchase_date',
                     'stock_metrics.last_trade',
-                    'stock_metrics.percent_change',
                     'stock_metrics.day_change'
                     )
                 ->where('portfolio_stocks.portfolio_id', $id)
