@@ -19,7 +19,7 @@ class PortfolioController extends Controller
     {
         $userPortfolios = Portfolio::where('user_id', \Auth::user()->id)->get();
         if($userPortfolios->count() > 0){
-            return redirect('user/portfolio/'.$userPortfolios->first()->pluck('id'));
+            return redirect('user/portfolio/'.$userPortfolios->first()->id);
         }
         return redirect('user/portfolio/0');
         
