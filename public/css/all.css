@@ -7251,6 +7251,11 @@ th{
 	background-color:#D9E0DC;
 }
 
+.table-subtotals-row>th{
+	border-top:2px solid #263338 !important;
+	border-bottom:1px solid #263338 !important;
+}
+
 .navbar {
 	border-radius:0px;
 	background-image:none;

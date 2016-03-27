@@ -64,7 +64,7 @@
 				</tr>
 			@endforeach
 			<tfoot>
-				<tr>
+				<tr class="table-subtotals-row">
 					<th><b>SubTotals:</b></th>
 					<th></th>
 					<th></th>
