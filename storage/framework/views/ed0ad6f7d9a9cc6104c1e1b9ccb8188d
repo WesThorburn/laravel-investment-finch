@@ -112,25 +112,40 @@
 	                }, 0 );
 	            }
 
-	            var totalGainLoss = function(totalCurrentValue, totalCurrentGainLoss){
+	            var getTotalPercentGainLoss = function(totalCurrentValue, totalCurrentGainLoss){
 	            	return (100/(totalCurrentValue-totalCurrentGainLoss)*totalCurrentGainLoss).toFixed(2);
+	            }
+
+	            var getClassForDisplay = function(value){
+	            	if(value > 0){
+	            		return "color-green";
+	            	}
+	            	else if(value < 0){
+	            		return "color-red";
+	            	}
+	            	else{
+	            		return "";
+	            	}
+
 	            }
 
 	            var totalCurrentValue = columnTotal(4, api);
 	            var totalCurrentGainLoss = columnTotal(5, api);
+	            var totalPercentGainLoss = getTotalPercentGainLoss(totalCurrentValue, totalCurrentGainLoss);
+	            var totalCurrentDayGainLoss = columnTotal(8, api);
 	 
 	            // Update footer
 	            $( api.column( 4 ).footer() ).html(
 	                '$'+ totalCurrentValue.toLocaleString()
 	            );
 	            $( api.column( 5 ).footer() ).html(
-	                '$'+ totalCurrentGainLoss.toLocaleString()
+	                '<div class='+ getClassForDisplay(totalCurrentGainLoss) +'>$'+ totalCurrentGainLoss.toLocaleString()+'</div>'
 	            );
 	            $( api.column( 6 ).footer() ).html(
-	                totalGainLoss(totalCurrentValue, totalCurrentGainLoss).toLocaleString()+'%'
+	                '<div class='+ getClassForDisplay(totalPercentGainLoss) +'>'+ totalPercentGainLoss.toLocaleString()+'%</div>'
 	            );
 	            $( api.column( 8 ).footer() ).html(
-	                '$'+ columnTotal(8, api).toLocaleString()
+	                '<div class='+ getClassForDisplay(totalCurrentDayGainLoss) +'>$'+ totalCurrentDayGainLoss.toLocaleString()+'</div>'
 	            );
         	}
 		});
