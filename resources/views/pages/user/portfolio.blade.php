@@ -11,7 +11,7 @@
 @section('body')
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Your Portfolios
@@ -77,12 +77,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-9">
 				@include('layouts.partials.portfolio-stocks')
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Add a Stock to this Portfolio

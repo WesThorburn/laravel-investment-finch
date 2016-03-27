@@ -122,7 +122,6 @@
 	            	else{
 	            		return "";
 	            	}
-
 	            }
 
 	            var totalCurrentValue = columnTotal(4, api);
