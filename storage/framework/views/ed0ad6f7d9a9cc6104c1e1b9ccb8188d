@@ -15,6 +15,11 @@
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
+	    	<?php 
+	    		//Initialize total value variables
+	    		$totalValue = 0;
+	    		$totalGainLoss = 0;
+	    	?>
 		    <?php foreach($stocksInSelectedPortfolio as $stock): ?>
 		    	<!-- Calculate Portfolio row values -->
 		    	<?php 
@@ -23,6 +28,10 @@
 		    		$gainLoss = $currentValue-$purchaseValue;
 		    		$percentGainLoss = 100/$purchaseValue*$gainLoss;
 		    		$valueChange = $stock->purchase_qty*$stock->day_change;
+
+		    		//Totals
+		    		$totalValue = $totalValue+$currentValue;
+		    		$totalGainLoss = $totalGainLoss+$gainLoss;
 		    	?>
 				<tr>
 					<td>
@@ -58,6 +67,19 @@
 					</td>
 				</tr>
 			<?php endforeach; ?>
+			<tfoot>
+				<tr>
+					<th><b>SubTotals:</b></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</tfoot>
 	    </tbody>
 	</table>
 </div>
@@ -68,7 +90,49 @@
 			"dom": 'tp',
 			"pageLength": 15,
 			"lengthMenu": [5,10,15,20,50,100],
-			"stateSave": true
+			"stateSave": true,
+			"footerCallback": function () {
+	            var api = this.api();
+	 
+	            // Remove the formatting to get integer data for summation
+	            var intVal = function ( i ) {
+	                return typeof i === 'string' ?
+	                    i.replace(/[\$,]/g, '')*1 :
+	                    typeof i === 'number' ?
+	                        i : 0;
+	            };
+	 
+	            // Total over all pages
+	            var columnTotal = function(columnNumber, api){
+	            	return api
+	                .column( columnNumber )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	            }
+
+	            var totalGainLoss = function(totalCurrentValue, totalCurrentGainLoss){
+	            	return (100/(totalCurrentValue-totalCurrentGainLoss)*totalCurrentGainLoss).toFixed(2);
+	            }
+
+	            var totalCurrentValue = columnTotal(4, api);
+	            var totalCurrentGainLoss = columnTotal(5, api);
+	 
+	            // Update footer
+	            $( api.column( 4 ).footer() ).html(
+	                '$'+ totalCurrentValue.toLocaleString()
+	            );
+	            $( api.column( 5 ).footer() ).html(
+	                '$'+ totalCurrentGainLoss.toLocaleString()
+	            );
+	            $( api.column( 6 ).footer() ).html(
+	                totalGainLoss(totalCurrentValue, totalCurrentGainLoss).toLocaleString()+'%'
+	            );
+	            $( api.column( 8 ).footer() ).html(
+	                '$'+ columnTotal(8, api).toLocaleString()
+	            );
+        	}
 		});
 	});
 </script>

@@ -85,27 +85,6 @@
 			<div class="col-md-8 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						{{ $selectedPortfolio->portfolio_name }} Subtotals
-					</div>
-					<table class="table table-striped table-bordered table-condensed table-bordered-only-top-bottom no-margin-top">
-						<tbody>
-							<tr>
-								<th colspan="4"></th>
-								<th>Total Value</th>
-								<th>Total Gain/Loss($)</th>
-								<th>Total Gain/Loss(%)</th>
-								<th>Total Day Change</th>
-								<th>Total Value Change</th>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8 col-md-offset-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
 						Add a Stock to this Portfolio
 					</div>
 					<div class="panel-body">
