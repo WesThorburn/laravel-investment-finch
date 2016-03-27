@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-	<div class="panel-heading"><b>Stocks in {{ $selectedPortfolio->portfolio_name }}</b></div>
+	<div class="panel-heading">Stocks in {{ $selectedPortfolio->portfolio_name }}</div>
 	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="stocks_in_portfolio_table">
 	    <thead>
 	        <tr>
@@ -62,8 +62,8 @@
 	$(document).ready(function(){
 		$('#stocks_in_portfolio_table').DataTable({
 			"dom": 'tp',
-			"pageLength": 10,
-			"lengthMenu": [5,10,20,50,100],
+			"pageLength": 15,
+			"lengthMenu": [5,10,15,20,50,100],
 			"stateSave": true
 		});
 	});
