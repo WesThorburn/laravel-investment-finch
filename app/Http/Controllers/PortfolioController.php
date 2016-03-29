@@ -121,16 +121,23 @@ class PortfolioController extends Controller
 
         //Check portfolio belongs to current user
         if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
-            \DB::table('portfolio_stocks')->insert([
-                'portfolio_id' => $id,
-                'stock_code' => $request->stockCode,
-                'purchase_price' => $request->purchasePrice,
-                'purchase_qty' => $request->quantity,
-                'brokerage' => $request->brokerage,
-                'purchase_date' => $request->date,
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
+            //Check if stock already exists in portfolio
+/*            if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first()){
+                $this->ammendPosition($request, $id);
+            }
+            else{*/
+                //Insert request data
+                \DB::table('portfolio_stocks')->insert([
+                    'portfolio_id' => $id,
+                    'stock_code' => $request->stockCode,
+                    'purchase_price' => (($request->purchasePrice*$request->quantity)+$request->brokerage)$request->quantity,
+                    'purchase_qty' => $request->quantity,
+                    'brokerage' => $request->brokerage,
+                    'purchase_date' => $request->date,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
+            //}
 
             \Session::flash('addStockToPortfolioSuccess', $request->stockCode.' was added to your Portfolio successfully!');
             return redirect('user/portfolio/'.$id);
@@ -140,6 +147,11 @@ class PortfolioController extends Controller
         return redirect()->back();
     }
 
+/*    private function ammendPosition(Request $request, $id){
+        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first();
+        $stockInPortfolio->
+    }
+*/
     /**
      * Remove the specified resource from storage.
      *
