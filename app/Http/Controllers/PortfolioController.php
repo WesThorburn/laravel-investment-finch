@@ -130,7 +130,7 @@ class PortfolioController extends Controller
                 \DB::table('portfolio_stocks')->insert([
                     'portfolio_id' => $id,
                     'stock_code' => $request->stockCode,
-                    'purchase_price' => (($request->purchasePrice*$request->quantity)+$request->brokerage)$request->quantity,
+                    'purchase_price' => (($request->purchasePrice*$request->quantity)+$request->brokerage)/$request->quantity,
                     'purchase_qty' => $request->quantity,
                     'brokerage' => $request->brokerage,
                     'purchase_date' => $request->date,
