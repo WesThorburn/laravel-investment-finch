@@ -122,10 +122,10 @@ class PortfolioController extends Controller
         //Check portfolio belongs to current user
         if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
             //Check if stock already exists in portfolio
-/*            if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first()){
+            if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first()){
                 $this->ammendPosition($request, $id);
             }
-            else{*/
+            else{
                 //Insert request data
                 \DB::table('portfolio_stocks')->insert([
                     'portfolio_id' => $id,
@@ -137,7 +137,7 @@ class PortfolioController extends Controller
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ]);
-            //}
+            }
 
             \Session::flash('addStockToPortfolioSuccess', $request->stockCode.' was added to your Portfolio successfully!');
             return redirect('user/portfolio/'.$id);
@@ -147,11 +147,22 @@ class PortfolioController extends Controller
         return redirect()->back();
     }
 
-/*    private function ammendPosition(Request $request, $id){
+    private function ammendPosition(Request $request, $id){
         $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first();
-        $stockInPortfolio->
+        $thisPurchaseTotal = $request->quantity * $request->purchasePrice + $request->brokerage;
+        $updatedPurchaseQty = $stockInPortfolio->purchase_qty + $request->quantity;
+        $updatedPurchasePrice = ($stockInPortfolio->purchase_price * $stockInPortfolio->purchase_qty + $thisPurchaseTotal)/$updatedPurchaseQty;
+        $updatedBrokerage = $stockInPortfolio->brokerage + $request->brokerage;
+
+        \DB::table('portfolio_stocks')
+            ->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])
+            ->update([
+                'purchase_price' => $updatedPurchasePrice,
+                'purchase_qty' => $updatedPurchaseQty,
+                'brokerage' => $updatedBrokerage
+            ]);
     }
-*/
+
     /**
      * Remove the specified resource from storage.
      *

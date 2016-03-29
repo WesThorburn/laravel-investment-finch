@@ -24,7 +24,7 @@
 		    	<!-- Calculate Portfolio row values -->
 		    	<?php 
 		    		$currentValue = $stock->last_trade*$stock->purchase_qty; 
-		    		$purchaseValue = $stock->purchase_price*$stock->purchase_qty+$stock->brokerage;
+		    		$purchaseValue = $stock->purchase_price*$stock->purchase_qty;
 		    		$gainLoss = $currentValue-$purchaseValue;
 		    		$percentGainLoss = 100/$purchaseValue*$gainLoss;
 		    		$valueChange = $stock->purchase_qty*$stock->day_change;
