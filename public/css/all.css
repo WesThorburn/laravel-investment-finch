@@ -7135,6 +7135,19 @@ th{
 	margin-top:1px;
 }
 
+.row-no-margins{
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.row-no-margin-left{
+	margin-left:0px;
+}
+
+.row-no-margin-right{
+	margin-right:0px;
+}
+
 .no-margin-top{
 	margin-top:none;
 }
@@ -7222,6 +7235,10 @@ th{
 
 .btn-row{
 	padding:0px 3px;
+}
+
+.btn-half-padding{
+	padding:3px 6px;
 }
 
 .panel{

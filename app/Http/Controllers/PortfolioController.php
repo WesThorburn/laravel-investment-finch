@@ -111,6 +111,16 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->tradeType == "buy"){
+            $this->buy($request, $id);
+        }
+        elseif($request->tradeType == "sell"){
+            $this->sell($request, $id);
+        }
+        return redirect()->back();
+    }
+
+    private function buy(Request $request, $id){
         $this->validate($request, [
             'stockCode' => 'required|string|max:3',
             'purchasePrice' => 'required|regex:/^\d*(\.\d{1,3})?$/',
@@ -147,6 +157,10 @@ class PortfolioController extends Controller
         return redirect()->back();
     }
 
+    private function sell(Request $request, $id){
+        return "wing wang";
+    }
+
     private function ammendPosition(Request $request, $id){
         $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first();
         $thisPurchaseTotal = $request->quantity * $request->purchasePrice + $request->brokerage;
@@ -171,6 +185,6 @@ class PortfolioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

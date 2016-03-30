@@ -94,6 +94,7 @@
 							<!-- Add Stock to Portfolio -->
 							<form role="form" action="{{action('PortfolioController@update', ['id' => $selectedPortfolio->id])}}" method="POST">
 								<input type="hidden" name="_method" value="put"/>
+								<input type="hidden" name="tradeType" value="buy"/>
 								{{ csrf_field() }}
 								<div class="row">
 									<label class="col-xs-2 single-px-padding-right" for="stockCode">Stock Code</label>

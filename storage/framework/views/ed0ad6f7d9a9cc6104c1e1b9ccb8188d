@@ -12,6 +12,7 @@
 	            <th>Gain/Loss(%)</th>
 	            <th>Day Change</th>
 	            <th>Value Change</th>
+	            <th></th>
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
@@ -65,11 +66,15 @@
 						<?php echo e(number_format($valueChange, 2)); ?>
 
 					</td>
+					<td class="rowlink-skip">
+						<button type="button" id="openSellModal" class="btn btn-danger btn-half-padding" data-toggle="modal" data-target="#sellModal" data-stockcode="<?php echo e($stock->stock_code); ?>" data-currentprice="<?php echo e(number_format($stock->last_trade, 2)); ?>">Sell</button>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 			<tfoot>
 				<tr class="table-subtotals-row">
 					<th><b>SubTotals:</b></th>
+					<th></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -84,7 +89,104 @@
 	</table>
 </div>
 
+<!-- Sell Modal -->
+<div id="sellModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Sell </h4>
+			</div>
+			<div class="modal-body">
+				<!-- Add Stock to Portfolio -->
+				<form role="form" action="<?php echo e(action('PortfolioController@update', ['id' => $selectedPortfolio->id])); ?>" method="POST">
+					<input type="hidden" name="_method" value="put"/>
+					<input type="hidden" name="tradeType" value="sell"/>
+					<?php echo e(csrf_field()); ?>
+
+					<div class="row">
+						<label class="col-sm-2 single-px-padding-right" for="stockCode">Stock Code</label>
+						<label class="col-sm-2 single-px-padding-left-right" for="salePrice">Sale Price</label>
+						<label class="col-sm-2 single-px-padding-left-right" for="purchaseQty">Quantity</label>
+						<label class="col-sm-2 single-px-padding-left-right" for="brokerage">Brokerage</label>
+						<label class="col-sm-3 single-px-padding-left-right" for="date">Sale Date</label>
+					</div>
+					<div class="row row-no-margin-right">
+						<div class="col-sm-2 single-px-padding-right">
+							<input name="stockCode" id="stockCode" type="text" class="form-control<?php echo e($errors->has('stockCode') ? ' has-error' : ''); ?>" 
+							placeholder="Code" maxlength="3" value=<?php echo e(old('stockCode')); ?>>
+						</div>
+						<div class="col-sm-2 single-px-padding-left-right">
+							<div class="input-group">
+								<div class="input-group-addon">$</div>
+								<input name="salePrice" id="salePrice" type="text" class="form-control<?php echo e($errors->has('salePrice') ? ' has-error' : ''); ?>" value=<?php echo e(old('salePrice')); ?>>
+							</div>
+						</div>
+						<div class="col-sm-2 single-px-padding-left-right">
+							<input name="quantity" id="quantity" type="text" class="form-control<?php echo e($errors->has('quantity') ? ' has-error' : ''); ?>" value=<?php echo e(old('quantity')); ?>>
+						</div>
+						<div class="col-sm-2 single-px-padding-left-right">
+							<div class="input-group">
+								<div class="input-group-addon">$</div>
+								<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('brokerage')); ?>>
+							</div>
+						</div>
+						<div class="col-sm-3 single-px-padding-left-right">
+							<input name="date" id="date" type="date" class="form-control<?php echo e($errors->has('date') ? ' has-error' : ''); ?>" value=<?php echo e(old('date')); ?>>
+						</div>
+						<div class="col-sm-1 single-px-padding-left">
+							<button type="submit" class="btn btn-default">Add</button>
+						</div>
+					</div>
+				</form>
+				<?php if($errors->has('stockCode') || $errors->has('salePrice') || $errors->has('quantity') || $errors->has('brokerage') || $errors->has('date')): ?>
+					<div class="col-sm-12 default-margin-top">
+						<div class="alert alert-danger three-quarter-margin-bottom">
+							<ul>
+					            <?php foreach($errors->all() as $error): ?>
+					                <li><?php echo e($error); ?></li>
+					            <?php endforeach; ?>
+					        </ul>
+						</div>
+					</div>
+				<?php endif; ?>
+				<?php if(Session::has('addStockToPortfolioSuccess')): ?>
+					<div class="col-sm-12 default-margin-top">
+						<div class="alert alert-success three-quarter-margin-bottom">
+							<ul>
+					            <li><?php echo e(Session('addStockToPortfolioSuccess')); ?></li>
+					        </ul>
+						</div>
+					</div>
+				<?php elseif(Session::has('addStockToPortfolioError')): ?>
+					<div class="col-sm-12 default-margin-top">
+						<div class="alert alert-danger three-quarter-margin-bottom">
+							<ul>
+					            <li><?php echo e(Session('addStockToPortfolioError')); ?></li>
+					        </ul>
+						</div>
+					</div>
+				<?php endif; ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
+	//Sell Modal contents
+	$("#sellModal").on('show.bs.modal', function(e){
+		console.log(e.relatedTarget.dataset);
+		var stockCode = e.relatedTarget.dataset.stockcode;
+		var salePrice = e.relatedTarget.dataset.currentprice
+		$(e.currentTarget).find('input[name="stockCode"]').val(stockCode);
+		$(e.currentTarget).find('input[name="salePrice"]').val(salePrice);
+	})
+
+	//Table contents
 	$(document).ready(function(){
 		$('#stocks_in_portfolio_table').DataTable({
 			"dom": 'tp',

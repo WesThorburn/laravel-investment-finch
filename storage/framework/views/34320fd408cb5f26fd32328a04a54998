@@ -93,6 +93,7 @@
 							<!-- Add Stock to Portfolio -->
 							<form role="form" action="<?php echo e(action('PortfolioController@update', ['id' => $selectedPortfolio->id])); ?>" method="POST">
 								<input type="hidden" name="_method" value="put"/>
+								<input type="hidden" name="tradeType" value="buy"/>
 								<?php echo e(csrf_field()); ?>
 
 								<div class="row">
