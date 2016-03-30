@@ -97,7 +97,7 @@
 								<input type="hidden" name="tradeType" value="buy"/>
 								{{ csrf_field() }}
 								<div class="row">
-									<label class="col-xs-2 single-px-padding-right" for="stockCode">Stock Code</label>
+									<label class="col-xs-2 single-px-padding-right" for="purchaseStockCode">Stock Code</label>
 									<label class="col-xs-2 single-px-padding-left-right" for="purchasePrice">Purchase Price</label>
 									<label class="col-xs-2 single-px-padding-left-right" for="purchaseQty">Quantity</label>
 									<label class="col-xs-2 single-px-padding-left-right" for="brokerage">Brokerage</label>
@@ -105,8 +105,8 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-2 single-px-padding-right">
-										<input name="stockCode" id="stockCode" type="text" class="form-control{{ $errors->has('stockCode') ? ' has-error' : ''}}" 
-										placeholder="Code" maxlength="3" value={{ old('stockCode') }}>
+										<input name="purchaseStockCode" id="purchaseStockCode" type="text" class="form-control{{ $errors->has('purchaseStockCode') ? ' has-error' : ''}}" 
+										placeholder="Code" maxlength="3" value={{ old('purchaseStockCode') }}>
 									</div>
 									<div class="col-xs-2 single-px-padding-left-right">
 										<div class="input-group">
@@ -115,23 +115,23 @@
 										</div>
 									</div>
 									<div class="col-xs-2 single-px-padding-left-right">
-										<input name="quantity" id="quantity" type="text" class="form-control{{ $errors->has('quantity') ? ' has-error' : ''}}" value={{ old('quantity') }}>
+										<input name="purchaseQuantity" id="purchaseQuantity" type="text" class="form-control{{ $errors->has('purchaseQuantity') ? ' has-error' : ''}}" value={{ old('purchaseQuantity') }}>
 									</div>
 									<div class="col-xs-2 single-px-padding-left-right">
 										<div class="input-group">
 											<div class="input-group-addon">$</div>
-											<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control{{ $errors->has('brokerage') ? ' has-error' : ''}}" value={{ old('brokerage') }}>
+											<input name="purchaseBrokerage" id="purchaseBrokerage" value="19.95" type="text" class="form-control{{ $errors->has('purchaseBrokerage') ? ' has-error' : ''}}" value={{ old('purchaseBrokerage') }}>
 										</div>
 									</div>
 									<div class="col-xs-3 single-px-padding-left-right">
-										<input name="date" id="date" type="date" class="form-control{{ $errors->has('date') ? ' has-error' : ''}}" value={{ old('date') }}>
+										<input name="purchaseDate" id="purchaseDate" type="date" class="form-control{{ $errors->has('purchaseDate') ? ' has-error' : ''}}" value={{ old('purchaseDate') }}>
 									</div>
 									<div class="col-xs-1 single-px-padding-left">
 										<button type="submit" class="btn btn-default">Add</button>
 									</div>
 								</div>
 							</form>
-							@if($errors->has('stockCode') || $errors->has('purchasePrice') || $errors->has('quantity') || $errors->has('brokerage') || $errors->has('date'))
+							@if($errors->has('purchaseStockCode') || $errors->has('purchasePrice') || $errors->has('purchaseQuantity') || $errors->has('purchaseBrokerage') || $errors->has('purchaseDate'))
 								<div class="col-xs-12 default-margin-top">
 									<div class="alert alert-danger three-quarter-margin-bottom">
 										<ul>

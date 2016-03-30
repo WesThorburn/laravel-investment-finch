@@ -124,23 +124,27 @@
 							</div>
 						</div>
 						<div class="col-sm-2 single-px-padding-left-right">
-							<input name="quantity" id="quantity" type="text" class="form-control<?php echo e($errors->has('quantity') ? ' has-error' : ''); ?>" value=<?php echo e(old('quantity')); ?>>
+							<input name="saleQuantity" id="saleQuantity" type="text" class="form-control<?php echo e($errors->has('saleQuantity') ? ' has-error' : ''); ?>" value=<?php echo e(old('saleQuantity')); ?>>
 						</div>
 						<div class="col-sm-2 single-px-padding-left-right">
 							<div class="input-group">
 								<div class="input-group-addon">$</div>
-								<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('brokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('brokerage')); ?>>
+								<input name="saleBrokerage" id="saleBrokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('saleBrokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('saleBrokerage')); ?>>
 							</div>
 						</div>
 						<div class="col-sm-3 single-px-padding-left-right">
-							<input name="date" id="date" type="date" class="form-control<?php echo e($errors->has('date') ? ' has-error' : ''); ?>" value=<?php echo e(old('date')); ?>>
+							<input name="saleDate" id="saleDate" type="date" class="form-control<?php echo e($errors->has('saleDate') ? ' has-error' : ''); ?>" value=<?php echo e(old('saleDate')); ?>>
 						</div>
 						<div class="col-sm-1 single-px-padding-left">
 							<button type="submit" class="btn btn-default">Add</button>
 						</div>
 					</div>
 				</form>
-				<?php if($errors->has('stockCode') || $errors->has('salePrice') || $errors->has('quantity') || $errors->has('brokerage') || $errors->has('date')): ?>
+				<?php if($errors->has('stockCode') || $errors->has('salePrice') || $errors->has('saleQuantity') || $errors->has('saleBrokerage') || $errors->has('saleDate')): ?>
+					<!-- Display Modal if errors are present -->
+					<script type="text/javascript">
+					    $('#sellModal').modal('show');
+					</script>
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-danger three-quarter-margin-bottom">
 							<ul>
@@ -151,7 +155,7 @@
 						</div>
 					</div>
 				<?php endif; ?>
-				<?php if(Session::has('addStockToPortfolioSuccess')): ?>
+				<?php if(Session::has('sellStockSuccess')): ?>
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-success three-quarter-margin-bottom">
 							<ul>
@@ -159,7 +163,7 @@
 					        </ul>
 						</div>
 					</div>
-				<?php elseif(Session::has('addStockToPortfolioError')): ?>
+				<?php elseif(Session::has('sellStockError')): ?>
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-danger three-quarter-margin-bottom">
 							<ul>
@@ -179,7 +183,6 @@
 <script>
 	//Sell Modal contents
 	$("#sellModal").on('show.bs.modal', function(e){
-		console.log(e.relatedTarget.dataset);
 		var stockCode = e.relatedTarget.dataset.stockcode;
 		var salePrice = e.relatedTarget.dataset.currentprice
 		$(e.currentTarget).find('input[name="stockCode"]').val(stockCode);

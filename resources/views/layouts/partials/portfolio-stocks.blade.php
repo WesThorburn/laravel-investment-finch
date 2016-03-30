@@ -119,23 +119,27 @@
 							</div>
 						</div>
 						<div class="col-sm-2 single-px-padding-left-right">
-							<input name="quantity" id="quantity" type="text" class="form-control{{ $errors->has('quantity') ? ' has-error' : ''}}" value={{ old('quantity') }}>
+							<input name="saleQuantity" id="saleQuantity" type="text" class="form-control{{ $errors->has('saleQuantity') ? ' has-error' : ''}}" value={{ old('saleQuantity') }}>
 						</div>
 						<div class="col-sm-2 single-px-padding-left-right">
 							<div class="input-group">
 								<div class="input-group-addon">$</div>
-								<input name="brokerage" id="brokerage" value="19.95" type="text" class="form-control{{ $errors->has('brokerage') ? ' has-error' : ''}}" value={{ old('brokerage') }}>
+								<input name="saleBrokerage" id="saleBrokerage" value="19.95" type="text" class="form-control{{ $errors->has('saleBrokerage') ? ' has-error' : ''}}" value={{ old('saleBrokerage') }}>
 							</div>
 						</div>
 						<div class="col-sm-3 single-px-padding-left-right">
-							<input name="date" id="date" type="date" class="form-control{{ $errors->has('date') ? ' has-error' : ''}}" value={{ old('date') }}>
+							<input name="saleDate" id="saleDate" type="date" class="form-control{{ $errors->has('saleDate') ? ' has-error' : ''}}" value={{ old('saleDate') }}>
 						</div>
 						<div class="col-sm-1 single-px-padding-left">
 							<button type="submit" class="btn btn-default">Add</button>
 						</div>
 					</div>
 				</form>
-				@if($errors->has('stockCode') || $errors->has('salePrice') || $errors->has('quantity') || $errors->has('brokerage') || $errors->has('date'))
+				@if($errors->has('stockCode') || $errors->has('salePrice') || $errors->has('saleQuantity') || $errors->has('saleBrokerage') || $errors->has('saleDate'))
+					<!-- Display Modal if errors are present -->
+					<script type="text/javascript">
+					    $('#sellModal').modal('show');
+					</script>
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-danger three-quarter-margin-bottom">
 							<ul>
@@ -146,7 +150,7 @@
 						</div>
 					</div>
 				@endif
-				@if(Session::has('addStockToPortfolioSuccess'))
+				@if(Session::has('sellStockSuccess'))
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-success three-quarter-margin-bottom">
 							<ul>
@@ -154,7 +158,7 @@
 					        </ul>
 						</div>
 					</div>
-				@elseif(Session::has('addStockToPortfolioError'))
+				@elseif(Session::has('sellStockError'))
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-danger three-quarter-margin-bottom">
 							<ul>
@@ -174,7 +178,6 @@
 <script>
 	//Sell Modal contents
 	$("#sellModal").on('show.bs.modal', function(e){
-		console.log(e.relatedTarget.dataset);
 		var stockCode = e.relatedTarget.dataset.stockcode;
 		var salePrice = e.relatedTarget.dataset.currentprice
 		$(e.currentTarget).find('input[name="stockCode"]').val(stockCode);
