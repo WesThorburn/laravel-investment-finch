@@ -158,11 +158,14 @@
 					        </ul>
 						</div>
 					</div>
-				@elseif(Session::has('sellStockError'))
+				@elseif(Session::has('sellPortfolioError'))
+					<script type="text/javascript">
+					    $('#sellModal').modal('show');
+					</script>
 					<div class="col-sm-12 default-margin-top">
 						<div class="alert alert-danger three-quarter-margin-bottom">
 							<ul>
-					            <li>{{ Session('addStockToPortfolioError') }}</li>
+					            <li>{{ Session('sellPortfolioError') }}</li>
 					        </ul>
 						</div>
 					</div>

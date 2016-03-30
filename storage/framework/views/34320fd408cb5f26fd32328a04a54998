@@ -150,11 +150,11 @@
 								        </ul>
 									</div>
 								</div>
-							<?php elseif(Session::has('addStockToPortfolioError')): ?>
+							<?php elseif(Session::has('buyPortfolioError')): ?>
 								<div class="col-xs-12 default-margin-top">
 									<div class="alert alert-danger three-quarter-margin-bottom">
 										<ul>
-								            <li><?php echo e(Session('addStockToPortfolioError')); ?></li>
+								            <li><?php echo e(Session('buyPortfolioError')); ?></li>
 								        </ul>
 									</div>
 								</div>

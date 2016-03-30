@@ -150,11 +150,11 @@
 								        </ul>
 									</div>
 								</div>
-							@elseif(Session::has('addStockToPortfolioError'))
+							@elseif(Session::has('buyPortfolioError'))
 								<div class="col-xs-12 default-margin-top">
 									<div class="alert alert-danger three-quarter-margin-bottom">
 										<ul>
-								            <li>{{ Session('addStockToPortfolioError') }}</li>
+								            <li>{{ Session('buyPortfolioError') }}</li>
 								        </ul>
 									</div>
 								</div>

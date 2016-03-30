@@ -111,12 +111,17 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->tradeType == "buy"){
-            $this->buy($request, $id);
+        //Check portfolio belongs to current user
+        if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
+            if($request->tradeType == "buy"){
+                $this->buy($request, $id);
+            }
+            elseif($request->tradeType == "sell"){
+                $this->sell($request, $id);
+            }
+            return redirect()->back();
         }
-        elseif($request->tradeType == "sell"){
-            $this->sell($request, $id);
-        }
+        \Session::flash($request->tradeType.'PortfolioError', 'There was an error with your request!');
         return redirect()->back();
     }
 
@@ -129,39 +134,32 @@ class PortfolioController extends Controller
             'purchaseDate' => 'required|date'
         ]);
 
-        //Check portfolio belongs to current user
-        if(Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
-            //Check if stock already exists in portfolio
-            if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first()){
-                $this->ammendPosition($request, $id);
-            }
-            else{
-                //Insert request data
-                \DB::table('portfolio_stocks')->insert([
-                    'portfolio_id' => $id,
-                    'stock_code' => $request->purchaseStockCode,
-                    'purchase_price' => (($request->purchasePrice*$request->purchaseQuantity)+$request->purchaseBrokerage)/$request->purchaseQuantity,
-                    'purchase_qty' => $request->purchaseQuantity,
-                    'brokerage' => $request->purchaseBrokerage,
-                    'purchase_date' => $request->purchaseDate,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s")
-                ]);
-            }
-
-            \Session::flash('addStockToPortfolioSuccess', $request->purchaseStockCode.' was added to your Portfolio successfully!');
-            return redirect('user/portfolio/'.$id);
+        //Check if stock already exists in portfolio
+        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first()){
+            $this->ammendPosition($request, $id);
         }
-
-        \Session::flash('addStockToPortfolioError', 'There was an error adding this stock to your portfolio!');
-        return redirect()->back();
+        else{
+            //Insert request data
+            \DB::table('portfolio_stocks')->insert([
+                'portfolio_id' => $id,
+                'stock_code' => $request->purchaseStockCode,
+                'purchase_price' => (($request->purchasePrice*$request->purchaseQuantity)+$request->purchaseBrokerage)/$request->purchaseQuantity,
+                'purchase_qty' => $request->purchaseQuantity,
+                'brokerage' => $request->purchaseBrokerage,
+                'purchase_date' => $request->purchaseDate,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+        }
+        \Session::flash('addStockToPortfolioSuccess', $request->purchaseStockCode.' was added to your Portfolio successfully!');
+        return redirect('user/portfolio/'.$id);
     }
 
     private function sell(Request $request, $id){
         $this->validate($request, [
             'stockCode' => 'required|string|max:3',
             'salePrice' => 'required|regex:/^\d*(\.\d{1,3})?$/',
-            'saleQuantity' => 'required|integer',
+            'saleQuantity' => 'required|integer|min:1',
             'saleBrokerage' => 'required|regex:/^\d*(\.\d{1,2})?$/',
             'saleDate' => 'required|date'
         ]);
