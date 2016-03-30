@@ -71,24 +71,28 @@ class PortfolioController extends Controller
      */
     public function show($id)
     {
-        return view('pages.user.portfolio')->with([            
-            'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
-            'selectedPortfolio' => Portfolio::select('id', 'portfolio_name')->where('id', $id)->first(),
-            'stocksInSelectedPortfolio' => \DB::table('portfolio_stocks')
-                ->join('stock_metrics', 'portfolio_stocks.stock_code', '=', 'stock_metrics.stock_code')
-                ->select(
-                    'portfolio_stocks.portfolio_id', 
-                    'portfolio_stocks.stock_code', 
-                    'portfolio_stocks.purchase_price', 
-                    'portfolio_stocks.purchase_qty', 
-                    'portfolio_stocks.brokerage', 
-                    'portfolio_stocks.purchase_date',
-                    'stock_metrics.last_trade',
-                    'stock_metrics.day_change'
-                    )
-                ->where('portfolio_stocks.portfolio_id', $id)
-                ->get()
-        ]);
+        //Check portfolio requested belongs to current user
+        if($id == 0 || Portfolio::where('id', $id)->pluck('user_id') == \Auth::user()->id){
+            return view('pages.user.portfolio')->with([            
+                'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
+                'selectedPortfolio' => Portfolio::select('id', 'portfolio_name')->where('id', $id)->first(),
+                'stocksInSelectedPortfolio' => \DB::table('portfolio_stocks')
+                    ->join('stock_metrics', 'portfolio_stocks.stock_code', '=', 'stock_metrics.stock_code')
+                    ->select(
+                        'portfolio_stocks.portfolio_id', 
+                        'portfolio_stocks.stock_code', 
+                        'portfolio_stocks.purchase_price', 
+                        'portfolio_stocks.purchase_qty', 
+                        'portfolio_stocks.brokerage', 
+                        'portfolio_stocks.purchase_date',
+                        'stock_metrics.last_trade',
+                        'stock_metrics.day_change'
+                        )
+                    ->where('portfolio_stocks.portfolio_id', $id)
+                    ->get()
+            ]);
+        }
+        return redirect()->back();
     }
 
     /**
@@ -163,6 +167,13 @@ class PortfolioController extends Controller
             'saleBrokerage' => 'required|regex:/^\d*(\.\d{1,2})?$/',
             'saleDate' => 'required|date'
         ]);
+
+        //Check if stock already exists in portfolio
+        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->sellStockCode])->first()){
+            
+        }
+        \Session::flash('addStockToPortfolioSuccess', $request->purchaseStockCode.' was added to your Portfolio successfully!');
+        return redirect('user/portfolio/'.$id);
     }
 
     private function ammendPosition(Request $request, $id){
