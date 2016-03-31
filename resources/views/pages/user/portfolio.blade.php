@@ -168,6 +168,7 @@
 							@endif
 						</div>
 					</div>
+					@include('layouts.partials.trades-list')
 				</div>
 			@endif
 		</div>

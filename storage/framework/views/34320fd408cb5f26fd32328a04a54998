@@ -168,6 +168,7 @@
 							<?php endif; ?>
 						</div>
 					</div>
+					<?php echo $__env->make('layouts.partials.trades-list', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 				</div>
 			<?php endif; ?>
 		</div>

@@ -76,6 +76,7 @@ class PortfolioController extends Controller
             return view('pages.user.portfolio')->with([            
                 'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
                 'selectedPortfolio' => Portfolio::select('id', 'portfolio_name')->where('id', $id)->first(),
+                'trades' => \DB::table('trades')->where('user_id', \Auth::user()->id)->orderBy('date')->get(),
                 'stocksInSelectedPortfolio' => \DB::table('portfolio_stocks')
                     ->join('stock_metrics', 'portfolio_stocks.stock_code', '=', 'stock_metrics.stock_code')
                     ->select(
