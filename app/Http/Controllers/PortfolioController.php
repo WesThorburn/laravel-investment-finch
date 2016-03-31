@@ -167,25 +167,40 @@ class PortfolioController extends Controller
             'saleDate' => 'required|date'
         ]);
 
-        $this->recordTrade(\Auth::user()->id, 'sell', $request->saleStockCode, $request->salePrice, $request->saleQuantity, $request->saleBrokerage, $request->saleDate);
-
         //Check if stock already exists in portfolio
-        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first()){
-            //Update portfolio
-            $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first();
-            \DB::table('portfolio_stocks')
-                ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
-                ->update([
-                    'quantity' => $stockInPortfolio->quantity-$request->saleQuantity,
-                    'updated_at' => date("Y-m-d H:i:s")
-                ]);
-
-            \Session::flash('sellStockSuccess', $request->saleQuantity.' units of '.$request->saleStockCode.' were sold successfully!');
+        if(!\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first()){
+            \Session::flash('sellPortfolioError', "You currently don't own ".$request->saleStockCode.' therefore, you cannot sell it!');
             return redirect('user/portfolio/'.$id);
         }
 
-        \Session::flash('sellPortfolioError', "You currently don't own ".$request->saleStockCode.' therefore, you cannot sell it!');
-        return redirect('user/portfolio/'.$id);
+        //Retreive existing stock record
+        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first();
+
+        //Check if sell quantity exists owned quantity
+        if($stockInPortfolio->quantity < $request->saleQuantity){
+            \Session::flash('sellPortfolioError', "You don't own enough ".$request->saleStockCode.' shares to record this sale!');
+            return redirect('user/portfolio/'.$id);
+        }
+        //Check if sell quantity equals owned quantity
+        elseif($stockInPortfolio->quantity == $request->saleQuantity){
+            \DB::table('portfolio_stocks')
+                ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
+                ->delete();
+        }
+
+        //Update portfolio
+        \DB::table('portfolio_stocks')
+            ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
+            ->update([
+                'quantity' => $stockInPortfolio->quantity-$request->saleQuantity,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+
+
+        $this->recordTrade(\Auth::user()->id, 'sell', $request->saleStockCode, $request->salePrice, $request->saleQuantity, $request->saleBrokerage, $request->saleDate);
+
+        \Session::flash('sellStockSuccess', $request->saleQuantity.' units of '.$request->saleStockCode.' were sold successfully!');
+        return redirect('user/portfolio/'.$id);   
     }
 
     private function ammendPosition(Request $request, $id){
