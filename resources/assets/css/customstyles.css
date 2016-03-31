@@ -67,6 +67,19 @@ th{
 	margin-top:1px;
 }
 
+.row-no-margins{
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.row-no-margin-left{
+	margin-left:0px;
+}
+
+.row-no-margin-right{
+	margin-right:0px;
+}
+
 .no-margin-top{
 	margin-top:none;
 }
@@ -83,9 +96,29 @@ th{
 	margin-bottom:0px;
 }
 
-.5px-padding-left-right{
-	padding-left:5px;
-	padding-right:5px;
+.no-padding{
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+.single-px-padding-left-right{
+	padding-left:1px !important;
+	padding-right:1px !important;
+}
+
+.single-px-padding-left{
+	padding-left:1px !important;
+}
+
+.single-px-padding-right{
+	padding-right:1px !important;
+}
+
+.five-px-padding-left-right{
+	padding-left:5px !important;
+	padding-right:5px !important;
 }
 
 .metrics-table.table > tbody > tr > td{
@@ -136,6 +169,10 @@ th{
 	padding:0px 3px;
 }
 
+.btn-half-padding{
+	padding:3px 6px;
+}
+
 .panel{
 	border-color:#2e3e44;
 }
@@ -161,6 +198,11 @@ th{
 .table-striped > tbody > tr:nth-of-type(odd).table-row-active,
 .table-striped > tbody > tr:nth-of-type(even).table-row-active{
 	background-color:#D9E0DC;
+}
+
+.table-subtotals-row>th{
+	border-top:2px solid #263338 !important;
+	border-bottom:1px solid #263338 !important;
 }
 
 .navbar {

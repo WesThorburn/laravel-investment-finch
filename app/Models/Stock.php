@@ -26,6 +26,10 @@ class Stock extends Model {
 		return $this->hasOne('App\Models\SectorIndexHistoricals', 'sector', 'sector');
 	}
 
+	public function portfolios(){
+    	return $this->belongsToMany('App\Models\Portfolio');
+    }
+
 	public static function scopeWithMarketIndex($query, $marketIndex){
 		switch ($marketIndex){
 			case 'asx20':

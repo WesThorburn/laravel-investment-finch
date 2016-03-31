@@ -7,6 +7,171 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('body'); ?>
-	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Your Portfolios
+					</div>
+					<?php if($portfolios->first()): ?>
+						<table class="table table-striped table-hover table-bordered table-condensed no-margins" id="portfolio_table">
+							<tbody data-link="row" class="rowlink">
+								<?php foreach($portfolios as $portfolio): ?>
+									<tr <?php if($portfolio->id == $selectedPortfolio->id): ?> class="table-row-active" <?php endif; ?>>
+										<td>
+											<a href="<?php echo e($portfolio->id); ?>"><?php echo e($portfolio->portfolio_name); ?></a>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					<?php else: ?>
+						<div class="panel-body">
+							You have no portfolios yet. 
+						</div>
+					<?php endif; ?>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Create a portfolio
+					</div>
+					<div class="panel-body">
+						<!-- Name -->
+						<form role="form" action="<?php echo e(action('PortfolioController@store')); ?>" method="POST">
+							<?php echo e(csrf_field()); ?>
+
+							<div class="col-xs-12">
+								<label for="name">Portfolio Name</label>
+							</div>
+							<div class="col-xs-12">
+								<input name="portfolioName" id="portfolioName" type="text" class="form-control<?php echo e($errors->has('portfolioName') ? ' has-error' : ''); ?>" placeholder="Portfolio Name" maxlength="64" value=<?php echo e(old('portfolioName')); ?>>
+							</div>
+							<div class="col-xs-12 half-margin-top half-margin-bottom">
+								<button type="submit" class="btn btn-default">Create</button>
+							</div>
+						</form>
+						<?php if($errors->has('portfolioName')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <?php foreach($errors->all() as $error): ?>
+							                <li><?php echo e($error); ?></li>
+							            <?php endforeach; ?>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if(Session::has('portfolioCreateSuccess')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-success three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('portfolioCreateSuccess')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php elseif(Session::has('portfolioNameError')): ?>
+							<div class="col-xs-12 quarter-margin-top">
+								<div class="alert alert-danger three-quarter-margin-bottom">
+									<ul>
+							            <li><?php echo e(Session('portfolioNameError')); ?></li>
+							        </ul>
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+			<?php if($portfolios->first()): ?>
+				<div class="col-md-9">
+					<?php echo $__env->make('layouts.partials.portfolio-stocks', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					<?php if(Session::has('sellStockSuccess')): ?>
+						<div class="alert alert-success three-quarter-margin-bottom">
+							<ul>
+					            <li><?php echo e(Session('sellStockSuccess')); ?></li>
+					        </ul>
+						</div>
+					<?php endif; ?>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Add a Stock to this Portfolio
+						</div>
+						<div class="panel-body">
+							<!-- Add Stock to Portfolio -->
+							<form role="form" action="<?php echo e(action('PortfolioController@update', ['id' => $selectedPortfolio->id])); ?>" method="POST">
+								<input type="hidden" name="_method" value="put"/>
+								<input type="hidden" name="tradeType" value="buy"/>
+								<?php echo e(csrf_field()); ?>
+
+								<div class="row">
+									<label class="col-xs-2 single-px-padding-right" for="purchaseStockCode">Stock Code</label>
+									<label class="col-xs-2 single-px-padding-left-right" for="purchasePrice">Purchase Price</label>
+									<label class="col-xs-2 single-px-padding-left-right" for="purchaseQty">Quantity</label>
+									<label class="col-xs-2 single-px-padding-left-right" for="brokerage">Brokerage</label>
+									<label class="col-xs-3 single-px-padding-left-right" for="date">Purchase Date</label>
+								</div>
+								<div class="row">
+									<div class="col-xs-2 single-px-padding-right">
+										<input name="purchaseStockCode" id="purchaseStockCode" type="text" class="form-control<?php echo e($errors->has('purchaseStockCode') ? ' has-error' : ''); ?>" 
+										placeholder="Code" maxlength="3" value=<?php echo e(old('purchaseStockCode')); ?>>
+									</div>
+									<div class="col-xs-2 single-px-padding-left-right">
+										<div class="input-group">
+											<div class="input-group-addon">$</div>
+											<input name="purchasePrice" id="purchasePrice" type="text" class="form-control<?php echo e($errors->has('purchasePrice') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchasePrice')); ?>>
+										</div>
+									</div>
+									<div class="col-xs-2 single-px-padding-left-right">
+										<input name="purchaseQuantity" id="purchaseQuantity" type="text" class="form-control<?php echo e($errors->has('purchaseQuantity') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchaseQuantity')); ?>>
+									</div>
+									<div class="col-xs-2 single-px-padding-left-right">
+										<div class="input-group">
+											<div class="input-group-addon">$</div>
+											<input name="purchaseBrokerage" id="purchaseBrokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('purchaseBrokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchaseBrokerage')); ?>>
+										</div>
+									</div>
+									<div class="col-xs-3 single-px-padding-left-right">
+										<input name="purchaseDate" id="purchaseDate" type="date" class="form-control<?php echo e($errors->has('purchaseDate') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchaseDate')); ?>>
+									</div>
+									<div class="col-xs-1 single-px-padding-left">
+										<button type="submit" class="btn btn-default">Add</button>
+									</div>
+								</div>
+							</form>
+							<?php if($errors->has('purchaseStockCode') || $errors->has('purchasePrice') || $errors->has('purchaseQuantity') || $errors->has('purchaseBrokerage') || $errors->has('purchaseDate')): ?>
+								<div class="col-xs-12 default-margin-top">
+									<div class="alert alert-danger three-quarter-margin-bottom">
+										<ul>
+								            <?php foreach($errors->all() as $error): ?>
+								                <li><?php echo e($error); ?></li>
+								            <?php endforeach; ?>
+								        </ul>
+									</div>
+								</div>
+							<?php endif; ?>
+							<?php if(Session::has('addStockToPortfolioSuccess')): ?>
+								<div class="col-xs-12 default-margin-top">
+									<div class="alert alert-success three-quarter-margin-bottom">
+										<ul>
+								            <li><?php echo e(Session('addStockToPortfolioSuccess')); ?></li>
+								        </ul>
+									</div>
+								</div>
+							<?php elseif(Session::has('buyPortfolioError')): ?>
+								<div class="col-xs-12 default-margin-top">
+									<div class="alert alert-danger three-quarter-margin-bottom">
+										<ul>
+								            <li><?php echo e(Session('buyPortfolioError')); ?></li>
+								        </ul>
+									</div>
+								</div>
+							<?php endif; ?>
+						</div>
+					</div>
+					<?php echo $__env->make('layouts.partials.trades-list', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

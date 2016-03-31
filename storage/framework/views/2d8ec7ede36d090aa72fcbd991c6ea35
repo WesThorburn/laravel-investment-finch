@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Your Trades</div>
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="trades_table">
+	    <thead>
+	        <tr>
+	        	<th>Trade Type</th>
+	            <th>Code</th>
+	            <th>Price($)</th>
+	            <th>Quantity</th>
+	            <th>Brokerage($)</th>
+	            <th>Value($)</th>
+	            <th>Date</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+		    <?php foreach($trades as $trade): ?>
+				<tr>
+					<td <?php if($trade->trade_type == "sell"): ?> class="color-red" 
+						<?php elseif($trade->trade_type == "buy"): ?> class="color-green"
+						<?php endif; ?>>
+						<?php echo e(ucfirst($trade->trade_type)); ?>
+
+					</td>
+					<td><?php echo e($trade->stock_code); ?></td>
+					<td><?php echo e(number_format($trade->price, 2)); ?></td>
+					<td><?php echo e(number_format($trade->quantity)); ?></td>
+					<td><?php echo e(number_format($trade->brokerage, 2)); ?></td>
+					<td>
+						<?php if($trade->trade_type == "buy"): ?>
+							<?php echo e(number_format($trade->price * $trade->quantity + $trade->brokerage, 2)); ?>
+
+						<?php elseif($trade->trade_type == "sell"): ?>
+							<?php echo e(number_format($trade->price * $trade->quantity - $trade->brokerage, 2)); ?>
+
+						<?php endif; ?>
+					</td>
+					<td><?php echo e($trade->date); ?></td>
+				</tr>
+			<?php endforeach; ?>
+	    </tbody>
+	</table>
+</div>
+<script>
+	$(document).ready(function(){
+		$('#trades_table').DataTable({
+			"dom": 'tp',
+			"pageLength": 15,
+			"lengthMenu": [5,10,15,20,50,100],
+			"stateSave": true
+		});
+	});
+</script>
