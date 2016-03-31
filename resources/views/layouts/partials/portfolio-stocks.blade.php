@@ -24,11 +24,11 @@
 		    @foreach($stocksInSelectedPortfolio as $stock)
 		    	<!-- Calculate Portfolio row values -->
 		    	<?php 
-		    		$currentValue = $stock->last_trade*$stock->purchase_qty; 
-		    		$purchaseValue = $stock->purchase_price*$stock->purchase_qty;
+		    		$currentValue = $stock->last_trade*$stock->quantity; 
+		    		$purchaseValue = $stock->purchase_price*$stock->quantity;
 		    		$gainLoss = $currentValue-$purchaseValue;
 		    		$percentGainLoss = 100/$purchaseValue*$gainLoss;
-		    		$valueChange = $stock->purchase_qty*$stock->day_change;
+		    		$valueChange = $stock->quantity*$stock->day_change;
 
 		    		//Totals
 		    		$totalValue = $totalValue+$currentValue;
@@ -38,7 +38,7 @@
 					<td>
 						{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
 					</td>
-					<td>{{ number_format($stock->purchase_qty) }}</td>
+					<td>{{ number_format($stock->quantity) }}</td>
 					<td>{{ number_format($stock->purchase_price, 2) }}</td>
 					<td>{{ number_format($stock->last_trade, 2) }}</td>
 					<td>{{ number_format(($currentValue), 2) }}</td>
@@ -101,16 +101,16 @@
 					<input type="hidden" name="tradeType" value="sell"/>
 					{{ csrf_field() }}
 					<div class="row">
-						<label class="col-sm-2 single-px-padding-right" for="stockCode">Stock Code</label>
+						<label class="col-sm-2 single-px-padding-right" for="saleStockCode">Stock Code</label>
 						<label class="col-sm-2 single-px-padding-left-right" for="salePrice">Sale Price</label>
-						<label class="col-sm-2 single-px-padding-left-right" for="purchaseQty">Quantity</label>
-						<label class="col-sm-2 single-px-padding-left-right" for="brokerage">Brokerage</label>
-						<label class="col-sm-3 single-px-padding-left-right" for="date">Sale Date</label>
+						<label class="col-sm-2 single-px-padding-left-right" for="saleQuantity">Quantity</label>
+						<label class="col-sm-2 single-px-padding-left-right" for="saleBrokerage">Brokerage</label>
+						<label class="col-sm-3 single-px-padding-left-right" for="saleDate">Sale Date</label>
 					</div>
 					<div class="row row-no-margin-right">
 						<div class="col-sm-2 single-px-padding-right">
-							<input name="stockCode" id="stockCode" type="text" class="form-control{{ $errors->has('stockCode') ? ' has-error' : ''}}" 
-							placeholder="Code" maxlength="3" value={{ old('stockCode') }}>
+							<input name="saleStockCode" id="saleStockCode" type="text" class="form-control{{ $errors->has('saleStockCode') ? ' has-error' : ''}}" 
+							placeholder="Code" maxlength="3" readonly="true" value={{ old('saleStockCode') }}>
 						</div>
 						<div class="col-sm-2 single-px-padding-left-right">
 							<div class="input-group">
@@ -150,15 +150,7 @@
 						</div>
 					</div>
 				@endif
-				@if(Session::has('sellStockSuccess'))
-					<div class="col-sm-12 default-margin-top">
-						<div class="alert alert-success three-quarter-margin-bottom">
-							<ul>
-					            <li>{{ Session('addStockToPortfolioSuccess') }}</li>
-					        </ul>
-						</div>
-					</div>
-				@elseif(Session::has('sellPortfolioError'))
+				@if(Session::has('sellPortfolioError'))
 					<script type="text/javascript">
 					    $('#sellModal').modal('show');
 					</script>
@@ -183,7 +175,7 @@
 	$("#sellModal").on('show.bs.modal', function(e){
 		var stockCode = e.relatedTarget.dataset.stockcode;
 		var salePrice = e.relatedTarget.dataset.currentprice
-		$(e.currentTarget).find('input[name="stockCode"]').val(stockCode);
+		$(e.currentTarget).find('input[name="saleStockCode"]').val(stockCode);
 		$(e.currentTarget).find('input[name="salePrice"]').val(salePrice);
 	})
 

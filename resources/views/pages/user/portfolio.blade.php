@@ -86,6 +86,13 @@
 			@if($portfolios->first())
 				<div class="col-md-9">
 					@include('layouts.partials.portfolio-stocks')
+					@if(Session::has('sellStockSuccess'))
+						<div class="alert alert-success three-quarter-margin-bottom">
+							<ul>
+					            <li>{{ Session('sellStockSuccess') }}</li>
+					        </ul>
+						</div>
+					@endif
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Add a Stock to this Portfolio

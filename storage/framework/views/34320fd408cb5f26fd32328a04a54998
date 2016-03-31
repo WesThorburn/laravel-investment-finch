@@ -85,6 +85,13 @@
 			<?php if($portfolios->first()): ?>
 				<div class="col-md-9">
 					<?php echo $__env->make('layouts.partials.portfolio-stocks', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					<?php if(Session::has('sellStockSuccess')): ?>
+						<div class="alert alert-success three-quarter-margin-bottom">
+							<ul>
+					            <li><?php echo e(Session('sellStockSuccess')); ?></li>
+					        </ul>
+						</div>
+					<?php endif; ?>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Add a Stock to this Portfolio

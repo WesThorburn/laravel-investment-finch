@@ -82,9 +82,7 @@ class PortfolioController extends Controller
                         'portfolio_stocks.portfolio_id', 
                         'portfolio_stocks.stock_code', 
                         'portfolio_stocks.purchase_price', 
-                        'portfolio_stocks.purchase_qty', 
-                        'portfolio_stocks.brokerage', 
-                        'portfolio_stocks.purchase_date',
+                        'portfolio_stocks.quantity',
                         'stock_metrics.last_trade',
                         'stock_metrics.day_change'
                         )
@@ -138,19 +136,19 @@ class PortfolioController extends Controller
             'purchaseDate' => 'required|date'
         ]);
 
-        //Check if stock already exists in portfolio
+        $this->recordTrade(\Auth::user()->id, 'buy', $request->purchaseStockCode, $request->purchasePrice, $request->purchaseQuantity, $request->purchaseBrokerage,$request->purchaseDate);
+
         if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first()){
+            //If stock already exists in portfolio
             $this->ammendPosition($request, $id);
         }
         else{
-            //Insert request data
+            //If stock isn't already in portfolio
             \DB::table('portfolio_stocks')->insert([
                 'portfolio_id' => $id,
                 'stock_code' => $request->purchaseStockCode,
                 'purchase_price' => (($request->purchasePrice*$request->purchaseQuantity)+$request->purchaseBrokerage)/$request->purchaseQuantity,
-                'purchase_qty' => $request->purchaseQuantity,
-                'brokerage' => $request->purchaseBrokerage,
-                'purchase_date' => $request->purchaseDate,
+                'quantity' => $request->purchaseQuantity,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             ]);
@@ -161,35 +159,62 @@ class PortfolioController extends Controller
 
     private function sell(Request $request, $id){
         $this->validate($request, [
-            'stockCode' => 'required|string|max:3',
+            'saleStockCode' => 'required|string|max:3',
             'salePrice' => 'required|regex:/^\d*(\.\d{1,3})?$/',
             'saleQuantity' => 'required|integer|min:1',
             'saleBrokerage' => 'required|regex:/^\d*(\.\d{1,2})?$/',
             'saleDate' => 'required|date'
         ]);
 
+        $this->recordTrade(\Auth::user()->id, 'sell', $request->saleStockCode, $request->salePrice, $request->saleQuantity, $request->saleBrokerage, $request->saleDate);
+
         //Check if stock already exists in portfolio
-        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->sellStockCode])->first()){
-            
+        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first()){
+            //Update portfolio
+            $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first();
+            \DB::table('portfolio_stocks')
+                ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
+                ->update([
+                    'quantity' => $stockInPortfolio->quantity-$request->saleQuantity,
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
+
+            \Session::flash('sellStockSuccess', $request->saleQuantity.' units of '.$request->saleStockCode.' were sold successfully!');
+            return redirect('user/portfolio/'.$id);
         }
-        \Session::flash('addStockToPortfolioSuccess', $request->purchaseStockCode.' was added to your Portfolio successfully!');
+
+        \Session::flash('sellPortfolioError', "You currently don't own ".$request->saleStockCode.' therefore, you cannot sell it!');
         return redirect('user/portfolio/'.$id);
     }
 
     private function ammendPosition(Request $request, $id){
-        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])->first();
-        $thisPurchaseTotal = $request->quantity * $request->purchasePrice + $request->brokerage;
-        $updatedPurchaseQty = $stockInPortfolio->purchase_qty + $request->quantity;
-        $updatedPurchasePrice = ($stockInPortfolio->purchase_price * $stockInPortfolio->purchase_qty + $thisPurchaseTotal)/$updatedPurchaseQty;
-        $updatedBrokerage = $stockInPortfolio->brokerage + $request->brokerage;
+        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first();
+        $thisPurchaseTotal = $request->purchaseQuantity * $request->purchasePrice + $request->purchaseBrokerage;
+        $updatedPurchaseQty = $stockInPortfolio->quantity + $request->purchaseQuantity;
+        $updatedPurchasePrice = ($stockInPortfolio->purchase_price * $stockInPortfolio->quantity + $thisPurchaseTotal)/$updatedPurchaseQty;
 
         \DB::table('portfolio_stocks')
-            ->where(['portfolio_id' => $id, 'stock_code' => $request->stockCode])
+            ->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])
             ->update([
                 'purchase_price' => $updatedPurchasePrice,
-                'purchase_qty' => $updatedPurchaseQty,
-                'brokerage' => $updatedBrokerage
+                'quantity' => $updatedPurchaseQty,
+                'updated_at' => date("Y-m-d H:i:s")
             ]);
+    }
+
+    private function recordTrade($userId, $tradeType, $stockCode, $price, $quantity, $brokerage, $date){
+        //Insert trade data
+        \DB::table('trades')->insert([
+            'user_id' => $userId,
+            'trade_type' => $tradeType,
+            'stock_code' => $stockCode,
+            'price' => $price,
+            'quantity' => $quantity,
+            'brokerage' => $brokerage,
+            'date' => $date,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
     }
 
     /**
