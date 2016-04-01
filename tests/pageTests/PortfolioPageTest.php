@@ -1,9 +1,13 @@
 <?php
 
 class PortfolioPageTest extends TestCase{
+
 	public function testPortfolioPage(){
-		$this->visit('/')
+		$user = factory(App\User::class)->make();
+		
+		$this->actingAs($user)
+			->visit('/')
 			->click('Portfolio')
-			->see('Your Portfol2ios');
+			->see('Your Portfolios');
 	}
 }
