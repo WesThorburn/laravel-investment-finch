@@ -2,9 +2,9 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ArtisanStockCommandTest extends TestCase{
+/*class ArtisanStockCommandTest extends TestCase{
 
-	/*use DatabaseTransactions;
+	use DatabaseTransactions;
 	
 	public function testUpdateStockList(){
 		$this->artisan("stocks:updateStockList", ['--testMode' => true]);
@@ -69,5 +69,5 @@ class ArtisanStockCommandTest extends TestCase{
 
 	public function testGetCompanySummaries(){
 		$this->artisan("stocks:getCompanySummaries", ['--testMode' => true]);
-	}*/
-}
+	}
+}*/
