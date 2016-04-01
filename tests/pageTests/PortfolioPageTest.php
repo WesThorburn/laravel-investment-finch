@@ -19,13 +19,23 @@ class PortfolioPageTest extends TestCase{
 			->dontSee('Your Trades');
 	}
 
-	public function testCreatePortfolio(){
+	public function testPortfolioFunctions(){
 		$user = factory(App\Models\User::class)->create();
 
 		$this->actingAs($user)
 			->visit('/user/portfolio')
+
+			//Create Portfolio
 			->type('Test Portfolio', 'portfolioName')
 			->press('Create')
-			->see('Stocks in Test Portfolio');
+			->see('Stocks in Test Portfolio')
+			->see('Add a Stock to this Portfolio')
+
+			//Add stock to portfolio
+			->type('A2M', 'purchaseStockCode')
+			->type('1.50', 'purchasePrice')
+			->type('1000', 'purchaseQuantity')
+			->type('07/04/2016', 'purchaseDate')
+			->press('Add');
 	}
 }
