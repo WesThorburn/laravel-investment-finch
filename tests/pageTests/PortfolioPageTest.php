@@ -13,11 +13,14 @@ class PortfolioPageTest extends TestCase{
 			->visit('/')
 			->click('Portfolio')
 			->see('Your Portfolios')
-			->see('Create a Portfolio');
+			->see('Create a Portfolio')
+			->dontSee('Stocks in ')
+			->dontSee('Add a Stock to this Portfolio')
+			->dontSee('Your Trades');
 	}
 
 	public function testCreatePortfolio(){
-		$user = factory(App\Models\User::class)->make();
+		$user = factory(App\Models\User::class)->create();
 
 		$this->actingAs($user)
 			->visit('/user/portfolio')
