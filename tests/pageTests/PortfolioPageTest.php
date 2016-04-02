@@ -7,7 +7,7 @@ class PortfolioPageTest extends TestCase{
 	use DatabaseTransactions;
 
 	public function testPortfolioPage(){
-		$user = factory(App\Models\User::class)->make();
+		$user = factory(App\Models\User::class)->create();
 
 		$this->actingAs($user)
 			->visit('/')
@@ -36,6 +36,15 @@ class PortfolioPageTest extends TestCase{
 			->type('1.50', 'purchasePrice')
 			->type('1000', 'purchaseQuantity')
 			->type('07/04/2016', 'purchaseDate')
-			->press('Add');
+			->press('Add')
+
+			//See Stock in portfolio row
+			->see('A2M')->see('1.52')
+
+			//See Trade Data
+			->see('Your Trades')->see('Buy');
+
+			//Sell Stock
+			//->call('PUT', '/user/portfolio/'.);
 	}
 }
