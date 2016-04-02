@@ -44,7 +44,18 @@ class PortfolioPageTest extends TestCase{
 			//See Trade Data
 			->see('Your Trades')->see('Buy');
 
-			//Sell Stock
-			//->call('PUT', '/user/portfolio/'.);
+			//Sell stock
+			$this->withoutMiddleware();
+
+			$response = $this->call('PUT', '/user/portfolio/'.$user->portfolios()->first()->id, [
+				'tradeType' => 'sell',
+				'saleStockCode' => 'A2M',
+				'salePrice' => '2.00',
+				'saleQuantity' => '1000',
+				'saleBrokerage' => '19.95',
+				'saleDate' => '07/04/2016'
+			]);
+
+			$this->assertResponseStatus(302);
 	}
 }

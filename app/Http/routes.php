@@ -47,6 +47,5 @@ Route::group(['prefix' => 'ajax'], function(){
 	});
 });
 
-route::get('/test', function(){
-	dd(\Auth::user()->portfolios()->first());
-});
+/*route::get('/test', function(){
+});*/
