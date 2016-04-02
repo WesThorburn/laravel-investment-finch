@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-/*class ArtisanStockCommandTest extends TestCase{
+class ArtisanStockCommandTest extends TestCase{
 
 	use DatabaseTransactions;
 	
@@ -70,4 +70,4 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 	public function testGetCompanySummaries(){
 		$this->artisan("stocks:getCompanySummaries", ['--testMode' => true]);
 	}
-}*/
+}

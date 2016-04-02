@@ -17,7 +17,7 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        $userPortfolios = Portfolio::where('user_id', \Auth::user()->id)->get();
+        $userPortfolios = Portfolio::belongingToCurrentUser()->get();
         if($userPortfolios->count() > 0){
             return redirect('user/portfolio/'.$userPortfolios->first()->id);
         }
@@ -47,7 +47,7 @@ class PortfolioController extends Controller
             'portfolioName' => 'required|string|max:64'
         ]);
 
-        if(Portfolio::where(['user_id' => \Auth::user()->id, 'portfolio_name' => $request->portfolioName])->first()){
+        if(Portfolio::belongingToCurrentUser()->withName($request->portfolioName)->first()){
             \Session::flash('portfolioNameError', 'You already have a portfolio with the same name!');
             return redirect()->back();
         }
@@ -181,7 +181,7 @@ class PortfolioController extends Controller
             \Session::flash('sellPortfolioError', "You don't own enough ".$request->saleStockCode.' shares to record this sale!');
             return redirect('user/portfolio/'.$id);
         }
-        //Check if sell quantity equals owned quantity
+        //Delete if sell quantity equals owned quantity
         elseif($stockInPortfolio->quantity == $request->saleQuantity){
             \DB::table('portfolio_stocks')
                 ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])

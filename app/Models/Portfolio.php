@@ -15,4 +15,12 @@ class Portfolio extends Model
     public function user(){
     	return $this->belongsTo('App\Models\User');
     }
+
+    public function scopeBelongingToCurrentUser($query){
+    	return $query->where('user_id', \Auth::user()->id);
+    }
+
+    public function scopeWithName($query, $name){
+    	return $query->where('portfolio_name', $name);
+    }
 }
