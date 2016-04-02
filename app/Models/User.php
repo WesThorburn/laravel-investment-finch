@@ -31,4 +31,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	public function portfolios(){
+    	return $this->hasMany('App\Models\Portfolio');
+    }
+
 }

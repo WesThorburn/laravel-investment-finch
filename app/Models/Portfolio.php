@@ -11,4 +11,8 @@ class Portfolio extends Model
     public function stocks(){
     	return $this->belongsToMany('App\Models\Stock');
     }
+
+    public function user(){
+    	return $this->belongsTo('App\Models\User');
+    }
 }
