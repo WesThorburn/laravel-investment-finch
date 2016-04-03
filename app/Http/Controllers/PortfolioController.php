@@ -78,18 +78,7 @@ class PortfolioController extends Controller
                 'portfolios' => Portfolio::select('id', 'portfolio_name')->where('user_id', \Auth::user()->id)->get(),
                 'selectedPortfolio' => Portfolio::select('id', 'portfolio_name')->where('id', $id)->first(),
                 'trades' => \DB::table('trades')->where('user_id', \Auth::user()->id)->orderBy('date')->get(),
-                'stocksInSelectedPortfolio' => \DB::table('portfolio_stocks')
-                    ->join('stock_metrics', 'portfolio_stocks.stock_code', '=', 'stock_metrics.stock_code')
-                    ->select(
-                        'portfolio_stocks.portfolio_id', 
-                        'portfolio_stocks.stock_code', 
-                        'portfolio_stocks.purchase_price', 
-                        'portfolio_stocks.quantity',
-                        'stock_metrics.last_trade',
-                        'stock_metrics.day_change'
-                        )
-                    ->where('portfolio_stocks.portfolio_id', $id)
-                    ->get()
+                'stocksInSelectedPortfolio' => PortfolioStock::getStockMetricsDataForPortfolio($id)
             ]);
         }
         return redirect()->back();
@@ -140,11 +129,11 @@ class PortfolioController extends Controller
 
         $this->recordTrade(\Auth::user()->id, 'buy', $request->purchaseStockCode, $request->purchasePrice, $request->purchaseQuantity, $request->purchaseBrokerage,$request->purchaseDate);
 
-        if(PortfolioStock::stockIsInPortfolio($request->purchaseStockCode, $id)){
+        if(PortfolioStock::alreadyInPortfolio($request->purchaseStockCode, $id)){
             $this->ammendPosition($request, $id);
         }
         else{
-            //Add stock to portfolio
+            //Add new stock to portfolio
             $portfolioStock = new PortfolioStock;
             $portfolioStock->portfolio_id = $id;
             $portfolioStock->stock_code = $request->purchaseStockCode;
@@ -166,35 +155,30 @@ class PortfolioController extends Controller
             'saleDate' => 'required|date'
         ]);
 
+        //Retreive existing stock record
+        $portfolioStock = PortfolioStock::whereStockInPortfolio($request->saleStockCode, $id)->first();
+
         //Check if stock already exists in portfolio
-        if(!\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first()){
+        if(!PortfolioStock::alreadyInPortfolio($request->saleStockCode, $id)){
             \Session::flash('sellPortfolioError', "You currently don't own ".$request->saleStockCode.' therefore, you cannot sell it!');
             return redirect('user/portfolio/'.$id);
         }
 
-        //Retreive existing stock record
-        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])->first();
-
         //Check if sell quantity exists owned quantity
-        if($stockInPortfolio->quantity < $request->saleQuantity){
+        if($portfolioStock->quantity < $request->saleQuantity){
             \Session::flash('sellPortfolioError', "You don't own enough ".$request->saleStockCode.' shares to record this sale!');
             return redirect('user/portfolio/'.$id);
         }
         //Delete if sell quantity equals owned quantity
-        elseif($stockInPortfolio->quantity == $request->saleQuantity){
-            \DB::table('portfolio_stocks')
-                ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
-                ->delete();
+        elseif($portfolioStock->quantity == $request->saleQuantity){
+            PortfolioStock::whereStockInPortfolio($request->saleStockCode, $id)->delete();
         }
-
-        //Update portfolio
-        \DB::table('portfolio_stocks')
-            ->where(['portfolio_id' => $id, 'stock_code' => $request->saleStockCode])
-            ->update([
-                'quantity' => $stockInPortfolio->quantity-$request->saleQuantity,
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
-
+        else{
+            //Update portfolio
+            $portfolioStock = PortfolioStock::whereStockInPortfolio($request->saleStockCode, $id)->first();
+            $portfolioStock->quantity = $portfolioStock->quantity-$request->saleQuantity;
+            $portfolioStock->save();
+        }
 
         $this->recordTrade(\Auth::user()->id, 'sell', $request->saleStockCode, $request->salePrice, $request->saleQuantity, $request->saleBrokerage, $request->saleDate);
 
@@ -203,18 +187,14 @@ class PortfolioController extends Controller
     }
 
     private function ammendPosition(Request $request, $id){
-        $stockInPortfolio = \DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first();
+        $portfolioStock = PortfolioStock::whereStockInPortfolio($request->purchaseStockCode, $id)->first();
         $thisPurchaseTotal = $request->purchaseQuantity * $request->purchasePrice + $request->purchaseBrokerage;
-        $updatedPurchaseQty = $stockInPortfolio->quantity + $request->purchaseQuantity;
-        $updatedPurchasePrice = ($stockInPortfolio->purchase_price * $stockInPortfolio->quantity + $thisPurchaseTotal)/$updatedPurchaseQty;
+        $updatedPurchaseQty = $portfolioStock->quantity + $request->purchaseQuantity;
+        $updatedPurchasePrice = ($portfolioStock->purchase_price * $portfolioStock->quantity + $thisPurchaseTotal)/$updatedPurchaseQty;
 
-        \DB::table('portfolio_stocks')
-            ->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])
-            ->update([
-                'purchase_price' => $updatedPurchasePrice,
-                'quantity' => $updatedPurchaseQty,
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
+        $portfolioStock->purchase_price = $updatedPurchasePrice;
+        $portfolioStock->quantity = $updatedPurchaseQty;
+        $portfolioStock->save();
     }
 
     private function recordTrade($userId, $tradeType, $stockCode, $price, $quantity, $brokerage, $date){
