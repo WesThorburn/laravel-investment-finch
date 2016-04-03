@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\Portfolio;
+use App\Models\PortfolioStock;
 use App\Http\Controllers\Controller;
 
 class PortfolioController extends Controller
@@ -139,20 +140,18 @@ class PortfolioController extends Controller
 
         $this->recordTrade(\Auth::user()->id, 'buy', $request->purchaseStockCode, $request->purchasePrice, $request->purchaseQuantity, $request->purchaseBrokerage,$request->purchaseDate);
 
-        if(\DB::table('portfolio_stocks')->where(['portfolio_id' => $id, 'stock_code' => $request->purchaseStockCode])->first()){
-            //If stock already exists in portfolio
+        if(PortfolioStock::stockIsInPortfolio($request->purchaseStockCode, $id)){
             $this->ammendPosition($request, $id);
         }
         else{
-            //If stock isn't already in portfolio
-            \DB::table('portfolio_stocks')->insert([
-                'portfolio_id' => $id,
-                'stock_code' => $request->purchaseStockCode,
-                'purchase_price' => (($request->purchasePrice*$request->purchaseQuantity)+$request->purchaseBrokerage)/$request->purchaseQuantity,
-                'quantity' => $request->purchaseQuantity,
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
+            //Add stock to portfolio
+            $portfolioStock = new PortfolioStock;
+            $portfolioStock->portfolio_id = $id;
+            $portfolioStock->stock_code = $request->purchaseStockCode;
+            $portfolioStock->purchase_price = (($request->purchasePrice*$request->purchaseQuantity)+$request->purchaseBrokerage)/$request->purchaseQuantity;
+            $portfolioStock->quantity = $request->purchaseQuantity;
+            $portfolioStock->save();
+            
         }
         \Session::flash('addStockToPortfolioSuccess', $request->purchaseStockCode.' was added to your Portfolio successfully!');
         return redirect('user/portfolio/'.$id);
