@@ -19,4 +19,8 @@ class Watchlist extends Model
     public function scopeBelongingToCurrentUser($query){
     	return $query->where('user_id', \Auth::user()->id);
     }
+
+    public function scopeWithName($query, $name){
+    	return $query->where('watchlist_name', $name);
+    }
 }
