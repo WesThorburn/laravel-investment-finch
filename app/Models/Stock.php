@@ -30,6 +30,10 @@ class Stock extends Model {
     	return $this->belongsToMany('App\Models\Portfolio');
     }
 
+    public function watchlists(){
+    	return $this->belongsToMany('App\Models\Watchlist');
+    }
+
 	public static function scopeWithMarketIndex($query, $marketIndex){
 		switch ($marketIndex){
 			case 'asx20':

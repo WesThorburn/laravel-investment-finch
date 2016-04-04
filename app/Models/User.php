@@ -35,4 +35,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     	return $this->hasMany('App\Models\Portfolio');
     }
 
+    public function watchlists(){
+    	return $this->hasMany('App\Models\Watchlist');
+    }
+
 }
