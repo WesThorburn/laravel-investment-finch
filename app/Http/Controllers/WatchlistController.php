@@ -73,7 +73,7 @@ class WatchlistController extends Controller
             return view('pages.user.watchlist')->with([            
                 'watchlists' => Watchlist::select('id', 'watchlist_name')->where('user_id', \Auth::user()->id)->get(),
                 'selectedWatchlist' => Watchlist::select('id', 'watchlist_name')->where('id', $id)->first(),
-                'stocksInSelectedWatchlist' => [],
+                'stocksInSelectedWatchlist' => Watchlist::getStockMetricsDataForPortfolio($id),
             ]);
         }
         return redirect()->back();
