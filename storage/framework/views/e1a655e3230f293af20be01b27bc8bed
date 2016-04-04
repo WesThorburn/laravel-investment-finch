@@ -48,8 +48,8 @@
 	$(document).ready(function(){
 		$('#watchlist_table').DataTable({
 			"dom": 'tp',
-			"pageLength": 5,
-			"lengthMenu": [5,10,20,50,100],
+			"pageLength": 10,
+			"lengthMenu": [10,20,50,100],
 			"stateSave": true
 		});
 	});

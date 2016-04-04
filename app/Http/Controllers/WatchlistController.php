@@ -102,25 +102,34 @@ class WatchlistController extends Controller
     public function update(Request $request, $id)
     {
         //Check portfolio belongs to current user
-        if(Watchlist::where('id', $id)->pluck('user_id') == \Auth::user()->id){
-             $this->validate($request, [
-                'stockCode' => 'required|string|max:3'
-            ]);
-            //Check stockCode exists in stock table
-            if(Stock::where('stock_code', $request->stockCode)->first()){
-                $stockWatchlist = new StockWatchlist;
-                $stockWatchlist->watchlist_id = $id;
-                $stockWatchlist->stock_code = $request->stockCode;
-                $stockWatchlist->save();
+        if(Watchlist::where('id', $id)->pluck('user_id') != \Auth::user()->id){
+            \Session::flash('watchlistError', 'There was an error with your request!');
+            return redirect()->back();
+        }
 
-                \Session::flash('addStockToWatchlistSuccess', $request->stockCode.' was added to your Watchlist successfully!');
-                return redirect('user/watchlist/'.$id);
-            }
+        $this->validate($request, [
+            'stockCode' => 'required|string|max:3'
+        ]);
+
+        //Check stockCode exists in stock table
+        if(!Stock::where('stock_code', $request->stockCode)->first()){
             \Session::flash('watchlistError', $request->stockCode.' is not currently an active Stock Code!');
             return redirect()->back();
         }
-        \Session::flash('watchlistError', 'There was an error with your request!');
-        return redirect()->back();
+
+        //Check stockCode already in watchlist
+        if(StockWatchlist::where(['watchlist_id' => $id, 'stock_code' => $request->stockCode])->first()){
+            \Session::flash('watchlistError', $request->stockCode.' is already in this Watchlist!');
+            return redirect()->back();
+        }
+
+        $stockWatchlist = new StockWatchlist;
+        $stockWatchlist->watchlist_id = $id;
+        $stockWatchlist->stock_code = $request->stockCode;
+        $stockWatchlist->save();
+
+        \Session::flash('addStockToWatchlistSuccess', $request->stockCode.' was added to your Watchlist successfully!');
+        return redirect('user/watchlist/'.$id);  
     }
 
     /**
