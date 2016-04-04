@@ -16,7 +16,10 @@ class WatchlistController extends Controller
      */
     public function index()
     {
-        return view('pages.user.watchlist');
+        return view('pages.user.watchlist')->with([
+            'watchlists' => \DB::table('watchlists')->where('user_id', \Auth::user()->id)->get(),
+            'selectedWatchlist' => 0
+        ]);
     }
 
     /**
