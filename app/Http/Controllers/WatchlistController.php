@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Models\Stock;
 use App\Models\Watchlist;
+use App\Models\StockWatchlist;
 use App\Http\Controllers\Controller;
 
 class WatchlistController extends Controller
@@ -73,7 +75,7 @@ class WatchlistController extends Controller
             return view('pages.user.watchlist')->with([            
                 'watchlists' => Watchlist::select('id', 'watchlist_name')->where('user_id', \Auth::user()->id)->get(),
                 'selectedWatchlist' => Watchlist::select('id', 'watchlist_name')->where('id', $id)->first(),
-                'stocksInSelectedWatchlist' => Watchlist::getStockMetricsDataForPortfolio($id),
+                'stocksInSelectedWatchlist' => StockWatchlist::getStockMetricsDataForPortfolio($id),
             ]);
         }
         return redirect()->back();
@@ -99,7 +101,26 @@ class WatchlistController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Check portfolio belongs to current user
+        if(Watchlist::where('id', $id)->pluck('user_id') == \Auth::user()->id){
+             $this->validate($request, [
+                'stockCode' => 'required|string|max:3'
+            ]);
+            //Check stockCode exists in stock table
+            if(Stock::where('stock_code', $request->stockCode)->first()){
+                $stockWatchlist = new StockWatchlist;
+                $stockWatchlist->watchlist_id = $id;
+                $stockWatchlist->stock_code = $request->stockCode;
+                $stockWatchlist->save();
+
+                \Session::flash('addStockToWatchlistSuccess', $request->stockCode.' was added to your Watchlist successfully!');
+                return redirect('user/watchlist/'.$id);
+            }
+            \Session::flash('watchlistError', $request->stockCode.' is not currently an active Stock Code!');
+            return redirect()->back();
+        }
+        \Session::flash('watchlistError', 'There was an error with your request!');
+        return redirect()->back();
     }
 
     /**

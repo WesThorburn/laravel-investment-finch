@@ -127,6 +127,14 @@
 								        </ul>
 									</div>
 								</div>
+							@elseif(Session::has('watchlistError'))
+								<div class="col-xs-12 default-margin-top">
+									<div class="alert alert-danger three-quarter-margin-bottom">
+										<ul>
+								            <li>{{ Session('watchlistError') }}</li>
+								        </ul>
+									</div>
+								</div>
 							@endif
 						</div>
 					</div>

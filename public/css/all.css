@@ -7189,11 +7189,6 @@ th{
 	padding-right:5px !important;
 }
 
-.metrics-table.table > tbody > tr > td{
-	padding:5px;
-	cursor:default;
-}
-
 .col-left-right-20px-padding{
 	padding-left:20px;
 	padding-right:20px;
@@ -7271,6 +7266,26 @@ th{
 .table-subtotals-row>th{
 	border-top:2px solid #263338 !important;
 	border-bottom:1px solid #263338 !important;
+}
+
+.td-limit-small{
+    max-width: 110px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.td-limit-medium{
+    max-width: 180px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.metrics-table.table > tbody > tr > td{
+	padding:5px;
+	cursor:default;
 }
 
 .navbar {

@@ -96,10 +96,10 @@
 								<?php echo e(csrf_field()); ?>
 
 								<div class="row">
-									<label class="col-xs-6 single-px-padding-right" for="stockCode">Stock Code</label>
+									<label class="col-xs-12 single-px-padding-right" for="stockCode">Stock Code</label>
 								</div>
 								<div class="row">
-									<div class="col-xs-5 single-px-padding-right">
+									<div class="col-xs-11 single-px-padding-right">
 										<input name="stockCode" id="stockCode" type="text" class="form-control<?php echo e($errors->has('stockCode') ? ' has-error' : ''); ?>" 
 										placeholder="Code" maxlength="3" value=<?php echo e(old('stockCode')); ?>>
 									</div>
@@ -124,6 +124,14 @@
 									<div class="alert alert-success three-quarter-margin-bottom">
 										<ul>
 								            <li><?php echo e(Session('addStockToWatchlistSuccess')); ?></li>
+								        </ul>
+									</div>
+								</div>
+							<?php elseif(Session::has('watchlistError')): ?>
+								<div class="col-xs-12 default-margin-top">
+									<div class="alert alert-danger three-quarter-margin-bottom">
+										<ul>
+								            <li><?php echo e(Session('watchlistError')); ?></li>
 								        </ul>
 									</div>
 								</div>

@@ -118,6 +118,12 @@ class StockController extends Controller
             ])
             ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
         return \Datatables::of($stocks)
+            ->editColumn('company_name', function($stock){
+                return '<div class="td-limit-medium">'.$stock->stock->company_name.'</div>';
+            })
+            ->editColumn('sector', function($stock){
+                return '<div class="td-limit-medium">'.$stock->stock->sector.'</div>';
+            })
             ->editColumn('volume', function($stock){
                 return number_format($stock->volume);
             })

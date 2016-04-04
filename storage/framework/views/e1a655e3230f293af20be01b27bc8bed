@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+	<div class="panel-heading"><b>Stocks in <?php echo e($selectedWatchlist->watchlist_name); ?></b></div>
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="watchlist_table">
+	    <thead>
+	        <tr>
+	            <th>Code</th>
+	            <th>Name</th>
+	            <th>Share Price</th>
+	            <th>Day Change</th>
+	            <th>Mkt Cap (M)</th>
+	            <th>Volume</th>
+	            <th>EBITDA (m)</th>
+	            <th>EPS Current Year</th>
+	            <th>P / E Ratio</th>
+	            <th>Price / Book</th>
+	            <th>PEG Ratio</th>
+	            <th>52 Week High</th>
+	            <th>52 Week Low</th>
+	        </tr>
+	    </thead>
+		<tbody data-link="row" class="rowlink">
+			<?php foreach($stocksInSelectedWatchlist as $stock): ?>
+				<tr>	
+					<td><?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></td>
+					<td class="td-limit-small"><?php echo e($stock->stock->company_name); ?></td>
+					<td>$<?php echo e($stock->last_trade); ?></td>
+					<td <?php if($stock->percent_change < 0): ?> class="color-red" 
+						<?php elseif($stock->percent_change > 0): ?> class="color-green"
+						<?php endif; ?>>
+						<?php echo e(number_format($stock->percent_change, 2)); ?>%
+					</td>
+					<td><?php echo e($stock->volume); ?></td>
+					<td><?php echo e($stock->EBITDA); ?></td>
+					<td><?php echo e($stock->earnings_per_share_current); ?></td>
+					<td><?php echo e($stock->price_to_earnings); ?></td>
+					<td><?php echo e($stock->price_to_book); ?></td>
+					<td><?php echo e($stock->peg_ratio); ?></td>
+					<td><?php echo e($stock->current_market_cap); ?></td>
+					<td><?php echo e($stock->year_high); ?></td>
+					<td><?php echo e($stock->year_low); ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#watchlist_table').DataTable({
+			"dom": 'tp',
+			"pageLength": 5,
+			"lengthMenu": [5,10,20,50,100],
+			"stateSave": true
+		});
+	});
+</script>
