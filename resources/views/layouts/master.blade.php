@@ -41,6 +41,19 @@
         	}, 15000); 
 		</script>
 		<div id="container">
+			<nav class="navbar navbar-default navbar-ceiling">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<a href="/" class="pull-left default-margin-right"><img src="../images/logo.png" width="75" height="75"></a>
+							<h1 class="main-header">Investment Finch</h1>
+						</div>
+						<div class="col-md-6">
+							<h2 class="sub-header pull-right double-margin-top">The ASX simplified.</h2>
+						</div>
+					</div>
+				</div>
+			</nav>
 			<nav class="navbar navbar-inverse no-margin-bottom">
 				<div class="container">
 					<div class="row">

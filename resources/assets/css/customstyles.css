@@ -23,12 +23,28 @@ th{
 	width:33.33%;
 }
 
+.double-margin-top{
+	margin-top:40px;
+}
+
+.double-margin-bottom{
+	margin-bottom:40px;
+}
+
 .default-margin-top{
 	margin-top:20px;
 }
 
 .default-margin-bottom{
 	margin-bottom:20px;
+}
+
+.default-margin-left{
+	margin-left:20px;
+}
+
+.default-margin-right{
+	margin-right:20px;
 }
 
 .three-quarter-margin-top{
@@ -45,6 +61,14 @@ th{
 
 .half-margin-bottom{
 	margin-bottom:10px;
+}
+
+.half-margin-left{
+	margin-left:10px;
+}
+
+.half-margin-right{
+	margin-right:10px;
 }
 
 .quarter-margin-bottom{
@@ -231,6 +255,24 @@ th{
 
 .navbar-default{
 	background-color:#D9E0DC;
+}
+
+.navbar-ceiling{
+	margin-bottom:0px;
+}
+
+.main-header{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:42px;
+	font-weight:bolder;
+}
+
+.sub-header{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:24px;
+	font-weight:bold;
 }
 
 .stocks-page-header{
