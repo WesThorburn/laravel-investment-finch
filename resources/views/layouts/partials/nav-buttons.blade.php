@@ -8,7 +8,7 @@
 	</button>
 </div>
 <div class="collapse navbar-collapse" id="main-navbar-collapse">
-	<ul class="nav navbar-nav">
+	<ul class="nav navbar-nav nav-font">
 		<li class="nav-button @if($page == 'home') active @endif"><a href="/">Home</a></li>
 		<li class="nav-button @if($page == 'sectors') active @endif"><a href="/sectors">Sectors</a></li>
 		<li class="nav-button @if($page == 'stocks') active @endif"><a href="/index/all">Stocks</a></li>

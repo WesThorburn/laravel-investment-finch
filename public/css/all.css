@@ -7066,6 +7066,11 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap-theme.css.map */
 
+* {
+    font-family: Calibri;
+    font-size:14px;
+  }
+
 body{
 	font-size:13px;
 }
@@ -7351,6 +7356,10 @@ th{
 	margin-bottom:0px;
 }
 
+.navbar-nav > li > a{
+	font-size:22px;
+}
+
 .main-header{
 	font-family: Calibri;
 	font-variant: small-caps;
@@ -7379,6 +7388,13 @@ th{
 
 .stocks-page-nav-tabs > li > a{
 	color:#555;
+}
+
+.nav-font{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:20px;
+	font-weight:bold;
 }
 
 .nav-tabs > li.active > a, 
