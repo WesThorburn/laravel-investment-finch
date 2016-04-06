@@ -52,8 +52,10 @@ class UpdateStockAnalysisCommand extends Command
 
         foreach($stocks as $key => $stock){
             $this->info('Updating: '.$stock.' | '.round((100/$numberOfStocks)*$key, 2).'%');
+
             $stockMetrics = StockMetrics::where('stock_code', $stock)->first();
-            if($stockMetrics->first()){
+
+            if($stockMetrics != null){
                 if($stockMetrics->last_trade > 0){
                     $stockMetrics->analysis = $this->generateAnalysis($stockMetrics);
                     $stockMetrics->save();
