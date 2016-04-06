@@ -45,7 +45,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-6">
-							<a href="/" class="pull-left default-margin-right"><img src="../images/logo.png" width="75" height="75"></a>
+							<a href="/" class="pull-left default-margin-right"><img src="{{asset('../images/logo.png')}}" width="75" height="75"></a>
 							<h1 class="main-header">Investment Finch</h1>
 						</div>
 						<div class="col-md-6">
