@@ -7248,6 +7248,23 @@ th{
 	display:none;
 }
 
+.form-control{
+	border-radius:0px;
+}
+
+.input-group-addon{
+	border-radius:0px;
+}
+
+.btn-default.active{
+
+}
+
+.btn, .btn-group-sm > .btn{
+	border-radius:0px;
+	border:none;
+}
+
 .btn-logout, .btn-login, .btn-register{
 	margin-top:8px;
 }
@@ -7262,6 +7279,11 @@ th{
 
 .panel{
 	border-color:#2e3e44;
+	border-radius:0px;
+}
+
+.panel-heading{
+	border-radius:0px;
 }
 
 .panel-body{
@@ -7363,6 +7385,10 @@ th{
 .nav-tabs > li.active > a:hover{
 	border-color:#2e3e44;
 	border-bottom-color: transparent;
+}
+
+.pagination > li:first-child > a, .pagination > li:last-child > a{
+	border-radius: 0px;
 }
 
 @media(min-width: 768px){
