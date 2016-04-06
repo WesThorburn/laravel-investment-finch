@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>
-			@yield('title') | ASX Stocks | Wes Thorburn
+			@yield('title') | Investment Finch
 		</title>
 		
 		<meta name="description" content="The only Australian Stock Market website that allows users to search for and rank stocks based on pre-defined metrics. A simple open source project built upon the Yahoo finance API."/>
@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="/css/all.css">
 		
 		<!-- Favicon -->
-		<link rel="shortcut icon" type="image/png" href="/images/favicon.ico"/>
+		<link rel="shortcut icon" type="image/png" href="/images/favicons/favicon.ico"/>
 
 		<!--Javascript-->
 		<script src="/js/jquery-2.1.4.min.js"></script>
