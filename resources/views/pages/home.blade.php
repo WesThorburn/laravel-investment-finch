@@ -68,7 +68,7 @@
 			document.getElementById(numberOfSectors).className = "btn btn-default active";
 		}
 	</script>
-	<div class="container">
+	<div class="container three-quarter-margin-top">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="alert alert-warning" role="alert">
@@ -119,6 +119,11 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-left-right-20px-padding">
+				<div class="row">
+					<div id="marketStatus">
+
+					</div>
+				</div>
 				<div class="row">
 					<div id="sectorDayGain">
 						@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])

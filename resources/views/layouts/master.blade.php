@@ -76,14 +76,18 @@
 					</div>
 				</div>
 			</nav>
-			<nav class="navbar navbar-default">
-				<div class="container">
-					<div class="row">
-						<div id="marketStatus" class="quarter-margin-top"></div>
-						<div id="marketChange" class="quarter-margin-top"></div>
+			<!-- Don't display market info on homepage -->
+			@if($_SERVER['REQUEST_URI'] != '/')
+				<nav class="navbar navbar-default">
+					<div class="container">
+						<div class="row">
+							<div id="marketStatus" class="quarter-margin-top"></div>
+							<div id="marketChange" class="quarter-margin-top"></div>
+
+						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
+			@endif
 			@yield('body')
 		</div>
 		@yield('footer')
