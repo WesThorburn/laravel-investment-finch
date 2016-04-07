@@ -19,4 +19,5 @@
 			<li class="nav-button @if($page == 'account') active @endif"><a href="/user/account">Account</a></li>
 		@endif
 	</ul>
+	@include('layouts.partials.search-box')
 </div>

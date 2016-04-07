@@ -19,4 +19,5 @@
 			<li class="nav-button <?php if($page == 'account'): ?> active <?php endif; ?>"><a href="/user/account">Account</a></li>
 		<?php endif; ?>
 	</ul>
+	<?php echo $__env->make('layouts.partials.search-box', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div>

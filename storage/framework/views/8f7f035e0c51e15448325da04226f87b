@@ -79,13 +79,8 @@
 			<nav class="navbar navbar-default">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-6">
-							<div id="marketStatus" class="quarter-margin-top"></div>
-							<div id="marketChange" class="quarter-margin-top"></div>
-						</div>
-						<div class="col-xs-6">
-							<?php echo $__env->make('layouts.partials.search-box', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-						</div>
+						<div id="marketStatus" class="quarter-margin-top"></div>
+						<div id="marketChange" class="quarter-margin-top"></div>
 					</div>
 				</div>
 			</nav>

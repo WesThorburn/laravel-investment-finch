@@ -79,13 +79,8 @@
 			<nav class="navbar navbar-default">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-6">
-							<div id="marketStatus" class="quarter-margin-top"></div>
-							<div id="marketChange" class="quarter-margin-top"></div>
-						</div>
-						<div class="col-xs-6">
-							@include('layouts.partials.search-box')
-						</div>
+						<div id="marketStatus" class="quarter-margin-top"></div>
+						<div id="marketChange" class="quarter-margin-top"></div>
 					</div>
 				</div>
 			</nav>

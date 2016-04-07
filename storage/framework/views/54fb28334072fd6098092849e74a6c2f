@@ -1,5 +1,5 @@
 <div class="pull-right half-margin-top">
-	<?php echo Form::open(['action' => 'StockController@show', 'method' => 'get', 'class' => 'form-group form-inline']); ?>
+	<?php echo Form::open(['action' => 'StockController@show', 'method' => 'get', 'class' => 'form-group form-inline no-margin-bottom']); ?>
 
 		<?php echo Form::text('stockCodeFind', null, ['class' => 'form-control', 'placeholder' => 'Find Stock Code']); ?>
 
