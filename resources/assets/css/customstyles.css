@@ -132,6 +132,14 @@ th{
 	padding-bottom:0px;
 }
 
+.no-padding-left{
+	padding-left:0px;
+}
+
+.no-padding-right{
+	padding-right:0px;
+}
+
 .single-px-padding-left-right{
 	padding-left:1px !important;
 	padding-right:1px !important;
