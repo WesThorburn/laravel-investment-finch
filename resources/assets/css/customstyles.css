@@ -118,7 +118,7 @@ th{
 }
 
 .no-margin-right{
-	margin-top:right;
+	margin-right:0px;
 }
 
 .no-margin-bottom{
@@ -333,6 +333,23 @@ th{
 
 .pagination > li:first-child > a, .pagination > li:last-child > a{
 	border-radius: 0px;
+}
+
+.main-footer{
+	height:150px;
+	background-color:#2e3e44;
+}
+
+.footer-text, .footer-text a{
+	color:#EDEEEA;
+	font-size:20px;
+	margin-top:10px;
+}
+
+.disclaimer-text{
+	margin-top:20px;
+	color:#EDEEEA;
+	font-size:13px;
 }
 
 @media(min-width: 768px){
