@@ -10,11 +10,23 @@
 	<script>
 		$(document).ready(
             function() {
+            	$('#marketOpenClosed').load('ajax/marketOpenClosed');
+				$('#marketTime').load('ajax/marketTime');
+				$('#marketChange').load('ajax/marketchange');
+
                 setInterval(function() {
+                	//Market Status Panel
+                	$('#marketOpenClosed').load('ajax/marketOpenClosed');
+                	$('#marketTime').load('ajax/marketTime');
+                	$('#marketChange').load('ajax/marketchange');
+
+                	//Sector Panels
                 	$('#sectorDayGain').load('ajax/sectors/topPerforming/top');
                 	$('#sectorDayLoss').load('ajax/sectors/topPerforming/bottom');
+
+                	//Volume Stocks Panel
                 	$('#highestVolumeStocks').load('ajax/stocks/highestVolume');
-                }, 60000);
+                }, 6000);
             });
 
 		$(document).ready(function () {
@@ -66,7 +78,7 @@
 			document.getElementById(numberOfSectors).className = "btn btn-default active";
 		}
 	</script>
-	<div class="container">
+	<div class="container three-quarter-margin-top">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="alert alert-warning" role="alert">
@@ -78,7 +90,8 @@
 			<div class="col-md-8 col-left-right-20px-padding">
 				<div class="row">
 					<div class="panel panel-default half-margin-bottom">
-						<div class="panel-heading">
+						<div class="panel-heading text-center">
+							<h2 class="no-margin-top">ASX Market Cap</h2>
 							<div class="btn-group btn-group-sm pull-center" role="group">
 								<button class="btn btn-default active" onclick="getMarketCapGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>
 								<button class="btn btn-default" onclick="getMarketCapGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
@@ -99,7 +112,8 @@
 				</div>
 				<div class="row">
 					<div class="panel panel-default half-margin-bottom">
-						<div class="panel-heading">
+						<div class="panel-heading text-center">
+							<h2 class="no-margin-top">Sector Caps</h2>
 							<div class="btn-group btn-group-sm pull-center" role="group">
 								<button class="btn btn-default active" onclick="getSectorCapGraphData('top_5', 'Sector Cap')" id="top_5">Top 5</button>
 								<button class="btn btn-default" onclick="getSectorCapGraphData('top_10', 'Sector Cap')" id="top_10">Top 10</button>
@@ -117,6 +131,17 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-left-right-20px-padding">
+				<div class="row">
+					<div class="panel panel-default half-margin-bottom">
+						<div class="panel-heading"><h3 class="no-margin-top no-margin-bottom text-center" id="marketOpenClosed"></h3></div>
+						<div class="panel-body">
+							<div class="center-block">
+								<h4 class="no-margin-top text-center" id="marketTime"></h4>
+								<h3 class="no-margin-top no-margin-bottom text-center" id="marketChange"></h3>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div id="sectorDayGain">
 						<?php echo $__env->make('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

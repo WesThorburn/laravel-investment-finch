@@ -38,6 +38,9 @@ Route::group(['prefix' => 'ajax'], function(){
 	Route::get('sectors/{sectorName}/otherstocksinsector', 'SectorController@otherStocksInSector');
 	Route::get('/marketstatus','MarketController@status');
 	Route::get('/marketchange', 'MarketController@change');
+	Route::get('/marketOpenClosed', 'MarketController@openClosed');
+	Route::get('/marketTime', 'MarketController@time');
+	Route::get('/simpleMarketChange', 'MarketController@simpleChange');
 
 	Route::group(['prefix' => 'graph'], function(){
 		Route::get('stock/{stockCode}/{timeFrame}/{dataType}', 'GraphController@stock');

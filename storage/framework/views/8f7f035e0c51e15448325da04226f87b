@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<title>
-			<?php echo $__env->yieldContent('title'); ?> | ASX Stocks | Wes Thorburn
+			<?php echo $__env->yieldContent('title'); ?> | Investment Finch
 		</title>
 		
-		<meta name="description" content="The only Australian Stock Market website that allows users to search for and rank stocks based on pre-defined metrics. A simple open source project built upon the Yahoo finance API."/>
+		<meta name="description" content="Investment Finch is the only Australian Stock Market website that allows users to search for and rank stocks based on pre-defined metrics. A simple open source project built upon the Yahoo finance API."/>
 
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/all.css">
 		
 		<!-- Favicon -->
-		<link rel="shortcut icon" type="image/png" href="/images/favicon.ico"/>
+		<link rel="shortcut icon" type="image/png" href="/images/favicons/favicon.ico"/>
 
 		<!--Javascript-->
 		<script src="/js/jquery-2.1.4.min.js"></script>
@@ -41,6 +41,32 @@
         	}, 15000); 
 		</script>
 		<div id="container">
+			<nav class="navbar navbar-default navbar-ceiling">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9">
+							<a href="/" class="pull-left default-margin-right"><img src="<?php echo e(asset('../images/logo.png')); ?>" width="75" height="75"></a>
+							<h1 class="main-header">Investment Finch</h1>
+						</div>
+						<div class="col-md-3">
+							<ul class="nav navbar-nav pull-right">
+								<li>
+									<?php if(Auth::check()): ?>
+										<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
+										<?php if(Auth::user()->is_admin): ?>
+											<button onclick="redirect('/dashboard/marketCapAdjustments')" class="btn btn-default btn-logout">Admin</button>
+										<?php endif; ?>
+									<?php else: ?>
+										<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
+										<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
+									<?php endif; ?>
+								</li>
+							</ul>
+							<h2 class="sub-header pull-right quarter-margin-top">The ASX simplified.</h2>
+						</div>
+					</div>
+				</div>
+			</nav>
 			<nav class="navbar navbar-inverse no-margin-bottom">
 				<div class="container">
 					<div class="row">
@@ -50,22 +76,39 @@
 					</div>
 				</div>
 			</nav>
-			<nav class="navbar navbar-default">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-6">
+			<!-- Don't display market info on homepage -->
+			<?php if(Request::route()->uri() != '/'): ?>
+				<nav class="navbar navbar-default">
+					<div class="container">
+						<div class="row">
 							<div id="marketStatus" class="quarter-margin-top"></div>
 							<div id="marketChange" class="quarter-margin-top"></div>
-						</div>
-						<div class="col-xs-6">
-							<?php echo $__env->make('layouts.partials.search-box', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
 						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
+			<?php endif; ?>
 			<?php echo $__env->yieldContent('body'); ?>
 		</div>
 		<?php echo $__env->yieldContent('footer'); ?>
-	</body>
 
+		<footer class="footer main-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<p class="footer-text text-center">Wes Thorburn <a href="https://github.com/WesThorburn">(github.com/WesThorburn)</a></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="disclaimer-text">
+							Investmentfinch.com.au accepts no responsibility for the accuracy or reliability of any information displayed on this website. 
+							No information provided on this website should be used for investment or trading decisions, nor should information on this website be considered financial advice. Investmentfinch.com.au will not be responsible for any financial losses suffered.<br>
+							Copyright © 2016 Investmentfinch.com.au. All rights reserved.
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>

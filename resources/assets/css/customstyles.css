@@ -1,3 +1,8 @@
+* {
+    font-family: Calibri;
+    font-size:14px;
+  }
+
 body{
 	font-size:13px;
 }
@@ -23,6 +28,14 @@ th{
 	width:33.33%;
 }
 
+.double-margin-top{
+	margin-top:40px;
+}
+
+.double-margin-bottom{
+	margin-bottom:40px;
+}
+
 .default-margin-top{
 	margin-top:20px;
 }
@@ -31,8 +44,16 @@ th{
 	margin-bottom:20px;
 }
 
+.default-margin-left{
+	margin-left:20px;
+}
+
+.default-margin-right{
+	margin-right:20px;
+}
+
 .three-quarter-margin-top{
-	margin-bottom:15px;
+	margin-top:15px;
 }
 
 .three-quarter-margin-bottom{
@@ -45,6 +66,14 @@ th{
 
 .half-margin-bottom{
 	margin-bottom:10px;
+}
+
+.half-margin-left{
+	margin-left:10px;
+}
+
+.half-margin-right{
+	margin-right:10px;
 }
 
 .quarter-margin-bottom{
@@ -81,7 +110,7 @@ th{
 }
 
 .no-margin-top{
-	margin-top:none;
+	margin-top:0px;
 }
 
 .no-margin-left{
@@ -89,7 +118,7 @@ th{
 }
 
 .no-margin-right{
-	margin-top:right;
+	margin-right:0px;
 }
 
 .no-margin-bottom{
@@ -101,6 +130,14 @@ th{
 	padding-right:0px;
 	padding-top:0px;
 	padding-bottom:0px;
+}
+
+.no-padding-left{
+	padding-left:0px;
+}
+
+.no-padding-right{
+	padding-right:0px;
 }
 
 .single-px-padding-left-right{
@@ -156,8 +193,21 @@ th{
 	display:none;
 }
 
+.form-control{
+	border-radius:0px;
+}
+
+.input-group-addon{
+	border-radius:0px;
+}
+
+.btn, .btn-group-sm > .btn{
+	border-radius:0px;
+	border:none;
+}
+
 .btn-logout, .btn-login, .btn-register{
-	margin-top:8px;
+	margin-top:4px;
 }
 
 .btn-row{
@@ -170,6 +220,11 @@ th{
 
 .panel{
 	border-color:#2e3e44;
+	border-radius:0px;
+}
+
+.panel-heading{
+	border-radius:0px;
 }
 
 .panel-body{
@@ -233,6 +288,28 @@ th{
 	background-color:#D9E0DC;
 }
 
+.navbar-ceiling{
+	margin-bottom:0px;
+}
+
+.navbar-nav > li > a{
+	font-size:22px;
+}
+
+.main-header{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:42px;
+	font-weight:bolder;
+}
+
+.sub-header{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:24px;
+	font-weight:bold;
+}
+
 .stocks-page-header{
 	font-size:22px;
 	font-weight:bold;
@@ -249,10 +326,38 @@ th{
 	color:#555;
 }
 
+.nav-font{
+	font-family: Calibri;
+	font-variant: small-caps;
+	font-size:20px;
+	font-weight:bold;
+}
+
 .nav-tabs > li.active > a, 
 .nav-tabs > li.active > a:hover{
 	border-color:#2e3e44;
 	border-bottom-color: transparent;
+}
+
+.pagination > li:first-child > a, .pagination > li:last-child > a{
+	border-radius: 0px;
+}
+
+.main-footer{
+	height:150px;
+	background-color:#2e3e44;
+}
+
+.footer-text, .footer-text a{
+	color:#EDEEEA;
+	font-size:20px;
+	margin-top:10px;
+}
+
+.disclaimer-text{
+	margin-top:20px;
+	color:#EDEEEA;
+	font-size:13px;
 }
 
 @media(min-width: 768px){

@@ -14,21 +14,32 @@ class MarketController extends Controller
 		return view('layouts.partials.market-change-display')
 			->with([
 				'marketChangeMessage' => SectorIndexHistoricals::getMarketChangeMessage(),
-				'marketChange' => SectorIndexHistoricals::getMarketChange()
+				'marketChange' => $this->simpleChange()
 			]);
 	}
 
 	public function status(){
-		if(isMarketOpen()){
-			$marketStatus = "Market Open";
-		}
-		else{
-			$marketStatus = "Market Closed";
-		}
 		return view('layouts.partials.market-status-display')
 			->with([
 				'serverTime' => getServerTime(),
-				'marketStatus' => $marketStatus
+				'marketStatus' => $this->openClosed()
 			]);
+	}
+
+	public function openClosed(){
+		if(isMarketOpen()){
+			return "Market Open";
+		}
+		else{
+			return "Market Closed";
+		}
+	}
+
+	public function time(){
+		return getServerTime();
+	}
+
+	public function simpleChange(){
+		return SectorIndexHistoricals::getMarketChange();
 	}
 }

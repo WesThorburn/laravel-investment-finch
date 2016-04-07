@@ -8,7 +8,7 @@
 	</button>
 </div>
 <div class="collapse navbar-collapse" id="main-navbar-collapse">
-	<ul class="nav navbar-nav">
+	<ul class="nav navbar-nav nav-font">
 		<li class="nav-button <?php if($page == 'home'): ?> active <?php endif; ?>"><a href="/">Home</a></li>
 		<li class="nav-button <?php if($page == 'sectors'): ?> active <?php endif; ?>"><a href="/sectors">Sectors</a></li>
 		<li class="nav-button <?php if($page == 'stocks'): ?> active <?php endif; ?>"><a href="/index/all">Stocks</a></li>
@@ -19,19 +19,5 @@
 			<li class="nav-button <?php if($page == 'account'): ?> active <?php endif; ?>"><a href="/user/account">Account</a></li>
 		<?php endif; ?>
 	</ul>
-	<div class="pull-right">
-		<ul class="nav navbar-nav">
-			<li>
-				<?php if(Auth::check()): ?>
-					<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
-					<?php if(Auth::user()->is_admin): ?>
-						<button onclick="redirect('/dashboard/marketCapAdjustments')" class="btn btn-default btn-logout">Admin</button>
-					<?php endif; ?>
-				<?php else: ?>
-					<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
-					<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
-				<?php endif; ?>
-			</li>
-		</ul>
-	</div>
+	<?php echo $__env->make('layouts.partials.search-box', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div>

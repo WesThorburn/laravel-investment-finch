@@ -1,5 +1,5 @@
 <div class="panel panel-default half-margin-bottom">
-	<div class="panel-heading"><b>{{ $highestVolumeStocksTitle }}</b></div>
+	<div class="panel-heading"><h4 class="no-margin-top no-margin-bottom text-center">{{ $highestVolumeStocksTitle }}</h4></div>
 	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
 		<tbody data-link="row" class="rowlink">
 		    @foreach($highestVolumeStocks as $stock)

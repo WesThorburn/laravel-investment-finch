@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						@include('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topWeeklyGains, 
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						@include('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topMonthlyGains, 
