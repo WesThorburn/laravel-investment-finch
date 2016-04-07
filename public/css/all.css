@@ -7261,17 +7261,13 @@ th{
 	border-radius:0px;
 }
 
-.btn-default.active{
-
-}
-
 .btn, .btn-group-sm > .btn{
 	border-radius:0px;
 	border:none;
 }
 
 .btn-logout, .btn-login, .btn-register{
-	margin-top:8px;
+	margin-top:4px;
 }
 
 .btn-row{

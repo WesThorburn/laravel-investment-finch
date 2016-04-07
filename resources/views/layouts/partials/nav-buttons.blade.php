@@ -19,19 +19,4 @@
 			<li class="nav-button @if($page == 'account') active @endif"><a href="/user/account">Account</a></li>
 		@endif
 	</ul>
-	<div class="pull-right">
-		<ul class="nav navbar-nav">
-			<li>
-				@if(Auth::check())
-					<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
-					@if(Auth::user()->is_admin)
-						<button onclick="redirect('/dashboard/marketCapAdjustments')" class="btn btn-default btn-logout">Admin</button>
-					@endif
-				@else
-					<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
-					<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
-				@endif
-			</li>
-		</ul>
-	</div>
 </div>
