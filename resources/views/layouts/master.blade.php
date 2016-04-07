@@ -77,7 +77,7 @@
 				</div>
 			</nav>
 			<!-- Don't display market info on homepage -->
-			@if($_SERVER['REQUEST_URI'] != '/')
+			@if(Request::route()->uri() != '/')
 				<nav class="navbar navbar-default">
 					<div class="container">
 						<div class="row">
