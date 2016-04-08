@@ -7069,10 +7069,16 @@ button.close {
 * {
     font-family: Calibri;
     font-size:14px;
+    margin: 0;
   }
+
+html{
+	height: 100%;
+}
 
 body{
 	font-size:13px;
+	height: 100%;
 }
 
 th{
@@ -7411,9 +7417,19 @@ th{
 	border-radius: 0px;
 }
 
-.main-footer{
-	height:150px;
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+.footer{
+	height: 150px;
 	background-color:#2e3e44;
+}
+
+.push{
+	height: 4em;
 }
 
 .footer-text, .footer-text a{
