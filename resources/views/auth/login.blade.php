@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('nav')
+	@include('layouts.partials.nav-buttons', ['page' => 'login'])
+@stop
+
 @section('title')
 	Login
 @stop
