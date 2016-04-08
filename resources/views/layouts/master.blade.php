@@ -82,9 +82,8 @@
 					<nav class="navbar navbar-default three-quarter-margin-bottom">
 						<div class="container">
 							<div class="row">
-								<div id="marketStatus" class="quarter-margin-top"></div>
-								<div id="marketChange" class="quarter-margin-top"></div>
-
+								<div id="marketStatus" class="quarter-margin-top three-quarter-margin-left"></div>
+								<div id="marketChange" class="quarter-margin-top three-quarter-margin-left"></div>
 							</div>
 						</div>
 					</nav>
