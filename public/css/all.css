@@ -7392,12 +7392,12 @@ th{
 }
 
 .stocks-page-nav-tabs{
-	margin-left:2px;
 	border:none;
 }
 
 .stocks-page-nav-tabs > li > a{
 	color:#555;
+	border-radius:0px;
 }
 
 .nav-font{

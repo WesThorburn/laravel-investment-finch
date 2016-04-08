@@ -28,7 +28,7 @@
 
                 	//Volume Stocks Panel
                 	$('#highestVolumeStocks').load('ajax/stocks/highestVolume');
-                }, 6000);
+                }, 15000);
             });
 
 		$(document).ready(function () {
