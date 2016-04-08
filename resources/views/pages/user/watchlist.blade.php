@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Watchlists
 					</div>
@@ -34,7 +34,7 @@
 						</div>
 					@endif
 				</div>
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Create a Watchlist
 					</div>
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 			@if($watchlists->first())
-				<div class="col-md-9">
+				<div class="col-md-9 no-padding-left">
 					@include('layouts.partials.watchlist-stocks')
 					<div class="col-md-6 no-padding-left">
 						<div class="panel panel-default">

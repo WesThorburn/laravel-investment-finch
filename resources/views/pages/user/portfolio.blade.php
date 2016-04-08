@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Portfolios
 					</div>
@@ -34,7 +34,7 @@
 						</div>
 					@endif
 				</div>
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Create a portfolio
 					</div>
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 			@if($portfolios->first())
-				<div class="col-md-9">
+				<div class="col-md-9 no-padding-left">
 					@include('layouts.partials.portfolio-stocks')
 					@if(Session::has('sellStockSuccess'))
 						<div class="alert alert-success three-quarter-margin-bottom">
@@ -93,7 +93,7 @@
 					        </ul>
 						</div>
 					@endif
-					<div class="panel panel-default">
+					<div class="panel panel-default three-quarter-margin-bottom">
 						<div class="panel-heading">
 							Add a Stock to this Portfolio
 						</div>

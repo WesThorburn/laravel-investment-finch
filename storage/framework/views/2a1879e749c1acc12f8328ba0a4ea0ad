@@ -10,7 +10,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Watchlists
 					</div>
@@ -32,7 +32,7 @@
 						</div>
 					<?php endif; ?>
 				</div>
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Create a Watchlist
 					</div>
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<?php if($watchlists->first()): ?>
-				<div class="col-md-9">
+				<div class="col-md-9 no-padding-left">
 					<?php echo $__env->make('layouts.partials.watchlist-stocks', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					<div class="col-md-6 no-padding-left">
 						<div class="panel panel-default">

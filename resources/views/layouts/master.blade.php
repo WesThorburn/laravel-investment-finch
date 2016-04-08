@@ -79,7 +79,7 @@
 				</nav>
 				<!-- Don't display market info on homepage -->
 				@if(Request::route()->uri() != '/')
-					<nav class="navbar navbar-default">
+					<nav class="navbar navbar-default three-quarter-margin-bottom">
 						<div class="container">
 							<div class="row">
 								<div id="marketStatus" class="quarter-margin-top"></div>

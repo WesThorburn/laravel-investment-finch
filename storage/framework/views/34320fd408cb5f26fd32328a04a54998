@@ -10,7 +10,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Portfolios
 					</div>
@@ -32,7 +32,7 @@
 						</div>
 					<?php endif; ?>
 				</div>
-				<div class="panel panel-default">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Create a portfolio
 					</div>
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<?php if($portfolios->first()): ?>
-				<div class="col-md-9">
+				<div class="col-md-9 no-padding-left">
 					<?php echo $__env->make('layouts.partials.portfolio-stocks', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					<?php if(Session::has('sellStockSuccess')): ?>
 						<div class="alert alert-success three-quarter-margin-bottom">
@@ -92,7 +92,7 @@
 					        </ul>
 						</div>
 					<?php endif; ?>
-					<div class="panel panel-default">
+					<div class="panel panel-default three-quarter-margin-bottom">
 						<div class="panel-heading">
 							Add a Stock to this Portfolio
 						</div>
