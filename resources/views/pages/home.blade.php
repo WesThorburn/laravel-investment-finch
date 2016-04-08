@@ -28,7 +28,7 @@
 
                 	//Volume Stocks Panel
                 	$('#highestVolumeStocks').load('ajax/stocks/highestVolume');
-                }, 6000);
+                }, 15000);
             });
 
 		$(document).ready(function () {
@@ -79,60 +79,56 @@
 			document.getElementById(numberOfSectors).className = "btn btn-default active";
 		}
 	</script>
-	<div class="container three-quarter-margin-top">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="alert alert-warning" role="alert">
+				<div class="alert alert-warning three-quarter-margin-top three-quarter-margin-bottom" role="alert">
 					Please be aware that the Yahoo Finance API is reporting certain stocks' market caps in Billions instead of Millions. This is causing incorrect sector and market cap totals to be generated. 
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-left-right-20px-padding">
-				<div class="row">
-					<div class="panel panel-default half-margin-bottom">
-						<div class="panel-heading text-center">
-							<h2 class="no-margin-top">ASX Market Cap</h2>
-							<div class="btn-group btn-group-sm pull-center" role="group">
-								<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
-								<button class="btn btn-default" onclick="getMarketCapGraphData('all_time', 'Market Cap')" id="all_time">All</button>
-							</div>
+			<div class="col-md-8">	
+				<div class="panel panel-default three-quarter-margin-bottom">
+					<div class="panel-heading text-center">
+						<h2 class="no-margin-top">ASX Market Cap</h2>
+						<div class="btn-group btn-group-sm pull-center" role="group">
+							<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('all_time', 'Market Cap')" id="all_time">All</button>
 						</div>
-						<div class="panel-body">
-							<div id="market_performance_div" class="pull-left">
-								@areachart('MarketCaps', 'market_performance_div')
-							</div>
+					</div>
+					<div class="panel-body">
+						<div id="market_performance_div" class="pull-left">
+							@areachart('MarketCaps', 'market_performance_div')
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="panel panel-default half-margin-bottom">
-						<div class="panel-heading text-center">
-							<h2 class="no-margin-top">Sector Caps</h2>
-							<div class="btn-group btn-group-sm pull-center" role="group">
-								<button class="btn btn-default active" onclick="getSectorCapGraphData('top_5', 'Sector Cap')" id="top_5">Top 5</button>
-								<button class="btn btn-default" onclick="getSectorCapGraphData('top_10', 'Sector Cap')" id="top_10">Top 10</button>
-								<button class="btn btn-default" onclick="getSectorCapGraphData('top_15', 'Sector Cap')" id="top_15">Top 15</button>
-								<button class="btn btn-default" onclick="getSectorCapGraphData('top_20', 'Sector Cap')" id="top_20">Top 20</button>
-								<button class="btn btn-default" onclick="getSectorCapGraphData('all', 'Sector Cap')" id="all">All</button>
-							</div>
+				<div class="panel panel-default">
+					<div class="panel-heading text-center">
+						<h2 class="no-margin-top">Sector Caps</h2>
+						<div class="btn-group btn-group-sm pull-center" role="group">
+							<button class="btn btn-default active" onclick="getSectorCapGraphData('top_5', 'Sector Cap')" id="top_5">Top 5</button>
+							<button class="btn btn-default" onclick="getSectorCapGraphData('top_10', 'Sector Cap')" id="top_10">Top 10</button>
+							<button class="btn btn-default" onclick="getSectorCapGraphData('top_15', 'Sector Cap')" id="top_15">Top 15</button>
+							<button class="btn btn-default" onclick="getSectorCapGraphData('top_20', 'Sector Cap')" id="top_20">Top 20</button>
+							<button class="btn btn-default" onclick="getSectorCapGraphData('all', 'Sector Cap')" id="all">All</button>
 						</div>
-						<div class="panel-body">
-							<div id="sectors_pie_div" class="pull-left">
-								@piechart('Sectors', 'sectors_pie_div')
-							</div>
+					</div>
+					<div class="panel-body">
+						<div id="sectors_pie_div" class="pull-left">
+							@piechart('Sectors', 'sectors_pie_div')
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 col-left-right-20px-padding">
+			<div class="col-md-4">
 				<div class="row">
-					<div class="panel panel-default half-margin-bottom">
+					<div class="panel panel-default three-quarter-margin-bottom">
 						<div class="panel-heading"><h3 class="no-margin-top no-margin-bottom text-center" id="marketOpenClosed"></h3></div>
 						<div class="panel-body">
 							<div class="center-block">

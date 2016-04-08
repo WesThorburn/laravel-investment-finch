@@ -1,3 +1,7 @@
+<?php $__env->startSection('nav'); ?>
+	<?php echo $__env->make('layouts.partials.nav-buttons', ['page' => 'login'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('title'); ?>
 	Login
 <?php $__env->stopSection(); ?>

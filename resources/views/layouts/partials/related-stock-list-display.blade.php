@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default three-quarter-margin-bottom">
 	<div class="panel-heading"><b>Related Stocks</b></div>
 	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="stock_table">
 	    <thead>

@@ -55,7 +55,7 @@ class StockController extends Controller
                 ])
                 ->setOptions([
                     'width' => 620,
-                    'height' => 380,
+                    'height' => 412,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
 

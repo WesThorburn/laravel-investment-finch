@@ -77,10 +77,10 @@
 					@include('layouts.partials.all-sectors-day-change-display')
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-8 no-padding-left">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="panel panel-default">
+						<div class="panel panel-default three-quarter-margin-bottom">
 							<div class="panel-heading">
 								<div class="btn-group btn-group-sm pull-center" role="group">
 									<button class="btn btn-default active" onclick="getMarketCapsGraphData('top_5')" id="top_5">Top 5</button>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="panel panel-default">
+						<div class="panel panel-default three-quarter-margin-bottom">
 							<div class="panel-heading">
 								<div class="btn-group btn-group-sm pull-center" role="group">
 									<button class="btn btn-default active" onclick="getSectorGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>

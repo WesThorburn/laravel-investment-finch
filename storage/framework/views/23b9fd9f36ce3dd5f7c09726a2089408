@@ -51,15 +51,13 @@
 		
 	</script>
 	<div class="container">
-		<div class="row">
+		<div class="row quarter-margin-bottom">
 			<div class="col-lg-12">
 				<h1 class="no-margin-top"><?php echo e($stock->company_name); ?></h1>
-				<h2><?php echo e($stock->sector); ?></h2>
-				<h3>(ASX: <?php echo e($stock->stock_code); ?>)</h3>
+				<h2 class="no-margin-top"><?php echo e($stock->sector); ?></h2>
+				<h3 class="no-margin-top">(ASX: <?php echo e($stock->stock_code); ?>)</h3>
 
-				<div class="default-margin-top"></div>
-
-				<h2 class="side-by-side quater-margin-right" id="stockPrice">$<?php echo e($metrics->last_trade); ?></h2>
+				<h2 class="side-by-side quarter-margin-right quarter-margin-bottom" id="stockPrice">$<?php echo e($metrics->last_trade); ?></h2>
 				<h3 id="dayChange"
 					<?php if(rtrim($metrics->percent_change, '%') < 0): ?> 
 						class="side-by-side color-red" 
@@ -70,8 +68,6 @@
 					<?php endif; ?>>
 					<?php echo e(number_format($metrics->percent_change, 2)); ?>%
 				</h3>
-
-				<div class="default-margin-bottom"></div>
 			</div>
 		</div>
 	</div>
@@ -99,8 +95,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="panel panel-default">
+			<div class="col-md-5 no-padding-left">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading"><b>Key Metrics</b></div>
 					<table class="table table-bordered metrics-table">
 						<tbody>
@@ -201,7 +197,7 @@
 					</div>
 					<div class="col-md-12">
 						<?php if($metrics->analysis != ""): ?>
-							<div class="panel panel-default">
+							<div class="panel panel-default three-quarter-margin-bottom">
 								<div class="panel-heading">
 									<b>Stock Analysis</b>
 								</div>
@@ -214,7 +210,7 @@
 					</div>
 				</div>
 			</div>
-			<div <?php if(!$relatedStocks->first() && $metrics->analysis != ""): ?> class="col-md-12" <?php else: ?> class="col-md-5" <?php endif; ?>>
+			<div <?php if(!$relatedStocks->first() && $metrics->analysis != ""): ?> class="col-md-12 no-padding-left" <?php else: ?> class="col-md-5 no-padding-left" <?php endif; ?>>
 				<?php if($stock->business_summary != ""): ?>
 					<div class="panel panel-default">
 						<div class="panel-heading">

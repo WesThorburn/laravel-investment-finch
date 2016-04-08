@@ -1,10 +1,16 @@
 * {
     font-family: Calibri;
     font-size:14px;
+    margin: 0;
   }
+
+html{
+	height: 100%;
+}
 
 body{
 	font-size:13px;
+	height: 100%;
 }
 
 th{
@@ -84,11 +90,11 @@ th{
 	margin-top:5px;
 }
 
-.quater-margin-left{
+.quarter-margin-left{
 	margin-left:5px;
 }
 
-.quater-margin-right{
+.quarter-margin-right{
 	margin-right:5px;
 }
 
@@ -318,12 +324,12 @@ th{
 }
 
 .stocks-page-nav-tabs{
-	margin-left:2px;
 	border:none;
 }
 
 .stocks-page-nav-tabs > li > a{
 	color:#555;
+	border-radius:0px;
 }
 
 .nav-font{
@@ -343,9 +349,19 @@ th{
 	border-radius: 0px;
 }
 
-.main-footer{
-	height:150px;
+.wrapper {
+	min-height: 90%;
+	height: auto !important;
+	height: 90%;
+}
+
+.footer{
+	height: 150px;
 	background-color:#2e3e44;
+}
+
+.push{
+	height: 4em;
 }
 
 .footer-text, .footer-text a{

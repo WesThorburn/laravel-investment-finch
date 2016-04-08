@@ -52,15 +52,13 @@
 		
 	</script>
 	<div class="container">
-		<div class="row">
+		<div class="row quarter-margin-bottom">
 			<div class="col-lg-12">
 				<h1 class="no-margin-top">{{ $stock->company_name }}</h1>
-				<h2>{{ $stock->sector }}</h2>
-				<h3>(ASX: {{ $stock->stock_code }})</h3>
+				<h2 class="no-margin-top">{{ $stock->sector }}</h2>
+				<h3 class="no-margin-top">(ASX: {{ $stock->stock_code }})</h3>
 
-				<div class="default-margin-top"></div>
-
-				<h2 class="side-by-side quater-margin-right" id="stockPrice">${{ $metrics->last_trade }}</h2>
+				<h2 class="side-by-side quarter-margin-right quarter-margin-bottom" id="stockPrice">${{ $metrics->last_trade }}</h2>
 				<h3 id="dayChange"
 					@if(rtrim($metrics->percent_change, '%') < 0) 
 						class="side-by-side color-red" 
@@ -71,8 +69,6 @@
 					@endif>
 					{{ number_format($metrics->percent_change, 2) }}%
 				</h3>
-
-				<div class="default-margin-bottom"></div>
 			</div>
 		</div>
 	</div>
@@ -100,8 +96,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="panel panel-default">
+			<div class="col-md-5 no-padding-left">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading"><b>Key Metrics</b></div>
 					<table class="table table-bordered metrics-table">
 						<tbody>
@@ -200,7 +196,7 @@
 					</div>
 					<div class="col-md-12">
 						@if($metrics->analysis != "")
-							<div class="panel panel-default">
+							<div class="panel panel-default three-quarter-margin-bottom">
 								<div class="panel-heading">
 									<b>Stock Analysis</b>
 								</div>
@@ -212,7 +208,7 @@
 					</div>
 				</div>
 			</div>
-			<div @if(!$relatedStocks->first() && $metrics->analysis != "") class="col-md-12" @else class="col-md-5" @endif>
+			<div @if(!$relatedStocks->first() && $metrics->analysis != "") class="col-md-12 no-padding-left" @else class="col-md-5 no-padding-left" @endif>
 				@if($stock->business_summary != "")
 					<div class="panel panel-default">
 						<div class="panel-heading">
