@@ -86,56 +86,58 @@
 			@if($watchlists->first())
 				<div class="col-md-9">
 					@include('layouts.partials.watchlist-stocks')
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Add a Stock to this Watchlist
-						</div>
-						<div class="panel-body">
-							<!-- Add Stock to Watchlist -->
-							<form role="form" action="{{action('WatchlistController@update', ['id' => $selectedWatchlist->id])}}" method="POST">
-								<input type="hidden" name="_method" value="put"/>
-								{{ csrf_field() }}
-								<div class="row">
-									<label class="col-xs-12 single-px-padding-right" for="stockCode">Stock Code</label>
-								</div>
-								<div class="row">
-									<div class="col-xs-11 single-px-padding-right">
-										<input name="stockCode" id="stockCode" type="text" class="form-control{{ $errors->has('stockCode') ? ' has-error' : ''}}" 
-										placeholder="Code" maxlength="3" value={{ old('stockCode') }}>
+					<div class="col-md-6 no-padding-left">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Add a Stock to this Watchlist
+							</div>
+							<div class="panel-body">
+								<!-- Add Stock to Watchlist -->
+								<form role="form" action="{{action('WatchlistController@update', ['id' => $selectedWatchlist->id])}}" method="POST">
+									<input type="hidden" name="_method" value="put"/>
+									{{ csrf_field() }}
+									<div class="row">
+										<label class="col-xs-12 single-px-padding-right" for="stockCode">Stock Code</label>
 									</div>
-									<div class="col-xs-1 single-px-padding-left">
-										<button type="submit" class="btn btn-default">Add</button>
+									<div class="row">
+										<div class="col-xs-10 single-px-padding-right">
+											<input name="stockCode" id="stockCode" type="text" class="form-control{{ $errors->has('stockCode') ? ' has-error' : ''}}" 
+											placeholder="Code" maxlength="3" value={{ old('stockCode') }}>
+										</div>
+										<div class="col-xs-2 single-px-padding-left">
+											<button type="submit" class="btn btn-default">Add</button>
+										</div>
 									</div>
-								</div>
-							</form>
-							@if($errors->has('stockCode'))
-								<div class="col-xs-12 default-margin-top">
-									<div class="alert alert-danger three-quarter-margin-bottom">
-										<ul>
-								            @foreach ($errors->all() as $error)
-								                <li>{{ $error }}</li>
-								            @endforeach
-								        </ul>
+								</form>
+								@if($errors->has('stockCode'))
+									<div class="col-xs-12 default-margin-top">
+										<div class="alert alert-danger three-quarter-margin-bottom">
+											<ul>
+									            @foreach ($errors->all() as $error)
+									                <li>{{ $error }}</li>
+									            @endforeach
+									        </ul>
+										</div>
 									</div>
-								</div>
-							@endif
-							@if(Session::has('addStockToWatchlistSuccess'))
-								<div class="col-xs-12 default-margin-top">
-									<div class="alert alert-success three-quarter-margin-bottom">
-										<ul>
-								            <li>{{ Session('addStockToWatchlistSuccess') }}</li>
-								        </ul>
+								@endif
+								@if(Session::has('addStockToWatchlistSuccess'))
+									<div class="col-xs-12 default-margin-top">
+										<div class="alert alert-success three-quarter-margin-bottom">
+											<ul>
+									            <li>{{ Session('addStockToWatchlistSuccess') }}</li>
+									        </ul>
+										</div>
 									</div>
-								</div>
-							@elseif(Session::has('watchlistError'))
-								<div class="col-xs-12 default-margin-top">
-									<div class="alert alert-danger three-quarter-margin-bottom">
-										<ul>
-								            <li>{{ Session('watchlistError') }}</li>
-								        </ul>
+								@elseif(Session::has('watchlistError'))
+									<div class="col-xs-12 default-margin-top">
+										<div class="alert alert-danger three-quarter-margin-bottom">
+											<ul>
+									            <li>{{ Session('watchlistError') }}</li>
+									        </ul>
+										</div>
 									</div>
-								</div>
-							@endif
+								@endif
+							</div>
 						</div>
 					</div>
 				</div>
