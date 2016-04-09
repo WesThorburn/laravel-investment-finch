@@ -67,6 +67,18 @@ class UpdateSectorMetricsCommand extends Command
             }
             if(count($stocksInSector) > 0){
                 $totalSectorMarketCap = SectorIndexHistoricals::getTotalSectorMarketCap($stocksInSector);
+
+                //Record Market cap in administration table if market cap is over 2 Trillion
+                if($totalSectorMarketCap > 2000000){
+                    $this->info("Not an error");
+                    \DB::table('administration')
+                        ->where('option_name', 'Market Cap Error')
+                        ->update([
+                            'option_value' => 'Total Sector Cap is: '.number_format($historicals->last()->total_sector_market_cap).'B.',
+                            'updated_at' => date("Y-m-d H:i:s")
+                        ]);
+                }
+                
                 if(isTradingDay()){
                     SectorIndexHistoricals::updateOrCreate(
                         [
