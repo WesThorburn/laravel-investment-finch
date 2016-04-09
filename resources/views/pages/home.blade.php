@@ -79,14 +79,7 @@
 			document.getElementById(numberOfSectors).className = "btn btn-default active";
 		}
 	</script>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="alert alert-warning three-quarter-margin-top three-quarter-margin-bottom" role="alert">
-					Please be aware that the Yahoo Finance API is reporting certain stocks' market caps in Billions instead of Millions. This is causing incorrect sector and market cap totals to be generated. 
-				</div>
-			</div>
-		</div>
+	<div class="container three-quarter-margin-top">
 		<div class="row">
 			<div class="col-md-8">	
 				<div class="panel panel-default three-quarter-margin-bottom">
