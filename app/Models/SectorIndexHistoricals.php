@@ -163,6 +163,12 @@ class SectorIndexHistoricals extends Model
     public static function getIndividualSectorGraphData($sectorName, $timeFrame = 'last_month', $dataType){
         $graphData = array();
         $historicals = SectorIndexHistoricals::where(['sector' => htmlspecialchars_decode($sectorName)])->dateCondition($timeFrame)->orderBy('date')->get();
+
+        //Check for total cap error
+        if($historicals->last()->total_sector_market_cap > 2000000){
+            $historicals->pop();
+        }
+
         foreach($historicals as $record){
             if($dataType == 'Market Cap'){
                 $recordValue = $record->total_sector_market_cap;
