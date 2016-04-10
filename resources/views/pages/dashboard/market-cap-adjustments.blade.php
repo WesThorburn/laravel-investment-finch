@@ -9,7 +9,7 @@
 @stop
 
 @section('body')
-	<div class="col-md-6 col-md-offset-3">
+	<div class="col-md-6 col-md-offset-2">
 		<ul class="nav nav-tabs stocks-page-nav-tabs">
 			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
 			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
@@ -71,6 +71,33 @@
 				</table>
 			</div>
 		@endif
+	</div>
+	<div class="col-md-2 double-margin-top">
+		<div class="panel panel-default single-pixel-top-margin">
+			<div class="panel-heading"><b>Admin Options</b></div>
+			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
+				<thead>
+					<th>Option Name</th>
+					<th>Value</th>
+				</thead>
+				<tbody>
+					@foreach($adminOptions as $option)
+						<td>{{ $option->option_name }}</td>
+						<td>
+							@if(!$option->option_value)
+								<div class="color-green">
+									None
+								</div>
+							@else
+								<div class="color-red">
+									{{ $option->option_value }}
+								</div>
+							@endif
+						</td>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<script>
