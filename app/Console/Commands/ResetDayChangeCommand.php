@@ -40,12 +40,17 @@ class ResetDayChangeCommand extends Command
     {
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
-            StockMetrics::whereIn('stock_code', ['TLS', 'CBA'])->where('percent_change', '!=', 0)->update(['percent_change' => 0.00]);
+            StockMetrics::whereIn('stock_code', ['TLS', 'CBA'])
+            	->where('day_change', '!=', 0)
+            	->orWhere('percent_change', '!=', 0)
+            	->update(['percent_change' => 0.00, 'day_change' => 0.00]);
             $this->info("Gains reset for TLS and CBA.");
         }
         else{
             $this->info("Resetting day gain to 0.00% for all stocks.");
-            StockMetrics::where('percent_change', '!=', 0)->update(['percent_change' => 0.00]);
+            StockMetrics::where('percent_change', '!=', 0)
+            	->orWhere('day_change', '!=', 0)
+            	->update(['percent_change' => 0.00, 'day_change' => 0.00]);
             $this->info("All gains have been reset.");
         }
     }
