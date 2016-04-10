@@ -3,12 +3,8 @@
 use App\Models\Historicals;
 
 class AjaxIndividualStockPageTest extends TestCase{
-	public function testCurrentStockPrice(){
-		$this->visit('ajax/stock/currentPrice/CBA');
-	}
-
-	public function testDayChange(){
-		$this->visit('ajax/stock/dayChange/CBA');
+	public function testStockChange(){
+		$this->visit('ajax/stock/stockChange/CBA');
 	}
 
 	public function testRelatedStocks(){
