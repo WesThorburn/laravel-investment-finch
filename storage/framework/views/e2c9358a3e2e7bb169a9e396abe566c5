@@ -7,95 +7,99 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('body'); ?>
-	<div class="col-md-6 col-md-offset-2">
-		<ul class="nav nav-tabs stocks-page-nav-tabs">
-			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
-			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
-		</ul>
-		<div class="panel panel-default single-pixel-top-margin">
-			<div class="panel-heading"><b>All Stocks</b></div>
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="adjusted_stocks">
-			    <thead>
-			        <tr>
-			            <th>Code</th>
-			            <th>Name</th>  
-			            <th>Yesterday's Mkt Cap (M)</th>          
-			            <th>Current Mkt Cap (M)</th>
-			            <th>Difference (M)</th>
-			            <th>Day Change</th>
-			            <th>Requires Adjustment</th>
-			            <th></th>
-			        </tr>
-			    </thead>
-			    <div class="panel-body">
-			    	<tbody></tbody>
-			    </div>
-			</table>
-		</div>
-		<?php if($flaggedStocks->first()): ?>
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>Flagged Stocks</b></div>
-				<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="flagged_stocks">
-				    <thead>
-				        <tr>
-				            <th>Code</th>
-				            <th>Yesterday's Mkt Cap (M)</th>          
-				            <th>Current Mkt Cap (M)</th>
-				            <th>Difference (M)</th>
-				            <th>Day Change</th>
-				            <th>Requires Adjustment</th>
-				        </tr>
-				    </thead>
-				    <tbody data-link="row" class="rowlink">
-					    <?php foreach($flaggedStocks as $stock): ?>
-							<tr>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 no-padding-right">
+				<ul class="nav nav-tabs stocks-page-nav-tabs">
+					<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
+					<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
+				</ul>
+				<div class="panel panel-default single-pixel-top-margin three-quarter-margin-bottom">
+					<div class="panel-heading"><b>All Stocks</b></div>
+					<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="adjusted_stocks">
+					    <thead>
+					        <tr>
+					            <th>Code</th>
+					            <th>Name</th>  
+					            <th>Yesterday's Mkt Cap (M)</th>          
+					            <th>Current Mkt Cap (M)</th>
+					            <th>Difference (M)</th>
+					            <th>Day Change</th>
+					            <th>Requires Adjustment</th>
+					            <th></th>
+					        </tr>
+					    </thead>
+					    <div class="panel-body">
+					    	<tbody></tbody>
+					    </div>
+					</table>
+				</div>
+				<?php if($flaggedStocks->first()): ?>
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>Flagged Stocks</b></div>
+						<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="flagged_stocks">
+						    <thead>
+						        <tr>
+						            <th>Code</th>
+						            <th>Yesterday's Mkt Cap (M)</th>          
+						            <th>Current Mkt Cap (M)</th>
+						            <th>Difference (M)</th>
+						            <th>Day Change</th>
+						            <th>Requires Adjustment</th>
+						        </tr>
+						    </thead>
+						    <tbody data-link="row" class="rowlink">
+							    <?php foreach($flaggedStocks as $stock): ?>
+									<tr>
+										<td>
+											<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
+										</td>
+										<td><?php echo e($stock->yesterdays_market_cap); ?></td>
+										<td><?php echo e($stock->current_market_cap); ?></td>
+										<td><?php echo e($stock->current_market_cap - $stock->yesterdays_market_cap); ?></td>
+										<td><?php echo e($stock->percent_change); ?></td>
+										<td>
+											<?php if($stock->market_cap_requires_adjustment == 0): ?>
+												No
+											<?php elseif($stock->market_cap_requires_adjustment == 1): ?>
+												Yes
+											<?php endif; ?>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+						    </tbody>
+						</table>
+					</div>
+				<?php endif; ?>
+			</div>
+			<div class="col-md-4 double-margin-top">
+				<div class="panel panel-default single-pixel-top-margin">
+					<div class="panel-heading"><b>Admin Options</b></div>
+					<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
+						<thead>
+							<th>Option Name</th>
+							<th>Value</th>
+						</thead>
+						<tbody>
+							<?php foreach($adminOptions as $option): ?>
+								<td><?php echo e($option->option_name); ?></td>
 								<td>
-									<?php echo e($stock->stock_code); ?><a href="/stocks/<?php echo e($stock->stock_code); ?>"></a>
-								</td>
-								<td><?php echo e($stock->yesterdays_market_cap); ?></td>
-								<td><?php echo e($stock->current_market_cap); ?></td>
-								<td><?php echo e($stock->current_market_cap - $stock->yesterdays_market_cap); ?></td>
-								<td><?php echo e($stock->percent_change); ?></td>
-								<td>
-									<?php if($stock->market_cap_requires_adjustment == 0): ?>
-										No
-									<?php elseif($stock->market_cap_requires_adjustment == 1): ?>
-										Yes
+									<?php if(!$option->option_value): ?>
+										<div class="color-green">
+											None
+										</div>
+									<?php else: ?>
+										<div class="color-red">
+											<?php echo e($option->option_value); ?>
+
+										</div>
 									<?php endif; ?>
 								</td>
-							</tr>
-						<?php endforeach; ?>
-				    </tbody>
-				</table>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		<?php endif; ?>
-	</div>
-	<div class="col-md-2 double-margin-top">
-		<div class="panel panel-default single-pixel-top-margin">
-			<div class="panel-heading"><b>Admin Options</b></div>
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
-				<thead>
-					<th>Option Name</th>
-					<th>Value</th>
-				</thead>
-				<tbody>
-					<?php foreach($adminOptions as $option): ?>
-						<td><?php echo e($option->option_name); ?></td>
-						<td>
-							<?php if(!$option->option_value): ?>
-								<div class="color-green">
-									None
-								</div>
-							<?php else: ?>
-								<div class="color-red">
-									<?php echo e($option->option_value); ?>
-
-								</div>
-							<?php endif; ?>
-						</td>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
 		</div>
 	</div>
 
@@ -126,7 +130,6 @@
 				var data = stockTable.row(this).data();
 				window.location.assign('/stock/'+ data.stock_code)
 			});
-
 		});
 	</script>
 <?php $__env->stopSection(); ?>

@@ -51,6 +51,9 @@ class DashboardController extends Controller
             ])
             ->whereIn('stock_metrics.stock_code', $stockCodesInMarketIndex);
         return \Datatables::of($stocks)
+            ->editColumn('company_name', function($stock){
+                return '<div class="td-limit-medium">'.$stock->stock->company_name.'</div>';
+            })
             ->editColumn('yesterdays_market_cap', function($stock){
                 if($stock->yesterdays_market_cap == 0.00){
                     return null;

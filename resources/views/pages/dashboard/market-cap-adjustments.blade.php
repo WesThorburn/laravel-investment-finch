@@ -9,94 +9,98 @@
 @stop
 
 @section('body')
-	<div class="col-md-6 col-md-offset-2">
-		<ul class="nav nav-tabs stocks-page-nav-tabs">
-			<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
-			<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
-		</ul>
-		<div class="panel panel-default single-pixel-top-margin">
-			<div class="panel-heading"><b>All Stocks</b></div>
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="adjusted_stocks">
-			    <thead>
-			        <tr>
-			            <th>Code</th>
-			            <th>Name</th>  
-			            <th>Yesterday's Mkt Cap (M)</th>          
-			            <th>Current Mkt Cap (M)</th>
-			            <th>Difference (M)</th>
-			            <th>Day Change</th>
-			            <th>Requires Adjustment</th>
-			            <th></th>
-			        </tr>
-			    </thead>
-			    <div class="panel-body">
-			    	<tbody></tbody>
-			    </div>
-			</table>
-		</div>
-		@if($flaggedStocks->first())
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>Flagged Stocks</b></div>
-				<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="flagged_stocks">
-				    <thead>
-				        <tr>
-				            <th>Code</th>
-				            <th>Yesterday's Mkt Cap (M)</th>          
-				            <th>Current Mkt Cap (M)</th>
-				            <th>Difference (M)</th>
-				            <th>Day Change</th>
-				            <th>Requires Adjustment</th>
-				        </tr>
-				    </thead>
-				    <tbody data-link="row" class="rowlink">
-					    @foreach($flaggedStocks as $stock)
-							<tr>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 no-padding-right">
+				<ul class="nav nav-tabs stocks-page-nav-tabs">
+					<li role="presentation"><a href="/dashboard/discontinued">Discontinued Stocks</a></li>
+					<li role="presentation" class="active"><a href="/dashboard/marketCapAdjustments">Market Cap Adjustments</a></li>
+				</ul>
+				<div class="panel panel-default single-pixel-top-margin three-quarter-margin-bottom">
+					<div class="panel-heading"><b>All Stocks</b></div>
+					<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="adjusted_stocks">
+					    <thead>
+					        <tr>
+					            <th>Code</th>
+					            <th>Name</th>  
+					            <th>Yesterday's Mkt Cap (M)</th>          
+					            <th>Current Mkt Cap (M)</th>
+					            <th>Difference (M)</th>
+					            <th>Day Change</th>
+					            <th>Requires Adjustment</th>
+					            <th></th>
+					        </tr>
+					    </thead>
+					    <div class="panel-body">
+					    	<tbody></tbody>
+					    </div>
+					</table>
+				</div>
+				@if($flaggedStocks->first())
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>Flagged Stocks</b></div>
+						<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="flagged_stocks">
+						    <thead>
+						        <tr>
+						            <th>Code</th>
+						            <th>Yesterday's Mkt Cap (M)</th>          
+						            <th>Current Mkt Cap (M)</th>
+						            <th>Difference (M)</th>
+						            <th>Day Change</th>
+						            <th>Requires Adjustment</th>
+						        </tr>
+						    </thead>
+						    <tbody data-link="row" class="rowlink">
+							    @foreach($flaggedStocks as $stock)
+									<tr>
+										<td>
+											{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
+										</td>
+										<td>{{ $stock->yesterdays_market_cap }}</td>
+										<td>{{ $stock->current_market_cap }}</td>
+										<td>{{ $stock->current_market_cap - $stock->yesterdays_market_cap }}</td>
+										<td>{{ $stock->percent_change }}</td>
+										<td>
+											@if($stock->market_cap_requires_adjustment == 0)
+												No
+											@elseif($stock->market_cap_requires_adjustment == 1)
+												Yes
+											@endif
+										</td>
+									</tr>
+								@endforeach
+						    </tbody>
+						</table>
+					</div>
+				@endif
+			</div>
+			<div class="col-md-4 double-margin-top">
+				<div class="panel panel-default single-pixel-top-margin">
+					<div class="panel-heading"><b>Admin Options</b></div>
+					<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
+						<thead>
+							<th>Option Name</th>
+							<th>Value</th>
+						</thead>
+						<tbody>
+							@foreach($adminOptions as $option)
+								<td>{{ $option->option_name }}</td>
 								<td>
-									{{ $stock->stock_code }}<a href="/stocks/{{$stock->stock_code}}"></a>
-								</td>
-								<td>{{ $stock->yesterdays_market_cap }}</td>
-								<td>{{ $stock->current_market_cap }}</td>
-								<td>{{ $stock->current_market_cap - $stock->yesterdays_market_cap }}</td>
-								<td>{{ $stock->percent_change }}</td>
-								<td>
-									@if($stock->market_cap_requires_adjustment == 0)
-										No
-									@elseif($stock->market_cap_requires_adjustment == 1)
-										Yes
+									@if(!$option->option_value)
+										<div class="color-green">
+											None
+										</div>
+									@else
+										<div class="color-red">
+											{{ $option->option_value }}
+										</div>
 									@endif
 								</td>
-							</tr>
-						@endforeach
-				    </tbody>
-				</table>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			</div>
-		@endif
-	</div>
-	<div class="col-md-2 double-margin-top">
-		<div class="panel panel-default single-pixel-top-margin">
-			<div class="panel-heading"><b>Admin Options</b></div>
-			<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margins">
-				<thead>
-					<th>Option Name</th>
-					<th>Value</th>
-				</thead>
-				<tbody>
-					@foreach($adminOptions as $option)
-						<td>{{ $option->option_name }}</td>
-						<td>
-							@if(!$option->option_value)
-								<div class="color-green">
-									None
-								</div>
-							@else
-								<div class="color-red">
-									{{ $option->option_value }}
-								</div>
-							@endif
-						</td>
-					@endforeach
-				</tbody>
-			</table>
 		</div>
 	</div>
 
@@ -127,7 +131,6 @@
 				var data = stockTable.row(this).data();
 				window.location.assign('/stock/'+ data.stock_code)
 			});
-
 		});
 	</script>
 @stop
