@@ -81,7 +81,7 @@
 	</script>
 	<div class="container three-quarter-margin-top">
 		<div class="row">
-			<div class="col-md-8">	
+			<div class="col-xs-12 col-sm-12 col-md-8">	
 				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading text-center">
 						<h2 class="no-margin-top">ASX Market Cap</h2>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="row">
 					<div class="panel panel-default three-quarter-margin-bottom">
 						<div class="panel-heading"><h3 class="no-margin-top no-margin-bottom text-center" id="marketOpenClosed"></h3></div>
