@@ -45,11 +45,11 @@
 				<nav class="navbar navbar-default navbar-ceiling">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-9">
+							<div class="col-xs-12 col-sm-8 col-md-9">
 								<a href="/" class="pull-left default-margin-right"><img src="{{asset('../images/logo.png')}}" width="75" height="75"></a>
 								<h1 class="main-header">Investment Finch</h1>
 							</div>
-							<div class="col-md-3">
+							<div class="col-xs-12 col-sm-4 col-md-3">
 								<ul class="nav navbar-nav pull-right">
 									<li>
 										@if(Auth::check())
