@@ -10,14 +10,14 @@
 
 @section('body')
 	<script type="text/javascript">
-		$(document).ready(
-            function() {
-                setInterval(function() {
-                		$('#relatedStocks').load('/ajax/relatedstocks/{{$stock->metrics->stock_code}}');
-                		$('#stockPrice').load('/ajax/stock/currentPrice/{{$stock->metrics->stock_code}}');
-                		$('#dayChange').load('/ajax/stock/dayChange/{{$stock->metrics->stock_code}}');
-                }, 60000);
-        	});
+		$(document).ready(function() {
+			$('#stockPrice').load('/ajax/stock/stockChange/{{$stock->metrics->stock_code}}');
+
+            setInterval(function() {
+            		$('#relatedStocks').load('/ajax/relatedstocks/{{$stock->metrics->stock_code}}');
+            		$('#stockPrice').load('/ajax/stock/stockChange/{{$stock->metrics->stock_code}}');
+            }, 60000);
+        });
 
 		$(document).ready(function () {
 		    $(window).resize(function(){
@@ -58,17 +58,9 @@
 				<h2 class="no-margin-top">{{ $stock->sector }}</h2>
 				<h3 class="no-margin-top">(ASX: {{ $stock->stock_code }})</h3>
 
-				<h2 class="side-by-side quarter-margin-right quarter-margin-bottom" id="stockPrice">${{ $metrics->last_trade }}</h2>
-				<h3 id="dayChange"
-					@if(rtrim($metrics->percent_change, '%') < 0) 
-						class="side-by-side color-red" 
-					@elseif(rtrim($metrics->percent_change, '%') > 0) 
-						class="side-by-side color-green" 
-					@else
-						class="side-by-side"
-					@endif>
-					{{ number_format($metrics->percent_change, 2) }}%
-				</h3>
+				<div id="stockPrice">
+
+				</div>
 			</div>
 		</div>
 	</div>

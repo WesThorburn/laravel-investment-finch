@@ -74,14 +74,9 @@ class StockController extends Controller
         return redirect('/');
     }
 
-    public function getCurrentPrice($id){
-        return "$".StockMetrics::where('stock_code', $id)->pluck('last_trade');
-    }
-
-    public function getDayChange($id){
-        return view('layouts.partials.individual-stock-day-change')->with([
-            'dayChange' => StockMetrics::where('stock_code', $id)->pluck('percent_change')
-        ]);
+    public function stockChange($id){
+        $metrics = StockMetrics::where('stock_code', $id)->first();
+        return view('layouts.partials.individual-stock-change')->with(compact('metrics'));
     }
 
     public function relatedStocks($id){

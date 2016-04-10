@@ -9,14 +9,14 @@
 
 <?php $__env->startSection('body'); ?>
 	<script type="text/javascript">
-		$(document).ready(
-            function() {
-                setInterval(function() {
-                		$('#relatedStocks').load('/ajax/relatedstocks/<?php echo e($stock->metrics->stock_code); ?>');
-                		$('#stockPrice').load('/ajax/stock/currentPrice/<?php echo e($stock->metrics->stock_code); ?>');
-                		$('#dayChange').load('/ajax/stock/dayChange/<?php echo e($stock->metrics->stock_code); ?>');
-                }, 60000);
-        	});
+		$(document).ready(function() {
+			$('#stockPrice').load('/ajax/stock/stockChange/<?php echo e($stock->metrics->stock_code); ?>');
+
+            setInterval(function() {
+            		$('#relatedStocks').load('/ajax/relatedstocks/<?php echo e($stock->metrics->stock_code); ?>');
+            		$('#stockPrice').load('/ajax/stock/stockChange/<?php echo e($stock->metrics->stock_code); ?>');
+            }, 60000);
+        });
 
 		$(document).ready(function () {
 		    $(window).resize(function(){
@@ -57,17 +57,9 @@
 				<h2 class="no-margin-top"><?php echo e($stock->sector); ?></h2>
 				<h3 class="no-margin-top">(ASX: <?php echo e($stock->stock_code); ?>)</h3>
 
-				<h2 class="side-by-side quarter-margin-right quarter-margin-bottom" id="stockPrice">$<?php echo e($metrics->last_trade); ?></h2>
-				<h3 id="dayChange"
-					<?php if(rtrim($metrics->percent_change, '%') < 0): ?> 
-						class="side-by-side color-red" 
-					<?php elseif(rtrim($metrics->percent_change, '%') > 0): ?> 
-						class="side-by-side color-green" 
-					<?php else: ?>
-						class="side-by-side"
-					<?php endif; ?>>
-					<?php echo e(number_format($metrics->percent_change, 2)); ?>%
-				</h3>
+				<div id="stockPrice">
+
+				</div>
 			</div>
 		</div>
 	</div>

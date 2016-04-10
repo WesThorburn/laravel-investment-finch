@@ -28,8 +28,7 @@ Route::controllers([
 ]);
 
 Route::group(['prefix' => 'ajax'], function(){
-	Route::get('stock/currentPrice/{stockCode}', 'StockController@getCurrentPrice');
-	Route::get('stock/dayChange/{stockCode}', 'StockController@getDayChange');
+	Route::get('stock/stockChange/{stockCode}', 'StockController@stockChange');
 	Route::get('stocks/highestVolume', 'StockController@highestVolume');
 	Route::get('stocks/{marketIndex}', 'StockController@stocks');
 	Route::get('relatedstocks/{stockCode}', 'StockController@relatedStocks');
