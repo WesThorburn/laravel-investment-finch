@@ -20,6 +20,7 @@ class DashboardController extends Controller
 
     public function marketCapAdjustmentsPage(){
         return view('pages/dashboard/market-cap-adjustments')->with([
+            'adminOptions' => \DB::table('administration')->get(),
             'flaggedStocks' => StockMetrics::join('stocks', 'stocks.stock_code', '=', 'stock_metrics.stock_code')
                 ->select([
                     'stock_metrics.stock_code', 

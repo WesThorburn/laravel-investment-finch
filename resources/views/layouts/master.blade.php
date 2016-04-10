@@ -93,23 +93,27 @@
 			<div class="push"></div>
 		</div>
 		@yield('footer')
-		<div class="footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3">
-						<p class="footer-text text-center">Wes Thorburn <a href="https://github.com/WesThorburn">(github.com/WesThorburn)</a></p>
+
+		<!-- Don't Display Footer on Dashboard -->
+		@if(strpos(Request::route()->uri(), 'dashboard') === false)
+			<div class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<p class="footer-text text-center">Wes Thorburn <a href="https://github.com/WesThorburn">(github.com/WesThorburn)</a></p>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<p class="disclaimer-text">
-							Investmentfinch.com.au accepts no responsibility for the accuracy or reliability of any information displayed on this website. 
-							No information provided on this website should be used for investment or trading decisions, nor should information on this website be considered financial advice. Investmentfinch.com.au will not be responsible for any financial losses suffered.<br>
-							Copyright © 2016 Investmentfinch.com.au. All rights reserved.
-						</p>
+					<div class="row">
+						<div class="col-md-12">
+							<p class="disclaimer-text">
+								Investmentfinch.com.au accepts no responsibility for the accuracy or reliability of any information displayed on this website. 
+								No information provided on this website should be used for investment or trading decisions, nor should information on this website be considered financial advice. Investmentfinch.com.au will not be responsible for any financial losses suffered.<br>
+								Copyright © 2016 Investmentfinch.com.au. All rights reserved.
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 	</body>
 </html>
