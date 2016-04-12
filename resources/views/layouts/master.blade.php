@@ -44,11 +44,11 @@
 			<nav class="navbar navbar-default navbar-ceiling">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-8 col-xs-offset-2 col-sm-8 col-md-9">
+						<div class="col-xs-8 col-sm-8 col-md-9">
 							<a href="/" class="pull-left default-margin-right"><img src="{{asset('../images/logo.png')}}" width="75" height="75"></a>
 							<h1 class="main-header">Investment Finch</h1>
 						</div>
-						<div class="col-xs-12 col-sm-4 col-md-3">
+						<div class="col-xs-4 col-sm-4 col-md-3">
 							<ul class="nav navbar-nav pull-right">
 								<li>
 									@if(Auth::check())
@@ -62,8 +62,8 @@
 									@endif
 								</li>
 							</ul>
-							<h2 class="sub-header pull-right quarter-margin-top">The ASX simplified.</h2>
 						</div>
+						<h2 class="sub-header pull-right quarter-margin-top">The ASX simplified.</h2>
 					</div>
 				</div>
 			</nav>
@@ -87,8 +87,10 @@
 					</div>
 				</nav>
 			@endif
-			@yield('body')
-			<div class="push"></div>
+			<div class="container-fluid">
+				@yield('body')
+				<div class="push"></div>
+			</div>
 		</div>
 		@yield('footer')
 		<div class="footer">
