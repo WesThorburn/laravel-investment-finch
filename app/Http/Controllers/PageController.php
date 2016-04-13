@@ -46,8 +46,6 @@ class PageController extends Controller
             	]
             ])
             ->setOptions([
-                'width' => 725,
-                'height' => 360,
                 'title' => 'Sector Caps (Billions)',
                 'pieSliceText' => 'label',
             ]);

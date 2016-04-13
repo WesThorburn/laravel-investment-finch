@@ -91,12 +91,6 @@
 						</div>
 					</div>
 				</div>
-				<div id="sectorDayGain">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
-				</div>
-				<div id="sectorDayLoss">
-					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
-				</div>
 				<div id="highestVolumeStocks">
 					@include('layouts.partials.highest-volume-stocks-display', ['title' => $highestVolumeStocksTitle])
 				</div>
@@ -118,6 +112,16 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 no-padding-right-md">
+				<div id="sectorDayGain">
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle])
+				</div>
+				<div id="sectorDayLoss">
+					@include('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle])
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading text-center">
 						<h2 class="no-margin-top">Sector Caps</h2>
