@@ -24,7 +24,7 @@
 	</script>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-xs-12">
 				<div id="metrics">
 					@include('layouts.partials.stock-list-display')
 				</div>

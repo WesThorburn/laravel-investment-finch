@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs stocks-page-nav-tabs">
+<ul class="nav nav-tabs stocks-page-nav-tabs hidden-xs">
 	<li role="presentation" @if($marketIndex == 'all') class="active" @endif><a href="/index/all">All Stocks</a></li>
 	<li role="presentation" @if($marketIndex == 'asx20') class="active" @endif><a href="/index/asx20">ASX 20</a></li>
 	<li role="presentation" @if($marketIndex == 'asx50') class="active" @endif><a href="/index/asx50">ASX 50</a></li>
@@ -7,10 +7,46 @@
 	<li role="presentation" @if($marketIndex == 'asx300') class="active" @endif><a href="/index/asx300">ASX 300</a></li>
 	<li role="presentation" @if($marketIndex == 'allOrds') class="active" @endif><a href="/index/allOrds">All Ords</a></li>
 </ul>
+
+<div class="panel-group visible-xs">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" href="#collapsible-navs">Indexes <span class="glyphicon glyphicon-menu-down"></span></a>
+			</h4>
+		</div>
+		<div class="collapse navbar-collapse nav-indexes no-padding-right" id="collapsible-navs">
+			<ul class="nav navbar-nav no-margins">
+				<li class="nav-button">
+					<a @if($marketIndex == 'all') class="nav-index-active" @else class="no-margin-left" @endif href="/index/all">All Stocks</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'asx20') class="nav-index-active" @else class="no-margin-left" @endif href="/index/asx20">ASX 20</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'asx50') class="nav-index-active" @else class="no-margin-left" @endif href="/index/asx50">ASX 50</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'asx100') class="nav-index-active" @else class="no-margin-left" @endif href="/index/asx100">ASX 100</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'asx200') class="nav-index-active" @else class="no-margin-left" @endif href="/index/asx200">ASX 200</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'asx300') class="nav-index-active" @else class="no-margin-left" @endif  href="/index/asx300">ASX 300</a>
+				</li>
+				<li class="nav-button">
+					<a @if($marketIndex == 'allOrds') class="nav-index-active" @else class="no-margin-left" @endif href="/index/allOrds">All Ords</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
 <div class="panel panel-default">
-	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom" id="stock_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom display responsive nowrap" cellspacing="0" width="100%"id="stock_table">
 	    <thead>
-	    	<h1 class="stocks-page-header text-center">{{ $formattedMarketIndex }}</h1>
+	    	<h1 class="stocks-page-header text-center hidden-xs">{{ $formattedMarketIndex }}</h1>
 	        <tr>
 	            <th>Code</th>
 	            <th>Name</th>

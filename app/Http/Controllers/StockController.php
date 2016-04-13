@@ -119,8 +119,14 @@ class StockController extends Controller
             ->editColumn('sector', function($stock){
                 return '<div class="td-limit-medium">'.$stock->stock->sector.'</div>';
             })
-            ->editColumn('volume', function($stock){
-                return number_format($stock->volume);
+            ->editColumn('percent_change', function($stock){
+                if($stock->percent_change > 0){
+                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                elseif($stock->percent_change < 0){
+                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                return number_format($stock->percent_change, 2).'%';
             })
             ->editColumn('current_market_cap', function($stock){
                 if($stock->current_market_cap == 0.00){
@@ -131,14 +137,8 @@ class StockController extends Controller
                 }
                 return number_format($stock->current_market_cap);
             })
-            ->editColumn('percent_change', function($stock){
-                if($stock->percent_change > 0){
-                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
-                }
-                elseif($stock->percent_change < 0){
-                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
-                }
-                return number_format($stock->percent_change, 2).'%';
+            ->editColumn('volume', function($stock){
+                return number_format($stock->volume);
             })
             ->make(true);
     }
