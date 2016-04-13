@@ -123,7 +123,7 @@
 		            {data: 'difference', name: 'difference', searchable: false},
 		            {data: 'percent_change', name: 'percent_change', searchable: false},
 		            {data: 'market_cap_requires_adjustment', name: 'market_cap_requires_adjustment'},
-		            {data: 'change_adjustment', name: 'change_adjustment'}
+		            {data: 'change_adjustment', name: 'change_adjustment', searchable: false}
 				]
 			});		
 			//Make table rows clickable
