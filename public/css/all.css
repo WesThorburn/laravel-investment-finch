@@ -7452,6 +7452,11 @@ th{
 	font-size:13px;
 }
 
+#market_performance_div{
+	height: 100% !important;
+    width: 100% !important;
+}
+
 @media(min-width: 992px){
 	.no-padding-left-md{
 		padding-left:0px;

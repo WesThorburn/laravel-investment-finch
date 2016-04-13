@@ -28,8 +28,6 @@ class PageController extends Controller
         $marketCapsLava = \Lava::AreaChart('MarketCaps')
             ->dataTable($marketCaps)
             ->setOptions([
-                'width' => 725,
-                'height' => 360,
                 'title' => 'ASX Market Cap (Billions)'
             ]);
 
