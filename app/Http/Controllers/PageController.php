@@ -19,10 +19,10 @@ class PageController extends Controller
     public function index()
     {
         //Line graph for market cap
-        $totalMarketCapGraphData = SectorIndexHistoricals::getIndividualSectorGraphData('All', 'last_3_months', 'Market Cap');
+        $totalMarketCapGraphData = SectorIndexHistoricals::getIndividualSectorGraphData('All', 'last_3_months', 'Cap');
         $marketCaps = \Lava::DataTable();
         $marketCaps->addStringColumn('Date')
-            ->addNumberColumn('Market Cap')
+            ->addNumberColumn('Cap')
             ->addRows($totalMarketCapGraphData);
 
         $marketCapsLava = \Lava::AreaChart('MarketCaps')

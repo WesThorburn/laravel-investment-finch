@@ -106,10 +106,10 @@
 					<div class="panel-heading text-center">
 						<h2 class="no-margin-top">ASX Market Cap</h2>
 						<div class="btn-group btn-group-sm pull-center" role="group">
-							<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
+							<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Cap')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Cap')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Cap')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Cap')" id="last_2_years">2 Years</button>
 						</div>
 					</div>
 					<div class="panel-body">
