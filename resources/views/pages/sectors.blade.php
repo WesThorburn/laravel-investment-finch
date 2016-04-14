@@ -103,14 +103,14 @@
 						<div class="panel panel-default three-quarter-margin-bottom">
 							<div class="panel-heading">
 								<div class="btn-group btn-group-sm pull-center" role="group">
-									<button class="btn btn-default active" onclick="getSectorGraphData('last_month', 'Market Cap')" id="last_month">30 Days</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('all_time', 'Market Cap')" id="all_time">All</button>
+									<button class="btn btn-default active" onclick="getSectorGraphData('last_month', 'Cap')" id="last_month">30 Days</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_3_months', 'Cap')" id="last_3_months">3 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_6_months', 'Cap')" id="last_6_months">6 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_year', 'Cap')" id="last_year">12 Months</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_2_years', 'Cap')" id="last_2_years">2 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_5_years', 'Cap')" id="last_5_years">5 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('last_10_years', 'Cap')" id="last_10_years">10 Years</button>
+									<button class="btn btn-default" onclick="getSectorGraphData('all_time', 'Cap')" id="all_time">All</button>
 								</div>
 							</div>
 							<div class="panel-body">

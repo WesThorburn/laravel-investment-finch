@@ -63,7 +63,7 @@
 									<?php endif; ?>
 								</li>
 							</ul>
-							<h2 class="sub-header pull-right quarter-margin-top">The ASX simplified.</h2>
+							<h2 class="sub-header pull-right text-right quarter-margin-top">The ASX simplified.</h2>
 						</div>
 					</div>
 				</div>
