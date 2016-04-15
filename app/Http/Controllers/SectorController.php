@@ -28,8 +28,6 @@ class SectorController extends Controller
         $sectorCapsLava = \Lava::AreaChart('SectorCaps')
             ->dataTable($sectorCaps)
             ->setOptions([
-                'width' => 725,
-                'height' => 320,
                 'title' => 'Total Sector Cap (Billions)'
             ]);
 
@@ -48,8 +46,6 @@ class SectorController extends Controller
                 ]
             ])
             ->setOptions([
-                'width' => 725,
-                'height' => 360,
                 'title' => 'Stocks In Sector',
                 'pieSliceText' => 'label',
             ]);

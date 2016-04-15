@@ -415,6 +415,16 @@ th{
     width: 100% !important;
 }
 
+#sector_caps_div{
+	height: 100% !important;
+    width: 100% !important;
+}
+
+#sector_stocks_div{
+	height: 100% !important;
+    width: 100% !important;
+}
+
 @media(min-width: 992px){
 	.no-padding-left-md{
 		padding-left:0px;
