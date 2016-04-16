@@ -39,8 +39,7 @@
 				"last_6_months", 
 				"last_year", 
 				"last_2_years", 
-				"last_5_years", 
-				"last_10_years", 
+				"last_5_years",
 				"all_time"
 			];
 
@@ -71,13 +70,13 @@
 
 	</script>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
+		
+			<div class="col-sm-4 col-md-4 no-padding-left">
 				<div id="allSectors">
 					@include('layouts.partials.all-sectors-day-change-display')
 				</div>
 			</div>
-			<div class="col-md-8 no-padding-left">
+			<div class="col-sm-8 col-md-8 no-padding-left">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="panel panel-default three-quarter-margin-bottom">
@@ -109,7 +108,6 @@
 									<button class="btn btn-default" onclick="getSectorGraphData('last_year', 'Cap')" id="last_year">12 Months</button>
 									<button class="btn btn-default" onclick="getSectorGraphData('last_2_years', 'Cap')" id="last_2_years">2 Years</button>
 									<button class="btn btn-default" onclick="getSectorGraphData('last_5_years', 'Cap')" id="last_5_years">5 Years</button>
-									<button class="btn btn-default" onclick="getSectorGraphData('last_10_years', 'Cap')" id="last_10_years">10 Years</button>
 									<button class="btn btn-default" onclick="getSectorGraphData('all_time', 'Cap')" id="all_time">All</button>
 								</div>
 							</div>
@@ -129,6 +127,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		
 	</div>
 @stop
