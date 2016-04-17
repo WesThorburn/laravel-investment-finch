@@ -20,7 +20,7 @@
 							], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						<?php echo $__env->make('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topWeeklyLosses, 
@@ -39,7 +39,7 @@
 							], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						<?php echo $__env->make('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topMonthlyLosses, 
@@ -49,7 +49,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 no-padding-left">
+			<div class="col-md-4 no-padding-right">
 				<?php echo $__env->make('layouts.partials.stock-top-change', 
 					[
 						'stockChanges' => $topStocks12Months, 
