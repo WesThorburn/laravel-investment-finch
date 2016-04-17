@@ -46,10 +46,7 @@
 				"last_3_months", 
 				"last_6_months", 
 				"last_year", 
-				"last_2_years", 
-				"last_5_years", 
-				"last_10_years", 
-				"all_time"
+				"last_2_years"
 			];
 
 			timeFrameButtonIds.forEach(function(buttonId){
