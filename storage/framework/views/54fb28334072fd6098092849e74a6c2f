@@ -1,4 +1,4 @@
-<div class="pull-right half-margin-top">
+<div class="pull-right half-margin-top hidden-xs">
 	<?php echo Form::open(['action' => 'StockController@show', 'method' => 'get', 'class' => 'form-group form-inline no-margin-bottom']); ?>
 
 		<?php echo Form::text('stockCodeFind', null, ['class' => 'form-control', 'placeholder' => 'Find Stock Code']); ?>
@@ -8,3 +8,14 @@
 	<?php echo Form::close(); ?>
 
 </div>
+
+<span class="default-margin-bottom default-margin-top visible-xs">
+	<?php echo Form::open(['action' => 'StockController@show', 'method' => 'get', 'class' => 'form-group form-inline']); ?>
+
+		<?php echo Form::text('stockCodeFind', null, ['class' => 'third-width form-control', 'placeholder' => 'Find Stock Code']); ?>
+
+		<?php echo Form::submit("Find", ['class' => 'btn btn-default third-width form-control quarter-margin-top']); ?>
+
+	<?php echo Form::close(); ?>
+
+</span>
