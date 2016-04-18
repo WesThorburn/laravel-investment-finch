@@ -34,7 +34,6 @@
 				});
 			});
 			var timeFrameButtonIds = [
-				"last_month", 
 				"last_3_months", 
 				"last_6_months", 
 				"last_year", 
@@ -81,8 +80,7 @@
 					<div class="panel panel-default three-quarter-margin-bottom">
 						<div class="panel-heading">
 							<div class="btn-group btn-group-sm pull-center" role="group">
-								<button class="btn btn-default active" onclick="getSectorGraphData('last_month', 'Cap')" id="last_month">30 Days</button>
-								<button class="btn btn-default" onclick="getSectorGraphData('last_3_months', 'Cap')" id="last_3_months">3 Months</button>
+								<button class="btn btn-default active" onclick="getSectorGraphData('last_3_months', 'Cap')" id="last_3_months">3 Months</button>
 								<button class="btn btn-default" onclick="getSectorGraphData('last_6_months', 'Cap')" id="last_6_months">6 Months</button>
 								<button class="btn btn-default" onclick="getSectorGraphData('last_year', 'Cap')" id="last_year">12 Months</button>
 								<button class="btn btn-default" onclick="getSectorGraphData('last_2_years', 'Cap')" id="last_2_years">2 Years</button>

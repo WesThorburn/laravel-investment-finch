@@ -25,15 +25,12 @@ class AjaxSectorPageTest extends TestCase{
 	public function testSectorGraph(){
 		$mostRecentDateInGraph = SectorIndexHistoricals::getMostRecentSectorIndexHistoricalsDate();
 		$mostRecentMonth = getMonthNameFromNumber(explode("-", $mostRecentDateInGraph)[1]);
-		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
-		$this->visit('ajax/graph/sector/Banks/last_month/Market%20Cap')
-			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Market Cap"}],"rows"')
-			->see($mostRecentMonth)
-			->see($mostRecentYear);
+		$this->visit('ajax/graph/sector/Banks/last_month/Cap')
+			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Cap"}],"rows"')
+			->see($mostRecentMonth);
 
-		$this->visit('ajax/graph/sector/Banks/last_6_months/Market%20Cap')
-			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Market Cap"}],"rows"')
-			->see($mostRecentMonth)
-			->see($mostRecentYear);
+		$this->visit('ajax/graph/sector/Banks/last_6_months/Cap')
+			->see('{"cols":[{"type":"string","label":"Date"},{"type":"number","label":"Cap"}],"rows"')
+			->see($mostRecentMonth);
 	}
 }

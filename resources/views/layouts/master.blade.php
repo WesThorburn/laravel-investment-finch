@@ -43,25 +43,40 @@
 			<nav class="navbar navbar-default navbar-ceiling">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-8 col-sm-8 col-md-9">
+						<div class="col-xs-8 col-sm-8 col-md-8">
 							<a href="/" class="pull-left default-margin-right"><img src="{{asset('../images/logo.png')}}" width="75" height="75"></a>
 							<h1 class="main-header">Investment Finch</h1>
 						</div>
-						<div class="col-xs-4 col-sm-4 col-md-3">
-							<ul class="nav navbar-nav pull-right">
-								<li>
-									@if(Auth::check())
-										<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
-										@if(Auth::user()->is_admin)
-											<button onclick="redirect('/dashboard/marketCapAdjustments')" class="btn btn-default btn-logout">Admin</button>
+						<div class="col-xs-4 col-sm-4 col-md-4">
+							<div class="row">
+								<h2 class="sub-header pull-right text-right quarter-margin-top">The ASX simplified.</h2>
+							</div>
+							<div class="row">
+								<ul class="nav navbar-nav pull-right">
+									<li>
+										@if(Auth::check())
+											<div class="btn-group hidden-xs">
+												<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<b>{{ Auth::user()->name }}</b> <span class="caret"></span>
+												</button>
+												<ul class="user-main-dropdown dropdown-menu dropdown-menu-right">
+													<li><a href="/user/watchlist">Watchlist</a></li>
+													<li><a href="/user/portfolio">Portfolio</a></li>
+													<li><a href="/user/account">Account</a></li>
+													<li role="separator" class="divider"></li>
+													@if(Auth::user()->is_admin)
+														<li><a href="/dashboard/marketCapAdjustments">Admin</a></li>
+													@endif
+													<li><a href="/auth/logout">Logout</a></li>
+												</ul>
+											</div>
+										@else
+											<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
+											<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
 										@endif
-									@else
-										<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
-										<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
-									@endif
-								</li>
-							</ul>
-							<h2 class="sub-header pull-right text-right quarter-margin-top">The ASX simplified.</h2>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>

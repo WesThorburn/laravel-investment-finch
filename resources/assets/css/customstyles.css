@@ -232,10 +232,6 @@ th{
 	border:none;
 }
 
-.btn-logout, .btn-login, .btn-register{
-	margin-top:4px;
-}
-
 .btn-row{
 	padding:0px 3px;
 }
@@ -378,6 +374,10 @@ th{
 .nav-tabs > li.active > a:hover{
 	border-color:#2e3e44;
 	border-bottom-color: transparent;
+}
+
+.user-main-dropdown{
+	border-radius:0px;
 }
 
 .pagination > li:first-child > a, .pagination > li:last-child > a{

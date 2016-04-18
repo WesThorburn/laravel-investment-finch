@@ -11,7 +11,6 @@ class AuthenticationTest extends TestCase{
 	public function testFailedLogIn(){
 		$this->visit('/auth/login')
 			->press('Login')
-			->see('Whoops!')
 			->see('There were some problems with your input.');
 	}
 
