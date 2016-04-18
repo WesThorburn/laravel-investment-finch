@@ -44,7 +44,7 @@
 </div>
 
 <div class="panel panel-default">
-	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom display responsive nowrap" cellspacing="0" width="100%"id="stock_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom responsive" cellspacing="0" width="100%" id="stock_table">
 	    <thead>
 	    	<h1 class="stocks-page-header text-center hidden-xs">{{ $formattedMarketIndex }}</h1>
 	        <tr>

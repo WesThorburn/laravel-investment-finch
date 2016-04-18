@@ -1,6 +1,6 @@
 <div class="panel panel-default three-quarter-margin-bottom">
 	<div class="panel-heading">Stocks in {{ $selectedPortfolio->portfolio_name }}</div>
-	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="stocks_in_portfolio_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top responsive" cellspacing="0" width="100%" id="stocks_in_portfolio_table">
 	    <thead>
 	        <tr>
 	            <th>Code</th>

@@ -63,6 +63,7 @@
 							<input type="hidden" name="_method" value="put"/>
 							<input type="hidden" name="fieldToBeUpdated" value="password"/>
 							{{ csrf_field() }}
+							
 							<!-- Current Password -->
 							<div class="col-xs-12 quarter-margin-top">
 								<label class="col-xs-4 text-right" for="oldPassword">Current Password</label>
