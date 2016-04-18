@@ -35,7 +35,7 @@ class StockController extends Controller
             return redirect('stocks/'.$request->stockCodeFind);
         }
         if(Stock::where('stock_code', $id)->first()){
-            $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
+            $priceGraphData = Stock::getGraphData($id, 'last_6_months', 'Price');
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
                 ->addNumberColumn('Price')
@@ -54,8 +54,6 @@ class StockController extends Controller
                      ]
                 ])
                 ->setOptions([
-                    'width' => 620,
-                    'height' => 412,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
 

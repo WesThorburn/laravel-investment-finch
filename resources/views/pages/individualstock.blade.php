@@ -33,8 +33,6 @@
 				});
 			});
 			var timeFrameButtonIds = [
-				"last_month", 
-				"last_3_months", 
 				"last_6_months", 
 				"last_year", 
 				"last_2_years", 
@@ -67,13 +65,11 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-7">
-				<div class="panel panel-default">
+			<div class="col-md-7 no-padding-left">
+				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						<div class="btn-group btn-group-sm pull-center" role="group">
-							<button class="btn btn-default active" onclick="getGraphData('last_month', 'Price')" id="last_month">30 Days</button>
-							<button class="btn btn-default" onclick="getGraphData('last_3_months', 'Price')" id="last_3_months">3 Months</button>
-							<button class="btn btn-default" onclick="getGraphData('last_6_months', 'Price')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default active" onclick="getGraphData('last_6_months', 'Price')" id="last_6_months">6 Months</button>
 							<button class="btn btn-default" onclick="getGraphData('last_year', 'Price')" id="last_year">12 Months</button>
 							<button class="btn btn-default" onclick="getGraphData('last_2_years', 'Price')" id="last_2_years">2 Years</button>
 							<button class="btn btn-default" onclick="getGraphData('last_5_years', 'Price')" id="last_5_years">5 Years</button>
@@ -87,6 +83,31 @@
 						</div>
 					</div>
 				</div>
+				@if($metrics->analysis != "")
+					<div class="panel panel-default three-quarter-margin-bottom">
+						<div class="panel-heading">
+							<b>Stock Analysis</b>
+						</div>
+						<div class="panel-body">
+							{{ $metrics->analysis }}
+						</div>
+					</div>
+				@endif
+				@if($relatedStocks->first())
+					<div id="relatedStocks">
+						@include('layouts.partials.related-stock-list-display')
+					</div>
+				@endif
+				@if($metrics->analysis == "" && !$relatedStocks->first())
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<b>Business Summary</b>
+						</div>
+						<div class="panel-body">
+							{{ $stock->business_summary }}
+						</div>
+					</div>
+				@endif
 			</div>
 			<div class="col-md-5 no-padding-left">
 				<div class="panel panel-default three-quarter-margin-bottom">
@@ -174,34 +195,7 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div @if($stock->business_summary == "") class="col-md-12" @else class="col-md-7" @endif>
-				<div class="row">
-					<div class="col-md-12">
-						@if($relatedStocks->first())
-							<div id="relatedStocks">
-								@include('layouts.partials.related-stock-list-display')
-							</div>
-						@endif
-					</div>
-					<div class="col-md-12">
-						@if($metrics->analysis != "")
-							<div class="panel panel-default three-quarter-margin-bottom">
-								<div class="panel-heading">
-									<b>Stock Analysis</b>
-								</div>
-								<div class="panel-body">
-									{{ $metrics->analysis }}
-								</div>
-							</div>
-						@endif
-					</div>
-				</div>
-			</div>
-			<div @if(!$relatedStocks->first() && $metrics->analysis != "") class="col-md-12 no-padding-left" @else class="col-md-5 no-padding-left" @endif>
-				@if($stock->business_summary != "")
+				@if($stock->business_summary != "" && $metrics->analysis != "" && $relatedStocks->first())
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>Business Summary</b>
