@@ -161,6 +161,11 @@ th{
 	padding-right:0px;
 }
 
+.no-padding-left-right{
+	padding-left:0px;
+	padding-right:0px;
+}
+
 .single-px-padding-left-right{
 	padding-left:1px !important;
 	padding-right:1px !important;

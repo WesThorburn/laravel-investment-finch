@@ -35,10 +35,8 @@
 				window.location.href = location;
 			}
 			setInterval(function(){
-        		$('#marketStatus').load('../ajax/marketstatus');
-        	}, 15000);
-        	setInterval(function(){
-        		$('#marketChange').load('../ajax/marketchange');
+        		$('#marketStatus').load('/ajax/marketstatus');
+        		$('#marketChange').load('/ajax/marketchange');
         	}, 15000); 
 		</script>
 		<div class="wrapper">
