@@ -12,7 +12,7 @@
 	            <th>Gain/Loss(%)</th>
 	            <th>Day Change</th>
 	            <th>Value Change</th>
-	            <th></th>
+	            <th class="all"></th>
 	        </tr>
 	    </thead>
 	    <tbody data-link="row" class="rowlink">
