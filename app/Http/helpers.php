@@ -108,6 +108,11 @@ function getCarbonDateFromDate($phpDate){
 	return Carbon::createFromDate($explodedDate[0], $explodedDate[1], $explodedDate[2]);
 }
 
+function getShortDateFromDate($phpDate){
+	//Receives PHP date, returns it as a short date (5 Jan, 19 Apr)
+	return date('j M', strtotime($phpDate));
+}
+
 function getMonthNameFromNumber($monthNumber){
 	$monthArray = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
 	return $monthArray[intval($monthNumber)];

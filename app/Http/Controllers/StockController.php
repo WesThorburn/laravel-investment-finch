@@ -35,7 +35,7 @@ class StockController extends Controller
             return redirect('stocks/'.$request->stockCodeFind);
         }
         if(Stock::where('stock_code', $id)->first()){
-            $priceGraphData = Stock::getGraphData($id, 'last_month', 'Price');
+            $priceGraphData = Stock::getGraphData($id, 'last_6_months', 'Price');
             $prices = \Lava::DataTable();
             $prices->addStringColumn('Date')
                 ->addNumberColumn('Price')
@@ -54,8 +54,6 @@ class StockController extends Controller
                      ]
                 ])
                 ->setOptions([
-                    'width' => 620,
-                    'height' => 412,
                     'title' => 'Price of '.strtoupper($id)
                 ]);
 
@@ -119,8 +117,14 @@ class StockController extends Controller
             ->editColumn('sector', function($stock){
                 return '<div class="td-limit-medium">'.$stock->stock->sector.'</div>';
             })
-            ->editColumn('volume', function($stock){
-                return number_format($stock->volume);
+            ->editColumn('percent_change', function($stock){
+                if($stock->percent_change > 0){
+                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                elseif($stock->percent_change < 0){
+                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
+                }
+                return number_format($stock->percent_change, 2).'%';
             })
             ->editColumn('current_market_cap', function($stock){
                 if($stock->current_market_cap == 0.00){
@@ -131,14 +135,8 @@ class StockController extends Controller
                 }
                 return number_format($stock->current_market_cap);
             })
-            ->editColumn('percent_change', function($stock){
-                if($stock->percent_change > 0){
-                    return "<div class='color-green'>".number_format($stock->percent_change, 2)."%"."</div>";
-                }
-                elseif($stock->percent_change < 0){
-                    return "<div class='color-red'>".number_format($stock->percent_change, 2)."%"."</div>";
-                }
-                return number_format($stock->percent_change, 2).'%';
+            ->editColumn('volume', function($stock){
+                return number_format($stock->volume);
             })
             ->make(true);
     }

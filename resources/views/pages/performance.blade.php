@@ -22,7 +22,7 @@
 							])
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						@include('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topWeeklyLosses, 
@@ -41,7 +41,7 @@
 							])
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-6 no-padding-right">
 						@include('layouts.partials.stock-top-change', 
 							[
 								'stockChanges' => $topMonthlyLosses, 
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 no-padding-left">
+			<div class="col-md-4 no-padding-right">
 				@include('layouts.partials.stock-top-change', 
 					[
 						'stockChanges' => $topStocks12Months, 

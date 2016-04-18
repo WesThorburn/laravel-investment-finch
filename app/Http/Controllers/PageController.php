@@ -19,17 +19,15 @@ class PageController extends Controller
     public function index()
     {
         //Line graph for market cap
-        $totalMarketCapGraphData = SectorIndexHistoricals::getIndividualSectorGraphData('All', 'last_3_months', 'Market Cap');
+        $totalMarketCapGraphData = SectorIndexHistoricals::getIndividualSectorGraphData('All', 'last_3_months', 'Cap');
         $marketCaps = \Lava::DataTable();
         $marketCaps->addStringColumn('Date')
-            ->addNumberColumn('Market Cap')
+            ->addNumberColumn('Cap')
             ->addRows($totalMarketCapGraphData);
 
         $marketCapsLava = \Lava::AreaChart('MarketCaps')
             ->dataTable($marketCaps)
             ->setOptions([
-                'width' => 725,
-                'height' => 360,
                 'title' => 'ASX Market Cap (Billions)'
             ]);
 
@@ -48,8 +46,6 @@ class PageController extends Controller
             	]
             ])
             ->setOptions([
-                'width' => 725,
-                'height' => 360,
                 'title' => 'Sector Caps (Billions)',
                 'pieSliceText' => 'label',
             ]);

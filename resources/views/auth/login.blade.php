@@ -11,13 +11,13 @@
 @section('body')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
+		<div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+							There were some problems with your input.<br><br>
 							<ul>
 								@foreach ($errors->all() as $error)
 									<li>{{ $error }}</li>
@@ -56,8 +56,12 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-default">Login</button>
+							</div>
+						</div>
 
-								<!--<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>-->
+						<div class="form-group">
+							<div class="col-md-8 col-md-offset-4">
+								<p>Don't have an account yet? <a href="register">Register here.</a></p>
 							</div>
 						</div>
 					</form>

@@ -11,7 +11,7 @@
 @section('body')
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-sm-4 col-md-3 no-padding-left">
 				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Watchlists
@@ -84,9 +84,9 @@
 				</div>
 			</div>
 			@if($watchlists->first())
-				<div class="col-md-9 no-padding-left">
+				<div class="col-sm-8 col-md-9 no-padding-left">
 					@include('layouts.partials.watchlist-stocks')
-					<div class="col-md-6 no-padding-left">
+					<div class="col-xs-12 col-sm-12 col-md-6 no-padding-left-right">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								Add a Stock to this Watchlist

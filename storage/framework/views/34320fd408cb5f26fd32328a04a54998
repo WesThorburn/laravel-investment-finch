@@ -9,7 +9,7 @@
 <?php $__env->startSection('body'); ?>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-sm-4 col-md-3 no-padding-left">
 				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading">
 						Your Portfolios
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<?php if($portfolios->first()): ?>
-				<div class="col-md-9 no-padding-left">
+				<div class="col-sm-8 col-md-9 no-padding-left">
 					<?php echo $__env->make('layouts.partials.portfolio-stocks', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					<?php if(Session::has('sellStockSuccess')): ?>
 						<div class="alert alert-success three-quarter-margin-bottom">
@@ -108,7 +108,7 @@
 									<label class="col-xs-2 single-px-padding-left-right" for="purchasePrice">Purchase Price</label>
 									<label class="col-xs-2 single-px-padding-left-right" for="purchaseQty">Quantity</label>
 									<label class="col-xs-2 single-px-padding-left-right" for="brokerage">Brokerage</label>
-									<label class="col-xs-3 single-px-padding-left-right" for="date">Purchase Date</label>
+									<label class="col-xs-2 single-px-padding-left-right" for="date">Purchase Date</label>
 								</div>
 								<div class="row">
 									<div class="col-xs-2 single-px-padding-right">
@@ -130,10 +130,10 @@
 											<input name="purchaseBrokerage" id="purchaseBrokerage" value="19.95" type="text" class="form-control<?php echo e($errors->has('purchaseBrokerage') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchaseBrokerage')); ?>>
 										</div>
 									</div>
-									<div class="col-xs-3 single-px-padding-left-right">
+									<div class="col-xs-2 col-lg-3 single-px-padding-left-right">
 										<input name="purchaseDate" id="purchaseDate" type="date" class="form-control<?php echo e($errors->has('purchaseDate') ? ' has-error' : ''); ?>" value=<?php echo e(old('purchaseDate')); ?>>
 									</div>
-									<div class="col-xs-1 single-px-padding-left">
+									<div class="col-xs-2 col-lg-1 single-px-padding-left">
 										<button type="submit" class="btn btn-default">Add</button>
 									</div>
 								</div>

@@ -19,6 +19,7 @@
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/dataTables.bootstrap.js"></script>
 		<script src="/js/jasny-bootstrap.js"></script>
+		<script src="/js/dataTables.responsive.min.js"></script>
 		<?php echo $__env->yieldContent('head'); ?>
 	</head>
 
@@ -34,63 +35,76 @@
 				window.location.href = location;
 			}
 			setInterval(function(){
-        		$('#marketStatus').load('../ajax/marketstatus');
-        	}, 15000);
-        	setInterval(function(){
-        		$('#marketChange').load('../ajax/marketchange');
+        		$('#marketStatus').load('/ajax/marketstatus');
+        		$('#marketChange').load('/ajax/marketchange');
         	}, 15000); 
 		</script>
 		<div class="wrapper">
-			<div id="container">
-				<nav class="navbar navbar-default navbar-ceiling">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-9">
-								<a href="/" class="pull-left default-margin-right"><img src="<?php echo e(asset('../images/logo.png')); ?>" width="75" height="75"></a>
-								<h1 class="main-header">Investment Finch</h1>
+			<nav class="navbar navbar-default navbar-ceiling">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-8 col-sm-8 col-md-8">
+							<a href="/" class="pull-left default-margin-right"><img src="<?php echo e(asset('../images/logo.png')); ?>" width="75" height="75"></a>
+							<h1 class="main-header">Investment Finch</h1>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4">
+							<div class="row">
+								<h2 class="sub-header pull-right text-right quarter-margin-top">The ASX simplified.</h2>
 							</div>
-							<div class="col-md-3">
+							<div class="row">
 								<ul class="nav navbar-nav pull-right">
 									<li>
 										<?php if(Auth::check()): ?>
-											<button onclick="redirect('/auth/logout')" class="btn btn-default btn-logout" id="logout">Logout</button>
-											<?php if(Auth::user()->is_admin): ?>
-												<button onclick="redirect('/dashboard/marketCapAdjustments')" class="btn btn-default btn-logout">Admin</button>
-											<?php endif; ?>
+											<div class="btn-group hidden-xs">
+												<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<b><?php echo e(Auth::user()->name); ?></b> <span class="caret"></span>
+												</button>
+												<ul class="user-main-dropdown dropdown-menu dropdown-menu-right">
+													<li><a href="/user/watchlist">Watchlist</a></li>
+													<li><a href="/user/portfolio">Portfolio</a></li>
+													<li><a href="/user/account">Account</a></li>
+													<li role="separator" class="divider"></li>
+													<?php if(Auth::user()->is_admin): ?>
+														<li><a href="/dashboard/marketCapAdjustments">Admin</a></li>
+													<?php endif; ?>
+													<li><a href="/auth/logout">Logout</a></li>
+												</ul>
+											</div>
 										<?php else: ?>
 											<button onclick="redirect('/auth/login')" class="btn btn-default btn-login" id="login">Log In</button>
 											<button onclick="redirect('/auth/register')" class="btn btn-default btn-register" id="register">Register</button>
 										<?php endif; ?>
 									</li>
 								</ul>
-								<h2 class="sub-header pull-right quarter-margin-top">The ASX simplified.</h2>
 							</div>
 						</div>
 					</div>
-				</nav>
-				<nav class="navbar navbar-inverse no-margin-bottom">
+				</div>
+			</nav>
+			<nav class="navbar navbar-inverse no-margin-bottom">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<?php echo $__env->yieldContent('nav'); ?>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<!-- Don't display market info on homepage -->
+			<?php if(Request::route()->uri() != '/'): ?>
+				<nav class="navbar navbar-default three-quarter-margin-bottom">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-12">
-								<?php echo $__env->yieldContent('nav'); ?>
-							</div>
+							<div id="marketStatus" class="quarter-margin-top three-quarter-margin-left"></div>
+							<div id="marketChange" class="quarter-margin-top three-quarter-margin-left"></div>
 						</div>
 					</div>
 				</nav>
-				<!-- Don't display market info on homepage -->
-				<?php if(Request::route()->uri() != '/'): ?>
-					<nav class="navbar navbar-default three-quarter-margin-bottom">
-						<div class="container">
-							<div class="row">
-								<div id="marketStatus" class="quarter-margin-top three-quarter-margin-left"></div>
-								<div id="marketChange" class="quarter-margin-top three-quarter-margin-left"></div>
-							</div>
-						</div>
-					</nav>
-				<?php endif; ?>
+			<?php endif; ?>
+			<div class="container-fluid">
 				<?php echo $__env->yieldContent('body'); ?>
+				<div class="push"></div>
 			</div>
-			<div class="push"></div>
 		</div>
 		<?php echo $__env->yieldContent('footer'); ?>
 

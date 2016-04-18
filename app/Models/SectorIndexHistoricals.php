@@ -170,13 +170,13 @@ class SectorIndexHistoricals extends Model
         }
 
         foreach($historicals as $record){
-            if($dataType == 'Market Cap'){
+            if($dataType == 'Cap'){
                 $recordValue = $record->total_sector_market_cap;
             }
             elseif($dataType == 'Volume'){
                 $recordValue = $record->volume;
             }
-            array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $recordValue));
+            array_push($graphData, array(getShortDateFromDate($record->date), $recordValue));
         }
         return $graphData;
     }

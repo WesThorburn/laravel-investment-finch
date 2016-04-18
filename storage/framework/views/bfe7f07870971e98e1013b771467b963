@@ -46,10 +46,7 @@
 				"last_3_months", 
 				"last_6_months", 
 				"last_year", 
-				"last_2_years", 
-				"last_5_years", 
-				"last_10_years", 
-				"all_time"
+				"last_2_years"
 			];
 
 			timeFrameButtonIds.forEach(function(buttonId){
@@ -79,18 +76,29 @@
 	</script>
 	<div class="container three-quarter-margin-top">
 		<div class="row">
-			<div class="col-md-8">	
+			<div class="col-xs-12 col-sm-12 col-md-4 no-padding-right-md">
+				<div class="panel panel-default three-quarter-margin-bottom">
+					<div class="panel-heading"><h3 class="no-margin-top no-margin-bottom text-center" id="marketOpenClosed"></h3></div>
+					<div class="panel-body">
+						<div class="center-block">
+							<h4 class="no-margin-top text-center" id="marketTime"></h4>
+							<h3 class="no-margin-top no-margin-bottom text-center" id="marketChange"></h3>
+						</div>
+					</div>
+				</div>
+				<div id="highestVolumeStocks">
+					<?php echo $__env->make('layouts.partials.highest-volume-stocks-display', ['title' => $highestVolumeStocksTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="panel panel-default three-quarter-margin-bottom">
 					<div class="panel-heading text-center">
 						<h2 class="no-margin-top">ASX Market Cap</h2>
 						<div class="btn-group btn-group-sm pull-center" role="group">
-							<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Market Cap')" id="last_3_months">3 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Market Cap')" id="last_6_months">6 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Market Cap')" id="last_year">12 Months</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Market Cap')" id="last_2_years">2 Years</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_5_years', 'Market Cap')" id="last_5_years">5 Years</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('last_10_years', 'Market Cap')" id="last_10_years">10 Years</button>
-							<button class="btn btn-default" onclick="getMarketCapGraphData('all_time', 'Market Cap')" id="all_time">All</button>
+							<button class="btn btn-default active" onclick="getMarketCapGraphData('last_3_months', 'Cap')" id="last_3_months">3 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_6_months', 'Cap')" id="last_6_months">6 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_year', 'Cap')" id="last_year">12 Months</button>
+							<button class="btn btn-default" onclick="getMarketCapGraphData('last_2_years', 'Cap')" id="last_2_years">2 Years</button>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -99,6 +107,16 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 no-padding-right-md">
+				<div id="sectorDayGain">
+					<?php echo $__env->make('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				</div>
+				<div id="sectorDayLoss">
+					<?php echo $__env->make('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading text-center">
 						<h2 class="no-margin-top">Sector Caps</h2>
@@ -114,34 +132,6 @@
 						<div id="sectors_pie_div" class="pull-left">
 							<?php echo Lava::renderPieChart('Sectors', 'sectors_pie_div'); ?>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="row">
-					<div class="panel panel-default three-quarter-margin-bottom">
-						<div class="panel-heading"><h3 class="no-margin-top no-margin-bottom text-center" id="marketOpenClosed"></h3></div>
-						<div class="panel-body">
-							<div class="center-block">
-								<h4 class="no-margin-top text-center" id="marketTime"></h4>
-								<h3 class="no-margin-top no-margin-bottom text-center" id="marketChange"></h3>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div id="sectorDayGain">
-						<?php echo $__env->make('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayGains, 'title' => $sectorDayGainTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div id="sectorDayLoss">
-						<?php echo $__env->make('layouts.partials.sector-day-change-display', ['sectorChanges' => $sectorDayLosses, 'title' => $sectorDayLossTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div id="highestVolumeStocks">
-						<?php echo $__env->make('layouts.partials.highest-volume-stocks-display', ['title' => $highestVolumeStocksTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 					</div>
 				</div>
 			</div>

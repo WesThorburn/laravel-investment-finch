@@ -9,7 +9,7 @@
 <?php $__env->startSection('body'); ?>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-xs-12">
 				<div id="metrics">
 					<?php echo $__env->make('layouts.partials.stock-list-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 				</div>

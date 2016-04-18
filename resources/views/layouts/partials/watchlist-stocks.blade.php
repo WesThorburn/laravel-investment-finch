@@ -1,6 +1,6 @@
 <div class="panel panel-default three-quarter-margin-bottom">
 	<div class="panel-heading"><b>Stocks in {{ $selectedWatchlist->watchlist_name }}</b></div>
-	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top" id="watchlist_table">
+	<table class="table table-striped table-hover table-bordered table-condensed table-bordered-only-top-bottom no-margin-top responsive" cellspacing="0" width="100%" id="watchlist_table">
 	    <thead>
 	        <tr>
 	            <th>Code</th>
