@@ -44,7 +44,7 @@ class CalculateTrendCommand extends Command
 
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
-            $stockCodes = ['CBA', 'TLS'];
+            $stockCodes = ['CBA', 'TLS', 'FRM'];
         }
 
         $numberOfStocks = count($stockCodes);
@@ -55,6 +55,10 @@ class CalculateTrendCommand extends Command
             	$stockMetrics->trend_medium_term = $this->getTrend($stock, 150);
             	$stockMetrics->trend_long_term = $this->getTrend($stock, 250);
             	$stockMetrics->save();
+
+                $this->info("\nShort Term: ".$stockMetrics->trend_short_term);
+                $this->info("Medium Term: ".$stockMetrics->trend_medium_term);
+                $this->info("Long Term: ".$stockMetrics->trend_long_term);
             }
 			$this->info($stock ." | ". round($key * (100/$numberOfStocks), 2).'%');
         }
@@ -71,23 +75,13 @@ class CalculateTrendCommand extends Command
 	    	$last50DayMA = $records->first()->fifty_day_moving_average;
 	    	$last200DayMA = $records->first()->two_hundred_day_moving_average;
 
-	    	//Detect upward trend
-			if($first50DayMA < $first200DayMA && $last50DayMA > $last200DayMA){
-				return "Up";
-			}
-			elseif($first50DayMA > $first200DayMA && $last50DayMA > $last200DayMA){
-				return "Up";
-			}
-
-			//Detect downward trend
-			elseif($first50DayMA > $first200DayMA && $last50DayMA < $last200DayMA){
-				return "Down";
-			}
-			elseif($first50DayMA < $first200DayMA && $last50DayMA < $last200DayMA){
-				return "Down";
-			}
-			return "None";
+	    	$gradient = $this->getGradient(($last50DayMA - $first50DayMA), $timeFrame)*1000;
+            return round($gradient, 2);
 		}
 		return "None";
+    }
+
+    private function getGradient($changeInY, $changeInX){
+        return $changeInY/$changeInX;
     }
 }

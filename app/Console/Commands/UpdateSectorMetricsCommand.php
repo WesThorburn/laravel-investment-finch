@@ -74,7 +74,7 @@ class UpdateSectorMetricsCommand extends Command
                     \DB::table('administration')
                         ->where('option_name', 'Market Cap Error')
                         ->update([
-                            'option_value' => 'Problem with '.$sectorName.' Sector. Total Sector Cap is: '.number_format($historicals->last()->total_sector_market_cap).'B.',
+                            'option_value' => 'Problem with '.$sectorName.' Sector. Total Sector Cap is: '.number_format($totalSectorMarketCap).'B.',
                             'updated_at' => date("Y-m-d H:i:s")
                         ]);
                 }
