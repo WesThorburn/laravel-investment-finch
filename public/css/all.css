@@ -7513,6 +7513,20 @@ th{
 		padding-right:0px;
 	}
 }
+
+/* Fluid XS styling */
+@media (max-width: 768px) {
+  .container {
+    width: inherit;
+  }
+}
+
+/* Fluid SM styling */
+@media (min-width: 768px) and (max-width: 992px) {
+  .container {
+    width: inherit;
+  }
+}
 div.dataTables_length label {
 	font-weight: normal;
 	text-align: left;

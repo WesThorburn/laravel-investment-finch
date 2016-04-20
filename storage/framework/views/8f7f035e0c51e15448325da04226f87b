@@ -101,7 +101,7 @@
 					</div>
 				</nav>
 			<?php endif; ?>
-			<div class="container-fluid">
+			<div class="container">
 				<?php echo $__env->yieldContent('body'); ?>
 				<div class="push"></div>
 			</div>

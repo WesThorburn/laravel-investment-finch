@@ -101,7 +101,7 @@
 					</div>
 				</nav>
 			@endif
-			<div class="container-fluid">
+			<div class="container">
 				@yield('body')
 				<div class="push"></div>
 			</div>
