@@ -11,7 +11,7 @@
 						{{ $stock->stock->company_name }}
 					</td>
 					<td>
-						{{ number_format($stock->volume) }}
+						${{ number_format($stock->last_trade, 2) }}
 					</td>
 				</tr>
 			@endforeach

@@ -89,6 +89,7 @@
 				<div id="highestVolumeStocks">
 					<?php echo $__env->make('layouts.partials.highest-volume-stocks-display', ['title' => $highestVolumeStocksTitle], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 				</div>
+				<?php echo $__env->make('layouts.partials.trending-stocks-display', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="panel panel-default three-quarter-margin-bottom">
