@@ -17,7 +17,7 @@ class AjaxIndividualStockPageTest extends TestCase{
 	}
 
 	public function testStockGraph(){
-		$mostRecentDateInGraph = Historicals::getMostRecentHistoricalDate('TLS');
+		$mostRecentDateInGraph = Historicals::getMostRecentHistoricalDate();
 		$mostRecentMonth = getMonthNameFromNumber(explode("-", $mostRecentDateInGraph)[1]);
 		$mostRecentYear = explode("-", $mostRecentDateInGraph)[0];
 

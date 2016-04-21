@@ -130,7 +130,7 @@ class UpdateStockMetricsCommand extends Command {
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
 	private static function correctPercentChange($lastTrade, $percentChange, $stockCode){
-		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate($stockCode);
+		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate();
 		$yesterdaysClose = Historicals::where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->pluck('close');
 		if($yesterdaysClose && $percentChange != 0 && $lastTrade == $yesterdaysClose){
 			return 0;
@@ -140,7 +140,7 @@ class UpdateStockMetricsCommand extends Command {
 
 	//Nulls current day's volume if it's the exact same as yesterday's
 	private static function correctVolume($volume, $stockCode){
-		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate($stockCode);
+		$mostRecentHistoricalDate = Historicals::getMostRecentHistoricalDate();
 		$yesterdaysVolume = Historicals::where(['stock_code' => $stockCode, 'date' => $mostRecentHistoricalDate])->pluck('volume');
 		if($yesterdaysVolume == $volume){
 			return 0;

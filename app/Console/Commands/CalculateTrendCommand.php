@@ -80,7 +80,7 @@ class CalculateTrendCommand extends Command
 
     private function populateTrendTable(){
         //Identify which stocks have a trend
-        $trendingStocksHistoricals = Historicals::where('date', Historicals::getMostRecentHistoricalDate('TLS'))
+        $trendingStocksHistoricals = Historicals::where('date', Historicals::getMostRecentHistoricalDate())
                                                 ->where('fifty_day_moving_average', '<', ('two_hundred_day_moving_average' * 1.03))
                                                 ->where('fifty_day_moving_average', '>', ('two_hundred_day_moving_average' * 0.97))
                                                 ->lists('stock_code');
