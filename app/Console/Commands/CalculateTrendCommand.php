@@ -44,7 +44,7 @@ class CalculateTrendCommand extends Command
 
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
-            $stockCodes = ['CBA', 'TLS', 'FRM'];
+            $stockCodes = ['CBA', 'TLS'];
         }
 
         $numberOfStocks = count($stockCodes);
@@ -55,13 +55,10 @@ class CalculateTrendCommand extends Command
             	$stockMetrics->trend_medium_term = $this->getTrend($stock, 150);
             	$stockMetrics->trend_long_term = $this->getTrend($stock, 250);
             	$stockMetrics->save();
-
-                $this->info("\nShort Term: ".$stockMetrics->trend_short_term);
-                $this->info("Medium Term: ".$stockMetrics->trend_medium_term);
-                $this->info("Long Term: ".$stockMetrics->trend_long_term);
             }
 			$this->info($stock ." | ". round($key * (100/$numberOfStocks), 2).'%');
         }
+        $this->populateTrendTable();
     }
 
     public function getTrend($stockCode, $timeFrame){
@@ -79,6 +76,31 @@ class CalculateTrendCommand extends Command
             return round($gradient, 2);
 		}
 		return "None";
+    }
+
+    private function populateTrendTable(){
+        //Identify which stocks have a trend
+        $trendingStocksHistoricals = Historicals::where('date', Historicals::getMostRecentHistoricalDate())
+                                                ->where('fifty_day_moving_average', '<', ('two_hundred_day_moving_average' * 1.03))
+                                                ->where('fifty_day_moving_average', '>', ('two_hundred_day_moving_average' * 0.97))
+                                                ->lists('stock_code');
+
+
+        $trendingStocksMetrics = StockMetrics::select('stock_code','trend_medium_term', 'trend_short_term')
+                                    ->where('volume', '>', 1000)
+                                    ->where('shares', '>', 0)
+                                    ->where('deleted_at', null)
+                                    ->whereIn('stock_code', $trendingStocksHistoricals)
+                                    ->orderBy('trend_short_term', 'DESC')
+                                    ->orderBy('trend_medium_term', 'DESC');
+
+        //Store found stocks in trend table
+        foreach($trendingStocksMetrics as $stock){
+            DB::table('trends')->insert([
+                'stock_code' => $stock->stock_code,
+                'trend_type' => $stock->trend_short_term
+            ]);
+        }
     }
 
     private function getGradient($changeInY, $changeInX){

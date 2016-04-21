@@ -46,8 +46,8 @@ class Historicals extends Model
         return null;
     }
 
-    public static function getMostRecentHistoricalDate($stockCode){
-        $date = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take(1)->lists('date');
+    public static function getMostRecentHistoricalDate(){
+        $date = Historicals::orderBy('date', 'desc')->take(1)->lists('date');
         if(isset($date[0])){
             return $date[0];
         }
