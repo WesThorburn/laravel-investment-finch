@@ -109,7 +109,7 @@ class Stock extends Model {
 				$fiftyDayMovingAverage = $record->fifty_day_moving_average;
 				$twoHundredDayMovingAverage = $record->two_hundred_day_moving_average;
 			}
-			array_push($graphData, array(getCarbonDateFromDate($record->date)->toFormattedDateString(), $price, $fiftyDayMovingAverage, $twoHundredDayMovingAverage));
+			array_push($graphData, array(getShortDateFromDate($record->date), $price, $fiftyDayMovingAverage, $twoHundredDayMovingAverage));
 		}
 		//Add Current day's trade value to graph data 
 		//10:32am allows time for the metrics to be populated
@@ -118,7 +118,7 @@ class Stock extends Model {
 			&& !Historicals::where(['stock_code' => $stockCode, 'date' => date('Y-m-d')])->first()){
 			$stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
 			$metricDate = explode(" ", $stockMetric->updated_at)[0];
-			array_push($graphData, array(getCarbonDateFromDate($metricDate)->toFormattedDateString(), $stockMetric->last_trade));
+			array_push($graphData, array(getShortDateFromDate($record->date), $stockMetric->last_trade));
 		}
 		return $graphData;
 	}

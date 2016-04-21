@@ -24,14 +24,12 @@ class AjaxIndividualStockPageTest extends TestCase{
 		$this->visit('ajax/graph/stock/TLS/last_month/Price')
 			->see('Date')
 			->see('Price')
-			->see($mostRecentMonth)
-			->see($mostRecentYear);
+			->see($mostRecentMonth);
 
 		$this->visit('ajax/graph/stock/TLS/all_time/Price')
 			->see('Date')
 			->see('Price')
-			->see('Feb 1, 2000')
-			->see($mostRecentMonth)
-			->see($mostRecentYear);
+			->see('1 Feb')
+			->see($mostRecentMonth);
 	}
 }
