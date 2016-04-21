@@ -81,10 +81,9 @@ class CalculateTrendCommand extends Command
     private function populateTrendTable(){
         //Identify which stocks have a trend
         $trendingStocksHistoricals = Historicals::where('date', Historicals::getMostRecentHistoricalDate())
-                                                ->where('fifty_day_moving_average', '<', ('two_hundred_day_moving_average' * 1.03))
-                                                ->where('fifty_day_moving_average', '>', ('two_hundred_day_moving_average' * 0.97))
-                                                ->lists('stock_code');
-
+                                            ->whereRaw('fifty_day_moving_average < (two_hundred_day_moving_average * 1.03)')
+                                            ->whereRaw('fifty_day_moving_average > (two_hundred_day_moving_average * 0.97)')
+                                            ->lists('stock_code');
 
         $trendingStocksMetrics = StockMetrics::select('stock_code','trend_medium_term', 'trend_short_term')
                                     ->where('volume', '>', 1000)
@@ -92,7 +91,8 @@ class CalculateTrendCommand extends Command
                                     ->where('deleted_at', null)
                                     ->whereIn('stock_code', $trendingStocksHistoricals)
                                     ->orderBy('trend_short_term', 'DESC')
-                                    ->orderBy('trend_medium_term', 'DESC');
+                                    ->orderBy('trend_medium_term', 'DESC')
+                                    ->get();
 
         //Store found stocks in trend table
         foreach($trendingStocksMetrics as $stock){
