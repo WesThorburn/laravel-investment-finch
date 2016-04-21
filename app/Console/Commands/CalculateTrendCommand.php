@@ -95,10 +95,14 @@ class CalculateTrendCommand extends Command
                                     ->get();
 
         //Store found stocks in trend table
+        \DB::table('trends')->delete();
+
         foreach($trendingStocksMetrics as $stock){
             \DB::table('trends')->insert([
                 'stock_code' => $stock->stock_code,
-                'trend_type' => $stock->trend_short_term
+                'trend_type' => $stock->trend_short_term,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
             ]);
         }
     }

@@ -91,6 +91,7 @@
 				<div id="highestVolumeStocks">
 					@include('layouts.partials.highest-volume-stocks-display', ['title' => $highestVolumeStocksTitle])
 				</div>
+				@include('layouts.partials.trending-stocks-display')
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="panel panel-default three-quarter-margin-bottom">

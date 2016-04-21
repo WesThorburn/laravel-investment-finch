@@ -50,6 +50,8 @@ class PageController extends Controller
                 'pieSliceText' => 'label',
             ]);
 
+            dd(\DB::table('trends')->orderBy('trend_type', 'DESC')->take(10)->get());
+
         return view('pages.home')->with([
             'marketCapsLava' => $marketCapsLava,
             'sectorDayGains' => SectorIndexHistoricals::getSectorDayChanges('top', 5, true),
@@ -57,7 +59,8 @@ class PageController extends Controller
             'sectorDayGainTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('top'),
             'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom'),
             'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(10)->get(),
-            'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers"
+            'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers",
+            'trendingStocks' => \DB::table('trends')->select('stock_code')->orderBy('trend_type', 'DESC')->take(10)
         ]);
     }
 
