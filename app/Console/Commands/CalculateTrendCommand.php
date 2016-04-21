@@ -56,6 +56,8 @@ class CalculateTrendCommand extends Command
             	$stockMetrics->trend_long_term = $this->getTrend($stock, 250);
             	$stockMetrics->save();
 
+                $this->populateTrendTable();
+
                 $this->info("\nShort Term: ".$stockMetrics->trend_short_term);
                 $this->info("Medium Term: ".$stockMetrics->trend_medium_term);
                 $this->info("Long Term: ".$stockMetrics->trend_long_term);
@@ -79,6 +81,10 @@ class CalculateTrendCommand extends Command
             return round($gradient, 2);
 		}
 		return "None";
+    }
+
+    private function populateTrendTable(){
+        
     }
 
     private function getGradient($changeInY, $changeInX){
