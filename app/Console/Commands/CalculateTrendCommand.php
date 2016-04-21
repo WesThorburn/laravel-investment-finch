@@ -96,7 +96,7 @@ class CalculateTrendCommand extends Command
 
         //Store found stocks in trend table
         foreach($trendingStocksMetrics as $stock){
-            DB::table('trends')->insert([
+            \DB::table('trends')->insert([
                 'stock_code' => $stock->stock_code,
                 'trend_type' => $stock->trend_short_term
             ]);
