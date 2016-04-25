@@ -24,6 +24,7 @@
 	</head>
 
 	<body>
+		@include('analytics-tracking')
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
