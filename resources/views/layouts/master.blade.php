@@ -24,7 +24,7 @@
 	</head>
 
 	<body>
-		@include('analytics-tracking')
+		@include('layouts.partials.analytics-tracking')
 		<script type="text/javascript">
 			$(document).ready(
 				function(){

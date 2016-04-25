@@ -24,6 +24,7 @@
 	</head>
 
 	<body>
+		<?php echo $__env->make('layouts.partials.analytics-tracking', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
@@ -122,7 +123,6 @@
 							<p class="disclaimer-text">
 								Investmentfinch.com.au accepts no responsibility for the accuracy or reliability of any information displayed on this website. 
 								No information provided on this website should be used for investment or trading decisions, nor should information on this website be considered financial advice. Investmentfinch.com.au will not be responsible for any financial losses suffered.<br>
-								Copyright © 2016 Investmentfinch.com.au. All rights reserved.
 							</p>
 						</div>
 					</div>
