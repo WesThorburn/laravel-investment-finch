@@ -51,10 +51,13 @@ class StockController extends Controller
                             'dragToZoom',
                             'rightClickToReset'
                          ]
-                     ]
+                     ],
+                     'chartArea' => [
+                        'top' => 25,
+                    ]
                 ])
                 ->setOptions([
-                    'title' => 'Price of '.strtoupper($id)
+                    'title' => 'Price of '.strtoupper($id),
                 ]);
 
             $sector = Stock::where('stock_code', $id)->pluck('sector');

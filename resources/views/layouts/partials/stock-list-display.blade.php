@@ -102,6 +102,5 @@
 			var data = stockTable.row(this).data();
 			window.location.assign('/stock/'+ data.stock_code)
 		});
-
 	});
 </script>

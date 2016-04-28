@@ -109,8 +109,8 @@ function getCarbonDateFromDate($phpDate){
 }
 
 function getShortDateFromDate($phpDate){
-	//Receives PHP date, returns it as a short date (5 Jan, 19 Apr)
-	return date('j M', strtotime($phpDate));
+	//Receives PHP date, returns it as a short date (5 Jan 09, 19 Apr 16)
+	return date('j M y', strtotime($phpDate));
 }
 
 function getMonthNameFromNumber($monthNumber){
