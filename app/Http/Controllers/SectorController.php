@@ -27,6 +27,11 @@ class SectorController extends Controller
 
         $sectorCapsLava = \Lava::AreaChart('SectorCaps')
             ->dataTable($sectorCaps)
+            ->customize([
+                 'chartArea' => [
+                    'top' => 25,
+                ]
+            ])
             ->setOptions([
                 'title' => 'Total Sector Cap (Billions)'
             ]);
