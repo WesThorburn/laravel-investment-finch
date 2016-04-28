@@ -27,6 +27,11 @@ class PageController extends Controller
 
         $marketCapsLava = \Lava::AreaChart('MarketCaps')
             ->dataTable($marketCaps)
+            ->customize([
+                 'chartArea' => [
+                    'top' => 25,
+                ]
+            ])
             ->setOptions([
                 'title' => 'ASX Market Cap (Billions)'
             ]);
