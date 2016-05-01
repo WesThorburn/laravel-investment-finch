@@ -112,4 +112,8 @@ class DashboardController extends Controller
         }
         return redirect('/');
     }
+
+    public function adminOptions(Request $request){
+        dd($request);
+    }
 }
