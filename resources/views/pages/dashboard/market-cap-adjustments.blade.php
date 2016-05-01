@@ -101,7 +101,7 @@
 									<form role="form" action="{{action('DashboardController@adminOptions')}}" method="POST">
 										{{ csrf_field() }}
 										<input type="hidden" name="{{ $option->option_name }}" value="true">
-										<button type="submit" class="btn btn-default" aria-label="Left Align">
+										<button type="submit" class="btn btn-default pull-right" aria-label="Left Align">
 											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 										</button>
 									</form>
