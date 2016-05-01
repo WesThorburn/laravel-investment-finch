@@ -81,6 +81,7 @@
 						<thead>
 							<th>Option Name</th>
 							<th>Value</th>
+							<th></th>
 						</thead>
 						<tbody>
 							@foreach($adminOptions as $option)
@@ -95,6 +96,15 @@
 											{{ $option->option_value }}
 										</div>
 									@endif
+								</td>
+								<td>
+									<form role="form" action="{{action('DashboardController@adminOptions')}}" method="POST">
+										{{ csrf_field() }}
+										<input type="hidden" name="{{ $option->option_name }}" value="true">
+										<button type="submit" class="btn btn-default" aria-label="Left Align">
+											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+										</button>
+									</form>
 								</td>
 							@endforeach
 						</tbody>

@@ -79,6 +79,7 @@
 						<thead>
 							<th>Option Name</th>
 							<th>Value</th>
+							<th></th>
 						</thead>
 						<tbody>
 							<?php foreach($adminOptions as $option): ?>
@@ -94,6 +95,16 @@
 
 										</div>
 									<?php endif; ?>
+								</td>
+								<td>
+									<form role="form" action="<?php echo e(action('DashboardController@adminOptions')); ?>" method="POST">
+										<?php echo e(csrf_field()); ?>
+
+										<input type="hidden" name="<?php echo e($option->option_name); ?>" value="true">
+										<button type="submit" class="btn btn-default" aria-label="Left Align">
+											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+										</button>
+									</form>
 								</td>
 							<?php endforeach; ?>
 						</tbody>

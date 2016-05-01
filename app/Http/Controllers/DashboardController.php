@@ -114,6 +114,9 @@ class DashboardController extends Controller
     }
 
     public function adminOptions(Request $request){
-        dd($request);
+        if($request->Market_Cap_Error){
+            \DB::table('administration')->where('option_name', 'Market Cap Error')->update(['option_value' => ""]);
+        }
+        return redirect()->back();
     }
 }
