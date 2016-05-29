@@ -67,7 +67,7 @@
 											<?php endif; ?>
 										</td>
 										<td>
-										<a href="/dashboard/addToBillionCapList/<?php echo e($stock->stock_code); ?>" class="btn btn-default btn-row glyphicon glyphicon-plus center-block"></a>
+										<a href="/dashboard/addToBillionCapList/<?php echo e($stock->stock_code); ?>" class="btn btn-default btn-row glyphicon glyphicon-plus center-block" title="Add to Billion Cap List"></a>
 										</td>
 									</tr>
 								<?php endforeach; ?>
