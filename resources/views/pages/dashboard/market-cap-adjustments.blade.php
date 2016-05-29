@@ -48,9 +48,10 @@
 						            <th>Difference (M)</th>
 						            <th>Day Change</th>
 						            <th>Requires Adjustment</th>
+						            <th></th>
 						        </tr>
 						    </thead>
-						    <tbody data-link="row" class="rowlink">
+						    <tbody data-link="row" class="rowlink panel-body">
 							    @foreach($flaggedStocks as $stock)
 									<tr>
 										<td>
@@ -66,6 +67,9 @@
 											@elseif($stock->market_cap_requires_adjustment == 1)
 												Yes
 											@endif
+										</td>
+										<td>
+										<a href="/dashboard/addToBillionCapList/{{ $stock->stock_code }}" class="btn btn-default btn-row glyphicon glyphicon-plus center-block"></a>
 										</td>
 									</tr>
 								@endforeach
