@@ -9,6 +9,7 @@ Route::get('performance', 'PageController@performance');
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], function(){
 	Route::get('/discontinued', 'DashboardController@discontinued');
 	Route::get('/marketCapAdjustments/{stockCode}/{addOrRemove}', 'DashboardController@changeStockAdjustmentStatus');
+	Route::get('/addToBillionCapList/{stockCode}', 'DashboardController@addToBillionCapList');
 	Route::get('/marketCapAdjustments', 'DashboardController@marketCapAdjustmentsPage');
 	Route::post('/adminOptions', 'DashboardController@adminOptions');
 

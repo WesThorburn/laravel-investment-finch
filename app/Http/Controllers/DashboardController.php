@@ -119,4 +119,11 @@ class DashboardController extends Controller
         }
         return redirect()->back();
     }
+
+    public function addToBillionCapList($stockCode){
+        $stock = StockMetrics::where('stock_code', $stockCode)->first();
+        $stock->billion_cap = 1;
+        $stock->save();
+        return redirect()->back();
+    }
 }
