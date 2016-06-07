@@ -3,6 +3,7 @@ Route::get('/', 'PageController@index');
 Route::resource('stock', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('stocks', 'StockController'); //'stock' and 'stocks' can both be routed
 Route::resource('sectors', 'SectorController');
+Route::get('search/autocomplete', ['uses' => 'SearchController@autocomplete', 'as' => 'search.autocomplete']);
 Route::get('index/{marketIndex}', 'StockController@index');
 Route::get('performance', 'PageController@performance');
 
