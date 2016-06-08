@@ -17,6 +17,7 @@ elixir(function(mix) {
     	'bootstrap-theme.css',
     	'customstyles.css',
     	'dataTables.bootstrap.css',
-    	'jasny-bootstrap.css'
+    	'jasny-bootstrap.css',
+    	'autocomplete.css'
     ]);
 });
