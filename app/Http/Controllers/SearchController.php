@@ -18,7 +18,7 @@ class SearchController extends Controller {
 
 		$searchResults = [];
 		foreach($stocks as $stock){
-			$searchResults[] = ['id' => $stock->stock_code, 'value' => $stock->stock_code . ' - ' .$stock->company_name];
+			$searchResults[] = ['id' => $stock->stock_code, 'value' => $stock->stock_code . '  -  ' .$stock->company_name];
 		}
 		return Response::json($searchResults);
 	}
