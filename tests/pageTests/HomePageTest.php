@@ -11,7 +11,7 @@ class HomePageTest extends TestCase{
 
 	public function testStockFind(){
 		$this->visit('/')
-			->type('CBA', 'stockCodeFind')
+			->type('CBA', 'term')
 			->press('Find')
 			->seePageIs('/stocks/CBA')
 			->see('Commonwealth Bank of Australia')
