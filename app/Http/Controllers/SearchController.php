@@ -12,6 +12,7 @@ class SearchController extends Controller {
 			->select('stocks.stock_code', 'stocks.company_name')
 			->where('stocks.stock_code', 'LIKE', '%'.Input::get('term').'%')
 			->orWhere('stocks.company_name', 'LIKE', '%'.Input::get('term').'%')
+			->where('stocks.deleted_at', '=', null)
 			->orderBy('stock_metrics.current_market_cap', 'DESC')
 			->take(5)
 			->get();
