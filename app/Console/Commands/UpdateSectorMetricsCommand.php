@@ -70,7 +70,6 @@ class UpdateSectorMetricsCommand extends Command
 
                 //Record Market cap in administration table if market cap is over 2 Trillion
                 if($totalSectorMarketCap > 2000000){
-                    $this->info("Not an error");
                     \DB::table('administration')
                         ->where('option_name', 'Market Cap Error')
                         ->update([
