@@ -46,17 +46,24 @@ class FillHistoricalMovingAveragesCommand extends Command
             foreach($uniqueStockCodes as $stockKey => $stockCode){
                 $this->info("Processing Stock Code: ".$stockCode." ".round(($stockKey+1)*(100/$numberOfStocks), 2)."%");
                 foreach([50,200] as $timeFrame){ 
-                    $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->skip(1)->take($timeFrame)->lists('close');
-                    if(count($recordsInTimeFrame) > 0){
-                        $averageOfRecordsInTimeFrame = $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
-                        if($timeFrame == 50){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-09'])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                    $historicalRecords = Historicals::where('stock_code', $stockCode)->where('date', '>', '2016-02-05')->orderBy('date', 'desc')->get();
+                    foreach($historicalRecords as $record){
+                        $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)
+                            ->orderBy('date', 'desc')
+                            ->where('date', '<', $record->date)
+                            ->take($timeFrame)
+                            ->lists('close');
+                        if($recordsInTimeFrame->count() > 0){
+                            $averageOfRecordsInTimeFrame = $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
+                            if($timeFrame == 50){
+                                Historicals::where(['stock_code' => $stockCode, 'date' => $record->date])->update(['fifty_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            }
+                            elseif($timeFrame == 200){
+                                Historicals::where(['stock_code' => $stockCode, 'date' => $record->date])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
+                            }
                         }
-                        elseif($timeFrame == 200){
-                            Historicals::where(['stock_code' => $stockCode, 'date' => '2016-02-09'])->update(['two_hundred_day_moving_average' => $averageOfRecordsInTimeFrame]);
-                        }
-                        $this->line(round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode." | ".$timeFrame." Day");
                     }
+                    $this->line(round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode." | ".$timeFrame." Day");
                 }
             }
         }
