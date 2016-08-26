@@ -76,7 +76,7 @@ class UpdateStockMetricsCommand extends Command {
 							"peg_ratio" => $individualMetric[15],
 							"year_high" => $individualMetric[16],
 							"year_low" => $individualMetric[17],
-							"current_market_cap" => $individualMetric[8] * $individualMetric[1], //Market cap is number of shares * last trade
+							"current_market_cap" => $individualMetric[8] * $individualMetric[1]/1000000, //Market cap is number of shares * last trade / 1,000,000
 							"dividend_yield" => $individualMetric[19],
 							"updated_at" => date("Y-m-d H:i:s")
 						]);
