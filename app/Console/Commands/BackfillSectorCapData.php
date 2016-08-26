@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Models\SectorIndexHistoricals;
 use App\Models\Stock;
@@ -24,15 +25,6 @@ class BackfillSectorCapData extends Command
      */
     protected $description = 'Backfills historical market cap data for each sector.';
 
-    private $sectorMetrics = [
-            'volume', 
-            'EBITDA', 
-            'earnings_per_share_current', 
-            'earnings_per_share_next_year', 
-            'price_to_earnings', 
-            'price_to_book', 
-            'dividend_yield'
-        ];
     /**
      * Create a new command instance.
      *
@@ -52,20 +44,20 @@ class BackfillSectorCapData extends Command
     {
         $this->info("This process may take several hours...");
         if($this->confirm('Do you wish to continue?')){
-            $sectorHistoricalRecords = SectorIndexHistoricals::select(\DB::raw('DISTINCT date'))
-                ->where('date', '>', '2015-08-12')
-                ->where('date', '<', '2016-02-10')
+            $listofDates = Historicals::where('stock_code', 'TLS')
+                ->where('date', '>', '2016-04-18')
+                ->where('date', '<', '2016-08-26')
                 ->orderBy('date', 'DESC')
                 ->lists('date');
 
             $listOfSectors = Stock::getListOfSectors();
             array_push($listOfSectors, 'All');
 
-            $numberOfDates = count($sectorHistoricalRecords);
+            $numberOfDates = count($listofDates);
 
             $previousDate = null;
 
-            foreach($sectorHistoricalRecords as $dateKey => $date){
+            foreach($listofDates as $dateKey => $date){
                 $this->info("Processing Date: ".$date);
                 foreach($listOfSectors as $sectorName){
                     $this->info("Processing: ".$sectorName);
@@ -75,7 +67,7 @@ class BackfillSectorCapData extends Command
                     }
 
                     if(count($stocksInSector) > 0){
-                        $totalSectorMarketCap = Historicals::where('date', $date)->whereIn('stock_code', $stocksInSector)->sum('current_market_cap');
+                        $totalSectorMarketCap = BackfillSectorCapData::getTotalSectorMarketCap($date, $stocksInSector);
                         SectorIndexHistoricals::updateOrCreate(
                             [
                                 'sector' => $sectorName,
@@ -105,5 +97,17 @@ class BackfillSectorCapData extends Command
                 $this->info("Completed: ".$date. " ".round((100/$numberOfDates)*($dateKey+1), 2)."%");
             }
         }
+    }
+
+    private function getTotalSectorMarketCap($date, $stocksInSector){
+        $totalSectorMarketCap = 0;
+        
+        foreach($stocksInSector as $stockCode){
+            $stockPriceAtDate = Historicals::where('stock_code', $stockCode)->where('date', $date)->pluck('close');
+            $numberOfShares = StockMetrics::where('stock_code', $stockCode)->pluck('shares');
+            $marketCapAtDate = $stockPriceAtDate * $numberOfShares / 1000000;
+            $totalSectorMarketCap = $totalSectorMarketCap + $marketCapAtDate;
+        }
+        return $totalSectorMarketCap;
     }
 }
