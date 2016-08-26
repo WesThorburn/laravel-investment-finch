@@ -76,7 +76,7 @@ class UpdateStockMetricsCommand extends Command {
 							"peg_ratio" => $individualMetric[15],
 							"year_high" => $individualMetric[16],
 							"year_low" => $individualMetric[17],
-							"current_market_cap" => UpdateStockMetricsCommand::correctMarketCap($stockCode, formatMoneyAmountToNumber($individualMetric[18])),
+							"current_market_cap" => $individualMetric[8] * $individualMetric[1], //Market cap is number of shares * last trade
 							"dividend_yield" => $individualMetric[19],
 							"updated_at" => date("Y-m-d H:i:s")
 						]);
@@ -121,12 +121,12 @@ class UpdateStockMetricsCommand extends Command {
 		return $ebitda;
 	}
 	//Temporary Function to manually correct market caps provided by Yahoo Finance API
-	private static function correctMarketCap($stockCode, $marketCap){
+	/*private static function correctMarketCap($stockCode, $marketCap){
 		if(StockMetrics::where('stock_code', $stockCode)->pluck('market_cap_requires_adjustment')){
 			return $marketCap/1000;
 		}
 		return $marketCap;
-	}
+	}*/
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
 	private static function correctPercentChange($lastTrade, $percentChange, $stockCode){
