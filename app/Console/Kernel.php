@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		/*if(isTradingDay()){
+		if(isTradingDay()){
 			$schedule->command('stocks:updateStockList')->dailyAt('02:00');
 			$schedule->command('stocks:getCompanySummaries')->dailyAt('02:05');
 			$schedule->command('stocks:calculateTrend')->dailyAt('02:15');
@@ -49,14 +49,14 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:resetDayChange')->dailyAt('06:00');
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:35');
-			if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 163000){*/
-				//$schedule->command('stocks:updateStockMetrics')->cron("*/2 * * * *");
-				//$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
-				//$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
-			/*}
+			if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 163000){
+				$schedule->command('stocks:updateStockMetrics')->cron("*/2 * * * *");
+				$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
+				$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
+			}
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:35');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:40');
 			$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:45');
-		}*/
+		}
 	}
 }
