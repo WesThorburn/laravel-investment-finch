@@ -33,7 +33,7 @@ class PageController extends Controller
                 ]
             ])
             ->setOptions([
-                'title' => 'ASX Market Cap (Billions)'
+                'title' => 'ASX Market Cap (Millions)'
             ]);
 
         //PieChart for Sectors' Market Caps
@@ -51,7 +51,7 @@ class PageController extends Controller
             	]
             ])
             ->setOptions([
-                'title' => 'Sector Caps (Billions)',
+                'title' => 'Sector Caps',
                 'pieSliceText' => 'label',
             ]);
 

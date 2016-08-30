@@ -33,7 +33,7 @@ class SectorController extends Controller
                 ]
             ])
             ->setOptions([
-                'title' => 'Total Sector Cap (Billions)'
+                'title' => 'Total Sector Cap (Millions)'
             ]);
 
         //Pie Chart For Stocks In Sector
