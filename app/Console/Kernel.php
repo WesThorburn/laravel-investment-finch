@@ -50,9 +50,9 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:28');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('10:35');
 			if(getCurrentTimeIntVal() >= 103000 && getCurrentTimeIntVal() <= 163000){
-				$schedule->command('stocks:updateStockMetrics')->cron("*/2 * * * *");
-				$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
-				$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'partial'])->cron("*/2 * * * *");
+				$schedule->command('stocks:updateStockMetrics')->everyThirtyMinutes();
+				$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'partial'])->everyThirtyMinutes();
+				$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'partial'])->everyThirtyMinutes();
 			}
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:35');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:40');
