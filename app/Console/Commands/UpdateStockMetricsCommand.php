@@ -52,8 +52,11 @@ class UpdateStockMetricsCommand extends Command {
 			$metrics = explode("\n", @file_get_contents($stockURL));
 			foreach($metrics as $metric){
 				if($metric != null){
+
 					$individualMetric = explode(',', $metric);
 					$stockCode = substr(explode('.', $individualMetric[0])[0], 1);
+					$numberOfShares = UpdateStockMetricsCommand::correctNumberOfShares($stockCode, $individualMetric[8]);
+
 					if($individualMetric[1]){
 						StockMetrics::updateOrCreate(['stock_code' => $stockCode], [
 							"stock_code" => $stockCode,
@@ -66,7 +69,7 @@ class UpdateStockMetricsCommand extends Command {
 							"close" => $individualMetric[1], //Last Trade after closing time
 							"adj_close" => 0.000, //No Data Available
 							"volume" => UpdateStockMetricsCommand::correctVolume($individualMetric[7], $stockCode),
-							"shares" => $individualMetric[8],
+							"shares" => $numberOfShares,
 							"EBITDA" => UpdateStockMetricsCommand::formatEBITDA($individualMetric[9]),
 							"earnings_per_share_current" => $individualMetric[10],
 							"earnings_per_share_next_year" => $individualMetric[11],
@@ -120,13 +123,14 @@ class UpdateStockMetricsCommand extends Command {
 		}
 		return $ebitda;
 	}
-	//Temporary Function to manually correct market caps provided by Yahoo Finance API
-	/*private static function correctMarketCap($stockCode, $marketCap){
-		if(StockMetrics::where('stock_code', $stockCode)->pluck('market_cap_requires_adjustment')){
-			return $marketCap/1000;
+
+	//Checks number of shares provided by API, if zero, use most recent non-zero number
+	private static function correctNumberOfShares($stockCode, $numberOfShares){
+		if($numberOfShares == 'N/A'){
+			return Historicals::where('stock_code', $stockCode)->where('shares', '!=', 0)->orderBy('date', 'DESC')->pluck('shares');
 		}
-		return $marketCap;
-	}*/
+		return $numberOfShares;
+	}
 
 	//Nulls current day's percentage change if it's the exact same as yesterday's
 	private static function correctPercentChange($lastTrade, $percentChange, $stockCode){
