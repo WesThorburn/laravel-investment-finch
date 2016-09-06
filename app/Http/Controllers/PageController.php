@@ -56,7 +56,7 @@ class PageController extends Controller
             ]);
 
         //Trending Stocks
-        $trendingStockCodes = \DB::table('trends')->orderBy('trend_type', 'DESC')->take(10)->lists('stock_code');
+        $trendingStockCodes = \DB::table('trends')->orderBy('trend_type', 'DESC')->take(15)->lists('stock_code');
         $trendingStocksmetrics = StockMetrics::whereIn('stock_code', $trendingStockCodes)->get();
 
         return view('pages.home')->with([
@@ -65,7 +65,7 @@ class PageController extends Controller
             'sectorDayLosses' => SectorIndexHistoricals::getSectorDayChanges('bottom', 5, true),
             'sectorDayGainTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('top'),
             'sectorDayLossTitle' => SectorIndexHistoricals::getSectorDayChangeTitle('bottom'),
-            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(10)->get(),
+            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(5)->get(),
             'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers",
             'trendingStocks' => $trendingStocksmetrics
         ]);
