@@ -65,8 +65,8 @@ class CalculateTrendCommand extends Command
     	$records = Historicals::select(['fifty_day_moving_average', 'two_hundred_day_moving_average'])
         	->where('stock_code', $stockCode)->orderBy('date', 'DESC')->take($timeFrame)->get();
 
-        //Check to ensure $records isn't empty
-        if($records->first()){
+        //Check to ensure sufficient records
+        if($records->first() && $records->count() >= 50){
 	    	$first50DayMA = $records->last()->fifty_day_moving_average;
 	    	$first200DayMA = $records->last()->two_hundred_day_moving_average;
 	    	$last50DayMA = $records->first()->fifty_day_moving_average;

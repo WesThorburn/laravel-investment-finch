@@ -88,7 +88,7 @@ class StockController extends Controller
 
     public function highestVolume(){
         return view('layouts.partials.highest-volume-stocks-display')->with([
-            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(10)->get(),
+            'highestVolumeStocks' => StockMetrics::with('stock')->omitOutliers()->orderBy('volume', 'desc')->take(5)->get(),
             'highestVolumeStocksTitle' => SectorIndexHistoricals::getSectorWeekDay()."'s Market Movers"
         ]);
     }
