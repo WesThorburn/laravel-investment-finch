@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\StockMetrics;
 use Illuminate\Database\Eloquent\Model;
 
 class Historicals extends Model
@@ -57,5 +58,37 @@ class Historicals extends Model
 
     public static function getYesterdaysHistoricalsDate(){
         return Historicals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
+    }
+
+    public static function getMACDLine($stockCode){
+        return Historicals::getEMA($stockCode, 12) - Historicals::getEMA($stockCode, 26);
+    }
+
+    public static function getSignalLine($stockCode, $mostRecentMACDValue){
+        $previousDay = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
+        $nineDayMultiplier = (2 / (9 + 1));
+        return ($mostRecentMACDValue - $previousDay->macd_line) * $nineDayMultiplier + $previousDay->macd_line;
+    }
+
+    public static function getEMA($stockCode, $timeFrame){
+        $multiplier = (2 / ($timeFrame + 1));
+        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
+        $historicalRecords = Historicals::where('stock_code', $stockCode)->orderBy('date', 'asc')->take($timeFrame)->get();
+        foreach($historicalRecords as $key => $record){
+            if($record->date == $historicalRecords->first()->date){
+                $recordsForSMA = Historicals::where('stock_code', $stockCode)
+                    ->orderBy('date', 'desc')
+                    ->take($timeFrame)
+                    ->lists('close');
+                if($recordsForSMA->count() > 0){
+                    $record->ema = $recordsForSMA->sum()/$recordsForSMA->count();
+                }
+            }
+            else{
+                $record->ema = ($record->close - $historicalRecords[$key-1]->ema) * $multiplier + $historicalRecords[$key-1]->ema;
+            }
+        }
+        return ($stockMetrics->last_trade - $historicalRecords->last()->ema) * $multiplier + $historicalRecords->last()->ema;
     }
 }

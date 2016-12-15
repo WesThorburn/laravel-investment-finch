@@ -53,6 +53,10 @@ class GetDailyFinancialsCommand extends Command
 		foreach($stockCodes as $key => $stockCode){
             if(isTradingDay()){
                 $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
+                $macdLine = Historicals::getMACDLine($stockCode);
+                $signalLine = Historicals::getSignalLine($stockCode, $macdLine);
+
 				Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 					"stock_code" => $stockCode,
 					"date" => date("Y-m-d"),
@@ -67,6 +71,9 @@ class GetDailyFinancialsCommand extends Command
 					"adj_close" => $stockMetrics->adj_close,
                     "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
                     "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
+                    "macd_line" =>  $macdLine,
+                    "signal_line" => $signalLine,
+                    "macd_histogram" => $macdLine - $signalLine,
                     "EBITDA" => $stockMetrics->EBITDA,
                     "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
                     "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,
