@@ -56,8 +56,9 @@ class FillHistoricalMACDsCommand extends Command
                     $twelveDayMultiplier = (2/(12 + 1));
                     $twentySixDayMultiplier = (2/(26 + 1));
 
-                    if($record->date == $historicalRecords->first()->date){ //First Date, we need the SMA
-                        $twelveDayRecords = Historicals::where('stock_code', $stockCode)
+                    if($record->date == $historicalRecords->first()->date){ 
+                        //First Date, we need the SMA (if not already filled)
+                        /*$twelveDayRecords = Historicals::where('stock_code', $stockCode)
                             ->orderBy('date', 'desc')
                             ->where('date', '<', '2016-01-01')
                             ->take(12)
@@ -73,7 +74,7 @@ class FillHistoricalMACDsCommand extends Command
                             ->lists('close');
                         if($twentySixDayRecords->count() > 0){
                             $record->twentySixDayEMA = $twentySixDayRecords->sum()/$twelveDayRecords->count();
-                        }
+                        }*/
                     }
                     else{
                         $record->twelveDayEMA = ($record->close - $historicalRecords[$key-1]->twelveDayEMA) * $twelveDayMultiplier + $historicalRecords[$key-1]->twelveDayEMA;
