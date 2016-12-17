@@ -81,20 +81,22 @@ class Historicals extends Model
     }
 
     public static function getStochasticK($stockCode, $timePeriod){
-        $highestHigh = Historicals::where('stock_code', $stockCode)
+        $listOfHighs = Historicals::where('stock_code', $stockCode)
             ->orderBy('date', 'DESC')
             ->limit($timePeriod)
-            ->max('high');
+            ->lists('high');
 
-        $lowestLow = Historicals::where('stock_code', $stockCode)
+        $listOfLows = Historicals::where('stock_code', $stockCode)
             ->orderBy('date', 'DESC')
             ->limit($timePeriod)
-            ->max('low');
+            ->lists('low');
 
         $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
 
-        $highestHigh = Historicals::where('stock_code', $stockCode);
-        return ($stockMetrics->last_trade - $lowestLow)/($highestHigh - $lowestLow) * 100;
+        if($listOfHighs->max() - $listOfLows->min() != 0){
+            return ($stockMetrics->last_trade - $listOfLows->min())/($listOfHighs->max() - $listOfLows->min()) * 100;
+        }
+        return 0;
     }
 
     public static function getStochasticD($stockCode, $timePeriod){
