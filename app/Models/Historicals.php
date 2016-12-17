@@ -79,4 +79,33 @@ class Historicals extends Model
         $nineDayMultiplier = (2 / (9 + 1));
         return ($mostRecentMACDValue - $previousDay->macd_line) * $nineDayMultiplier + $previousDay->macd_line;
     }
+
+    public static function getStochasticK($stockCode, $timePeriod){
+        $highestHigh = Historicals::where('stock_code', $stockCode)
+            ->orderBy('date', 'DESC')
+            ->limit($timePeriod)
+            ->max('high');
+
+        $lowestLow = Historicals::where('stock_code', $stockCode)
+            ->orderBy('date', 'DESC')
+            ->limit($timePeriod)
+            ->max('low');
+
+        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
+        $highestHigh = Historicals::where('stock_code', $stockCode);
+        return ($stockMetrics->last_trade - $lowestLow)/($highestHigh - $lowestLow) * 100;
+    }
+
+    public static function getStochasticD($stockCode, $timePeriod){
+        $kSMAs = Historicals::where('stock_code', $stockCode)
+            ->orderBy('date', 'DESC')
+            ->limit($timePeriod)
+            ->lists('stochastic_k');
+
+        if($kSMAs->count() > 0){
+            return $kSMAs->sum()/$kSMAs->count();
+        }
+        return null;
+    }
 }
