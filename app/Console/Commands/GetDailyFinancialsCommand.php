@@ -54,8 +54,10 @@ class GetDailyFinancialsCommand extends Command
             if(isTradingDay()){
                 $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
 
-                /*$macdLine = Historicals::getMACDLine($stockCode);
-                $signalLine = Historicals::getSignalLine($stockCode, $macdLine);*/
+                $twelveDayEma = Historicals::getEMA($stockCode, 12);
+                $twentySixDayEma = Historicals::getEMA($stockCode, 26)
+                $macdLine = $twelveDayEma - $twentySixDayEma;
+                $signalLine = Historicals::getSignalLine($stockCode, $macdLine);
 
 				Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 					"stock_code" => $stockCode,
@@ -71,9 +73,11 @@ class GetDailyFinancialsCommand extends Command
 					"adj_close" => $stockMetrics->adj_close,
                     "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
                     "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
-                    /*"macd_line" =>  $macdLine,
+                    "twelve_day_ema" => $twelveDayEma,
+                    "twenty_six_day_ema" => $twentySixDayEma,
+                    "macd_line" =>  $macdLine,
                     "signal_line" => $signalLine,
-                    "macd_histogram" => $macdLine - $signalLine,*/
+                    "macd_histogram" => $macdLine - $signalLine,
                     "EBITDA" => $stockMetrics->EBITDA,
                     "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
                     "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,

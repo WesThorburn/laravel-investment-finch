@@ -60,35 +60,23 @@ class Historicals extends Model
         return Historicals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
     }
 
-    public static function getMACDLine($stockCode){
-        return Historicals::getEMA($stockCode, 12) - Historicals::getEMA($stockCode, 26);
+    public static function getEMA($stockCode, $timeFrame){
+        $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => getMostRecentHistoricalDate()])->first();
+
+        $multiplier = (2/($timeframe + 1));
+
+        if($timeFrame == 12){
+            return($stockMetric->last_trade - $yesterdaysHistoricals->twelve_day_ema) * $multiplier + $yesterdaysHistoricals->twelve_day_ema;
+        }
+        else if($timeFrame == 26){
+            return ($stockMetric->last_trade - $yesterdaysHistoricals->twenty_six_day_ema) * $multiplier + $yesterdaysHistoricals->twenty_six_day_ema;
+        }
     }
 
     public static function getSignalLine($stockCode, $mostRecentMACDValue){
         $previousDay = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
         $nineDayMultiplier = (2 / (9 + 1));
         return ($mostRecentMACDValue - $previousDay->macd_line) * $nineDayMultiplier + $previousDay->macd_line;
-    }
-
-    public static function getEMA($stockCode, $timeFrame){
-        $multiplier = (2 / ($timeFrame + 1));
-        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
-
-        $historicalRecords = Historicals::where('stock_code', $stockCode)->orderBy('date', 'asc')->take($timeFrame)->get();
-        foreach($historicalRecords as $key => $record){
-            if($record->date == $historicalRecords->first()->date){
-                $recordsForSMA = Historicals::where('stock_code', $stockCode)
-                    ->orderBy('date', 'desc')
-                    ->take($timeFrame)
-                    ->lists('close');
-                if($recordsForSMA->count() > 0){
-                    $record->ema = $recordsForSMA->sum()/$recordsForSMA->count();
-                }
-            }
-            else{
-                $record->ema = ($record->close - $historicalRecords[$key-1]->ema) * $multiplier + $historicalRecords[$key-1]->ema;
-            }
-        }
-        return ($stockMetrics->last_trade - $historicalRecords->last()->ema) * $multiplier + $historicalRecords->last()->ema;
     }
 }
