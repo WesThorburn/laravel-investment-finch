@@ -64,6 +64,11 @@ class FillHistoricalMACDsCommand extends Command
                 ->limit(PHP_INT_MAX)
                 ->get();
 
+            if($signalLineRecords->count() < 1){
+                $this->info("Insufficient data, skipping " . $stockCode);
+                continue;
+            }
+
             //Get 9 Day SMA for first signal line point
             $macdLineRecords = Historicals::where('stock_code', $stockCode)
                 ->where('date', '<', $signalLineRecords->first()->date)
