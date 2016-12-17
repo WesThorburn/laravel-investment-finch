@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\GetCompanySummariesCommand',
 		'App\Console\Commands\FillHistoricalMovingAveragesCommand',
 		'App\Console\Commands\FillHistoricalMACDsCommand',
+		'App\Console\Commands\FillHistoricalEMAsCommand',
 		'App\Console\Commands\CalculateTrendCommand',
 		'App\Console\Commands\GetASXListsCommand',
 		'App\Console\Commands\UpdateStockAnalysisCommand',
