@@ -55,7 +55,7 @@ class GetDailyFinancialsCommand extends Command
                 $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
 
                 $twelveDayEma = Historicals::getEMA($stockCode, 12);
-                $twentySixDayEma = Historicals::getEMA($stockCode, 26)
+                $twentySixDayEma = Historicals::getEMA($stockCode, 26);
                 $macdLine = $twelveDayEma - $twentySixDayEma;
                 $signalLine = Historicals::getSignalLine($stockCode, $macdLine);
 
