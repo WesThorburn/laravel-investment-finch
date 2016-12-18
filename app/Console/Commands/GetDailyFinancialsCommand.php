@@ -81,6 +81,7 @@ class GetDailyFinancialsCommand extends Command
                     "stochastic_k" => Historicals::getStochasticK($stockCode, 5),
                     "stochastic_d" => Historicals::getStochasticD($stockCode, 3),
                     "obv" => Historicals::getOBV($stockCode),
+                    "five_day_rsi" => Historicals::getRSI($stockCode),
                     "EBITDA" => $stockMetrics->EBITDA,
                     "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
                     "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,

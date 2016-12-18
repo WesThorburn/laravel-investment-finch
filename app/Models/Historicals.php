@@ -119,14 +119,57 @@ class Historicals extends Model
         $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => getMostRecentHistoricalDate()])->first();
 
         if($stockMetrics->percent_change > 0){
-            $obv = $yesterdaysHistoricals->obv + $record->volume;
+            $obv = $yesterdaysHistoricals->obv + $stockMetrics->volume;
         }
         else if($stockMetrics->percent_change < 0){
-            $obv = $yesterdaysHistoricals->obv - $record->volume;
+            $obv = $yesterdaysHistoricals->obv - $stockMetrics->volume;
         }
         else if($stockMetrics->percent_change == 0){
             $obv = $yesterdaysHistoricals->obv;
         }
         return $obv;
+    }
+
+    public static function getRSI($stockCode){
+        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
+        $fiveDayChanges = Historicals::where('stock_code', $stockCode)
+            ->where('date', '<=', getMostRecentHistoricalDate())
+            ->orderBy('date', 'DESC')
+            ->limit(5)
+            ->lists('day_change');
+
+        $fiveDayGains = [];
+        $fiveDayLosses = [];
+
+        foreach($fiveDayChanges as $dayChange){
+            if($dayChange > 0){
+                array_push($fiveDayGains, abs($dayChange));
+            }
+            else if($dayChange < 0){
+                array_push($fiveDayLosses, abs($dayChange));
+            }
+        }
+
+        if(count($fiveDayGains) > 0){
+            $averageGain = array_sum($fiveDayGains)/count($fiveDayGains);
+        }
+        else{
+            $averageGain = 0;
+        }
+        
+        if(count($fiveDayLosses) > 0){
+            $averageLoss = array_sum($fiveDayLosses)/count($fiveDayLosses);
+        }
+        else{
+            $averageLoss = 0;
+        }
+
+        if($averageLoss != 0){
+            return 100 - 100 / (1 + ($averageGain / $averageLoss));
+        }
+        else{
+            return 100;
+        }
     }
 }
