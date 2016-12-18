@@ -172,4 +172,30 @@ class Historicals extends Model
             return 100;
         }
     }
+
+    public static function getCCI($stockCode, $typicalPrice){
+        $typicalPriceRecords = Historicals::where('stock_code', $stockCode)
+            ->where('date', '<', getMostRecentHistoricalDate())
+            ->orderBy('date', 'DESC')
+            ->limit(20)
+            ->lists('typical_price');
+
+        //Calculate 20-Period SMA
+        if($typicalPriceRecords->count() != 0){
+            $typicalPriceSMA = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
+        }
+        else{
+            $typicalPriceSMA = $typicalPrice;
+        }
+
+        //Calculate Mean Deviation
+        foreach($typicalPriceRecords as $price){
+            $price = abs($price - $typicalPriceSMA);
+        }
+        $meanDeviation = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
+
+        if($meanDeviation != 0){
+            return ($typicalPrice - $typicalPriceSMA)/(0.15 * $meanDeviation);
+        }
+    }
 }

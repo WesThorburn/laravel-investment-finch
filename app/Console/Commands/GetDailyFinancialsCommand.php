@@ -59,6 +59,8 @@ class GetDailyFinancialsCommand extends Command
                 $macdLine = $twelveDayEma - $twentySixDayEma;
                 $signalLine = Historicals::getSignalLine($stockCode, $macdLine);
 
+                $typicalPrice = ($stockMetrics->high + $stockMetrics->low + $stockMetrics->close)/3;
+
 				Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
 					"stock_code" => $stockCode,
 					"date" => date("Y-m-d"),
@@ -82,6 +84,8 @@ class GetDailyFinancialsCommand extends Command
                     "stochastic_d" => Historicals::getStochasticD($stockCode, 3),
                     "obv" => Historicals::getOBV($stockCode),
                     "five_day_rsi" => Historicals::getRSI($stockCode),
+                    "typical_price" => $typicalPrice,
+                    "cci" => Historicals::getCCI($stockCode, $typicalPrice),
                     "EBITDA" => $stockMetrics->EBITDA,
                     "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
                     "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,
