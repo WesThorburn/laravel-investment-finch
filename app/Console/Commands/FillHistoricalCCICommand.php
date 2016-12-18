@@ -50,40 +50,46 @@ class FillHistoricalCCICommand extends Command
                 ->orderBy('date', 'asc')
                 ->get();
 
-            //Calculate typical price
-            foreach($historicalRecords as $key => $record){
-                $record->typical_price = ($record->high + $record->low + $record->close)/3;
-                $record->save();
-            }
-
-            //Calculate CCI
-            foreach($historicalRecords as $key => $record){
-                $typicalPriceRecords = Historicals::where('stock_code', $stockCode)
-                    ->where('date', '<', $record->date)
-                    ->orderBy('date', 'DESC')
-                    ->limit(20)
-                    ->lists('typical_price');
-
-                //Calculate 20-Period SMA
-                if($typicalPriceRecords->count() != 0){
-                    $typicalPriceSMA = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
-                }
-                else{
-                    $typicalPriceSMA = $record->typical_price;
-                }
-
-                //Calculate Mean Deviation
-                foreach($typicalPriceRecords as $typicalPrice){
-                    $typicalPrice = abs($typicalPrice - $typicalPriceSMA);
-                }
-                $meanDeviation = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
-
-                if($meanDeviation != 0){
-                    $record->cci = ($record->typical_price - $typicalPriceSMA)/(0.15 * $meanDeviation);
+            if($historicalRecords->last()->cci == null){
+                //Calculate typical price
+                foreach($historicalRecords as $key => $record){
+                    $record->typical_price = ($record->high + $record->low + $record->close)/3;
                     $record->save();
                 }
-            }
 
+                //Calculate CCI
+                foreach($historicalRecords as $key => $record){
+                    $typicalPriceRecords = Historicals::where('stock_code', $stockCode)
+                        ->where('date', '<', $record->date)
+                        ->orderBy('date', 'DESC')
+                        ->limit(20)
+                        ->lists('typical_price');
+
+                    //Calculate 20-Period SMA
+                    if($typicalPriceRecords->count() != 0){
+                        $typicalPriceSMA = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
+                    }
+                    else{
+                        $typicalPriceSMA = $record->typical_price;
+                    }
+
+                    //Calculate Mean Deviation
+                    foreach($typicalPriceRecords as $typicalPrice){
+                        $typicalPrice = abs($typicalPrice - $typicalPriceSMA);
+                    }
+                    if($typicalPriceRecords->count() != 0){
+                        $meanDeviation = $typicalPriceRecords->sum()/$typicalPriceRecords->count();
+                    }
+                    else{
+                        $meanDeviation = 0;
+                    }
+
+                    if($meanDeviation != 0){
+                        $record->cci = ($record->typical_price - $typicalPriceSMA)/(0.15 * $meanDeviation);
+                        $record->save();
+                    }
+                }
+            }
             $this->line("Completed ".round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode);
         }
     }
