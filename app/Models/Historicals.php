@@ -110,4 +110,23 @@ class Historicals extends Model
         }
         return null;
     }
+
+    public static function getOBV($stockCode){
+        $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
+
+        $obv = 0;
+
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => getMostRecentHistoricalDate()])->first();
+
+        if($stockMetrics->percent_change > 0){
+            $obv = $yesterdaysHistoricals->obv + $record->volume;
+        }
+        else if($stockMetrics->percent_change < 0){
+            $obv = $yesterdaysHistoricals->obv - $record->volume;
+        }
+        else if($stockMetrics->percent_change == 0){
+            $obv = $yesterdaysHistoricals->obv;
+        }
+        return $obv;
+    }
 }

@@ -80,6 +80,7 @@ class GetDailyFinancialsCommand extends Command
                     "macd_histogram" => $macdLine - $signalLine,
                     "stochastic_k" => Historicals::getStochasticK($stockCode, 5),
                     "stochastic_d" => Historicals::getStochasticD($stockCode, 3),
+                    "obv" => Historicals::getOBV($stockCode),
                     "EBITDA" => $stockMetrics->EBITDA,
                     "earnings_per_share_current"=> $stockMetrics->earnings_per_share_current,
                     "earnings_per_share_next_year"=> $stockMetrics->earnings_per_share_next_year,
