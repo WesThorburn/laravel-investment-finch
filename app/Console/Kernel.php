@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\FillHistoricalStochasticsCommand',
 		'App\Console\Commands\FillHistoricalOBVCommand',
 		'App\Console\Commands\FillHistoricalRSICommand',
+		'App\Console\Commands\FillHistoricalCCICommand',
 		'App\Console\Commands\CalculateTrendCommand',
 		'App\Console\Commands\GetASXListsCommand',
 		'App\Console\Commands\UpdateStockAnalysisCommand',
