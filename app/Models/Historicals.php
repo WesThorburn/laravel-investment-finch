@@ -39,8 +39,8 @@ class Historicals extends Model
     	}
     }
 
-    public static function getMovingAverage($stockCode, $timeFrame){
-        $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take($timeFrame)->lists('close');
+    public static function getMovingAverage($stockCode, $timeframe){
+        $recordsInTimeFrame = Historicals::where('stock_code', $stockCode)->orderBy('date', 'desc')->take($timeframe)->lists('close');
         if(count($recordsInTimeFrame) > 0){
             return $recordsInTimeFrame->sum()/$recordsInTimeFrame->count();
         }
@@ -60,16 +60,16 @@ class Historicals extends Model
         return Historicals::orderBy('date', 'desc')->distinct()->take(2)->lists('date')[1];
     }
 
-    public static function getEMA($stockCode, $timeFrame){
+    public static function getEMA($stockCode, $timeframe){
         $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
         $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
 
         $multiplier = (2/($timeframe + 1));
 
-        if($timeFrame == 12){
+        if($timeframe == 12){
             return($stockMetric->last_trade - $yesterdaysHistoricals->twelve_day_ema) * $multiplier + $yesterdaysHistoricals->twelve_day_ema;
         }
-        else if($timeFrame == 26){
+        else if($timeframe == 26){
             return ($stockMetric->last_trade - $yesterdaysHistoricals->twenty_six_day_ema) * $multiplier + $yesterdaysHistoricals->twenty_six_day_ema;
         }
     }
