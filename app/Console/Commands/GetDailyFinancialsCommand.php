@@ -73,6 +73,7 @@ class GetDailyFinancialsCommand extends Command
 					"volume" => $stockMetrics->volume,
                     "shares" => $stockMetrics->shares,
 					"adj_close" => $stockMetrics->adj_close,
+                    "twenty_day_moving_average" => Historicals::getMovingAverage($stockCode, 20),
                     "fifty_day_moving_average" => Historicals::getMovingAverage($stockCode, 50),
                     "two_hundred_day_moving_average" => Historicals::getMovingAverage($stockCode, 200),
                     "twelve_day_ema" => $twelveDayEma,
