@@ -125,16 +125,19 @@ class Historicals extends Model
 
         $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
 
-        if($stockMetrics->percent_change > 0){
-            $obv = $yesterdaysHistoricals->obv + $stockMetrics->volume;
+        if($yesterdaysHistoricals){
+            if($stockMetrics->percent_change > 0){
+                $obv = $yesterdaysHistoricals->obv + $stockMetrics->volume;
+            }
+            else if($stockMetrics->percent_change < 0){
+                $obv = $yesterdaysHistoricals->obv - $stockMetrics->volume;
+            }
+            else if($stockMetrics->percent_change == 0){
+                $obv = $yesterdaysHistoricals->obv;
+            }
+            return $obv;
         }
-        else if($stockMetrics->percent_change < 0){
-            $obv = $yesterdaysHistoricals->obv - $stockMetrics->volume;
-        }
-        else if($stockMetrics->percent_change == 0){
-            $obv = $yesterdaysHistoricals->obv;
-        }
-        return $obv;
+        return 0;
     }
 
     public static function getRSI($stockCode){
