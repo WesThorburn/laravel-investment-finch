@@ -64,14 +64,17 @@ class Historicals extends Model
         $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
         $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
 
-        $multiplier = (2/($timeframe + 1));
+        if($stockMetric && $yesterdaysHistoricals){
+            $multiplier = (2/($timeframe + 1));
 
-        if($timeframe == 12){
-            return($stockMetric->last_trade - $yesterdaysHistoricals->twelve_day_ema) * $multiplier + $yesterdaysHistoricals->twelve_day_ema;
+            if($timeframe == 12){
+                return($stockMetric->last_trade - $yesterdaysHistoricals->twelve_day_ema) * $multiplier + $yesterdaysHistoricals->twelve_day_ema;
+            }
+            else if($timeframe == 26){
+                return ($stockMetric->last_trade - $yesterdaysHistoricals->twenty_six_day_ema) * $multiplier + $yesterdaysHistoricals->twenty_six_day_ema;
+            }
         }
-        else if($timeframe == 26){
-            return ($stockMetric->last_trade - $yesterdaysHistoricals->twenty_six_day_ema) * $multiplier + $yesterdaysHistoricals->twenty_six_day_ema;
-        }
+        return 0;
     }
 
     public static function getSignalLine($stockCode, $mostRecentMACDValue){
