@@ -62,7 +62,7 @@ class Historicals extends Model
 
     public static function getEMA($stockCode, $timeFrame){
         $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
-        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => getMostRecentHistoricalDate()])->first();
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
 
         $multiplier = (2/($timeframe + 1));
 
@@ -116,7 +116,7 @@ class Historicals extends Model
 
         $obv = 0;
 
-        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => getMostRecentHistoricalDate()])->first();
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
 
         if($stockMetrics->percent_change > 0){
             $obv = $yesterdaysHistoricals->obv + $stockMetrics->volume;
@@ -134,7 +134,7 @@ class Historicals extends Model
         $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
 
         $fiveDayChanges = Historicals::where('stock_code', $stockCode)
-            ->where('date', '<=', getMostRecentHistoricalDate())
+            ->where('date', '<=', Historicals::getMostRecentHistoricalDate())
             ->orderBy('date', 'DESC')
             ->limit(5)
             ->lists('day_change');
@@ -175,7 +175,7 @@ class Historicals extends Model
 
     public static function getCCI($stockCode, $typicalPrice){
         $typicalPriceRecords = Historicals::where('stock_code', $stockCode)
-            ->where('date', '<', getMostRecentHistoricalDate())
+            ->where('date', '<', Historicals::getMostRecentHistoricalDate())
             ->orderBy('date', 'DESC')
             ->limit(20)
             ->lists('typical_price');
