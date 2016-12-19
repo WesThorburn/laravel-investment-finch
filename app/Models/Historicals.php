@@ -79,8 +79,12 @@ class Historicals extends Model
 
     public static function getSignalLine($stockCode, $mostRecentMACDValue){
         $previousDay = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
-        $nineDayMultiplier = (2 / (9 + 1));
-        return ($mostRecentMACDValue - $previousDay->macd_line) * $nineDayMultiplier + $previousDay->macd_line;
+
+        if($previousDay){
+            $nineDayMultiplier = (2 / (9 + 1));
+            return ($mostRecentMACDValue - $previousDay->macd_line) * $nineDayMultiplier + $previousDay->macd_line;
+        }
+        return 0;
     }
 
     public static function getStochasticK($stockCode, $timePeriod){
