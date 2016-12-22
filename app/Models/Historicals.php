@@ -62,7 +62,7 @@ class Historicals extends Model
 
     public static function getEMA($stockCode, $timeframe){
         $stockMetric = StockMetrics::where('stock_code', $stockCode)->first();
-        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getYesterdaysHistoricalsDate()])->first();
 
         if($stockMetric && $yesterdaysHistoricals){
             $multiplier = (2/($timeframe + 1));
@@ -78,7 +78,7 @@ class Historicals extends Model
     }
 
     public static function getSignalLine($stockCode, $mostRecentMACDValue){
-        $previousDay = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
+        $previousDay = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getYesterdaysHistoricalsDate()])->first();
 
         if($previousDay){
             $nineDayMultiplier = (2 / (9 + 1));
@@ -123,7 +123,7 @@ class Historicals extends Model
 
         $obv = 0;
 
-        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getMostRecentHistoricalDate()])->first();
+        $yesterdaysHistoricals = Historicals::where(['stock_code' => $stockCode, 'date' => Historicals::getYesterdaysHistoricalsDate()])->first();
 
         if($yesterdaysHistoricals){
             if($stockMetrics->percent_change > 0){
@@ -144,7 +144,7 @@ class Historicals extends Model
         $stockMetrics = StockMetrics::where('stock_code', $stockCode)->first();
 
         $fiveDayChanges = Historicals::where('stock_code', $stockCode)
-            ->where('date', '<=', Historicals::getMostRecentHistoricalDate())
+            ->where('date', '<=', Historicals::getYesterdaysHistoricalsDate())
             ->orderBy('date', 'DESC')
             ->limit(5)
             ->lists('day_change');
@@ -185,7 +185,7 @@ class Historicals extends Model
 
     public static function getCCI($stockCode, $typicalPrice){
         $typicalPriceRecords = Historicals::where('stock_code', $stockCode)
-            ->where('date', '<', Historicals::getMostRecentHistoricalDate())
+            ->where('date', '<', Historicals::getYesterdaysHistoricalsDate())
             ->orderBy('date', 'DESC')
             ->limit(20)
             ->lists('typical_price');
