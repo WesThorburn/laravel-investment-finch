@@ -51,23 +51,21 @@ class FillHistoricalOBVCommand extends Command
                 ->get();
 
             foreach($historicalRecords as $key => $record){
-                if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
-                    if($record->date == $historicalRecords->first()->date){
-                        $record->obv = $record->volume;
-                    }
-                    else{
-                        if($record->percent_change > 0){
-                            $record->obv = $historicalRecords[$key-1]->obv + $record->volume;
-                        }
-                        else if($record->percent_change < 0){
-                            $record->obv = $historicalRecords[$key-1]->obv - $record->volume;
-                        }
-                        else if($record->percent_change == 0){
-                            $record->obv = $historicalRecords[$key-1]->obv;
-                        }
-                    }
-                    $record->save();
+                if($record->date == $historicalRecords->first()->date){
+                    $record->obv = $record->volume;
                 }
+                else{
+                    if($record->percent_change > 0){
+                        $record->obv = $historicalRecords[$key-1]->obv + $record->volume;
+                    }
+                    else if($record->percent_change < 0){
+                        $record->obv = $historicalRecords[$key-1]->obv - $record->volume;
+                    }
+                    else if($record->percent_change == 0){
+                        $record->obv = $historicalRecords[$key-1]->obv;
+                    }
+                }
+                $record->save();
             }
             $this->line("Completed ".round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode);
         }

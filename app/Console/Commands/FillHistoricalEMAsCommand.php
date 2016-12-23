@@ -46,7 +46,7 @@ class FillHistoricalEMAsCommand extends Command
             $this->info("Processing Stock Code: ".$stockCode." ".round(($stockKey+1)*(100/$numberOfStocks), 2)."%");
 
             //Fill first-day SMA
-            /*$twelveDaySMA = null;
+            $twelveDaySMA = null;
             $twentySixDaySMA = null;
 
             $firstHistorical = Historicals::where('stock_code', $stockCode)
@@ -76,11 +76,11 @@ class FillHistoricalEMAsCommand extends Command
 
             $firstHistorical->twelve_day_ema = $twelveDaySMA;
             $firstHistorical->twenty_six_day_ema = $twentySixDaySMA;
-            $firstHistorical->save();*/
+            $firstHistorical->save();
 
             //Fill non-first day EMAs
             $historicals = Historicals::where('stock_code', $stockCode)
-                ->where('date', '>', '2016-12-15')
+                ->where('date', '>', '2016-01-01')
                 ->orderBy('date', 'asc')
                 ->get();
 
@@ -88,15 +88,14 @@ class FillHistoricalEMAsCommand extends Command
                 if($key > 0){ //Skip first one, (that's the SMA)
                     $twelveDayMultiplier = 2/(12+1);
                     $twentySixDayMultiplier = 2/(26+1);
-                    if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
-                        $previousDayTwelveDayEMA = $historicals[$key-1]->twelve_day_ema;
-                        $previousDayTwentySixDayEMA = $historicals[$key-1]->twenty_six_day_ema;
 
-                        $record->twelve_day_ema = ($record->close - $previousDayTwelveDayEMA) * $twelveDayMultiplier + $previousDayTwelveDayEMA;
-                        $record->twenty_six_day_ema = ($record->close - $previousDayTwentySixDayEMA) * $twentySixDayMultiplier + $previousDayTwentySixDayEMA;
+                    $previousDayTwelveDayEMA = $historicals[$key-1]->twelve_day_ema;
+                    $previousDayTwentySixDayEMA = $historicals[$key-1]->twenty_six_day_ema;
 
-                        $record->save();
-                    }
+                    $record->twelve_day_ema = ($record->close - $previousDayTwelveDayEMA) * $twelveDayMultiplier + $previousDayTwelveDayEMA;
+                    $record->twenty_six_day_ema = ($record->close - $previousDayTwentySixDayEMA) * $twentySixDayMultiplier + $previousDayTwentySixDayEMA;
+
+                    $record->save();
                 }
             }
         }
