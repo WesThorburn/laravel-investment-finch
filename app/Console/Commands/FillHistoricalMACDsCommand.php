@@ -46,19 +46,21 @@ class FillHistoricalMACDsCommand extends Command
             $this->info("Processing Stock Code: ".$stockCode." ".round(($stockKey+1)*(100/$numberOfStocks), 2)."%");
 
             $historicalRecords = Historicals::where('stock_code', $stockCode)
-                ->where('date', '>', '2016-01-01')
+                ->where('date', '>', '2016-12-15')
                 ->orderBy('date', 'asc')
                 ->get();
 
             //Fill MACD Line
             foreach($historicalRecords as $record){
-                $record->macd_line = $record->twelve_day_ema - $record->twenty_six_day_ema;
-                $record->save();
+                if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
+                    $record->macd_line = $record->twelve_day_ema - $record->twenty_six_day_ema;
+                    $record->save();
+                }
             }
 
             //Crunch signal line + update histogram
             $signalLineRecords = Historicals::where('stock_code', $stockCode)
-                ->where('date', '>', '2016-01-01')
+                ->where('date', '>', '2016-12-15')
                 ->orderBy('date', 'asc')
                 ->skip(10)
                 ->limit(PHP_INT_MAX)
@@ -76,20 +78,24 @@ class FillHistoricalMACDsCommand extends Command
                 ->take(9)
                 ->lists('macd_line');
 
-            if($macdLineRecords->count() > 0){
-                $signalLineRecords->first()->signal_line = $macdLineRecords->sum()/$macdLineRecords->count();
+            if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
+                if($macdLineRecords->count() > 0){
+                    $signalLineRecords->first()->signal_line = $macdLineRecords->sum()/$macdLineRecords->count();
+                }
+                else{
+                    $signalLineRecords->first()->signal_line = $signalLineRecords->first()->close;
+                }
+                $signalLineRecords->first()->save();
             }
-            else{
-                $signalLineRecords->first()->signal_line = $signalLineRecords->first()->close;
-            }
-            $signalLineRecords->first()->save();
 
             $nineDayMultiplier = (2/(9 + 1));
 
             foreach($signalLineRecords as $key => $record){
                 if($key > 0){
-                    $record->signal_line = ($record->macd_line - $signalLineRecords[$key-1]->macd_line) * $nineDayMultiplier + $signalLineRecords[$key-1]->macd_line;
-                    $record->save();
+                    if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
+                        $record->signal_line = ($record->macd_line - $signalLineRecords[$key-1]->macd_line) * $nineDayMultiplier + $signalLineRecords[$key-1]->macd_line;
+                        $record->save();
+                    }
                 }
             }
 
@@ -102,8 +108,10 @@ class FillHistoricalMACDsCommand extends Command
                 ->get();
 
             foreach($histogramRecords as $record){
-                $record->macd_histogram = $record->macd_line - $record->signal_line;
-                $record->save();
+                if($record->date == '2016-12-21' || $record->date == '2016-12-20' || $record->date == '2016-12-19'){
+                    $record->macd_histogram = $record->macd_line - $record->signal_line;
+                    $record->save();
+                }
             }
 
             $this->line("Completed ".round(($stockKey+1)*(100/$numberOfStocks), 2)."% | Stock: ".$stockCode);
