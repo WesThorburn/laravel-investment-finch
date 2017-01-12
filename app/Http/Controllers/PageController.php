@@ -82,4 +82,16 @@ class PageController extends Controller
             'topStocks12Months' => StockGains::getTopStocks12Months(29)
         ]);
     }
+
+    public function about(){
+        return view('pages.about');
+    }
+
+    public function privacy(){
+        return view('pages.privacy');
+    }
+
+    public function contact(){
+        return view('pages.contact');
+    }
 }

@@ -7,6 +7,10 @@ Route::get('search/autocomplete', ['uses' => 'SearchController@autocomplete', 'a
 Route::get('index/{marketIndex}', 'StockController@index');
 Route::get('performance', 'PageController@performance');
 
+Route::get('about', 'PageController@about');
+Route::get('contact', 'PageController@contact');
+Route::get('privacy', 'PageController@privacy');
+
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'admin']], function(){
 	Route::get('/discontinued', 'DashboardController@discontinued');
 	Route::get('/marketCapAdjustments/{stockCode}/{addOrRemove}', 'DashboardController@changeStockAdjustmentStatus');

@@ -126,6 +126,17 @@
 							</p>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-1 col-md-offset-4">
+							<a href="/about">About</a>
+						</div>
+						<div class="col-md-1">
+							<a href="/privacy">Privacy</a>
+						</div>
+						<div class="col-md-1">
+							<a href="/contact">Contact</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		@endif
