@@ -125,7 +125,7 @@
 					@yield('body')
 					<div class="push"></div>
 				</div>
-				<div class="col-md-2 no-padding-left no-padding-right visible-md visible-md-* visible-lg-*">
+				<div class="col-md-2 no-padding-left no-padding-right visible-md-* visible-lg-*">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 						<!-- test-responsive -->
 						<ins class="adsbygoogle"
