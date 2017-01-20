@@ -99,7 +99,7 @@
 			@if(Request::route()->uri() != '/')
 				<nav class="navbar navbar-default three-quarter-margin-bottom">
 					<div class="col-md-8 col-md-offset-2">
-						<div class="container">
+						<div class="container-fluid">
 							<div class="row">
 								<div id="marketStatus" class="quarter-margin-top"></div>
 								<div id="marketChange" class="quarter-margin-top"></div>
@@ -111,12 +111,11 @@
 			<div class="row">
 				<div class="col-md-2 no-padding-left no-padding-right visible-md-* visible-lg-*">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- test-responsive -->
+						<!-- skyscraper-large -->
 						<ins class="adsbygoogle"
-						     style="display:block"
+						     style="display:inline-block;width:300px;height:600px"
 						     data-ad-client="ca-pub-7363637623148655"
-						     data-ad-slot="7086637177"
-						     data-ad-format="auto"></ins>
+						     data-ad-slot="5012644778"></ins>
 						<script>
 						(adsbygoogle = window.adsbygoogle || []).push({});
 					</script>
@@ -127,12 +126,11 @@
 				</div>
 				<div class="col-md-2 no-padding-left no-padding-right visible-md-* visible-lg-*">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- test-responsive -->
+						<!-- skyscraper-large -->
 						<ins class="adsbygoogle"
-						     style="display:block"
+						     style="display:inline-block;width:300px;height:600px"
 						     data-ad-client="ca-pub-7363637623148655"
-						     data-ad-slot="7086637177"
-						     data-ad-format="auto"></ins>
+						     data-ad-slot="5012644778"></ins>
 						<script>
 						(adsbygoogle = window.adsbygoogle || []).push({});
 					</script>
