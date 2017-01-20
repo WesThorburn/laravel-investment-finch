@@ -11,6 +11,8 @@ html{
 body{
 	font-size:13px;
 	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 th{
