@@ -68,7 +68,7 @@
 		}
 
 	</script>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="col-sm-4 col-md-4 no-padding-left">
 			<div id="allSectors">
 				@include('layouts.partials.all-sectors-day-change-display')

@@ -76,20 +76,7 @@
 			document.getElementById(numberOfSectors).className = "btn btn-default active";
 		}
 	</script>
-	<div class="container three-quarter-margin-top">
-		<div class="row">
-			<div class="col-md-12">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- test-leaderboard -->
-				<ins class="adsbygoogle"
-				     style="display:inline-block;width:728px;height:90px"
-				     data-ad-client="ca-pub-7363637623148655"
-				     data-ad-slot="2516836775"></ins>
-				<script>
-				(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
-			</div>
-		</div>
+	<div class="container-fluid three-quarter-margin-top">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-4 no-padding-right-md">
 				<div class="panel panel-default three-quarter-margin-bottom">

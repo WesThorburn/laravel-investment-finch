@@ -49,9 +49,9 @@
 
 		
 	</script>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row quarter-margin-bottom">
-			<div class="col-lg-9">
+			<div class="col-lg-12">
 				<h1 class="no-margin-top">{{ $stock->company_name }}</h1>
 				<h2 class="no-margin-top">{{ $stock->sector }}</h2>
 				<h3 class="no-margin-top">(ASX: {{ $stock->stock_code }})</h3>
@@ -60,22 +60,10 @@
 
 				</div>
 			</div>
-			<div class="col-lg-3">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- test-responsive -->
-				<ins class="adsbygoogle"
-				     style="display:block"
-				     data-ad-client="ca-pub-7363637623148655"
-				     data-ad-slot="7086637177"
-				     data-ad-format="auto"></ins>
-				<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
-			</div>
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-7 no-padding-left">
 				<div class="panel panel-default three-quarter-margin-bottom">
