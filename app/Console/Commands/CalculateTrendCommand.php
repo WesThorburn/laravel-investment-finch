@@ -40,7 +40,7 @@ class CalculateTrendCommand extends Command
      */
     public function handle()
     {
-        $stockCodes = StockMetrics::where('current_market_cap', '>', 50)->lists('stock_code');
+        $stockCodes = Stock::lists('stock_code');
 
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
@@ -66,7 +66,7 @@ class CalculateTrendCommand extends Command
         	->where('stock_code', $stockCode)->orderBy('date', 'DESC')->take($timeFrame)->get();
 
         //Check to ensure sufficient records
-        if($records->first() && $records->count() >= 200){
+        if($records->first() && $records->count() >= 50){
 	    	$first50DayMA = $records->last()->fifty_day_moving_average;
 	    	$first200DayMA = $records->last()->two_hundred_day_moving_average;
 	    	$last50DayMA = $records->first()->fifty_day_moving_average;
@@ -85,9 +85,18 @@ class CalculateTrendCommand extends Command
                                             ->whereRaw('fifty_day_moving_average > (two_hundred_day_moving_average * 0.97)')
                                             ->lists('stock_code');
 
+        //Omit stocks listed in the last 12 months
+        foreach($trendingStocksHistoricals as $key => $historicalRecords){
+            $earliestRecord = Historicals::where('stock_code', $historicalRecords)->orderBy('date', 'ASC')->first();
+            if(getCarbonDateFromDate($earliestRecord->date) > Carbon::now()->subYear()){
+                unset($trendingStocksHistoricals[$key]);
+            }
+        }
+
         $trendingStocksMetrics = StockMetrics::select('stock_code','trend_medium_term', 'trend_short_term')
                                     ->where('volume', '>', 1000)
                                     ->where('shares', '>', 0)
+                                    ->where('current_market_cap', '>', 50)
                                     ->where('deleted_at', null)
                                     ->whereIn('stock_code', $trendingStocksHistoricals)
                                     ->orderBy('trend_short_term', 'DESC')
