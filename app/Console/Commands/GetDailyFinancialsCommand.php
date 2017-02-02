@@ -46,6 +46,8 @@ class GetDailyFinancialsCommand extends Command
 
         $numberOfStocks = count($stockCodes);
 
+        $runningDate = date("Y-m-d"); //In case function runs past midnight
+
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
             $stockCodes = ['CBA','TLS'];
@@ -61,9 +63,9 @@ class GetDailyFinancialsCommand extends Command
 
                 $typicalPrice = ($stockMetrics->high + $stockMetrics->low + $stockMetrics->close)/3;
 
-				Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => date("Y-m-d")], [
+				Historicals::updateOrCreate(['stock_code' => $stockCode, 'date' => $runningDate], [
 					"stock_code" => $stockCode,
-					"date" => date("Y-m-d"),
+					"date" => $runningDate,
 					"open" => $stockMetrics->open,
 					"high" => $stockMetrics->high,
 					"low" => $stockMetrics->low,

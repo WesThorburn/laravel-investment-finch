@@ -89,7 +89,7 @@ class CalculateTrendCommand extends Command
         //Omit stocks listed in the last 12 months
         foreach($trendingStocksHistoricals as $key => $historicalRecords){
             $earliestRecord = Historicals::where('stock_code', $historicalRecords)->orderBy('date', 'ASC')->first();
-            if(getCarbonDateFromDate($earliestRecord->date) > Carbon::now()->subYear()){
+            if($earliestRecord->date > getDateFromCarbonDate(Carbon::now()->subYear())){
                 unset($trendingStocksHistoricals[$key]);
             }
         }
