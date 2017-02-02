@@ -40,7 +40,7 @@ class CalculateTrendCommand extends Command
      */
     public function handle()
     {
-        $stockCodes = Stock::lists('stock_code');
+        $stockCodes = StockMetrics::where('current_market_cap', '>', 50)->lists('stock_code');
 
         if($this->option('testMode') == 'true'){
             $this->info("[Test Mode]");
@@ -66,7 +66,7 @@ class CalculateTrendCommand extends Command
         	->where('stock_code', $stockCode)->orderBy('date', 'DESC')->take($timeFrame)->get();
 
         //Check to ensure sufficient records
-        if($records->first() && $records->count() >= 50){
+        if($records->first() && $records->count() >= 200){
 	    	$first50DayMA = $records->last()->fifty_day_moving_average;
 	    	$first200DayMA = $records->last()->two_hundred_day_moving_average;
 	    	$last50DayMA = $records->first()->fifty_day_moving_average;
