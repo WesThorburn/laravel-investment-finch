@@ -1,7 +1,7 @@
 # Investment Finch
 ## This project has been discontinued due to the closure of the Yahoo Finance API
 
-The website is still live and all old data is still accessible. You can access it at http://investmentfinch.com.au/
+The website is still live and all old data is still accessible. You can access it at http://stocks.westhorburn.com/
 
 ## About
 
