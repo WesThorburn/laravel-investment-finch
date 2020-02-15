@@ -1,8 +1,6 @@
 # Investment Finch
 ## This project has been discontinued due to the closure of the Yahoo Finance API
 
-The website is still live and all old data is still accessible. You can access it at http://stocks.westhorburn.com/
-
 ## About
 
 This is an ongoing solo-project I have been working on that allows users to search for and view stocks listed on the Australian Stock Exchange (ASX). My goal for this project is to gain experience working with very large data sets as well as some experience working with automation within Laravel. 
