@@ -45,6 +45,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
+		/*  Project along with Yahoo financed API is now deprecated
+			no reason to continue daily update commands
 		if(isTradingDay()){
 			$schedule->command('stocks:updateStockList')->dailyAt('02:00');
 			$schedule->command('stocks:getCompanySummaries')->dailyAt('02:05');
@@ -63,6 +65,6 @@ class Kernel extends ConsoleKernel {
 			$schedule->command('stocks:updateSectorMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:35');
 			$schedule->command('stocks:updateIndexMetrics', ['--mode' => 'full'])->weekdays()->dailyAt('16:40');
 			$schedule->command('stocks:getDailyFinancials')->weekdays()->dailyAt('16:45');
-		}
+		}*/
 	}
 }
